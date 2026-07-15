@@ -1,0 +1,132 @@
+/* Shared site styles (used with Tailwind CDN pages) */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: Inter, system-ui, sans-serif;
+}
+.hero-glow {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 101, 242, 0.35), transparent),
+    radial-gradient(ellipse 50% 40% at 100% 30%, rgba(88, 101, 242, 0.1), transparent);
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0d0e12;
+}
+::-webkit-scrollbar-thumb {
+  background: #2b2d31;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5865f2;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid #5865f2;
+  outline-offset: 2px;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 {
+  transition-delay: 0.08s;
+}
+.reveal-delay-2 {
+  transition-delay: 0.16s;
+}
+.reveal-delay-3 {
+  transition-delay: 0.24s;
+}
+.reveal-delay-4 {
+  transition-delay: 0.32s;
+}
+.avatar-float {
+  animation: float 5s ease-in-out infinite;
+}
+.avatar-glow {
+  animation: pulse-glow 3.5s ease-in-out infinite;
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 60%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+}
+.btn-shine:hover::after {
+  transform: translateX(120%);
+}
+.cmd-row {
+  transition: background-color 0.15s ease;
+  cursor: pointer;
+}
+.cmd-row:hover {
+  background-color: rgba(88, 101, 242, 0.08);
+}
+.cmd-row.hidden-by-filter {
+  display: none;
+}
+.faq-item[open] summary {
+  color: #fff;
+}
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .avatar-float,
+  .avatar-glow,
+  .btn-shine::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

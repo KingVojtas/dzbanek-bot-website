@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy — dzbanek-bot</title>
+    <meta name="description" content="Privacy Policy for dzbanek-bot — what data is stored and why." />
+    <meta property="og:title" content="Privacy Policy — dzbanek-bot" />
+    <meta property="og:image" content="assets/bot-avatar.png" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              discord: {
+                bg: '#0D0E12', darker: '#111214', card: '#1E1F22', elevated: '#2B2D31',
+                blurple: '#5865F2', muted: '#B5BAC1',
+              },
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            boxShadow: { glow: '0 0 60px -12px rgba(88, 101, 242, 0.45)' },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body class="bg-discord-bg text-white antialiased font-sans">
+    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/80 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/bot-avatar.png" alt="" class="h-9 w-9 rounded-2xl object-cover ring-2 ring-discord-blurple/40" />
+          <span class="text-lg font-bold">dzbanek-bot</span>
+        </a>
+        <a href="index.html" class="text-sm font-medium text-discord-blurple hover:underline">← Home</a>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+      <h1 class="text-3xl font-bold tracking-tight">Privacy Policy</h1>
+      <p class="mt-2 text-sm text-discord-muted">Last updated: July 2026</p>
+
+      <div class="mt-10 space-y-8 text-discord-muted leading-relaxed">
+        <section>
+          <h2 class="text-lg font-semibold text-white">1. Overview</h2>
+          <p class="mt-2">
+            This policy describes what <strong class="text-white">dzbanek-bot</strong> stores.
+            Open source:
+            <a href="https://github.com/KingVojtas/dzbanek-bot" target="_blank" rel="noopener noreferrer" class="text-discord-blurple hover:underline">KingVojtas/dzbanek-bot</a>.
+            Self-hosted instances are controlled by their operators.
+          </p>
+        </section>
+        <section>
+          <h2 class="text-lg font-semibold text-white">2. Data we store</h2>
+          <ul class="mt-2 list-disc space-y-2 pl-5">
+            <li><strong class="text-white">Discord IDs</strong> — guild, user, and channel IDs for commands, posts, and settings.</li>
+            <li><strong class="text-white">Music stats</strong> — plays, skips, duration, top tracks (for <code class="text-white">/stats</code> and <code class="text-white">/top</code>).</li>
+            <li><strong class="text-white">Wishlists</strong> — Steam app IDs / names for sale alerts.</li>
+            <li><strong class="text-white">Playlists</strong> — server “Dzbanek playlist” tracks.</li>
+            <li><strong class="text-white">Feed dedup</strong> — seen article/deal IDs.</li>
+            <li><strong class="text-white">Guild settings</strong> — optional channel IDs and feature toggles from the admin web UI.</li>
+            <li><strong class="text-white">Admin sessions</strong> — signed cookie after Discord OAuth (identify + guilds) for the admin dashboard.</li>
+            <li><strong class="text-white">Daily snapshots</strong> — anonymous aggregates (servers, plays) for the public stats chart.</li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="text-lg font-semibold text-white">3. Public stats API</h2>
+          <p class="mt-2">
+            The public <code class="text-white">/api/stats</code> endpoint exposes only aggregates
+            (server count, approximate users, total plays, etc.) — not individual user IDs or messages.
+          </p>
+        </section>
+        <section>
+          <h2 class="text-lg font-semibold text-white">4. What we don’t collect</h2>
+          <p class="mt-2">
+            We do not sell personal data, store free-text search history, or require email/payment.
+          </p>
+        </section>
+        <section>
+          <h2 class="text-lg font-semibold text-white">5. Third parties</h2>
+          <p class="mt-2">
+            Discord, YouTube/yt-dlp, Spotify (optional), Steam, game-deals.app, Epic, lyrics APIs — each has its own policy.
+          </p>
+        </section>
+        <section>
+          <h2 class="text-lg font-semibold text-white">6. Contact</h2>
+          <p class="mt-2">
+            <a href="https://github.com/KingVojtas/dzbanek-bot" target="_blank" rel="noopener noreferrer" class="text-discord-blurple hover:underline">github.com/KingVojtas/dzbanek-bot</a>
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="border-t border-white/5 py-8 text-center text-sm text-discord-muted">
+      <a href="index.html" class="text-discord-blurple hover:underline">Home</a>
+      ·
+      <a href="terms.html" class="text-discord-blurple hover:underline">Terms</a>
+      · © <span id="year"></span>
+    </footer>
+    <script src="js/config.js"></script>
+    <script src="js/site.js"></script>
+  </body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — dzbanek-bot</title>
+    <meta
+      name="description"
+      content="Configure dzbanek-bot channels for news, Steam deals, and Epic free games via Discord login."
+    />
+    <meta property="og:title" content="Admin — dzbanek-bot" />
+    <meta property="og:description" content="Discord OAuth admin dashboard for guild channel settings." />
+    <meta property="og:image" content="assets/bot-avatar.png" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              discord: {
+                bg: '#0D0E12',
+                darker: '#111214',
+                card: '#1E1F22',
+                elevated: '#2B2D31',
+                blurple: '#5865F2',
+                'blurple-hover': '#4752C4',
+                muted: '#B5BAC1',
+                green: '#23A559',
+              },
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            boxShadow: {
+              glow: '0 0 60px -12px rgba(88, 101, 242, 0.45)',
+              card: '0 8px 32px -8px rgba(0, 0, 0, 0.5)',
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body class="bg-discord-bg text-white antialiased">
+    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/80 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/bot-avatar.png" alt="" class="h-9 w-9 rounded-2xl object-cover ring-2 ring-discord-blurple/40" />
+          <span class="text-lg font-bold">dzbanek-bot</span>
+        </a>
+        <div class="hidden items-center gap-5 lg:flex">
+          <a href="index.html" class="text-sm font-medium text-discord-muted hover:text-white">Home</a>
+          <a href="stats.html" class="text-sm font-medium text-discord-muted hover:text-white">Stats</a>
+          <a href="admin.html" class="text-sm font-medium text-white">Admin</a>
+          <a
+            href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-shine rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold"
+            >Add to Server</a
+          >
+        </div>
+        <button id="menu-btn" type="button" class="rounded-lg p-2 text-discord-muted lg:hidden" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </nav>
+      <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker lg:hidden">
+        <div class="flex flex-col gap-1 px-4 py-3">
+          <a href="index.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Home</a>
+          <a href="stats.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Stats</a>
+          <a href="admin.html" class="rounded-lg px-3 py-2 text-sm text-white">Admin</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+      <p class="text-sm font-medium text-discord-blurple">Server configuration</p>
+      <h1 class="mt-1 text-3xl font-bold tracking-tight">Admin dashboard</h1>
+      <p class="mt-2 text-sm text-discord-muted">
+        Log in with Discord to configure news, Steam deals, and Epic free-game channels for guilds
+        you manage (requires Manage Server). Bot must already be in the guild.
+      </p>
+
+      <!-- Logged out -->
+      <div id="logged-out" class="mt-10 rounded-2xl border border-white/5 bg-discord-card p-8 text-center shadow-card">
+        <img src="assets/bot-avatar.png" alt="" class="mx-auto h-16 w-16 rounded-2xl ring-2 ring-discord-blurple/40" />
+        <h2 class="mt-4 text-xl font-semibold">Sign in with Discord</h2>
+        <p class="mt-2 text-sm text-discord-muted">
+          We only request <code class="text-white/80">identify</code> and
+          <code class="text-white/80">guilds</code> scopes.
+        </p>
+        <a
+          id="login-btn"
+          href="#"
+          class="btn-shine mt-6 inline-flex items-center gap-2 rounded-full bg-discord-blurple px-6 py-3 text-sm font-semibold shadow-glow hover:bg-discord-blurple-hover"
+        >
+          Login with Discord
+        </a>
+        <p id="login-error" class="mt-4 hidden text-sm text-red-400"></p>
+      </div>
+
+      <!-- Logged in -->
+      <div id="logged-in" class="mt-10 hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/5 bg-discord-card p-4">
+          <div class="flex items-center gap-3">
+            <img id="user-avatar" src="" alt="" class="h-10 w-10 rounded-full bg-discord-elevated" />
+            <div>
+              <p id="user-name" class="font-semibold"></p>
+              <p class="text-xs text-discord-muted">Signed in</p>
+            </div>
+          </div>
+          <button
+            id="logout-btn"
+            type="button"
+            class="rounded-full border border-white/10 px-4 py-2 text-sm text-discord-muted hover:text-white"
+          >
+            Log out
+          </button>
+        </div>
+
+        <div>
+          <label for="guild-select" class="text-sm font-medium text-discord-muted">Guild</label>
+          <select
+            id="guild-select"
+            class="mt-1 w-full rounded-xl border border-white/10 bg-discord-elevated px-4 py-3 text-sm text-white"
+          ></select>
+          <p id="guilds-empty" class="mt-2 hidden text-sm text-amber-400">
+            No manageable guilds where the bot is present. Invite the bot first.
+          </p>
+        </div>
+
+        <form id="settings-form" class="space-y-6 rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card">
+          <fieldset class="space-y-3">
+            <legend class="text-sm font-semibold text-white">📰 News (RSS)</legend>
+            <label class="flex items-center gap-2 text-sm text-discord-muted">
+              <input id="newsEnabled" type="checkbox" class="rounded border-white/20 bg-discord-elevated text-discord-blurple" />
+              Enable news posts for this guild
+            </label>
+            <input
+              id="newsChannelId"
+              type="text"
+              placeholder="News channel ID"
+              class="w-full rounded-xl border border-white/10 bg-discord-elevated px-4 py-2.5 text-sm placeholder:text-discord-muted/60"
+            />
+          </fieldset>
+
+          <fieldset class="space-y-3">
+            <legend class="text-sm font-semibold text-white">🎮 Steam daily deals</legend>
+            <label class="flex items-center gap-2 text-sm text-discord-muted">
+              <input id="steamEnabled" type="checkbox" class="rounded border-white/20 bg-discord-elevated text-discord-blurple" />
+              Enable Steam digests
+            </label>
+            <input
+              id="steamChannelId"
+              type="text"
+              placeholder="Steam deals channel ID"
+              class="w-full rounded-xl border border-white/10 bg-discord-elevated px-4 py-2.5 text-sm placeholder:text-discord-muted/60"
+            />
+          </fieldset>
+
+          <fieldset class="space-y-3">
+            <legend class="text-sm font-semibold text-white">🆓 Epic free games</legend>
+            <label class="flex items-center gap-2 text-sm text-discord-muted">
+              <input id="epicEnabled" type="checkbox" class="rounded border-white/20 bg-discord-elevated text-discord-blurple" />
+              Enable Epic free-game posts
+            </label>
+            <input
+              id="epicChannelId"
+              type="text"
+              placeholder="Epic channel ID"
+              class="w-full rounded-xl border border-white/10 bg-discord-elevated px-4 py-2.5 text-sm placeholder:text-discord-muted/60"
+            />
+          </fieldset>
+
+          <p class="text-xs text-discord-muted">
+            Tip: enable Developer Mode in Discord → right-click a channel → Copy Channel ID.
+            RSS feed URLs still come from the host <code class="text-white/70">config.json</code>.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <button
+              type="submit"
+              class="btn-shine rounded-full bg-discord-blurple px-6 py-2.5 text-sm font-semibold hover:bg-discord-blurple-hover"
+            >
+              Save settings
+            </button>
+            <span id="save-status" class="text-sm text-discord-muted"></span>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="border-t border-white/5 py-10">
+      <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
+        <p class="text-sm text-discord-muted">© <span id="year"></span> dzbanek-bot</p>
+        <nav class="flex gap-5 text-sm text-discord-muted">
+          <a href="terms.html" class="hover:text-white">Terms</a>
+          <a href="privacy.html" class="hover:text-white">Privacy</a>
+          <a href="https://github.com/KingVojtas/dzbanek-bot" class="hover:text-white" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/site.js"></script>
+    <script>
+      const apiBase = () => (window.DZBANEK?.API_BASE || 'http://127.0.0.1:3847').replace(/\/$/, '');
+
+      const $ = (id) => document.getElementById(id);
+      const loggedOut = $('logged-out');
+      const loggedIn = $('logged-in');
+
+      $('login-btn').href = apiBase() + '/api/auth/login';
+
+      async function api(path, opts = {}) {
+        const res = await fetch(apiBase() + path, {
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) },
+          ...opts,
+        });
+        return res;
+      }
+
+      function fillForm(s) {
+        $('newsEnabled').checked = !!s.newsEnabled;
+        $('newsChannelId').value = s.newsChannelId || '';
+        $('steamEnabled').checked = !!s.steamEnabled;
+        $('steamChannelId').value = s.steamChannelId || '';
+        $('epicEnabled').checked = !!s.epicEnabled;
+        $('epicChannelId').value = s.epicChannelId || '';
+      }
+
+      async function loadSettings(guildId) {
+        if (!guildId) return;
+        $('save-status').textContent = 'Loading…';
+        const res = await api('/api/admin/guilds/' + guildId + '/settings');
+        if (!res.ok) {
+          $('save-status').textContent = 'Failed to load settings';
+          return;
+        }
+        fillForm(await res.json());
+        $('save-status').textContent = '';
+      }
+
+      async function init() {
+        try {
+          const meRes = await api('/api/auth/me');
+          if (!meRes.ok) {
+            loggedOut.classList.remove('hidden');
+            loggedIn.classList.add('hidden');
+            return;
+          }
+          const me = await meRes.json();
+          loggedOut.classList.add('hidden');
+          loggedIn.classList.remove('hidden');
+          $('user-name').textContent = me.username || me.globalName || me.id;
+          if (me.avatar) {
+            $('user-avatar').src = `https://cdn.discordapp.com/avatars/${me.id}/${me.avatar}.png?size=64`;
+          } else {
+            $('user-avatar').src = 'assets/bot-avatar.png';
+          }
+
+          const gRes = await api('/api/admin/guilds');
+          const guilds = gRes.ok ? await gRes.json() : [];
+          const select = $('guild-select');
+          select.innerHTML = '';
+          if (!guilds.length) {
+            $('guilds-empty').classList.remove('hidden');
+            $('settings-form').classList.add('opacity-50', 'pointer-events-none');
+            return;
+          }
+          $('guilds-empty').classList.add('hidden');
+          $('settings-form').classList.remove('opacity-50', 'pointer-events-none');
+          for (const g of guilds) {
+            const opt = document.createElement('option');
+            opt.value = g.id;
+            opt.textContent = g.name;
+            select.appendChild(opt);
+          }
+          select.addEventListener('change', () => loadSettings(select.value));
+          await loadSettings(select.value);
+        } catch (e) {
+          $('login-error').textContent =
+            'Cannot reach API at ' + apiBase() + '. Start the bot with API_ENABLED=true.';
+          $('login-error').classList.remove('hidden');
+        }
+      }
+
+      $('logout-btn').addEventListener('click', async () => {
+        await api('/api/auth/logout', { method: 'POST' });
+        location.reload();
+      });
+
+      $('settings-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const guildId = $('guild-select').value;
+        if (!guildId) return;
+        $('save-status').textContent = 'Saving…';
+        const body = {
+          newsEnabled: $('newsEnabled').checked,
+          newsChannelId: $('newsChannelId').value.trim() || null,
+          steamEnabled: $('steamEnabled').checked,
+          steamChannelId: $('steamChannelId').value.trim() || null,
+          epicEnabled: $('epicEnabled').checked,
+          epicChannelId: $('epicChannelId').value.trim() || null,
+        };
+        const res = await api('/api/admin/guilds/' + guildId + '/settings', {
+          method: 'PATCH',
+          body: JSON.stringify(body),
+        });
+        if (res.ok) {
+          $('save-status').textContent = 'Saved ✓';
+          window.showToast?.('Settings saved');
+        } else {
+          const err = await res.json().catch(() => ({}));
+          $('save-status').textContent = err.error || 'Save failed';
+        }
+      });
+
+      init();
+    </script>
+  </body>
+</html>

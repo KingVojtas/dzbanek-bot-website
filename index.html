@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="dzbanek-bot — your Discord music DJ, Steam & Epic deal hunter, and RSS news desk in one open-source bot."
+    />
+    <title>dzbanek-bot — Music, Deals & News for Discord</title>
+    <!-- Open Graph / Twitter (set absolute SITE_URL in production for og:image) -->
+    <meta property="og:title" content="dzbanek-bot — Music, Deals & News for Discord" />
+    <meta
+      property="og:description"
+      content="Your server’s music DJ, Steam & Epic deal hunter, and RSS news desk — open source discord.js bot."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/bot-avatar.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="dzbanek-bot" />
+    <meta
+      name="twitter:description"
+      content="Music, Steam deals, Epic free games, RSS news & wishlist alerts for Discord."
+    />
+    <meta name="twitter:image" content="assets/bot-avatar.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
+    <link rel="stylesheet" href="css/site.css" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              discord: {
+                bg: '#0D0E12',
+                darker: '#111214',
+                card: '#1E1F22',
+                elevated: '#2B2D31',
+                blurple: '#5865F2',
+                'blurple-hover': '#4752C4',
+                muted: '#B5BAC1',
+                green: '#23A559',
+                embed: '#2B2D31',
+              },
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            },
+            boxShadow: {
+              glow: '0 0 60px -12px rgba(88, 101, 242, 0.45)',
+              card: '0 8px 32px -8px rgba(0, 0, 0, 0.5)',
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: Inter, system-ui, sans-serif;
+      }
+      .hero-glow {
+        background:
+          radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 101, 242, 0.35), transparent),
+          radial-gradient(ellipse 50% 40% at 100% 30%, rgba(88, 101, 242, 0.1), transparent),
+          radial-gradient(ellipse 40% 30% at 0% 60%, rgba(88, 101, 242, 0.08), transparent);
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0d0e12;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #2b2d31;
+        border-radius: 999px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #5865f2;
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid #5865f2;
+        outline-offset: 2px;
+      }
+
+      /* Nav active link */
+      .nav-link.is-active {
+        color: #fff;
+      }
+      .nav-link.is-active::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -4px;
+        height: 2px;
+        border-radius: 999px;
+        background: #5865f2;
+      }
+
+      /* Scroll reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(22px);
+        transition:
+          opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal-delay-1 {
+        transition-delay: 0.08s;
+      }
+      .reveal-delay-2 {
+        transition-delay: 0.16s;
+      }
+      .reveal-delay-3 {
+        transition-delay: 0.24s;
+      }
+      .reveal-delay-4 {
+        transition-delay: 0.32s;
+      }
+
+      /* Hero avatar motion */
+      .avatar-float {
+        animation: float 5s ease-in-out infinite;
+      }
+      .avatar-glow {
+        animation: pulse-glow 3.5s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          opacity: 0.45;
+          transform: scale(0.92);
+        }
+        50% {
+          opacity: 0.85;
+          transform: scale(1.05);
+        }
+      }
+
+      /* Primary CTA shine */
+      .btn-shine {
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-shine::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          105deg,
+          transparent 40%,
+          rgba(255, 255, 255, 0.18) 50%,
+          transparent 60%
+        );
+        transform: translateX(-120%);
+        transition: transform 0.6s ease;
+      }
+      .btn-shine:hover::after {
+        transform: translateX(120%);
+      }
+
+      /* Command row hover */
+      .cmd-row {
+        transition: background-color 0.15s ease;
+      }
+      .cmd-row:hover {
+        background-color: rgba(88, 101, 242, 0.08);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .avatar-float,
+        .avatar-glow,
+        .btn-shine::after {
+          animation: none !important;
+          transition: none !important;
+        }
+        .avatar-glow {
+          opacity: 0.5;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-discord-bg text-white antialiased">
+    <!-- ========== NAVIGATION ========== -->
+    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/80 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <a href="#home" class="flex items-center gap-2.5 group">
+          <img
+            src="assets/bot-avatar.png"
+            alt=""
+            width="36"
+            height="36"
+            class="h-9 w-9 rounded-2xl object-cover shadow-glow ring-2 ring-discord-blurple/40 transition group-hover:ring-discord-blurple"
+          />
+          <span class="text-lg font-bold tracking-tight">dzbanek-bot</span>
+        </a>
+
+        <div class="hidden items-center gap-5 lg:flex">
+          <a href="#home" data-nav class="nav-link relative text-sm font-medium text-discord-muted transition hover:text-white">Home</a>
+          <a href="#features" data-nav class="nav-link relative text-sm font-medium text-discord-muted transition hover:text-white">Features</a>
+          <a href="#commands" data-nav class="nav-link relative text-sm font-medium text-discord-muted transition hover:text-white">Commands</a>
+          <a href="stats.html" class="text-sm font-medium text-discord-muted transition hover:text-white">Stats</a>
+          <a href="permissions.html" class="text-sm font-medium text-discord-muted transition hover:text-white">Permissions</a>
+          <a href="#faq" data-nav class="nav-link relative text-sm font-medium text-discord-muted transition hover:text-white">FAQ</a>
+          <a href="admin.html" class="text-sm font-medium text-discord-muted transition hover:text-white">Admin</a>
+          <a
+            href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-shine rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold shadow-glow transition hover:bg-discord-blurple-hover hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Add to Server
+          </a>
+        </div>
+
+        <button
+          id="menu-btn"
+          type="button"
+          class="inline-flex items-center justify-center rounded-lg p-2 text-discord-muted hover:bg-discord-elevated hover:text-white lg:hidden"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      </nav>
+
+      <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker lg:hidden">
+        <div class="flex flex-col gap-1 px-4 py-3">
+          <a href="#home" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">Home</a>
+          <a href="#features" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">Features</a>
+          <a href="#commands" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">Commands</a>
+          <a href="stats.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">Stats</a>
+          <a href="permissions.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">Permissions</a>
+          <a href="#faq" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">FAQ</a>
+          <a href="admin.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">Admin</a>
+          <a
+            href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-2 rounded-full bg-discord-blurple px-5 py-2.5 text-center text-sm font-semibold transition hover:bg-discord-blurple-hover"
+          >
+            Add to Server
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ========== HERO ========== -->
+      <section id="home" class="hero-glow relative overflow-hidden">
+        <div
+          class="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-2 lg:gap-10 lg:px-8 lg:py-28"
+        >
+          <!-- Copy -->
+          <div class="text-center lg:text-left">
+            <p
+              class="reveal mb-4 inline-flex items-center gap-2 rounded-full border border-discord-blurple/30 bg-discord-blurple/10 px-3 py-1 text-xs font-medium text-discord-blurple"
+            >
+              <span class="h-1.5 w-1.5 rounded-full bg-discord-green animate-pulse"></span>
+              Online · Open source · discord.js v14
+            </p>
+            <h1 class="reveal reveal-delay-1 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+              <span
+                class="bg-gradient-to-r from-white via-white to-discord-muted bg-clip-text text-transparent"
+                >dzbanek-bot</span
+              >
+            </h1>
+            <p class="reveal reveal-delay-2 mt-4 text-xl font-semibold text-white sm:text-2xl">
+              Your server’s music DJ, deal hunter, and news desk — in one bot.
+            </p>
+            <p
+              class="reveal reveal-delay-2 mt-3 max-w-xl text-base leading-relaxed text-discord-muted sm:text-lg mx-auto lg:mx-0"
+            >
+              Queue tracks from YouTube, Spotify &amp; SoundCloud. Wake up to curated Steam sales
+              and Epic free games. Keep channels fresh with RSS embeds and personal wishlist DM
+              alerts when games drop in price.
+            </p>
+
+            <!-- Tech badges -->
+            <div
+              class="reveal reveal-delay-3 mt-5 flex flex-wrap items-center justify-center gap-2 lg:justify-start"
+            >
+              <span class="rounded-full border border-white/10 bg-discord-elevated/50 px-3 py-1 text-xs font-medium text-discord-muted">TypeScript</span>
+              <span class="rounded-full border border-white/10 bg-discord-elevated/50 px-3 py-1 text-xs font-medium text-discord-muted">discord.js v14</span>
+              <span class="rounded-full border border-white/10 bg-discord-elevated/50 px-3 py-1 text-xs font-medium text-discord-muted">Slash commands</span>
+              <span class="rounded-full border border-white/10 bg-discord-elevated/50 px-3 py-1 text-xs font-medium text-discord-muted">Open source</span>
+            </div>
+
+            <div
+              class="reveal reveal-delay-3 mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
+            >
+              <a
+                href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-shine inline-flex items-center gap-2 rounded-full bg-discord-blurple px-6 py-3 text-sm font-semibold shadow-glow transition hover:bg-discord-blurple-hover hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"
+                  />
+                </svg>
+                Invite Bot
+              </a>
+              <!-- TODO: replace with real support invite, e.g. https://discord.gg/YOUR_CODE -->
+              <a
+                href="#support"
+                class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-discord-elevated/60 px-6 py-3 text-sm font-semibold text-white transition hover:border-discord-blurple/50 hover:bg-discord-elevated"
+              >
+                Support Server
+              </a>
+              <a
+                href="https://github.com/KingVojtas/dzbanek-bot"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm font-medium text-discord-muted transition hover:text-white"
+              >
+                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill-rule="evenodd"
+                    d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+
+          <!-- Avatar + Discord mock embed -->
+          <div class="reveal reveal-delay-2 flex flex-col items-center gap-8 lg:items-end">
+            <div class="relative avatar-float">
+              <div
+                class="avatar-glow absolute inset-0 rounded-[2rem] bg-discord-blurple/40 blur-3xl"
+                aria-hidden="true"
+              ></div>
+              <img
+                src="assets/bot-avatar.png"
+                alt="dzbanek-bot profile picture — jug with headphones"
+                width="256"
+                height="256"
+                class="relative h-44 w-44 rounded-[2rem] object-cover shadow-card ring-4 ring-discord-blurple/40 sm:h-52 sm:w-52 lg:h-56 lg:w-56"
+              />
+            </div>
+
+            <!-- Discord-style mock embed: Now playing -->
+            <div
+              class="w-full max-w-sm rounded-lg border border-white/5 bg-[#313338] p-3 shadow-card text-left"
+              aria-hidden="true"
+            >
+              <div class="flex items-start gap-3">
+                <img
+                  src="assets/bot-avatar.png"
+                  alt=""
+                  class="h-10 w-10 shrink-0 rounded-full object-cover"
+                />
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <span class="text-sm font-semibold text-white">dzbanek-bot</span>
+                    <span
+                      class="rounded bg-discord-blurple px-1 py-px text-[10px] font-bold uppercase leading-none text-white"
+                      >Bot</span
+                    >
+                    <span class="text-xs text-[#949BA4]">Today at 3:33 PM</span>
+                  </div>
+                  <p class="mt-1 text-sm text-[#DBDEE1]">▶️ Now playing</p>
+                  <!-- Embed body -->
+                  <div class="mt-2 flex overflow-hidden rounded border-l-4 border-discord-blurple bg-[#2B2D31]">
+                    <div class="flex-1 p-3">
+                      <p class="text-xs font-semibold text-discord-blurple">Now Playing</p>
+                      <p class="mt-1 text-sm font-semibold text-white">Lofi beats to code to</p>
+                      <p class="mt-1 text-xs text-[#B5BAC1]">
+                        Duration · 2:45:00<br />
+                        Requested by · you
+                      </p>
+                      <div class="mt-2 flex gap-1.5">
+                        <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">⏯️</span>
+                        <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">⏭️</span>
+                        <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">🔀</span>
+                        <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">🔁</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== FEATURES ========== -->
+      <section id="features" class="border-t border-white/5 bg-discord-darker/50 py-20 sm:py-24">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div class="reveal mx-auto max-w-2xl text-center">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Built for real servers</h2>
+            <p class="mt-3 text-discord-muted">
+              Not a kitchen-sink bot — three sharp pillars that actually get used every day: music,
+              deals, and automated news.
+            </p>
+          </div>
+
+          <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Music -->
+            <article
+              class="reveal reveal-delay-1 group rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-discord-blurple/40 hover:shadow-glow"
+            >
+              <div
+                class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-discord-blurple/15 text-2xl transition group-hover:bg-discord-blurple/25"
+                aria-hidden="true"
+              >
+                🎵
+              </div>
+              <h3 class="text-lg font-semibold">Music that just works</h3>
+              <p class="mt-2 text-sm leading-relaxed text-discord-muted">
+                Drop a link or search — YouTube, Spotify tracks/playlists/albums, and SoundCloud.
+                Queue up to 100 tracks with loop, shuffle, lyrics, game OSTs, and a shared Dzbanek
+                playlist for your whole server.
+              </p>
+              <ul class="mt-4 space-y-1.5 text-xs text-discord-muted">
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Idle auto-disconnect (saves bandwidth)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> In-chat control buttons (pause, skip…)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> <code class="text-white/80">/game</code> soundtrack lookup
+                </li>
+              </ul>
+            </article>
+
+            <!-- Deals -->
+            <article
+              class="reveal reveal-delay-2 group rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-discord-blurple/40 hover:shadow-glow"
+            >
+              <div
+                class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-discord-blurple/15 text-2xl transition group-hover:bg-discord-blurple/25"
+                aria-hidden="true"
+              >
+                🎮
+              </div>
+              <h3 class="text-lg font-semibold">Deals worth posting</h3>
+              <p class="mt-2 text-sm leading-relaxed text-discord-muted">
+                A daily Steam digest with live prices — only games rated Very Positive or better.
+                Epic free games when they drop. Build a personal wishlist and get DMs when your
+                games go on sale.
+              </p>
+              <ul class="mt-4 space-y-1.5 text-xs text-discord-muted">
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Review-filtered (no trash sales)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Steam + Epic pipelines
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Wishlist DM sale alerts
+                </li>
+              </ul>
+            </article>
+
+            <!-- News -->
+            <article
+              class="reveal reveal-delay-3 group rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-discord-blurple/40 hover:shadow-glow sm:col-span-2 lg:col-span-1"
+            >
+              <div
+                class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-discord-blurple/15 text-2xl transition group-hover:bg-discord-blurple/25"
+                aria-hidden="true"
+              >
+                📰
+              </div>
+              <h3 class="text-lg font-semibold">News without the noise</h3>
+              <p class="mt-2 text-sm leading-relaxed text-discord-muted">
+                Configurable RSS feeds (Reuters, Ars Technica, or your own) post as clean embeds on
+                a schedule. Deduplicated across restarts so you never get flooded — previous bot
+                messages are cleaned up automatically.
+              </p>
+              <ul class="mt-4 space-y-1.5 text-xs text-discord-muted">
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Cron-based polling
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Persistent seen-store (no reposts)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Channel stays tidy
+                </li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== HOW IT WORKS ========== -->
+      <section id="how" class="border-t border-white/5 py-20 sm:py-24">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div class="reveal mx-auto max-w-2xl text-center">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Up and running in minutes</h2>
+            <p class="mt-3 text-discord-muted">Three steps. No complicated setup for members.</p>
+          </div>
+
+          <ol class="mt-14 grid gap-6 sm:grid-cols-3">
+            <li
+              class="reveal reveal-delay-1 relative rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card"
+            >
+              <span
+                class="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-discord-blurple text-sm font-bold"
+                >1</span
+              >
+              <h3 class="text-lg font-semibold">Invite the bot</h3>
+              <p class="mt-2 text-sm text-discord-muted">
+                Click <strong class="text-white">Add to Server</strong>, pick your guild, and grant
+                the recommended permissions (music + embeds + manage messages for cleanup).
+              </p>
+            </li>
+            <li
+              class="reveal reveal-delay-2 relative rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card"
+            >
+              <span
+                class="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-discord-blurple text-sm font-bold"
+                >2</span
+              >
+              <h3 class="text-lg font-semibold">Play &amp; automate</h3>
+              <p class="mt-2 text-sm text-discord-muted">
+                Join a voice channel and run <code class="text-discord-blurple">/play</code>. Deals
+                and news post on schedule once channels are configured on the host.
+              </p>
+            </li>
+            <li
+              class="reveal reveal-delay-3 relative rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card"
+            >
+              <span
+                class="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-discord-blurple text-sm font-bold"
+                >3</span
+              >
+              <h3 class="text-lg font-semibold">Track &amp; compete</h3>
+              <p class="mt-2 text-sm text-discord-muted">
+                Build wishlists with <code class="text-discord-blurple">/wishlist-add</code>, check
+                <code class="text-discord-blurple">/stats</code>, and climb
+                <code class="text-discord-blurple">/top</code> leaderboards.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ========== COMMANDS ========== -->
+      <section id="commands" class="border-t border-white/5 bg-discord-darker/50 py-20 sm:py-24">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div class="reveal mx-auto max-w-2xl text-center">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Slash commands</h2>
+            <p class="mt-3 text-discord-muted">
+              Type
+              <code class="rounded bg-discord-elevated px-1.5 py-0.5 text-discord-blurple">/</code>
+              in Discord. Click any command to copy it — or filter the list below.
+            </p>
+            <div class="mt-6">
+              <label for="cmd-search" class="sr-only">Search commands</label>
+              <input
+                id="cmd-search"
+                type="search"
+                placeholder="Search commands… e.g. play, wishlist, top"
+                class="w-full rounded-xl border border-white/10 bg-discord-card px-4 py-3 text-sm text-white placeholder:text-discord-muted/70 focus:border-discord-blurple/50"
+              />
+            </div>
+          </div>
+
+          <div class="mt-12 grid gap-8 lg:grid-cols-3">
+            <!-- Music -->
+            <div
+              class="reveal reveal-delay-1 rounded-2xl border border-white/5 bg-discord-card overflow-hidden"
+            >
+              <div class="border-b border-white/5 bg-discord-elevated/40 px-5 py-3">
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple">
+                  🎵 Music
+                </h3>
+              </div>
+              <ul class="divide-y divide-white/5 text-sm" id="cmd-list-music">
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/play" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/play</code>
+                  <span class="text-discord-muted">YouTube, Spotify, or SoundCloud</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/queue" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/queue</code>
+                  <span class="text-discord-muted">Queue &amp; now-playing</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/playing" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/playing</code>
+                  <span class="text-discord-muted">Current track only</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/skip" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/skip</code>
+                  <span class="text-discord-muted">Skip to next</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/stop" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/stop</code>
+                  <span class="text-discord-muted">Stop &amp; leave voice</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/pause" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/pause</code>
+                  <span class="text-discord-muted">Pause playback</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/resume" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/resume</code>
+                  <span class="text-discord-muted">Resume playback</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/shuffle" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/shuffle</code>
+                  <span class="text-discord-muted">Shuffle the queue</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/loop" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/loop</code>
+                  <span class="text-discord-muted">off / track / queue</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/remove" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/remove</code>
+                  <span class="text-discord-muted">Remove from queue</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/lyrics" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/lyrics</code>
+                  <span class="text-discord-muted">Show lyrics</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/game" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/game</code>
+                  <span class="text-discord-muted">Game soundtrack</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/playlist" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/playlist</code>
+                  <span class="text-discord-muted">Dzbanek playlist</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Deals -->
+            <div
+              class="reveal reveal-delay-2 rounded-2xl border border-white/5 bg-discord-card overflow-hidden"
+            >
+              <div class="border-b border-white/5 bg-discord-elevated/40 px-5 py-3">
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple">
+                  🎮 Deals &amp; wishlist
+                </h3>
+              </div>
+              <ul class="divide-y divide-white/5 text-sm">
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/wishlist-add" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/wishlist-add</code>
+                  <span class="text-discord-muted">Add Steam game for alerts</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/wishlist-list" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/wishlist-list</code>
+                  <span class="text-discord-muted">List your wishlist</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/wishlist-remove" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/wishlist-remove</code>
+                  <span class="text-discord-muted">Remove by name</span>
+                </li>
+              </ul>
+              <div class="border-t border-white/5 px-5 py-4 text-xs text-discord-muted">
+                Plus automated daily Steam digests and Epic free-game posts in configured channels.
+              </div>
+            </div>
+
+            <!-- Stats -->
+            <div
+              class="reveal reveal-delay-3 rounded-2xl border border-white/5 bg-discord-card overflow-hidden"
+            >
+              <div class="border-b border-white/5 bg-discord-elevated/40 px-5 py-3">
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple">
+                  📊 Stats
+                </h3>
+              </div>
+              <ul class="divide-y divide-white/5 text-sm">
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/stats" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/stats</code>
+                  <span class="text-discord-muted">Server or user activity</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/top" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/top</code>
+                  <span class="text-discord-muted">plays · duration · skips · tracks</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== STATISTICS ========== -->
+      <section id="stats" class="border-t border-white/5 py-16 sm:py-20">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div class="reveal mx-auto max-w-2xl text-center">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Live &amp; capable</h2>
+            <p class="mt-3 text-sm text-discord-muted">
+              Live totals from the bot API when online — plus product capability numbers.
+              <a href="stats.html" class="text-discord-blurple hover:underline">Open full dashboard →</a>
+            </p>
+            <p id="live-api-hint" class="mt-2 text-xs text-discord-muted">Connecting to API…</p>
+          </div>
+
+          <!-- Live KPIs -->
+          <dl class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card px-4 py-6 text-center shadow-card">
+              <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Servers</dt>
+              <dd id="live-servers" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
+            </div>
+            <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card px-4 py-6 text-center shadow-card">
+              <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Approx. users</dt>
+              <dd id="live-users" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
+            </div>
+            <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card px-4 py-6 text-center shadow-card">
+              <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Total plays</dt>
+              <dd id="live-plays" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
+            </div>
+            <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card px-4 py-6 text-center shadow-card">
+              <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Uptime</dt>
+              <dd id="live-uptime" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
+            </div>
+          </dl>
+
+          <!-- Capability stats -->
+          <dl class="mt-6 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+            <div class="reveal reveal-delay-1 rounded-2xl border border-white/5 bg-discord-card px-4 py-8 text-center shadow-card sm:px-6">
+              <div class="text-2xl" aria-hidden="true">⚡</div>
+              <dd class="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl" data-count="18">0</dd>
+              <dt class="mt-2 text-xs font-medium uppercase tracking-wider text-discord-muted sm:text-sm">Slash commands</dt>
+            </div>
+            <div class="reveal reveal-delay-2 rounded-2xl border border-white/5 bg-discord-card px-4 py-8 text-center shadow-card sm:px-6">
+              <div class="text-2xl" aria-hidden="true">🎧</div>
+              <dd class="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl" data-count="3">0</dd>
+              <dt class="mt-2 text-xs font-medium uppercase tracking-wider text-discord-muted sm:text-sm">Music sources</dt>
+            </div>
+            <div class="reveal reveal-delay-3 rounded-2xl border border-white/5 bg-discord-card px-4 py-8 text-center shadow-card sm:px-6">
+              <div class="text-2xl" aria-hidden="true">🏷️</div>
+              <dd class="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl" data-count="2">0</dd>
+              <dt class="mt-2 text-xs font-medium uppercase tracking-wider text-discord-muted sm:text-sm">Deal pipelines</dt>
+            </div>
+            <div class="reveal reveal-delay-4 rounded-2xl border border-white/5 bg-discord-card px-4 py-8 text-center shadow-card sm:px-6">
+              <div class="text-2xl" aria-hidden="true">🧩</div>
+              <dd class="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl" data-count="6">0</dd>
+              <dt class="mt-2 text-xs font-medium uppercase tracking-wider text-discord-muted sm:text-sm">Core modules</dt>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ========== FAQ ========== -->
+      <section id="faq" class="border-t border-white/5 bg-discord-darker/50 py-20 sm:py-24">
+        <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div class="reveal text-center">
+            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">FAQ</h2>
+            <p class="mt-3 text-discord-muted">Straight answers about privacy, permissions, and features.</p>
+          </div>
+          <div class="reveal mt-10 space-y-3">
+            <details class="faq-item group rounded-2xl border border-white/5 bg-discord-card px-5 py-4">
+              <summary class="cursor-pointer list-none font-medium text-discord-muted transition group-open:text-white flex items-center justify-between gap-3">
+                Does the bot store my search history?
+                <span class="text-discord-blurple text-lg leading-none">+</span>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-discord-muted">
+                No free-text search log. We track aggregated play stats, skips, wishlist game IDs, and
+                feed dedup IDs so content isn’t reposted. See the
+                <a href="privacy.html" class="text-discord-blurple hover:underline">Privacy Policy</a>.
+              </p>
+            </details>
+            <details class="faq-item group rounded-2xl border border-white/5 bg-discord-card px-5 py-4">
+              <summary class="cursor-pointer list-none font-medium text-discord-muted transition group-open:text-white flex items-center justify-between gap-3">
+                Can I change the language?
+                <span class="text-discord-blurple text-lg leading-none">+</span>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-discord-muted">
+                Command UI is English. News content follows whatever language your RSS feeds use.
+                Multi-language bot UI isn’t built yet.
+              </p>
+            </details>
+            <details class="faq-item group rounded-2xl border border-white/5 bg-discord-card px-5 py-4">
+              <summary class="cursor-pointer list-none font-medium text-discord-muted transition group-open:text-white flex items-center justify-between gap-3">
+                Why does it need Manage Messages?
+                <span class="text-discord-blurple text-lg leading-none">+</span>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-discord-muted">
+                Only to delete the bot’s <em>own</em> previous Steam/Epic digest before posting a new one
+                (channel cleanup). It is not used to moderate member messages.
+                <a href="permissions.html" class="text-discord-blurple hover:underline">Full permissions guide</a>.
+              </p>
+            </details>
+            <details class="faq-item group rounded-2xl border border-white/5 bg-discord-card px-5 py-4">
+              <summary class="cursor-pointer list-none font-medium text-discord-muted transition group-open:text-white flex items-center justify-between gap-3">
+                What music sources are supported?
+                <span class="text-discord-blurple text-lg leading-none">+</span>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-discord-muted">
+                YouTube, Spotify (tracks / playlists / albums), and SoundCloud via URL or search.
+                Full Spotify playlist expansion needs Spotify API credentials on the host.
+              </p>
+            </details>
+            <details class="faq-item group rounded-2xl border border-white/5 bg-discord-card px-5 py-4">
+              <summary class="cursor-pointer list-none font-medium text-discord-muted transition group-open:text-white flex items-center justify-between gap-3">
+                Invite vs self-host?
+                <span class="text-discord-blurple text-lg leading-none">+</span>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-discord-muted">
+                Use <strong class="text-white">Add to Server</strong> for the public instance, or self-host
+                from
+                <a href="https://github.com/KingVojtas/dzbanek-bot" class="text-discord-blurple hover:underline" target="_blank" rel="noopener noreferrer">GitHub</a>
+                with your own token and config. Admins can set channels on the
+                <a href="admin.html" class="text-discord-blurple hover:underline">Admin</a> page when the API is running.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section id="support" class="sr-only" aria-hidden="true"></section>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="border-t border-white/5 bg-discord-bg py-12">
+      <div
+        class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 sm:flex-row sm:px-6 lg:px-8"
+      >
+        <div class="flex items-center gap-2.5">
+          <img
+            src="assets/bot-avatar.png"
+            alt=""
+            width="32"
+            height="32"
+            class="h-8 w-8 rounded-xl object-cover"
+          />
+          <div>
+            <p class="text-sm font-semibold">dzbanek-bot</p>
+            <p class="text-xs text-discord-muted">
+              © <span id="year"></span> · Open source on
+              <a
+                href="https://github.com/KingVojtas/dzbanek-bot"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-discord-blurple hover:underline"
+                >GitHub</a
+              >
+            </p>
+          </div>
+        </div>
+
+        <nav
+          class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-discord-muted"
+        >
+          <a href="terms.html" class="transition hover:text-white">Terms of Service</a>
+          <a href="privacy.html" class="transition hover:text-white">Privacy Policy</a>
+          <a
+            href="https://github.com/KingVojtas/dzbanek-bot"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="transition hover:text-white"
+            >Contact / GitHub</a
+          >
+        </nav>
+      </div>
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script src="js/config.js"></script>
+    <script src="js/site.js"></script>
+    <script>
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const apiBase = () => (window.DZBANEK?.API_BASE || 'http://127.0.0.1:3847').replace(/\/$/, '');
+
+      // Scroll reveal
+      const revealEls = document.querySelectorAll('.reveal');
+      if (reduceMotion) {
+        revealEls.forEach((el) => el.classList.add('is-visible'));
+      } else if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add('is-visible'));
+      }
+
+      // Capability count-up
+      function animateCount(el, target, duration = 1200) {
+        if (reduceMotion) {
+          el.textContent = String(target);
+          return;
+        }
+        const start = performance.now();
+        function frame(now) {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = String(Math.round(target * eased));
+          if (t < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+      const statEls = document.querySelectorAll('[data-count]');
+      if ('IntersectionObserver' in window) {
+        const statsIo = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              animateCount(entry.target, Number(entry.target.getAttribute('data-count') || 0));
+              statsIo.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.4 },
+        );
+        statEls.forEach((el) => statsIo.observe(el));
+      } else {
+        statEls.forEach((el) => {
+          el.textContent = el.getAttribute('data-count') || '0';
+        });
+      }
+
+      // Active nav on scroll
+      const sections = ['home', 'features', 'commands', 'stats', 'faq']
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+      const navLinks = document.querySelectorAll('[data-nav]');
+      function setActiveNav() {
+        const y = window.scrollY + 120;
+        let current = 'home';
+        for (const section of sections) {
+          if (section.offsetTop <= y) current = section.id;
+        }
+        navLinks.forEach((link) => {
+          const href = link.getAttribute('href') || '';
+          link.classList.toggle('is-active', href === `#${current}`);
+        });
+      }
+      window.addEventListener('scroll', setActiveNav, { passive: true });
+      setActiveNav();
+
+      // Command search + copy
+      const cmdSearch = document.getElementById('cmd-search');
+      const cmdRows = document.querySelectorAll('.cmd-row[data-cmd]');
+      cmdSearch?.addEventListener('input', () => {
+        const q = cmdSearch.value.trim().toLowerCase();
+        cmdRows.forEach((row) => {
+          const text = row.textContent.toLowerCase();
+          row.classList.toggle('hidden-by-filter', q !== '' && !text.includes(q));
+        });
+      });
+      cmdRows.forEach((row) => {
+        const copy = () => window.copyText?.(row.getAttribute('data-cmd') || '');
+        row.addEventListener('click', copy);
+        row.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            copy();
+          }
+        });
+      });
+
+      // Live stats + health badge
+      function formatUptime(sec) {
+        if (sec == null || Number.isNaN(Number(sec))) return '—';
+        const s = Number(sec);
+        const d = Math.floor(s / 86400);
+        const h = Math.floor((s % 86400) / 3600);
+        if (d > 0) return `${d}d ${h}h`;
+        const m = Math.floor((s % 3600) / 60);
+        return h > 0 ? `${h}h ${m}m` : `${m}m`;
+      }
+      function formatNum(n) {
+        return n == null ? '—' : Number(n).toLocaleString();
+      }
+      async function loadLive() {
+        const hint = document.getElementById('live-api-hint');
+        try {
+          const health = await fetch(apiBase() + '/api/health').then((r) => r.json());
+          const badge = document.querySelector('#home .animate-pulse')?.parentElement;
+          if (badge && health.ok) {
+            badge.childNodes.forEach((n) => {
+              /* keep structure */
+            });
+          }
+          const stats = await fetch(apiBase() + '/api/stats').then((r) => {
+            if (!r.ok) throw new Error('stats');
+            return r.json();
+          });
+          document.getElementById('live-servers').textContent = formatNum(stats.servers);
+          document.getElementById('live-users').textContent = formatNum(stats.approxUsers);
+          document.getElementById('live-plays').textContent = formatNum(stats.totalPlays);
+          document.getElementById('live-uptime').textContent = formatUptime(stats.uptimeSec);
+          if (hint) {
+            hint.textContent = 'Live data · API online';
+            hint.className = 'mt-2 text-xs text-discord-green';
+          }
+        } catch {
+          if (hint) {
+            hint.innerHTML =
+              'API offline — start the bot or open the <a href="stats.html" class="text-discord-blurple hover:underline">stats dashboard</a>. Capability numbers below still apply.';
+            hint.className = 'mt-2 text-xs text-discord-muted';
+          }
+        }
+      }
+      loadLive();
+    </script>
+  </body>
+</html>

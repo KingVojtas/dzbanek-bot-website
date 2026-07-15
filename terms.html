@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Service — dzbanek-bot</title>
+    <meta name="description" content="Terms of Service for dzbanek-bot." />
+    <meta property="og:title" content="Terms of Service — dzbanek-bot" />
+    <meta property="og:image" content="assets/bot-avatar.png" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              discord: {
+                bg: '#0D0E12', darker: '#111214', card: '#1E1F22', elevated: '#2B2D31',
+                blurple: '#5865F2', muted: '#B5BAC1',
+              },
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            boxShadow: { glow: '0 0 60px -12px rgba(88, 101, 242, 0.45)' },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body class="bg-discord-bg text-white antialiased font-sans">
+    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/80 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/bot-avatar.png" alt="" class="h-9 w-9 rounded-2xl object-cover ring-2 ring-discord-blurple/40" />
+          <span class="text-lg font-bold">dzbanek-bot</span>
+        </a>
+        <a href="index.html" class="text-sm font-medium text-discord-blurple hover:underline">← Home</a>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+      <h1 class="text-3xl font-bold tracking-tight">Terms of Service</h1>
+      <p class="mt-2 text-sm text-discord-muted">Last updated: July 2026</p>
+
+      <div class="mt-10 space-y-8 text-discord-muted leading-relaxed">
+        <section>
+          <h2 class="text-lg font-semibold text-white">1. Acceptance</h2>
+          <p class="mt-2">
+            By inviting or using <strong class="text-white">dzbanek-bot</strong> (“the Bot”) in a
+            Discord server, you agree to these Terms. If you do not agree, remove the Bot and stop using it.
+          </p>
+        </section>
+        <section>
+          <h2 class="text-lg font-semibold text-white">2. Description of service</h2>
+          <p class="mt-2">
+            The Bot provides music playback (YouTube, Spotify, SoundCloud), scheduled RSS news,
+            Steam daily deal digests, Epic free-game announcements, wishlist sale alerts, activity
+            statistics, and optional web admin configuration. Features may change as the open-source project evolves.
+          </p>
+        </section>
+        <section>
+          <h2 class="text-lg font-semibold text-white">3. Discord rules</h2>
+          <p class="mt-2">
+            You must comply with the
+            <a href="https://discord.com/terms" target="_blank" rel="noopener noreferrer" class="text-discord-blurple hover:underline">Discord Terms</a>
+            and
+            <a href="https://discord.com/guidelines" target="_blank" rel="noopener noreferrer" class="text-discord-blurple hover:underline">Community Guidelines</a>.
+            Server owners are responsible for how the Bot is configured in their communities.
+          </p>
+        </section>
+        <section>
+          <h2 class="text-lg font-semibold text-white">4. Acceptable use</h2>
+          <ul class="mt-2 list-disc space-y-1 pl-5">
+            <li>Do not use the Bot to spam, harass, or violate Discord or third-party rights.</li>
+            <li>Do not attempt to exploit or overload the Bot or its API.</li>
+            <li>Respect third-party terms (YouTube, Spotify, Steam, etc.) and copyright law.</li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="text-lg font-semibold text-white">5. Availability</h2>
+          <p class="mt-2">
+            The Bot is provided “as is” without guarantees of uptime or accuracy of deal prices,
+            review scores, lyrics, or news content.
+          </p>
+        </section>
+        <section>
+          <h2 class="text-lg font-semibold text-white">6. Limitation of liability</h2>
+          <p class="mt-2">
+            To the fullest extent permitted by law, the Bot’s authors are not liable for indirect or
+            consequential damages arising from use of the Bot.
+          </p>
+        </section>
+        <section>
+          <h2 class="text-lg font-semibold text-white">7. Contact</h2>
+          <p class="mt-2">
+            <a href="https://github.com/KingVojtas/dzbanek-bot" target="_blank" rel="noopener noreferrer" class="text-discord-blurple hover:underline">github.com/KingVojtas/dzbanek-bot</a>
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="border-t border-white/5 py-8 text-center text-sm text-discord-muted">
+      <a href="index.html" class="text-discord-blurple hover:underline">Home</a>
+      ·
+      <a href="privacy.html" class="text-discord-blurple hover:underline">Privacy Policy</a>
+      · © <span id="year"></span>
+    </footer>
+    <script src="js/config.js"></script>
+    <script src="js/site.js"></script>
+  </body>
+</html>

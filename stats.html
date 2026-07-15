@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Stats — dzbanek-bot</title>
+    <meta
+      name="description"
+      content="Live dashboard for dzbanek-bot: servers, users, tracks played, and growth trends."
+    />
+    <meta property="og:title" content="Live Stats — dzbanek-bot" />
+    <meta
+      property="og:description"
+      content="Real-time servers, users, plays, and growth charts for dzbanek-bot."
+    />
+    <meta property="og:image" content="assets/bot-avatar.png" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              discord: {
+                bg: '#0D0E12',
+                darker: '#111214',
+                card: '#1E1F22',
+                elevated: '#2B2D31',
+                blurple: '#5865F2',
+                'blurple-hover': '#4752C4',
+                muted: '#B5BAC1',
+                green: '#23A559',
+              },
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            boxShadow: {
+              glow: '0 0 60px -12px rgba(88, 101, 242, 0.45)',
+              card: '0 8px 32px -8px rgba(0, 0, 0, 0.5)',
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/site.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  </head>
+  <body class="bg-discord-bg text-white antialiased">
+    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/80 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/bot-avatar.png" alt="" class="h-9 w-9 rounded-2xl object-cover ring-2 ring-discord-blurple/40" />
+          <span class="text-lg font-bold">dzbanek-bot</span>
+        </a>
+        <div class="hidden items-center gap-5 lg:flex">
+          <a href="index.html" class="text-sm font-medium text-discord-muted hover:text-white">Home</a>
+          <a href="stats.html" class="text-sm font-medium text-white">Stats</a>
+          <a href="permissions.html" class="text-sm font-medium text-discord-muted hover:text-white">Permissions</a>
+          <a href="admin.html" class="text-sm font-medium text-discord-muted hover:text-white">Admin</a>
+          <a
+            href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-shine rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold"
+            >Add to Server</a
+          >
+        </div>
+        <button id="menu-btn" type="button" class="rounded-lg p-2 text-discord-muted lg:hidden" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </nav>
+      <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker lg:hidden">
+        <div class="flex flex-col gap-1 px-4 py-3">
+          <a href="index.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Home</a>
+          <a href="stats.html" class="rounded-lg px-3 py-2 text-sm text-white">Stats</a>
+          <a href="permissions.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Permissions</a>
+          <a href="admin.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Admin</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="text-sm font-medium text-discord-blurple">Live dashboard</p>
+          <h1 class="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Bot statistics</h1>
+          <p class="mt-2 text-sm text-discord-muted">
+            Powered by the bot’s public API. Status:
+            <span id="api-status" class="font-medium text-discord-muted">checking…</span>
+          </p>
+        </div>
+        <button
+          id="refresh-btn"
+          type="button"
+          class="rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-discord-muted hover:border-discord-blurple/40 hover:text-white"
+        >
+          Refresh
+        </button>
+      </div>
+
+      <!-- KPI grid -->
+      <dl class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
+          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Servers</dt>
+          <dd id="stat-servers" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
+        </div>
+        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
+          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Approx. users</dt>
+          <dd id="stat-users" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
+        </div>
+        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
+          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Total plays</dt>
+          <dd id="stat-plays" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
+        </div>
+        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
+          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Uptime</dt>
+          <dd id="stat-uptime" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
+        </div>
+      </dl>
+
+      <dl class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div class="rounded-2xl border border-white/5 bg-discord-card p-4">
+          <dt class="text-xs uppercase tracking-wider text-discord-muted">Skips</dt>
+          <dd id="stat-skips" class="mt-1 text-2xl font-bold">—</dd>
+        </div>
+        <div class="rounded-2xl border border-white/5 bg-discord-card p-4">
+          <dt class="text-xs uppercase tracking-wider text-discord-muted">Wishlist adds</dt>
+          <dd id="stat-wishlist" class="mt-1 text-2xl font-bold">—</dd>
+        </div>
+        <div class="rounded-2xl border border-white/5 bg-discord-card p-4">
+          <dt class="text-xs uppercase tracking-wider text-discord-muted">Tracked users</dt>
+          <dd id="stat-tracked" class="mt-1 text-2xl font-bold">—</dd>
+        </div>
+      </dl>
+
+      <!-- Chart -->
+      <div class="mt-10 rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card sm:p-6">
+        <h2 class="text-lg font-semibold">Growth &amp; activity</h2>
+        <p class="mt-1 text-sm text-discord-muted">
+          Daily snapshots from the bot (plays and server count). Empty until the API starts collecting history.
+        </p>
+        <div class="relative mt-6 h-64 sm:h-80">
+          <canvas id="growth-chart" aria-label="Growth chart"></canvas>
+          <p
+            id="chart-empty"
+            class="absolute inset-0 flex items-center justify-center text-sm text-discord-muted"
+          >
+            Waiting for data…
+          </p>
+        </div>
+      </div>
+
+      <p id="generated-at" class="mt-4 text-center text-xs text-discord-muted"></p>
+      <p class="mt-2 text-center text-xs text-discord-muted">
+        API base:
+        <code id="api-base-label" class="text-discord-blurple"></code>
+        · set <code class="text-white/70">localStorage.dzbanek_api_base</code> to override
+      </p>
+    </main>
+
+    <footer class="border-t border-white/5 py-10">
+      <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
+        <p class="text-sm text-discord-muted">© <span id="year"></span> dzbanek-bot</p>
+        <nav class="flex gap-5 text-sm text-discord-muted">
+          <a href="terms.html" class="hover:text-white">Terms</a>
+          <a href="privacy.html" class="hover:text-white">Privacy</a>
+          <a href="https://github.com/KingVojtas/dzbanek-bot" class="hover:text-white" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/site.js"></script>
+    <script>
+      const apiBase = () => (window.DZBANEK?.API_BASE || 'http://127.0.0.1:3847').replace(/\/$/, '');
+      document.getElementById('api-base-label').textContent = apiBase();
+
+      let chart;
+
+      function formatUptime(sec) {
+        if (sec == null || Number.isNaN(sec)) return '—';
+        const d = Math.floor(sec / 86400);
+        const h = Math.floor((sec % 86400) / 3600);
+        if (d > 0) return `${d}d ${h}h`;
+        const m = Math.floor((sec % 3600) / 60);
+        return h > 0 ? `${h}h ${m}m` : `${m}m`;
+      }
+
+      function formatNum(n) {
+        if (n == null) return '—';
+        return Number(n).toLocaleString();
+      }
+
+      function setStatus(ok, message) {
+        const el = document.getElementById('api-status');
+        el.textContent = message;
+        el.className = 'font-medium ' + (ok ? 'text-discord-green' : 'text-red-400');
+      }
+
+      function renderChart(history) {
+        const empty = document.getElementById('chart-empty');
+        const labels = (history || []).map((h) => h.date);
+        const plays = (history || []).map((h) => h.totalPlays);
+        const servers = (history || []).map((h) => h.servers);
+
+        if (!labels.length) {
+          empty.classList.remove('hidden');
+          if (chart) chart.destroy();
+          return;
+        }
+        empty.classList.add('hidden');
+
+        const ctx = document.getElementById('growth-chart');
+        if (chart) chart.destroy();
+        chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels,
+            datasets: [
+              {
+                label: 'Total plays',
+                data: plays,
+                borderColor: '#5865F2',
+                backgroundColor: 'rgba(88, 101, 242, 0.15)',
+                fill: true,
+                tension: 0.3,
+                yAxisID: 'y',
+              },
+              {
+                label: 'Servers',
+                data: servers,
+                borderColor: '#23A559',
+                backgroundColor: 'transparent',
+                tension: 0.3,
+                yAxisID: 'y1',
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+              legend: { labels: { color: '#B5BAC1' } },
+            },
+            scales: {
+              x: {
+                ticks: { color: '#B5BAC1', maxRotation: 0 },
+                grid: { color: 'rgba(255,255,255,0.04)' },
+              },
+              y: {
+                position: 'left',
+                ticks: { color: '#B5BAC1' },
+                grid: { color: 'rgba(255,255,255,0.06)' },
+              },
+              y1: {
+                position: 'right',
+                ticks: { color: '#23A559' },
+                grid: { drawOnChartArea: false },
+              },
+            },
+          },
+        });
+      }
+
+      async function loadStats() {
+        setStatus(false, 'loading…');
+        try {
+          const res = await fetch(apiBase() + '/api/stats', { credentials: 'omit' });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+          document.getElementById('stat-servers').textContent = formatNum(data.servers);
+          document.getElementById('stat-users').textContent = formatNum(data.approxUsers);
+          document.getElementById('stat-plays').textContent = formatNum(data.totalPlays);
+          document.getElementById('stat-uptime').textContent = formatUptime(data.uptimeSec);
+          document.getElementById('stat-skips').textContent = formatNum(data.totalSkips);
+          document.getElementById('stat-wishlist').textContent = formatNum(data.totalWishlistAdds);
+          document.getElementById('stat-tracked').textContent = formatNum(data.uniqueUsersTracked);
+          document.getElementById('generated-at').textContent = data.generatedAt
+            ? 'Last updated: ' + new Date(data.generatedAt).toLocaleString()
+            : '';
+          renderChart(data.history || []);
+          setStatus(true, 'online');
+        } catch (err) {
+          setStatus(false, 'offline — start the bot API on ' + apiBase());
+          renderChart([]);
+        }
+      }
+
+      document.getElementById('refresh-btn').addEventListener('click', loadStats);
+      loadStats();
+      setInterval(loadStats, 60_000);
+    </script>
+  </body>
+</html>
