@@ -841,21 +841,17 @@
             <p id="live-api-hint" class="mt-2 text-xs text-discord-muted">Connecting to API…</p>
           </div>
 
-          <!-- Live KPIs -->
-          <dl class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <!-- Live KPIs from http://127.0.0.1:3848/api/stats -->
+          <dl class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card px-4 py-6 text-center shadow-card">
               <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Servers</dt>
               <dd id="live-servers" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
             </div>
             <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card px-4 py-6 text-center shadow-card">
-              <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Approx. users</dt>
+              <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Users</dt>
               <dd id="live-users" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
             </div>
-            <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card px-4 py-6 text-center shadow-card">
-              <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Total plays</dt>
-              <dd id="live-plays" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
-            </div>
-            <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card px-4 py-6 text-center shadow-card">
+            <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card px-4 py-6 text-center shadow-card sm:col-span-2 lg:col-span-1">
               <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Uptime</dt>
               <dd id="live-uptime" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
             </div>
@@ -1022,31 +1018,37 @@
     <script src="js/config.js"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
+    <script src="js/stats-api.js"></script>
     <script>
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const apiBase = () => (window.DZBANEK?.API_BASE || 'http://127.0.0.1:3847').replace(/\/$/, '');
+      const S = window.DzbanekStats;
+      const apiBase = () => S.apiBase();
 
       // Status strip (stats API health — not Discord online status)
       (async function statusStrip() {
         const dot = document.getElementById('status-dot');
         const text = document.getElementById('status-text');
         if (!dot || !text) return;
-        try {
-          const res = await fetch(apiBase() + '/api/health', { signal: AbortSignal.timeout(4000) });
-          const data = await res.json();
-          if (data.ok) {
-            dot.classList.add('is-online');
-            text.textContent =
-              'Stats API reachable' +
-              (data.ready ? ' · bot connected to Discord' : ' · bot still connecting…');
-            text.className = 'text-discord-muted';
-          } else {
-            throw new Error('not ok');
-          }
-        } catch {
-          dot.classList.add('is-offline');
+        const health = await S.fetchHealth();
+        if (health.ok) {
+          dot.classList.add('is-online');
           text.textContent =
-            'Stats API offline (start the bot for live numbers). Discord bot may still be online.';
+            'Stats API online at ' +
+            S.apiBase() +
+            (health.ready ? ' · bot connected to Discord' : ' · bot still connecting…');
+          text.className = 'text-discord-muted';
+        } else {
+          // Health optional — try stats endpoint as proof of life
+          try {
+            await S.fetchStats();
+            dot.classList.add('is-online');
+            text.textContent = 'Live stats online · ' + S.apiBase() + '/api/stats';
+            text.className = 'text-discord-muted';
+          } catch {
+            dot.classList.add('is-offline');
+            text.textContent =
+              'Stats API offline at ' + S.apiBase() + ' (start the bot for live numbers).';
+          }
         }
       })();
 
@@ -1187,50 +1189,32 @@
         });
       });
 
-      // Live stats + health badge
-      function formatUptime(sec) {
-        if (sec == null || Number.isNaN(Number(sec))) return '—';
-        const s = Number(sec);
-        const d = Math.floor(s / 86400);
-        const h = Math.floor((s % 86400) / 3600);
-        if (d > 0) return `${d}d ${h}h`;
-        const m = Math.floor((s % 3600) / 60);
-        return h > 0 ? `${h}h ${m}m` : `${m}m`;
-      }
-      function formatNum(n) {
-        return n == null ? '—' : Number(n).toLocaleString();
-      }
+      // Live stats from http://127.0.0.1:3848/api/stats
       async function loadLive() {
         const hint = document.getElementById('live-api-hint');
         try {
-          const health = await fetch(apiBase() + '/api/health').then((r) => r.json());
-          const badge = document.querySelector('#home .animate-pulse')?.parentElement;
-          if (badge && health.ok) {
-            badge.childNodes.forEach((n) => {
-              /* keep structure */
-            });
-          }
-          const stats = await fetch(apiBase() + '/api/stats').then((r) => {
-            if (!r.ok) throw new Error('stats');
-            return r.json();
-          });
-          document.getElementById('live-servers').textContent = formatNum(stats.servers);
-          document.getElementById('live-users').textContent = formatNum(stats.approxUsers);
-          document.getElementById('live-plays').textContent = formatNum(stats.totalPlays);
-          document.getElementById('live-uptime').textContent = formatUptime(stats.uptimeSec);
+          const stats = await S.fetchStats();
+          document.getElementById('live-servers').textContent = S.formatNum(stats.servers);
+          document.getElementById('live-users').textContent = S.formatNum(stats.users);
+          document.getElementById('live-uptime').textContent = S.formatUptime(stats.uptimeSec);
           if (hint) {
-            hint.textContent = 'Live data · API online';
+            hint.textContent =
+              'Live from ' + S.apiBase() + '/api/stats · ' + new Date().toLocaleTimeString();
             hint.className = 'mt-2 text-xs text-discord-green';
           }
-        } catch {
+        } catch (err) {
+          console.error(err);
           if (hint) {
             hint.innerHTML =
-              'API offline — start the bot or open the <a href="stats.html" class="text-discord-blurple hover:underline">stats dashboard</a>. Capability numbers below still apply.';
+              'Cannot reach live stats at <code class="text-white/80">' +
+              S.apiBase() +
+              '/api/stats</code>. Start the bot, then refresh. Capability numbers below still apply. · <a href="stats.html" class="text-discord-blurple hover:underline">Stats page</a>';
             hint.className = 'mt-2 text-xs text-discord-muted';
           }
         }
       }
       loadLive();
+      setInterval(loadLive, 15_000);
     </script>
   </body>
 </html>

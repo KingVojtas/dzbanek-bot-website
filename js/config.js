@@ -11,7 +11,7 @@
  * OG_IMAGE — absolute image URL (Discord/Twitter need absolute paths).
  */
 window.DZBANEK = {
-  API_BASE: localStorage.getItem('dzbanek_api_base') || 'http://127.0.0.1:3847',
+  API_BASE: localStorage.getItem('dzbanek_api_base') || 'http://127.0.0.1:3848',
   INVITE_URL:
     'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands',
   GITHUB: 'https://github.com/KingVojtas/dzbanek-bot',

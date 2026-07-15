@@ -32,7 +32,7 @@ Or open HTML files directly (API admin cookies need a real origin; prefer `serve
 
 1. In the bot repo, set `.env` (see bot `.env.example`):
    - `API_ENABLED=true`
-   - `API_PORT=3847`
+   - `API_PORT=3848`
    - `WEBSITE_ORIGIN=http://127.0.0.1:3000,http://localhost:3000,http://127.0.0.1:5500,null`
    - For admin: `DISCORD_CLIENT_SECRET`, `SESSION_SECRET`, `OAUTH_REDIRECT_URI`
 2. Start the bot (`npm start` / `npm run dev`).
@@ -41,7 +41,7 @@ Or open HTML files directly (API admin cookies need a real origin; prefer `serve
 **Override API URL in the browser** (no rebuild):
 
 ```js
-localStorage.setItem('dzbanek_api_base', 'http://127.0.0.1:3847');
+localStorage.setItem('dzbanek_api_base', 'http://127.0.0.1:3848');
 // then reload
 ```
 
@@ -69,7 +69,7 @@ Default is set in `js/config.js` → `window.DZBANEK.API_BASE`.
 4. Toggle news / Steam / Epic and set channel IDs → Save
 
 **Discord Developer Portal setup**
-- OAuth2 redirect: `http://127.0.0.1:3847/api/auth/callback` (or your production API URL)
+- OAuth2 redirect: `http://127.0.0.1:3848/api/auth/callback` (or your production API URL)
 - Client secret → bot `.env` as `DISCORD_CLIENT_SECRET`
 
 **CORS / cookies:** the admin UI uses `credentials: 'include'`. The bot must list this site’s origin in `WEBSITE_ORIGIN`. For production, prefer reverse-proxying `/api` on the same site origin so cookies are first-party.
@@ -105,7 +105,7 @@ Test link previews with [opengraph.xyz](https://www.opengraph.xyz) or by pasting
 
 - HTML5, Tailwind CSS (CDN), Inter (Google Fonts)
 - Chart.js 4 (stats page only)
-- Bot API: Node `http` on port **3847** (default)
+- Bot API: Node `http` on port **3848** (this project’s default; override via `localStorage` / bot `API_PORT`)
 
 ## Related repo
 

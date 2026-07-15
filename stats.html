@@ -107,27 +107,31 @@
         </button>
       </div>
 
-      <!-- KPI grid -->
-      <dl class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
+      <!-- Live KPIs from /api/stats (serverCount, userCount, uptime) -->
+      <dl class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div class="rounded-2xl border border-discord-blurple/25 bg-discord-card p-6 shadow-card text-center sm:p-8">
           <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Servers</dt>
-          <dd id="stat-servers" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
+          <dd id="stat-servers" class="mt-3 text-4xl font-extrabold sm:text-5xl">—</dd>
+          <p class="mt-2 text-xs text-discord-muted">Guilds the bot is in</p>
         </div>
-        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
-          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Approx. users</dt>
-          <dd id="stat-users" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
+        <div class="rounded-2xl border border-discord-blurple/25 bg-discord-card p-6 shadow-card text-center sm:p-8">
+          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Users</dt>
+          <dd id="stat-users" class="mt-3 text-4xl font-extrabold sm:text-5xl">—</dd>
+          <p class="mt-2 text-xs text-discord-muted">Approx. members across servers</p>
         </div>
-        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
-          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Total plays</dt>
-          <dd id="stat-plays" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
-        </div>
-        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
+        <div class="rounded-2xl border border-discord-blurple/25 bg-discord-card p-6 shadow-card text-center sm:p-8">
           <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Uptime</dt>
-          <dd id="stat-uptime" class="mt-2 text-3xl font-extrabold sm:text-4xl">—</dd>
+          <dd id="stat-uptime" class="mt-3 text-4xl font-extrabold sm:text-5xl">—</dd>
+          <p class="mt-2 text-xs text-discord-muted">Process uptime</p>
         </div>
       </dl>
 
-      <dl class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <!-- Extra metrics when the richer API provides them -->
+      <dl id="extra-stats" class="mt-4 hidden grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div class="rounded-2xl border border-white/5 bg-discord-card p-4">
+          <dt class="text-xs uppercase tracking-wider text-discord-muted">Total plays</dt>
+          <dd id="stat-plays" class="mt-1 text-2xl font-bold">—</dd>
+        </div>
         <div class="rounded-2xl border border-white/5 bg-discord-card p-4">
           <dt class="text-xs uppercase tracking-wider text-discord-muted">Skips</dt>
           <dd id="stat-skips" class="mt-1 text-2xl font-bold">—</dd>
@@ -136,34 +140,26 @@
           <dt class="text-xs uppercase tracking-wider text-discord-muted">Wishlist adds</dt>
           <dd id="stat-wishlist" class="mt-1 text-2xl font-bold">—</dd>
         </div>
-        <div class="rounded-2xl border border-white/5 bg-discord-card p-4">
-          <dt class="text-xs uppercase tracking-wider text-discord-muted">Tracked users</dt>
-          <dd id="stat-tracked" class="mt-1 text-2xl font-bold">—</dd>
-        </div>
       </dl>
 
-      <!-- Chart -->
-      <div class="mt-10 rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card sm:p-6">
+      <!-- Chart (only when history is present) -->
+      <div id="chart-panel" class="mt-10 hidden rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card sm:p-6">
         <h2 class="text-lg font-semibold">Growth &amp; activity</h2>
         <p class="mt-1 text-sm text-discord-muted">
-          Daily snapshots from the bot (plays and server count). Empty until the API starts collecting history.
+          Daily snapshots from the bot (plays and server count).
         </p>
         <div class="relative mt-6 h-64 sm:h-80">
           <canvas id="growth-chart" aria-label="Growth chart"></canvas>
-          <p
-            id="chart-empty"
-            class="absolute inset-0 flex items-center justify-center text-sm text-discord-muted"
-          >
-            Waiting for data…
-          </p>
         </div>
       </div>
+      <p id="chart-empty" class="mt-8 text-center text-sm text-discord-muted">
+        Live snapshot from the bot API. Historical charts appear when daily history is available.
+      </p>
 
       <p id="generated-at" class="mt-4 text-center text-xs text-discord-muted"></p>
       <p class="mt-2 text-center text-xs text-discord-muted">
-        API base:
-        <code id="api-base-label" class="text-discord-blurple"></code>
-        · set <code class="text-white/70">localStorage.dzbanek_api_base</code> to override
+        API:
+        <code id="api-base-label" class="text-discord-blurple"></code>/api/stats
       </p>
     </main>
 
@@ -181,25 +177,12 @@
     <script src="js/config.js"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
+    <script src="js/stats-api.js"></script>
     <script>
-      const apiBase = () => (window.DZBANEK?.API_BASE || 'http://127.0.0.1:3847').replace(/\/$/, '');
-      document.getElementById('api-base-label').textContent = apiBase();
+      const S = window.DzbanekStats;
+      document.getElementById('api-base-label').textContent = S.apiBase();
 
       let chart;
-
-      function formatUptime(sec) {
-        if (sec == null || Number.isNaN(sec)) return '—';
-        const d = Math.floor(sec / 86400);
-        const h = Math.floor((sec % 86400) / 3600);
-        if (d > 0) return `${d}d ${h}h`;
-        const m = Math.floor((sec % 3600) / 60);
-        return h > 0 ? `${h}h ${m}m` : `${m}m`;
-      }
-
-      function formatNum(n) {
-        if (n == null) return '—';
-        return Number(n).toLocaleString();
-      }
 
       function setStatus(ok, message) {
         const el = document.getElementById('api-status');
@@ -208,18 +191,19 @@
       }
 
       function renderChart(history) {
+        const panel = document.getElementById('chart-panel');
         const empty = document.getElementById('chart-empty');
         const labels = (history || []).map((h) => h.date);
-        const plays = (history || []).map((h) => h.totalPlays);
-        const servers = (history || []).map((h) => h.servers);
-
         if (!labels.length) {
+          panel.classList.add('hidden');
           empty.classList.remove('hidden');
           if (chart) chart.destroy();
           return;
         }
         empty.classList.add('hidden');
-
+        panel.classList.remove('hidden');
+        const plays = history.map((h) => h.totalPlays ?? 0);
+        const servers = history.map((h) => h.servers ?? 0);
         const ctx = document.getElementById('growth-chart');
         if (chart) chart.destroy();
         chart = new Chart(ctx, {
@@ -250,9 +234,7 @@
             responsive: true,
             maintainAspectRatio: false,
             interaction: { mode: 'index', intersect: false },
-            plugins: {
-              legend: { labels: { color: '#B5BAC1' } },
-            },
+            plugins: { legend: { labels: { color: '#B5BAC1' } } },
             scales: {
               x: {
                 ticks: { color: '#B5BAC1', maxRotation: 0 },
@@ -276,30 +258,39 @@
       async function loadStats() {
         setStatus(false, 'loading…');
         try {
-          const res = await fetch(apiBase() + '/api/stats', { credentials: 'omit' });
-          if (!res.ok) throw new Error('HTTP ' + res.status);
-          const data = await res.json();
-          document.getElementById('stat-servers').textContent = formatNum(data.servers);
-          document.getElementById('stat-users').textContent = formatNum(data.approxUsers);
-          document.getElementById('stat-plays').textContent = formatNum(data.totalPlays);
-          document.getElementById('stat-uptime').textContent = formatUptime(data.uptimeSec);
-          document.getElementById('stat-skips').textContent = formatNum(data.totalSkips);
-          document.getElementById('stat-wishlist').textContent = formatNum(data.totalWishlistAdds);
-          document.getElementById('stat-tracked').textContent = formatNum(data.uniqueUsersTracked);
-          document.getElementById('generated-at').textContent = data.generatedAt
-            ? 'Last updated: ' + new Date(data.generatedAt).toLocaleString()
-            : '';
-          renderChart(data.history || []);
-          setStatus(true, 'online');
+          const data = await S.fetchStats();
+          document.getElementById('stat-servers').textContent = S.formatNum(data.servers);
+          document.getElementById('stat-users').textContent = S.formatNum(data.users);
+          document.getElementById('stat-uptime').textContent = S.formatUptime(data.uptimeSec);
+
+          const hasExtra =
+            data.totalPlays != null || data.totalSkips != null || data.totalWishlistAdds != null;
+          const extra = document.getElementById('extra-stats');
+          if (hasExtra) {
+            extra.classList.remove('hidden');
+            document.getElementById('stat-plays').textContent = S.formatNum(data.totalPlays);
+            document.getElementById('stat-skips').textContent = S.formatNum(data.totalSkips);
+            document.getElementById('stat-wishlist').textContent = S.formatNum(
+              data.totalWishlistAdds,
+            );
+          } else {
+            extra.classList.add('hidden');
+          }
+
+          document.getElementById('generated-at').textContent =
+            'Last updated: ' + new Date(data.generatedAt).toLocaleString();
+          renderChart(data.history);
+          setStatus(true, 'online · live from bot');
         } catch (err) {
-          setStatus(false, 'offline — start the bot API on ' + apiBase());
+          console.error(err);
+          setStatus(false, 'offline — cannot reach ' + S.apiBase() + '/api/stats');
           renderChart([]);
         }
       }
 
       document.getElementById('refresh-btn').addEventListener('click', loadStats);
       loadStats();
-      setInterval(loadStats, 60_000);
+      setInterval(loadStats, 15_000);
     </script>
   </body>
 </html>
