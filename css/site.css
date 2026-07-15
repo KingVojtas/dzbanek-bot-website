@@ -114,6 +114,68 @@ input:focus-visible {
 .faq-item summary::-webkit-details-marker {
   display: none;
 }
+/* Mock embed carousel */
+.mock-slide {
+  display: none;
+}
+.mock-slide.is-active {
+  display: block;
+  animation: mock-in 0.35s ease;
+}
+@keyframes mock-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.mock-tab {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #1e1f22;
+  color: #b5bac1;
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+.mock-tab:hover {
+  color: #fff;
+  border-color: rgba(88, 101, 242, 0.4);
+}
+.mock-tab.is-active {
+  background: rgba(88, 101, 242, 0.2);
+  border-color: rgba(88, 101, 242, 0.55);
+  color: #fff;
+}
+
+/* API status strip */
+.status-strip {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(17, 18, 20, 0.9);
+  font-size: 0.75rem;
+}
+.status-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: #b5bac1;
+  flex-shrink: 0;
+}
+.status-dot.is-online {
+  background: #23a559;
+  box-shadow: 0 0 8px rgba(35, 165, 89, 0.7);
+}
+.status-dot.is-offline {
+  background: #ed4245;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -125,7 +187,8 @@ input:focus-visible {
   }
   .avatar-float,
   .avatar-glow,
-  .btn-shine::after {
+  .btn-shine::after,
+  .mock-slide.is-active {
     animation: none !important;
     transition: none !important;
   }

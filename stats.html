@@ -13,7 +13,7 @@
       property="og:description"
       content="Real-time servers, users, plays, and growth charts for dzbanek-bot."
     />
-    <meta property="og:image" content="assets/bot-avatar.png" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
@@ -63,6 +63,7 @@
           <a href="index.html" class="text-sm font-medium text-discord-muted hover:text-white">Home</a>
           <a href="stats.html" class="text-sm font-medium text-white">Stats</a>
           <a href="permissions.html" class="text-sm font-medium text-discord-muted hover:text-white">Permissions</a>
+          <a href="changelog.html" class="text-sm font-medium text-discord-muted hover:text-white">Changelog</a>
           <a href="admin.html" class="text-sm font-medium text-discord-muted hover:text-white">Admin</a>
           <a
             href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
@@ -81,6 +82,7 @@
           <a href="index.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Home</a>
           <a href="stats.html" class="rounded-lg px-3 py-2 text-sm text-white">Stats</a>
           <a href="permissions.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Permissions</a>
+          <a href="changelog.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Changelog</a>
           <a href="admin.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Admin</a>
         </div>
       </div>
@@ -177,6 +179,7 @@
     </footer>
 
     <script src="js/config.js"></script>
+    <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
     <script>
       const apiBase = () => (window.DZBANEK?.API_BASE || 'http://127.0.0.1:3847').replace(/\/$/, '');

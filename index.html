@@ -8,21 +8,28 @@
       content="dzbanek-bot — your Discord music DJ, Steam & Epic deal hunter, and RSS news desk in one open-source bot."
     />
     <title>dzbanek-bot — Music, Deals & News for Discord</title>
-    <!-- Open Graph / Twitter (set absolute SITE_URL in production for og:image) -->
+    <!-- Open Graph / Twitter — absolute image for Discord link previews -->
     <meta property="og:title" content="dzbanek-bot — Music, Deals & News for Discord" />
     <meta
       property="og:description"
       content="Your server’s music DJ, Steam & Epic deal hunter, and RSS news desk — open source discord.js bot."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/bot-avatar.png" />
+    <meta property="og:url" content="https://kingvojtas.github.io/dzbanek-bot-website/" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png"
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="dzbanek-bot" />
     <meta
       name="twitter:description"
       content="Music, Steam deals, Epic free games, RSS news & wishlist alerts for Discord."
     />
-    <meta name="twitter:image" content="assets/bot-avatar.png" />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png"
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -237,6 +244,7 @@
           <a href="stats.html" class="text-sm font-medium text-discord-muted transition hover:text-white">Stats</a>
           <a href="permissions.html" class="text-sm font-medium text-discord-muted transition hover:text-white">Permissions</a>
           <a href="#faq" data-nav class="nav-link relative text-sm font-medium text-discord-muted transition hover:text-white">FAQ</a>
+          <a href="changelog.html" class="text-sm font-medium text-discord-muted transition hover:text-white">Changelog</a>
           <a href="admin.html" class="text-sm font-medium text-discord-muted transition hover:text-white">Admin</a>
           <a
             href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
@@ -275,6 +283,7 @@
           <a href="stats.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">Stats</a>
           <a href="permissions.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">Permissions</a>
           <a href="#faq" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">FAQ</a>
+          <a href="changelog.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">Changelog</a>
           <a href="admin.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white">Admin</a>
           <a
             href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
@@ -288,6 +297,14 @@
       </div>
     </header>
 
+    <!-- API status (stats HTTP API — not Discord presence) -->
+    <div class="status-strip" id="status-strip" role="status">
+      <div class="mx-auto flex max-w-6xl items-center gap-2 px-4 py-1.5 sm:px-6 lg:px-8 text-discord-muted">
+        <span class="status-dot" id="status-dot" aria-hidden="true"></span>
+        <span id="status-text">Checking stats API…</span>
+      </div>
+    </div>
+
     <main>
       <!-- ========== HERO ========== -->
       <section id="home" class="hero-glow relative overflow-hidden">
@@ -300,7 +317,7 @@
               class="reveal mb-4 inline-flex items-center gap-2 rounded-full border border-discord-blurple/30 bg-discord-blurple/10 px-3 py-1 text-xs font-medium text-discord-blurple"
             >
               <span class="h-1.5 w-1.5 rounded-full bg-discord-green animate-pulse"></span>
-              Online · Open source · discord.js v14
+              Open source · discord.js v14 · slash commands
             </p>
             <h1 class="reveal reveal-delay-1 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
               <span
@@ -315,8 +332,8 @@
               class="reveal reveal-delay-2 mt-3 max-w-xl text-base leading-relaxed text-discord-muted sm:text-lg mx-auto lg:mx-0"
             >
               Queue tracks from YouTube, Spotify &amp; SoundCloud. Wake up to curated Steam sales
-              and Epic free games. Keep channels fresh with RSS embeds and personal wishlist DM
-              alerts when games drop in price.
+              and Epic free games. Point news &amp; deals at any channel with
+              <code class="text-discord-blurple">/setup</code> — plus wishlist DM alerts when prices drop.
             </p>
 
             <!-- Tech badges -->
@@ -386,46 +403,93 @@
               />
             </div>
 
-            <!-- Discord-style mock embed: Now playing -->
-            <div
-              class="w-full max-w-sm rounded-lg border border-white/5 bg-[#313338] p-3 shadow-card text-left"
-              aria-hidden="true"
-            >
-              <div class="flex items-start gap-3">
-                <img
-                  src="assets/bot-avatar.png"
-                  alt=""
-                  class="h-10 w-10 shrink-0 rounded-full object-cover"
-                />
-                <div class="min-w-0 flex-1">
-                  <div class="flex flex-wrap items-center gap-1.5">
-                    <span class="text-sm font-semibold text-white">dzbanek-bot</span>
-                    <span
-                      class="rounded bg-discord-blurple px-1 py-px text-[10px] font-bold uppercase leading-none text-white"
-                      >Bot</span
-                    >
-                    <span class="text-xs text-[#949BA4]">Today at 3:33 PM</span>
+            <!-- Discord-style mock embed carousel -->
+            <div class="w-full max-w-sm" id="mock-carousel">
+              <div
+                class="rounded-lg border border-white/5 bg-[#313338] p-3 shadow-card text-left"
+                aria-live="polite"
+              >
+                <!-- Music -->
+                <div class="mock-slide is-active" data-slide="music">
+                  <div class="flex items-start gap-3">
+                    <img src="assets/bot-avatar.png" alt="" class="h-10 w-10 shrink-0 rounded-full object-cover" />
+                    <div class="min-w-0 flex-1">
+                      <div class="flex flex-wrap items-center gap-1.5">
+                        <span class="text-sm font-semibold text-white">dzbanek-bot</span>
+                        <span class="rounded bg-discord-blurple px-1 py-px text-[10px] font-bold uppercase leading-none text-white">Bot</span>
+                        <span class="text-xs text-[#949BA4]">Today at 3:33 PM</span>
+                      </div>
+                      <p class="mt-1 text-sm text-[#DBDEE1]">▶️ Now playing</p>
+                      <div class="mt-2 flex overflow-hidden rounded border-l-4 border-discord-blurple bg-[#2B2D31]">
+                        <div class="flex-1 p-3">
+                          <p class="text-xs font-semibold text-discord-blurple">Now Playing</p>
+                          <p class="mt-1 text-sm font-semibold text-white">Lofi beats to code to</p>
+                          <p class="mt-1 text-xs text-[#B5BAC1]">Duration · 2:45:00<br />Requested by · you</p>
+                          <div class="mt-2 flex gap-1.5">
+                            <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">⏯️</span>
+                            <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">⏭️</span>
+                            <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">🔀</span>
+                            <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">🔁</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <p class="mt-1 text-sm text-[#DBDEE1]">▶️ Now playing</p>
-                  <!-- Embed body -->
-                  <div class="mt-2 flex overflow-hidden rounded border-l-4 border-discord-blurple bg-[#2B2D31]">
-                    <div class="flex-1 p-3">
-                      <p class="text-xs font-semibold text-discord-blurple">Now Playing</p>
-                      <p class="mt-1 text-sm font-semibold text-white">Lofi beats to code to</p>
-                      <p class="mt-1 text-xs text-[#B5BAC1]">
-                        Duration · 2:45:00<br />
-                        Requested by · you
-                      </p>
-                      <div class="mt-2 flex gap-1.5">
-                        <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">⏯️</span>
-                        <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">⏭️</span>
-                        <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">🔀</span>
-                        <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">🔁</span>
+                </div>
+                <!-- Steam -->
+                <div class="mock-slide" data-slide="steam">
+                  <div class="flex items-start gap-3">
+                    <img src="assets/bot-avatar.png" alt="" class="h-10 w-10 shrink-0 rounded-full object-cover" />
+                    <div class="min-w-0 flex-1">
+                      <div class="flex flex-wrap items-center gap-1.5">
+                        <span class="text-sm font-semibold text-white">dzbanek-bot</span>
+                        <span class="rounded bg-discord-blurple px-1 py-px text-[10px] font-bold uppercase leading-none text-white">Bot</span>
+                        <span class="text-xs text-[#949BA4]">Today at 3:33 AM</span>
+                      </div>
+                      <p class="mt-1 text-sm text-[#DBDEE1]">🎮 Steam Daily Deals</p>
+                      <div class="mt-2 flex overflow-hidden rounded border-l-4 border-discord-blurple bg-[#2B2D31]">
+                        <div class="flex-1 p-3">
+                          <p class="text-xs font-semibold text-discord-blurple">Top deals · review filtered</p>
+                          <p class="mt-1 text-sm font-semibold text-white">Hades II</p>
+                          <p class="mt-1 text-xs text-[#B5BAC1]">
+                            <span class="line-through opacity-70">41,99€</span> → <strong class="text-white">8,39€</strong> (-80%)
+                          </p>
+                          <p class="mt-1 text-xs text-[#B5BAC1]">⭐ Very Positive (95%) · Expires soon</p>
+                          <p class="mt-2 text-xs text-discord-blurple">View on Steam →</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Epic -->
+                <div class="mock-slide" data-slide="epic">
+                  <div class="flex items-start gap-3">
+                    <img src="assets/bot-avatar.png" alt="" class="h-10 w-10 shrink-0 rounded-full object-cover" />
+                    <div class="min-w-0 flex-1">
+                      <div class="flex flex-wrap items-center gap-1.5">
+                        <span class="text-sm font-semibold text-white">dzbanek-bot</span>
+                        <span class="rounded bg-discord-blurple px-1 py-px text-[10px] font-bold uppercase leading-none text-white">Bot</span>
+                        <span class="text-xs text-[#949BA4]">Today at 5:00 PM</span>
+                      </div>
+                      <p class="mt-1 text-sm text-[#DBDEE1]">🆓 Epic Free Games</p>
+                      <div class="mt-2 flex overflow-hidden rounded border-l-4 border-[#0078F2] bg-[#2B2D31]">
+                        <div class="flex-1 p-3">
+                          <p class="text-xs font-semibold text-[#0078F2]">Free now on Epic Games Store</p>
+                          <p class="mt-1 text-sm font-semibold text-white">Control</p>
+                          <p class="mt-1 text-xs text-[#B5BAC1]">Claim before it leaves the free rotation.</p>
+                          <p class="mt-2 text-xs text-[#0078F2]">Open in Epic →</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="mt-3 flex flex-wrap justify-center gap-2" role="tablist" aria-label="Preview examples">
+                <button type="button" class="mock-tab is-active" data-mock-tab="music" role="tab" aria-selected="true">Music</button>
+                <button type="button" class="mock-tab" data-mock-tab="steam" role="tab" aria-selected="false">Steam</button>
+                <button type="button" class="mock-tab" data-mock-tab="epic" role="tab" aria-selected="false">Epic</button>
+              </div>
+              <p class="mt-2 text-center text-xs text-discord-muted">See it in Discord — mock previews of real bot embeds</p>
             </div>
           </div>
         </div>
@@ -438,7 +502,7 @@
             <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Built for real servers</h2>
             <p class="mt-3 text-discord-muted">
               Not a kitchen-sink bot — three sharp pillars that actually get used every day: music,
-              deals, and automated news.
+              deals, and automated news. Preview them in the hero mock above.
             </p>
           </div>
 
@@ -956,10 +1020,77 @@
 
     <!-- ========== SCRIPTS ========== -->
     <script src="js/config.js"></script>
+    <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
     <script>
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const apiBase = () => (window.DZBANEK?.API_BASE || 'http://127.0.0.1:3847').replace(/\/$/, '');
+
+      // Status strip (stats API health — not Discord online status)
+      (async function statusStrip() {
+        const dot = document.getElementById('status-dot');
+        const text = document.getElementById('status-text');
+        if (!dot || !text) return;
+        try {
+          const res = await fetch(apiBase() + '/api/health', { signal: AbortSignal.timeout(4000) });
+          const data = await res.json();
+          if (data.ok) {
+            dot.classList.add('is-online');
+            text.textContent =
+              'Stats API reachable' +
+              (data.ready ? ' · bot connected to Discord' : ' · bot still connecting…');
+            text.className = 'text-discord-muted';
+          } else {
+            throw new Error('not ok');
+          }
+        } catch {
+          dot.classList.add('is-offline');
+          text.textContent =
+            'Stats API offline (start the bot for live numbers). Discord bot may still be online.';
+        }
+      })();
+
+      // Mock embed carousel
+      (function mockCarousel() {
+        const root = document.getElementById('mock-carousel');
+        if (!root) return;
+        const slides = [...root.querySelectorAll('.mock-slide')];
+        const tabs = [...root.querySelectorAll('[data-mock-tab]')];
+        const order = ['music', 'steam', 'epic'];
+        let idx = 0;
+        let timer;
+
+        function show(name) {
+          idx = Math.max(0, order.indexOf(name));
+          slides.forEach((s) => s.classList.toggle('is-active', s.getAttribute('data-slide') === name));
+          tabs.forEach((t) => {
+            const on = t.getAttribute('data-mock-tab') === name;
+            t.classList.toggle('is-active', on);
+            t.setAttribute('aria-selected', String(on));
+          });
+        }
+
+        tabs.forEach((t) =>
+          t.addEventListener('click', () => {
+            show(t.getAttribute('data-mock-tab'));
+            restart();
+          }),
+        );
+
+        function restart() {
+          clearInterval(timer);
+          if (reduceMotion) return;
+          timer = setInterval(() => {
+            idx = (idx + 1) % order.length;
+            show(order[idx]);
+          }, 6000);
+        }
+
+        root.addEventListener('mouseenter', () => clearInterval(timer));
+        root.addEventListener('mouseleave', restart);
+        show('music');
+        restart();
+      })();
 
       // Scroll reveal
       const revealEls = document.querySelectorAll('.reveal');

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Changelog — dzbanek-bot</title>
+    <meta
+      name="description"
+      content="What’s new in dzbanek-bot and its website — features, setup, and stats."
+    />
+    <meta property="og:title" content="Changelog — dzbanek-bot" />
+    <meta
+      property="og:description"
+      content="Milestones for the Discord bot and marketing site."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kingvojtas.github.io/dzbanek-bot-website/changelog.html" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png"
+    />
+    <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              discord: {
+                bg: '#0D0E12',
+                darker: '#111214',
+                card: '#1E1F22',
+                elevated: '#2B2D31',
+                blurple: '#5865F2',
+                'blurple-hover': '#4752C4',
+                muted: '#B5BAC1',
+                green: '#23A559',
+              },
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            boxShadow: {
+              glow: '0 0 60px -12px rgba(88, 101, 242, 0.45)',
+              card: '0 8px 32px -8px rgba(0, 0, 0, 0.5)',
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body class="bg-discord-bg text-white antialiased">
+    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/80 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/bot-avatar.png" alt="" class="h-9 w-9 rounded-2xl object-cover ring-2 ring-discord-blurple/40" />
+          <span class="text-lg font-bold">dzbanek-bot</span>
+        </a>
+        <div class="hidden items-center gap-5 lg:flex">
+          <a href="index.html" class="text-sm font-medium text-discord-muted hover:text-white">Home</a>
+          <a href="stats.html" class="text-sm font-medium text-discord-muted hover:text-white">Stats</a>
+          <a href="permissions.html" class="text-sm font-medium text-discord-muted hover:text-white">Permissions</a>
+          <a href="changelog.html" class="text-sm font-medium text-white">Changelog</a>
+          <a href="admin.html" class="text-sm font-medium text-discord-muted hover:text-white">Admin</a>
+          <a
+            href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-shine rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold"
+            >Add to Server</a
+          >
+        </div>
+        <button id="menu-btn" type="button" class="rounded-lg p-2 text-discord-muted lg:hidden" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </nav>
+      <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker lg:hidden">
+        <div class="flex flex-col gap-1 px-4 py-3">
+          <a href="index.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Home</a>
+          <a href="stats.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Stats</a>
+          <a href="permissions.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Permissions</a>
+          <a href="changelog.html" class="rounded-lg px-3 py-2 text-sm text-white">Changelog</a>
+          <a href="admin.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Admin</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
+      <p class="text-sm font-medium text-discord-blurple">What’s new</p>
+      <h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Changelog</h1>
+      <p class="mt-3 text-discord-muted">
+        Highlights for the bot and this site. Full code history lives on
+        <a href="https://github.com/KingVojtas/dzbanek-bot" class="text-discord-blurple hover:underline" target="_blank" rel="noopener noreferrer">GitHub</a>.
+      </p>
+
+      <ol class="relative mt-12 space-y-0 border-l border-white/10 pl-6">
+        <li class="relative pb-10">
+          <span class="absolute -left-[1.55rem] top-1 flex h-5 w-5 items-center justify-center rounded-full border border-discord-blurple/50 bg-discord-card text-[10px] text-discord-blurple">●</span>
+          <time class="text-xs font-medium uppercase tracking-wider text-discord-blurple">Jul 2026</time>
+          <h2 class="mt-1 text-lg font-semibold">Marketing site polish</h2>
+          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-discord-muted">
+            <li>Hero Discord mock carousel (music, Steam deals, Epic free)</li>
+            <li>Stats API status strip · stronger Open Graph previews</li>
+            <li>This changelog page</li>
+          </ul>
+        </li>
+        <li class="relative pb-10">
+          <span class="absolute -left-[1.55rem] top-1 flex h-5 w-5 items-center justify-center rounded-full border border-white/20 bg-discord-card text-[10px] text-discord-muted">●</span>
+          <time class="text-xs font-medium uppercase tracking-wider text-discord-muted">Jul 2026</time>
+          <h2 class="mt-1 text-lg font-semibold">Website + live stats API</h2>
+          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-discord-muted">
+            <li>Landing page with features, FAQ, permissions guide</li>
+            <li>Command search &amp; click-to-copy · <code class="text-white/80">/setup</code> documented</li>
+            <li>Public <code class="text-white/80">/api/stats</code> + Chart.js dashboard</li>
+            <li>Discord OAuth admin UI for channel settings</li>
+          </ul>
+        </li>
+        <li class="relative pb-10">
+          <span class="absolute -left-[1.55rem] top-1 flex h-5 w-5 items-center justify-center rounded-full border border-white/20 bg-discord-card text-[10px] text-discord-muted">●</span>
+          <time class="text-xs font-medium uppercase tracking-wider text-discord-muted">2026</time>
+          <h2 class="mt-1 text-lg font-semibold">Multi-server setup</h2>
+          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-discord-muted">
+            <li><code class="text-white/80">/setup news|steam|epic|status|disable</code></li>
+            <li>Per-guild channel settings (Manage Server)</li>
+          </ul>
+        </li>
+        <li class="relative pb-10">
+          <span class="absolute -left-[1.55rem] top-1 flex h-5 w-5 items-center justify-center rounded-full border border-white/20 bg-discord-card text-[10px] text-discord-muted">●</span>
+          <time class="text-xs font-medium uppercase tracking-wider text-discord-muted">2026</time>
+          <h2 class="mt-1 text-lg font-semibold">Deals &amp; wishlist</h2>
+          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-discord-muted">
+            <li>Daily Steam digests with review filtering &amp; live prices</li>
+            <li>Epic free-game posts</li>
+            <li>Personal wishlist + DM sale alerts</li>
+          </ul>
+        </li>
+        <li class="relative pb-10">
+          <span class="absolute -left-[1.55rem] top-1 flex h-5 w-5 items-center justify-center rounded-full border border-white/20 bg-discord-card text-[10px] text-discord-muted">●</span>
+          <time class="text-xs font-medium uppercase tracking-wider text-discord-muted">2026</time>
+          <h2 class="mt-1 text-lg font-semibold">Music &amp; stats</h2>
+          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-discord-muted">
+            <li>YouTube, Spotify, SoundCloud · queue, loop, shuffle, lyrics, game OSTs</li>
+            <li>Server playlists · <code class="text-white/80">/stats</code> &amp; <code class="text-white/80">/top</code></li>
+            <li>RSS news automation with dedup &amp; cleanup</li>
+          </ul>
+        </li>
+        <li class="relative">
+          <span class="absolute -left-[1.55rem] top-1 flex h-5 w-5 items-center justify-center rounded-full border border-white/20 bg-discord-card text-[10px] text-discord-muted">●</span>
+          <time class="text-xs font-medium uppercase tracking-wider text-discord-muted">Earlier</time>
+          <h2 class="mt-1 text-lg font-semibold">Project start</h2>
+          <p class="mt-2 text-sm text-discord-muted">
+            TypeScript bot on discord.js v14 — open source on
+            <a href="https://github.com/KingVojtas/dzbanek-bot" class="text-discord-blurple hover:underline" target="_blank" rel="noopener noreferrer">KingVojtas/dzbanek-bot</a>.
+          </p>
+        </li>
+      </ol>
+    </main>
+
+    <footer class="border-t border-white/5 py-10">
+      <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
+        <p class="text-sm text-discord-muted">© <span id="year"></span> dzbanek-bot</p>
+        <nav class="flex gap-5 text-sm text-discord-muted">
+          <a href="terms.html" class="hover:text-white">Terms</a>
+          <a href="privacy.html" class="hover:text-white">Privacy</a>
+          <a href="https://github.com/KingVojtas/dzbanek-bot" class="hover:text-white" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
+    </footer>
+    <script src="js/config.js"></script>
+    <script src="js/seo.js"></script>
+    <script src="js/site.js"></script>
+  </body>
+</html>

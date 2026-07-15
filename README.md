@@ -8,9 +8,10 @@ Dark Discord-inspired UI: HTML + Tailwind CDN + Inter + vanilla JS. Live data co
 
 | File | Description |
 |------|-------------|
-| `index.html` | Landing: hero, features, how-it-works, commands (search + copy), live/capability stats, FAQ |
+| `index.html` | Landing: hero mock carousel, status strip, features, commands, stats, FAQ |
 | `stats.html` | Live dashboard (KPIs + Chart.js growth chart) |
 | `permissions.html` | Why each Discord permission is requested |
+| `changelog.html` | Project milestones / what’s new |
 | `admin.html` | Discord OAuth admin: per-guild news / Steam / Epic channel settings |
 | `terms.html` / `privacy.html` | Legal (same dark theme) |
 | `assets/bot-avatar.png` | Logo / favicon / OG image asset |
@@ -75,14 +76,21 @@ Default is set in `js/config.js` → `window.DZBANEK.API_BASE`.
 
 ## SEO / Open Graph
 
-Pages include `og:*` and `twitter:*` tags. For Discord/Twitter link previews in production, set **absolute** URLs:
+Pages ship with **absolute** `og:image` / `twitter:image` pointing at:
 
-```html
-<meta property="og:image" content="https://your-domain.com/assets/bot-avatar.png" />
-<meta property="og:url" content="https://your-domain.com/" />
+```
+https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png
 ```
 
-Relative `og:image` paths work poorly in scrapers. Optionally set `window.DZBANEK.SITE_URL` in `js/config.js` and inject absolute tags at deploy time.
+`js/config.js` sets `SITE_URL` (GitHub Pages default) and `OG_IMAGE`. `js/seo.js` rewrites `og:url` when the site is served.
+
+Enable **GitHub Pages** (Settings → Pages → Deploy from `main` / root) for:
+
+```
+https://kingvojtas.github.io/dzbanek-bot-website/
+```
+
+Test link previews with [opengraph.xyz](https://www.opengraph.xyz) or by pasting the URL into Discord.
 
 ## Customize
 

@@ -10,7 +10,7 @@
     />
     <meta property="og:title" content="Admin — dzbanek-bot" />
     <meta property="og:description" content="Discord OAuth admin dashboard for guild channel settings." />
-    <meta property="og:image" content="assets/bot-avatar.png" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png" />
     <meta name="twitter:card" content="summary" />
     <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -57,6 +57,7 @@
         <div class="hidden items-center gap-5 lg:flex">
           <a href="index.html" class="text-sm font-medium text-discord-muted hover:text-white">Home</a>
           <a href="stats.html" class="text-sm font-medium text-discord-muted hover:text-white">Stats</a>
+          <a href="changelog.html" class="text-sm font-medium text-discord-muted hover:text-white">Changelog</a>
           <a href="admin.html" class="text-sm font-medium text-white">Admin</a>
           <a
             href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
@@ -74,6 +75,7 @@
         <div class="flex flex-col gap-1 px-4 py-3">
           <a href="index.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Home</a>
           <a href="stats.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Stats</a>
+          <a href="changelog.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Changelog</a>
           <a href="admin.html" class="rounded-lg px-3 py-2 text-sm text-white">Admin</a>
         </div>
       </div>
@@ -208,6 +210,7 @@
     </footer>
 
     <script src="js/config.js"></script>
+    <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
     <script>
       const apiBase = () => (window.DZBANEK?.API_BASE || 'http://127.0.0.1:3847').replace(/\/$/, '');
