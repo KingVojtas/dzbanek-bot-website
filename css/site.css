@@ -105,6 +105,70 @@ input:focus-visible {
 .status-pill-bad {
   color: #ed4245;
 }
+
+/* Leave room so sticky nav CTAs don’t sit under the corner switcher */
+header.sticky {
+  padding-right: 7.25rem;
+}
+
+/* Fixed language switcher (top-right corner) */
+.lang-corner {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(30, 31, 34, 0.92);
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+}
+.lang-corner-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  color: #b5bac1;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.lang-corner-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+.lang-corner-btn.is-lang-active,
+.lang-corner-btn[aria-pressed='true'] {
+  color: #fff;
+  background: #5865f2;
+  box-shadow: 0 0 0 1px rgba(88, 101, 242, 0.35);
+}
+.lang-flag {
+  font-size: 1rem;
+  line-height: 1;
+}
+@media (max-width: 640px) {
+  header.sticky {
+    padding-right: 1rem;
+  }
+  .lang-corner {
+    top: auto;
+    bottom: 0.85rem;
+    right: 0.85rem;
+  }
+  .lang-corner-btn {
+    padding: 0.4rem 0.7rem;
+  }
+}
 @keyframes float {
   0%,
   100% {

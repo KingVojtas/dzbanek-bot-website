@@ -159,12 +159,30 @@
     syncToggleButtons();
   }
 
+  function ensureLangCorner() {
+    if (typeof document === 'undefined') return;
+    if (document.getElementById('lang-corner')) return;
+    var el = document.createElement('div');
+    el.id = 'lang-corner';
+    el.className = 'lang-corner';
+    el.setAttribute('role', 'group');
+    el.setAttribute('aria-label', 'Language');
+    el.innerHTML =
+      '<button type="button" data-set-lang="en" class="lang-corner-btn" aria-pressed="false" title="English">' +
+      '<span class="lang-flag" aria-hidden="true">🇬🇧</span><span>EN</span></button>' +
+      '<button type="button" data-set-lang="cs" class="lang-corner-btn" aria-pressed="false" title="Čeština">' +
+      '<span class="lang-flag" aria-hidden="true">🇨🇿</span><span>CS</span></button>';
+    document.body.appendChild(el);
+  }
+
   function syncToggleButtons() {
     document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
       var lang = btn.getAttribute('data-set-lang');
       var on = lang === api.lang;
       btn.setAttribute('aria-pressed', String(on));
       btn.classList.toggle('is-lang-active', on);
+      // Corner buttons use CSS via .is-lang-active / aria-pressed
+      if (btn.classList.contains('lang-corner-btn')) return;
       if (on) {
         btn.classList.add('bg-discord-blurple', 'text-white');
         btn.classList.remove('text-discord-muted', 'hover:text-white');
@@ -235,6 +253,7 @@
   window.t = t;
 
   function boot() {
+    ensureLangCorner();
     bindToggles();
     apply();
   }
