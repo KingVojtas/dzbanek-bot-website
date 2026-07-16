@@ -55,8 +55,55 @@ input:focus-visible {
 .avatar-float {
   animation: float 5s ease-in-out infinite;
 }
+.avatar-float:hover {
+  animation-play-state: paused;
+  transform: scale(1.04) translateY(-4px);
+  transition: transform 0.35s ease;
+}
 .avatar-glow {
   animation: pulse-glow 3.5s ease-in-out infinite;
+}
+/* Confetti for invite CTAs */
+.confetti-layer {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  margin-left: -4px;
+  margin-top: -4px;
+  animation: confetti-fly 0.85s ease-out forwards;
+}
+@keyframes confetti-fly {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0.4) rotate(220deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .avatar-float,
+  .avatar-glow {
+    animation: none;
+  }
+  .confetti-layer {
+    display: none;
+  }
+}
+.status-pill-ok {
+  color: #23a559;
+}
+.status-pill-bad {
+  color: #ed4245;
 }
 @keyframes float {
   0%,

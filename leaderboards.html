@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboards — dzbanek-bot</title>
+    <meta name="description" content="Public top tracks and servers for dzbanek-bot." />
+    <meta property="og:title" content="Leaderboards — dzbanek-bot" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png" />
+    <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              discord: {
+                bg: '#0D0E12', darker: '#111214', card: '#1E1F22', elevated: '#2B2D31',
+                blurple: '#5865F2', 'blurple-hover': '#4752C4', muted: '#B5BAC1', green: '#23A559',
+              },
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            boxShadow: { glow: '0 0 60px -12px rgba(88, 101, 242, 0.45)', card: '0 8px 32px -8px rgba(0,0,0,0.5)' },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body class="bg-discord-bg text-white antialiased">
+    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/80 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/bot-avatar.png" alt="" class="h-9 w-9 rounded-2xl object-cover ring-2 ring-discord-blurple/40" />
+          <span class="text-lg font-bold">dzbanek-bot</span>
+        </a>
+        <div class="hidden items-center gap-4 lg:flex">
+          <a href="index.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.home">Home</a>
+          <a href="stats.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.stats">Stats</a>
+          <a href="leaderboards.html" class="text-sm font-medium text-white" data-i18n="nav.leaderboards">Leaderboards</a>
+          <a href="status.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.status">Status</a>
+          <a href="admin.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.admin">Admin</a>
+          <div class="flex items-center gap-0.5 rounded-full border border-white/10 bg-discord-elevated/50 p-0.5" role="group" data-i18n-aria="lang.label">
+            <button type="button" data-set-lang="en" class="rounded-full px-2.5 py-1 text-xs font-semibold">EN</button>
+            <button type="button" data-set-lang="cs" class="rounded-full px-2.5 py-1 text-xs font-semibold">CS</button>
+          </div>
+          <a href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands" target="_blank" rel="noopener noreferrer" class="btn-shine rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold" data-i18n="nav.invite" data-invite-confetti>Add to Server</a>
+        </div>
+        <button id="menu-btn" type="button" class="rounded-lg p-2 text-discord-muted lg:hidden" data-i18n-aria="nav.menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </nav>
+      <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker lg:hidden">
+        <div class="flex flex-col gap-1 px-4 py-3">
+          <a href="index.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted" data-i18n="nav.home">Home</a>
+          <a href="stats.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted" data-i18n="nav.stats">Stats</a>
+          <a href="leaderboards.html" class="rounded-lg px-3 py-2 text-sm text-white" data-i18n="nav.leaderboards">Leaderboards</a>
+          <a href="status.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted" data-i18n="nav.status">Status</a>
+          <a href="admin.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted" data-i18n="nav.admin">Admin</a>
+          <div class="mt-1 flex gap-0.5 rounded-full border border-white/10 p-0.5 self-start">
+            <button type="button" data-set-lang="en" class="rounded-full px-3 py-1.5 text-xs font-semibold">EN</button>
+            <button type="button" data-set-lang="cs" class="rounded-full px-3 py-1.5 text-xs font-semibold">CS</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="boards-root" class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <p class="text-sm font-medium text-discord-blurple" data-i18n="boards.kicker">Public rankings</p>
+      <h1 class="mt-1 text-3xl font-bold tracking-tight sm:text-4xl" data-i18n="boards.title">Leaderboards</h1>
+      <p class="mt-2 max-w-2xl text-sm text-discord-muted" data-i18n="boards.lead">
+        Aggregate top tracks and servers from public stats. No personal user data.
+      </p>
+
+      <dl class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card p-5 text-center shadow-card">
+          <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="boards.total_plays">Total plays</dt>
+          <dd data-board="total-plays" class="mt-2 text-3xl font-extrabold">—</dd>
+        </div>
+        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 text-center shadow-card">
+          <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="boards.wishlist">Wishlist adds</dt>
+          <dd data-board="wishlist" class="mt-2 text-3xl font-extrabold">—</dd>
+        </div>
+        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 text-center shadow-card">
+          <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="boards.guilds">Servers</dt>
+          <dd data-board="servers" class="mt-2 text-3xl font-extrabold">—</dd>
+        </div>
+      </dl>
+
+      <div class="mt-10 grid gap-6 lg:grid-cols-2">
+        <section class="overflow-hidden rounded-2xl border border-white/5 bg-discord-card shadow-card">
+          <div class="border-b border-white/5 bg-discord-elevated/40 px-5 py-3">
+            <h2 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="boards.tracks">Top tracks</h2>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="text-left text-xs uppercase tracking-wider text-discord-muted">
+                  <th class="px-4 py-3">#</th>
+                  <th class="px-4 py-3" data-i18n="boards.name">Name</th>
+                  <th class="px-4 py-3 text-right" data-i18n="boards.plays">Plays</th>
+                </tr>
+              </thead>
+              <tbody data-board="tracks-body"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="overflow-hidden rounded-2xl border border-white/5 bg-discord-card shadow-card">
+          <div class="border-b border-white/5 bg-discord-elevated/40 px-5 py-3">
+            <h2 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="boards.servers">Top servers</h2>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="text-left text-xs uppercase tracking-wider text-discord-muted">
+                  <th class="px-4 py-3">#</th>
+                  <th class="px-4 py-3" data-i18n="boards.name">Name</th>
+                  <th class="px-4 py-3 text-right" data-i18n="boards.plays">Plays</th>
+                </tr>
+              </thead>
+              <tbody data-board="servers-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="border-t border-white/5 py-10">
+      <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
+        <p class="text-sm text-discord-muted">© <span id="year"></span> dzbanek-bot</p>
+        <div class="flex flex-col items-center gap-3 sm:items-end">
+          <nav class="flex flex-wrap items-center justify-center gap-5 text-sm text-discord-muted sm:justify-end">
+            <a href="terms.html" class="hover:text-white" data-i18n="footer.terms_short">Terms</a>
+            <a href="privacy.html" class="hover:text-white" data-i18n="footer.privacy_short">Privacy</a>
+            <a href="https://github.com/KingVojtas/dzbanek-bot" class="hover:text-white" target="_blank" rel="noopener noreferrer" data-i18n="footer.github">GitHub</a>
+            <a href="https://buymeacoffee.com/vojtas?status=1" class="text-amber-200/90 hover:text-amber-100" target="_blank" rel="noopener noreferrer" data-i18n="footer.coffee">☕ Buy me a coffee</a>
+          </nav>
+          <div class="flex flex-col items-center gap-1.5 sm:items-end">
+            <p class="text-xs font-medium uppercase tracking-wider text-discord-muted" data-i18n="footer.made_by">Made by:</p>
+            <img src="assets/dzbanek-labs-logo.png" alt="Dzbanek Labs" class="h-auto w-24 rounded-xl object-contain" />
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/locales/en.js"></script>
+    <script src="js/locales/cs.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/seo.js"></script>
+    <script src="js/site.js"></script>
+    <script src="js/stats-api.js"></script>
+    <script src="js/public-feed.js"></script>
+    <script src="js/share-kit.js"></script>
+    <script>
+      const root = document.getElementById('boards-root');
+      async function load() {
+        await window.DzbanekPublicFeed.loadAndRender({ boardsRoot: root });
+      }
+      document.addEventListener('dzbanek:lang', load);
+      load();
+      setInterval(load, 60_000);
+    </script>
+  </body>
+</html>

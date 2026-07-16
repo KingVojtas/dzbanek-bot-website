@@ -8,18 +8,24 @@ Dark Discord-inspired UI: HTML + Tailwind CDN + Inter + vanilla JS. Live data co
 
 | File | Description |
 |------|-------------|
-| `index.html` | Landing: hero mock carousel, status strip, features, commands, stats, FAQ |
+| `index.html` | Landing: hero, Dzbanek Now, share/QR kit, features, commands, stats, FAQ |
 | `stats.html` | Live dashboard (KPIs + Chart.js growth chart) |
+| `leaderboards.html` | Public top tracks / top servers |
+| `status.html` | Website + stats API + bot readiness |
 | `permissions.html` | Why each Discord permission is requested |
 | `changelog.html` | Project milestones / what’s new |
 | `admin.html` | Discord OAuth admin: per-guild news / Steam / Epic channel settings |
 | `terms.html` / `privacy.html` | Legal (same dark theme) |
 | `assets/bot-avatar.png` | Logo / favicon / OG image asset |
+| `assets/dzbanek-labs-logo.png` | Made by Dzbanek Labs footer mark |
 | `css/site.css` | Shared motion + utility styles |
-| `js/config.js` | `API_BASE`, invite URL |
+| `js/config.js` | `API_BASE`, invite URL, `SUPPORT_URL` |
+| `js/i18n.js` + `js/locales/` | EN / CS language toggle |
 | `js/site.js` | Nav, toast, clipboard helpers |
 | `js/permissions-calc.js` | Invite bitfield calculator |
 | `js/command-playground.js` | Slash command mock embed playground |
+| `js/public-feed.js` | Live wall + leaderboards rendering |
+| `js/share-kit.js` | Support CTA, invite confetti, QR helpers |
 | `js/stats-card.js` | Canvas share card export |
 
 ## Preview locally
@@ -108,6 +114,7 @@ For **true live** stats later, host the bot on HTTPS and set `PRODUCTION_API_BAS
 - Permissions table (no Administrator required; Manage Messages = bot’s own digest cleanup)
 - **Permissions calculator** — toggle Music / Digest cleanup packs → live bitfield + custom invite URL
 - FAQ (search history, language, permissions, music sources, invite vs self-host)
+- **EN / CS language toggle** — landing copy + shared nav/footer; preference in `localStorage` / `?lang=`
 
 ### Commands UX
 - Live filter search on the landing commands section
@@ -167,8 +174,10 @@ Test link previews with [opengraph.xyz](https://www.opengraph.xyz) or by pasting
 | What | Where |
 |------|--------|
 | Invite link | `js/config.js` → `INVITE_URL` (also hardcoded CTAs use client id `923262419923513445`) |
-| Support server | `index.html` → Support Server button `href` |
+| Support server | `js/config.js` → `SUPPORT_URL` (empty = “coming soon” toast) |
 | Buy me a coffee | `js/config.js` → `COFFEE_URL` (also linked in page footers) |
+| Language (EN/CS) | Header toggle · `?lang=cs` · `localStorage.dzbanek_lang` · strings in `js/locales/` |
+| Public live wall / boards | Optional `public` on `/api/stats` or in `data/stats.json` |
 | Bot avatar | Replace `assets/bot-avatar.png` |
 | API base | `js/config.js` or `localStorage.dzbanek_api_base` |
 

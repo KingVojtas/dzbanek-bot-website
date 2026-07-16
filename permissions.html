@@ -65,17 +65,24 @@
           <span class="text-lg font-bold tracking-tight">dzbanek-bot</span>
         </a>
         <div class="hidden items-center gap-5 lg:flex">
-          <a href="index.html" data-nav-page="index.html" class="text-sm font-medium text-discord-muted hover:text-white">Home</a>
-          <a href="stats.html" data-nav-page="stats.html" class="text-sm font-medium text-discord-muted hover:text-white">Stats</a>
-          <a href="permissions.html" data-nav-page="permissions.html" class="text-sm font-medium text-white">Permissions</a>
-          <a href="index.html#faq" class="text-sm font-medium text-discord-muted hover:text-white">FAQ</a>
-          <a href="changelog.html" class="text-sm font-medium text-discord-muted hover:text-white">Changelog</a>
-          <a href="admin.html" data-nav-page="admin.html" class="text-sm font-medium text-discord-muted hover:text-white">Admin</a>
+          <a href="index.html" data-nav-page="index.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.home">Home</a>
+          <a href="stats.html" data-nav-page="stats.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.stats">Stats</a>
+          <a href="leaderboards.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.leaderboards">Leaderboards</a>
+          <a href="status.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.status">Status</a>
+          <a href="permissions.html" data-nav-page="permissions.html" class="text-sm font-medium text-white" data-i18n="nav.permissions">Permissions</a>
+          <a href="index.html#faq" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.faq">FAQ</a>
+          <a href="changelog.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.changelog">Changelog</a>
+          <a href="admin.html" data-nav-page="admin.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.admin">Admin</a>
+          <div class="flex items-center gap-0.5 rounded-full border border-white/10 bg-discord-elevated/50 p-0.5" role="group" data-i18n-aria="lang.label" aria-label="Language">
+            <button type="button" data-set-lang="en" class="rounded-full px-2.5 py-1 text-xs font-semibold transition" aria-pressed="true">EN</button>
+            <button type="button" data-set-lang="cs" class="rounded-full px-2.5 py-1 text-xs font-semibold transition" aria-pressed="false">CS</button>
+          </div>
           <a
             href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands"
             target="_blank"
             rel="noopener noreferrer"
             class="btn-shine rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold shadow-glow hover:bg-discord-blurple-hover"
+            data-i18n="nav.invite"
             >Add to Server</a
           >
         </div>
@@ -94,21 +101,25 @@
       </nav>
       <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker lg:hidden">
         <div class="flex flex-col gap-1 px-4 py-3">
-          <a href="index.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted hover:bg-discord-elevated">Home</a>
-          <a href="stats.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted hover:bg-discord-elevated">Stats</a>
-          <a href="permissions.html" class="rounded-lg px-3 py-2 text-sm text-white hover:bg-discord-elevated">Permissions</a>
-          <a href="index.html#faq" class="rounded-lg px-3 py-2 text-sm text-discord-muted hover:bg-discord-elevated">FAQ</a>
-          <a href="changelog.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted hover:bg-discord-elevated">Changelog</a>
-          <a href="admin.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted hover:bg-discord-elevated">Admin</a>
+          <a href="index.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted hover:bg-discord-elevated" data-i18n="nav.home">Home</a>
+          <a href="stats.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted hover:bg-discord-elevated" data-i18n="nav.stats">Stats</a>
+          <a href="permissions.html" class="rounded-lg px-3 py-2 text-sm text-white hover:bg-discord-elevated" data-i18n="nav.permissions">Permissions</a>
+          <a href="index.html#faq" class="rounded-lg px-3 py-2 text-sm text-discord-muted hover:bg-discord-elevated" data-i18n="nav.faq">FAQ</a>
+          <a href="changelog.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted hover:bg-discord-elevated" data-i18n="nav.changelog">Changelog</a>
+          <a href="admin.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted hover:bg-discord-elevated" data-i18n="nav.admin">Admin</a>
+          <div class="mt-1 flex items-center gap-0.5 rounded-full border border-white/10 bg-discord-elevated/50 p-0.5 self-start" role="group" data-i18n-aria="lang.label" aria-label="Language">
+            <button type="button" data-set-lang="en" class="rounded-full px-3 py-1.5 text-xs font-semibold transition">EN</button>
+            <button type="button" data-set-lang="cs" class="rounded-full px-3 py-1.5 text-xs font-semibold transition">CS</button>
+          </div>
         </div>
       </div>
     </header>
 
     <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      <p class="text-sm font-medium text-discord-blurple">Trust &amp; security</p>
-      <h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Permissions explained</h1>
-      <p class="mt-3 max-w-2xl text-discord-muted">
-        dzbanek-bot asks only for what it needs — <strong class="text-white">not Administrator</strong>.
+      <p class="text-sm font-medium text-discord-blurple" data-i18n="permsPage.kicker">Trust &amp; security</p>
+      <h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl" data-i18n="permsPage.title">Permissions explained</h1>
+      <p class="mt-3 max-w-2xl text-discord-muted" data-i18n="permsPage.lead">
+        dzbanek-bot asks only for what it needs — not Administrator.
         Here’s exactly why each permission appears on the invite screen.
       </p>
 
@@ -322,15 +333,24 @@
         class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6"
       >
         <p class="text-sm text-discord-muted">© <span id="year"></span> dzbanek-bot</p>
-        <nav class="flex gap-5 text-sm text-discord-muted">
-          <a href="terms.html" class="hover:text-white">Terms</a>
-          <a href="privacy.html" class="hover:text-white">Privacy</a>
-          <a href="https://github.com/KingVojtas/dzbanek-bot" class="hover:text-white" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="https://buymeacoffee.com/vojtas?status=1" class="text-amber-200/90 hover:text-amber-100" target="_blank" rel="noopener noreferrer">☕ Buy me a coffee</a>
-        </nav>
+        <div class="flex flex-col items-center gap-3 sm:items-end">
+          <nav class="flex flex-wrap items-center justify-center gap-5 text-sm text-discord-muted sm:justify-end">
+            <a href="terms.html" class="hover:text-white" data-i18n="footer.terms_short">Terms</a>
+            <a href="privacy.html" class="hover:text-white" data-i18n="footer.privacy_short">Privacy</a>
+            <a href="https://github.com/KingVojtas/dzbanek-bot" class="hover:text-white" target="_blank" rel="noopener noreferrer" data-i18n="footer.github">GitHub</a>
+            <a href="https://buymeacoffee.com/vojtas?status=1" class="text-amber-200/90 hover:text-amber-100" target="_blank" rel="noopener noreferrer" data-i18n="footer.coffee">☕ Buy me a coffee</a>
+          </nav>
+          <div class="flex flex-col items-center gap-1.5 sm:items-end">
+            <p class="text-xs font-medium uppercase tracking-wider text-discord-muted" data-i18n="footer.made_by">Made by:</p>
+            <img src="assets/dzbanek-labs-logo.png" alt="Dzbanek Labs" width="128" height="128" class="h-auto w-24 rounded-xl object-contain" data-i18n-aria="footer.labs_alt" />
+          </div>
+        </div>
       </div>
     </footer>
     <script src="js/config.js"></script>
+    <script src="js/locales/en.js"></script>
+    <script src="js/locales/cs.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
     <script src="js/permissions-calc.js"></script>

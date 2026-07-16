@@ -1,12 +1,12 @@
 {
-  "servers": 1,
-  "approxUsers": 12,
+  "servers": 2,
+  "approxUsers": 26,
   "totalPlays": 95,
   "totalSkips": 3,
   "totalWishlistAdds": 3,
   "uniqueUsersTracked": 2,
   "uptimeSec": null,
-  "generatedAt": "2026-07-16T11:55:29.281Z",
+  "generatedAt": "2026-07-16T11:56:18.004Z",
   "history": [
     {
       "date": "2026-07-15",
@@ -17,12 +17,39 @@
     },
     {
       "date": "2026-07-16",
-      "servers": 1,
-      "approxUsers": 12,
+      "servers": 2,
+      "approxUsers": 26,
       "totalPlays": 95,
       "uniqueUsersTracked": 2
     }
   ],
+  "public": {
+    "topTracks": [
+      { "title": "Lofi beats to code to", "plays": 18 },
+      { "title": "Hades II OST", "plays": 11 },
+      { "title": "Synthwave drive", "plays": 7 }
+    ],
+    "recentDeals": [
+      {
+        "source": "epic",
+        "title": "Control",
+        "subtitle": "Free now on Epic Games Store"
+      },
+      {
+        "source": "steam",
+        "title": "Hades II",
+        "subtitle": "−80% · Very Positive"
+      }
+    ],
+    "milestones": [
+      { "text": "Public instance crossed 2 servers", "at": "2026-07-16" },
+      { "text": "95 total tracks played across guilds", "at": "2026-07-16" }
+    ],
+    "topServers": [
+      { "name": "Dzbanek HQ", "plays": 62 },
+      { "name": "Community Lab", "plays": 33 }
+    ]
+  },
   "source": "snapshot",
-  "note": "Public snapshot for static hosting. Refresh with: node scripts/export-stats.mjs"
+  "note": "Public snapshot for static hosting. Optional public{} feeds live wall & leaderboards. Refresh with: node scripts/export-stats.mjs"
 }

@@ -143,6 +143,11 @@
     IS_STATIC_HOSTING: detectStaticHosting(),
     INVITE_URL:
       'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands',
+    /**
+     * Support Discord invite (e.g. https://discord.gg/xxxx).
+     * Empty = Support buttons show “coming soon” toast instead of linking.
+     */
+    SUPPORT_URL: 'https://discord.gg/9CnkKWWP26',
     GITHUB: 'https://github.com/KingVojtas/dzbanek-bot',
     GITHUB_SITE: 'https://github.com/KingVojtas/dzbanek-bot-website',
     /** Optional tip jar — shown in footers */

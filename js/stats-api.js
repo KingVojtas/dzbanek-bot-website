@@ -57,6 +57,7 @@
       typeof raw.source === 'string'
         ? raw.source
         : null;
+    const publicBlock = normalizePublic(raw.public ?? raw.publicActivity);
 
     return {
       servers,
@@ -67,9 +68,82 @@
       totalWishlistAdds,
       uniqueUsersTracked,
       history,
+      public: publicBlock,
       generatedAt: typeof raw.generatedAt === 'string' ? raw.generatedAt : new Date().toISOString(),
       source,
       raw,
+    };
+  }
+
+  function asArray(v) {
+    return Array.isArray(v) ? v : [];
+  }
+
+  /**
+   * Optional public marketing aggregates (safe: no user IDs).
+   * @param {unknown} block
+   */
+  function normalizePublic(block) {
+    if (!block || typeof block !== 'object') {
+      return {
+        topTracks: [],
+        recentDeals: [],
+        milestones: [],
+        topServers: [],
+      };
+    }
+    const b = /** @type {Record<string, unknown>} */ (block);
+    return {
+      topTracks: asArray(b.topTracks)
+        .map((row) => {
+          if (!row || typeof row !== 'object') return null;
+          const r = /** @type {Record<string, unknown>} */ (row);
+          const title = String(r.title || r.name || '').trim();
+          if (!title) return null;
+          return {
+            title,
+            plays: num(r.plays ?? r.count) ?? 0,
+          };
+        })
+        .filter(Boolean),
+      recentDeals: asArray(b.recentDeals)
+        .map((row) => {
+          if (!row || typeof row !== 'object') return null;
+          const r = /** @type {Record<string, unknown>} */ (row);
+          const title = String(r.title || r.name || '').trim();
+          if (!title) return null;
+          const src = String(r.source || '').toLowerCase();
+          return {
+            source: src === 'epic' ? 'epic' : src === 'steam' ? 'steam' : 'other',
+            title,
+            subtitle: String(r.subtitle || r.detail || '').trim(),
+          };
+        })
+        .filter(Boolean),
+      milestones: asArray(b.milestones)
+        .map((row) => {
+          if (!row || typeof row !== 'object') return null;
+          const r = /** @type {Record<string, unknown>} */ (row);
+          const text = String(r.text || r.message || '').trim();
+          if (!text) return null;
+          return {
+            text,
+            at: typeof r.at === 'string' ? r.at : null,
+          };
+        })
+        .filter(Boolean),
+      topServers: asArray(b.topServers)
+        .map((row) => {
+          if (!row || typeof row !== 'object') return null;
+          const r = /** @type {Record<string, unknown>} */ (row);
+          const name = String(r.name || r.displayName || '').trim();
+          if (!name) return null;
+          return {
+            name,
+            plays: num(r.plays ?? r.count) ?? 0,
+          };
+        })
+        .filter(Boolean),
     };
   }
 
@@ -183,15 +257,30 @@
     }
   }
 
+  /**
+   * Stats + public activity block (for live wall / leaderboards).
+   */
+  async function fetchPublicActivity() {
+    const stats = await fetchStats();
+    return {
+      stats,
+      public: stats.public || normalizePublic(null),
+      source: stats.source,
+      generatedAt: stats.generatedAt,
+    };
+  }
+
   global.DzbanekStats = {
     apiBase,
     snapshotUrl,
     normalizeStats,
+    normalizePublic,
     formatNum,
     formatUptime,
     fetchStats,
     fetchLiveStats,
     fetchSnapshotStats,
     fetchHealth,
+    fetchPublicActivity,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

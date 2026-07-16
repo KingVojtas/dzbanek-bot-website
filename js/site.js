@@ -50,11 +50,16 @@
   };
 
   window.copyText = async function copyText(text) {
+    var tFn = window.t || (window.DZBANEK_I18N && window.DZBANEK_I18N.t);
     try {
       await navigator.clipboard.writeText(text);
-      window.showToast('Copied: ' + text);
+      var ok = tFn
+        ? tFn('toast.copied', { text: text })
+        : 'Copied: ' + text;
+      window.showToast(ok);
     } catch {
-      window.showToast('Could not copy');
+      var fail = tFn ? tFn('toast.copy_fail') : 'Could not copy';
+      window.showToast(fail);
     }
   };
 })();

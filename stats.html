@@ -60,30 +60,43 @@
           <span class="text-lg font-bold">dzbanek-bot</span>
         </a>
         <div class="hidden items-center gap-5 lg:flex">
-          <a href="index.html" class="text-sm font-medium text-discord-muted hover:text-white">Home</a>
-          <a href="stats.html" class="text-sm font-medium text-white">Stats</a>
-          <a href="permissions.html" class="text-sm font-medium text-discord-muted hover:text-white">Permissions</a>
-          <a href="changelog.html" class="text-sm font-medium text-discord-muted hover:text-white">Changelog</a>
-          <a href="admin.html" class="text-sm font-medium text-discord-muted hover:text-white">Admin</a>
+          <a href="index.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.home">Home</a>
+          <a href="stats.html" class="text-sm font-medium text-white" data-i18n="nav.stats">Stats</a>
+          <a href="leaderboards.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.leaderboards">Leaderboards</a>
+          <a href="status.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.status">Status</a>
+          <a href="permissions.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.permissions">Permissions</a>
+          <a href="changelog.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.changelog">Changelog</a>
+          <a href="admin.html" class="text-sm font-medium text-discord-muted hover:text-white" data-i18n="nav.admin">Admin</a>
+          <div class="flex items-center gap-0.5 rounded-full border border-white/10 bg-discord-elevated/50 p-0.5" role="group" data-i18n-aria="lang.label" aria-label="Language">
+            <button type="button" data-set-lang="en" class="rounded-full px-2.5 py-1 text-xs font-semibold transition" aria-pressed="true">EN</button>
+            <button type="button" data-set-lang="cs" class="rounded-full px-2.5 py-1 text-xs font-semibold transition" aria-pressed="false">CS</button>
+          </div>
           <a
             href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands"
             target="_blank"
             rel="noopener noreferrer"
             class="btn-shine rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold"
+            data-i18n="nav.invite"
             >Add to Server</a
           >
         </div>
-        <button id="menu-btn" type="button" class="rounded-lg p-2 text-discord-muted lg:hidden" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+        <button id="menu-btn" type="button" class="rounded-lg p-2 text-discord-muted lg:hidden" data-i18n-aria="nav.menu" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </nav>
       <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker lg:hidden">
         <div class="flex flex-col gap-1 px-4 py-3">
-          <a href="index.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Home</a>
-          <a href="stats.html" class="rounded-lg px-3 py-2 text-sm text-white">Stats</a>
-          <a href="permissions.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Permissions</a>
-          <a href="changelog.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Changelog</a>
-          <a href="admin.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted">Admin</a>
+          <a href="index.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted" data-i18n="nav.home">Home</a>
+          <a href="stats.html" class="rounded-lg px-3 py-2 text-sm text-white" data-i18n="nav.stats">Stats</a>
+          <a href="leaderboards.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted" data-i18n="nav.leaderboards">Leaderboards</a>
+          <a href="status.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted" data-i18n="nav.status">Status</a>
+          <a href="permissions.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted" data-i18n="nav.permissions">Permissions</a>
+          <a href="changelog.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted" data-i18n="nav.changelog">Changelog</a>
+          <a href="admin.html" class="rounded-lg px-3 py-2 text-sm text-discord-muted" data-i18n="nav.admin">Admin</a>
+          <div class="mt-1 flex items-center gap-0.5 rounded-full border border-white/10 bg-discord-elevated/50 p-0.5 self-start" role="group" data-i18n-aria="lang.label" aria-label="Language">
+            <button type="button" data-set-lang="en" class="rounded-full px-3 py-1.5 text-xs font-semibold transition">EN</button>
+            <button type="button" data-set-lang="cs" class="rounded-full px-3 py-1.5 text-xs font-semibold transition">CS</button>
+          </div>
         </div>
       </div>
     </header>
@@ -91,10 +104,10 @@
     <main class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p class="text-sm font-medium text-discord-blurple">Live dashboard</p>
-          <h1 class="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Bot statistics</h1>
+          <p class="text-sm font-medium text-discord-blurple" data-i18n="statsPage.kicker">Live dashboard</p>
+          <h1 class="mt-1 text-3xl font-bold tracking-tight sm:text-4xl" data-i18n="statsPage.title">Bot statistics</h1>
           <p class="mt-2 text-sm text-discord-muted">
-            Powered by the bot’s public API. Status:
+            <span data-i18n="statsPage.lead">Powered by the bot’s public API. Status:</span>
             <span id="api-status" class="font-medium text-discord-muted">checking…</span>
           </p>
         </div>
@@ -105,6 +118,7 @@
             disabled
             class="rounded-full border border-discord-blurple/40 bg-discord-blurple/15 px-4 py-2 text-sm font-medium text-white opacity-50 cursor-not-allowed hover:bg-discord-blurple/25"
             title="Download a shareable PNG of current KPIs"
+            data-i18n="statsPage.download"
           >
             Download card
           </button>
@@ -114,6 +128,7 @@
             disabled
             class="rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-discord-muted opacity-50 cursor-not-allowed hover:border-discord-blurple/40 hover:text-white"
             title="Copy stats card image to clipboard"
+            data-i18n="statsPage.copy"
           >
             Copy card
           </button>
@@ -121,6 +136,7 @@
             id="refresh-btn"
             type="button"
             class="rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-discord-muted hover:border-discord-blurple/40 hover:text-white"
+            data-i18n="statsPage.refresh"
           >
             Refresh
           </button>
@@ -131,49 +147,49 @@
       <!-- Live KPIs from /api/stats (serverCount, userCount, uptime) -->
       <dl class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div class="rounded-2xl border border-discord-blurple/25 bg-discord-card p-6 shadow-card text-center sm:p-8">
-          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Servers</dt>
+          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted" data-i18n="statsPage.servers">Servers</dt>
           <dd id="stat-servers" class="mt-3 text-4xl font-extrabold sm:text-5xl">—</dd>
-          <p class="mt-2 text-xs text-discord-muted">Guilds the bot is in</p>
+          <p class="mt-2 text-xs text-discord-muted" data-i18n="statsPage.servers_hint">Guilds the bot is in</p>
         </div>
         <div class="rounded-2xl border border-discord-blurple/25 bg-discord-card p-6 shadow-card text-center sm:p-8">
-          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Users</dt>
+          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted" data-i18n="statsPage.users">Users</dt>
           <dd id="stat-users" class="mt-3 text-4xl font-extrabold sm:text-5xl">—</dd>
-          <p class="mt-2 text-xs text-discord-muted">Approx. members across servers</p>
+          <p class="mt-2 text-xs text-discord-muted" data-i18n="statsPage.users_hint">Approx. members across servers</p>
         </div>
         <div class="rounded-2xl border border-discord-blurple/25 bg-discord-card p-6 shadow-card text-center sm:p-8">
-          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted">Uptime</dt>
+          <dt class="text-xs font-medium uppercase tracking-wider text-discord-muted" data-i18n="statsPage.uptime">Uptime</dt>
           <dd id="stat-uptime" class="mt-3 text-4xl font-extrabold sm:text-5xl">—</dd>
-          <p class="mt-2 text-xs text-discord-muted">Process uptime</p>
+          <p class="mt-2 text-xs text-discord-muted" data-i18n="statsPage.uptime_hint">Process uptime</p>
         </div>
       </dl>
 
       <!-- Extra metrics when the richer API provides them -->
       <dl id="extra-stats" class="mt-4 hidden grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div class="rounded-2xl border border-white/5 bg-discord-card p-4">
-          <dt class="text-xs uppercase tracking-wider text-discord-muted">Total plays</dt>
+          <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="statsPage.plays">Total plays</dt>
           <dd id="stat-plays" class="mt-1 text-2xl font-bold">—</dd>
         </div>
         <div class="rounded-2xl border border-white/5 bg-discord-card p-4">
-          <dt class="text-xs uppercase tracking-wider text-discord-muted">Skips</dt>
+          <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="statsPage.skips">Skips</dt>
           <dd id="stat-skips" class="mt-1 text-2xl font-bold">—</dd>
         </div>
         <div class="rounded-2xl border border-white/5 bg-discord-card p-4">
-          <dt class="text-xs uppercase tracking-wider text-discord-muted">Wishlist adds</dt>
+          <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="statsPage.wishlist">Wishlist adds</dt>
           <dd id="stat-wishlist" class="mt-1 text-2xl font-bold">—</dd>
         </div>
       </dl>
 
       <!-- Chart (only when history is present) -->
       <div id="chart-panel" class="mt-10 hidden rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card sm:p-6">
-        <h2 class="text-lg font-semibold">Growth &amp; activity</h2>
-        <p class="mt-1 text-sm text-discord-muted">
+        <h2 class="text-lg font-semibold" data-i18n="statsPage.chart_title">Growth &amp; activity</h2>
+        <p class="mt-1 text-sm text-discord-muted" data-i18n="statsPage.chart_lead">
           Daily snapshots from the bot (plays and server count).
         </p>
         <div class="relative mt-6 h-64 sm:h-80">
           <canvas id="growth-chart" aria-label="Growth chart"></canvas>
         </div>
       </div>
-      <p id="chart-empty" class="mt-8 text-center text-sm text-discord-muted">
+      <p id="chart-empty" class="mt-8 text-center text-sm text-discord-muted" data-i18n="statsPage.chart_empty">
         Live snapshot from the bot API. Historical charts appear when daily history is available.
       </p>
 
@@ -187,16 +203,25 @@
     <footer class="border-t border-white/5 py-10">
       <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
         <p class="text-sm text-discord-muted">© <span id="year"></span> dzbanek-bot</p>
-        <nav class="flex flex-wrap items-center justify-center gap-5 text-sm text-discord-muted">
-          <a href="terms.html" class="hover:text-white">Terms</a>
-          <a href="privacy.html" class="hover:text-white">Privacy</a>
-          <a href="https://github.com/KingVojtas/dzbanek-bot" class="hover:text-white" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="https://buymeacoffee.com/vojtas?status=1" class="text-amber-200/90 hover:text-amber-100" target="_blank" rel="noopener noreferrer">☕ Buy me a coffee</a>
-        </nav>
+        <div class="flex flex-col items-center gap-3 sm:items-end">
+          <nav class="flex flex-wrap items-center justify-center gap-5 text-sm text-discord-muted sm:justify-end">
+            <a href="terms.html" class="hover:text-white" data-i18n="footer.terms_short">Terms</a>
+            <a href="privacy.html" class="hover:text-white" data-i18n="footer.privacy_short">Privacy</a>
+            <a href="https://github.com/KingVojtas/dzbanek-bot" class="hover:text-white" target="_blank" rel="noopener noreferrer" data-i18n="footer.github">GitHub</a>
+            <a href="https://buymeacoffee.com/vojtas?status=1" class="text-amber-200/90 hover:text-amber-100" target="_blank" rel="noopener noreferrer" data-i18n="footer.coffee">☕ Buy me a coffee</a>
+          </nav>
+          <div class="flex flex-col items-center gap-1.5 sm:items-end">
+            <p class="text-xs font-medium uppercase tracking-wider text-discord-muted" data-i18n="footer.made_by">Made by:</p>
+            <img src="assets/dzbanek-labs-logo.png" alt="Dzbanek Labs" width="128" height="128" class="h-auto w-24 rounded-xl object-contain" data-i18n-aria="footer.labs_alt" />
+          </div>
+        </div>
       </div>
     </footer>
 
     <script src="js/config.js"></script>
+    <script src="js/locales/en.js"></script>
+    <script src="js/locales/cs.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
     <script src="js/stats-api.js"></script>

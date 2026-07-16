@@ -34,9 +34,12 @@ const payload = {
   uptimeSec: null,
   generatedAt: raw.generatedAt || new Date().toISOString(),
   history: Array.isArray(raw.history) ? raw.history : [],
+  // Optional marketing aggregates from bot (top tracks, deals, etc.)
+  public: raw.public && typeof raw.public === 'object' ? raw.public : undefined,
   source: 'snapshot',
   note: 'Public snapshot for static hosting. Refresh with: node scripts/export-stats.mjs',
 };
+if (payload.public === undefined) delete payload.public;
 
 await mkdir(dirname(outFile), { recursive: true });
 await writeFile(outFile, JSON.stringify(payload, null, 2) + '\n', 'utf8');
