@@ -235,13 +235,17 @@ header.sticky {
     box-shadow 0.2s ease;
 }
 .now-card-live.is-idle .now-live-badge {
-  color: #949ba4;
-  border-color: rgba(255, 255, 255, 0.06);
+  color: #8b8e97;
+  border-color: rgba(148, 155, 164, 0.25);
+  background: rgba(43, 45, 49, 0.9);
 }
 .now-card-live.is-idle .now-live-badge .dot {
-  background: #6d6f78;
+  background: #72767d;
   box-shadow: none;
-  opacity: 0.9;
+  opacity: 1;
+}
+.now-card-live.is-idle .now-live-badge [data-now='status-label'] {
+  color: #8b8e97;
 }
 @keyframes neon-breathe {
   0%,

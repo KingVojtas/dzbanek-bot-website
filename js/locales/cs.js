@@ -232,7 +232,7 @@
       title: 'Dzbanek teď',
       lead: 'Živá aktivita bota — skladby, příkazy, slevy a milníky.',
       live: 'Právě hraje',
-      activity: 'Aktuální aktivita',
+      activity: 'Nedávná aktivita',
       tracks: 'Top skladby',
       deals: 'Deals Pulse',
       milestones: 'Milníky',
