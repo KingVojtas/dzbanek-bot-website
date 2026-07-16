@@ -1,6 +1,6 @@
 /**
- * Invite QR + copy helpers. Expects qrcode library global when generating QR
- * (https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js).
+ * Invite QR + copy helpers, support CTAs, invite confetti.
+ * Uses local vendor: js/vendor/qrcode.min.js → window.QRCode
  */
 (function (global) {
   function inviteUrl() {
@@ -14,24 +14,115 @@
     return key;
   }
 
-  function paintQr(canvas) {
+  function getQRCodeLib() {
+    return global.QRCode || global.qrcode || null;
+  }
+
+  /**
+   * Paint invite URL onto a <canvas>. Retries briefly if the vendor script is still loading.
+   */
+  function paintQr(canvas, attempt) {
+    attempt = attempt || 0;
     const url = inviteUrl();
-    if (!canvas || !url) return Promise.resolve();
-    if (typeof global.QRCode === 'undefined') {
-      return Promise.reject(new Error('QRCode library missing'));
+    if (!canvas || !url) return Promise.resolve(false);
+
+    const lib = getQRCodeLib();
+    if (!lib || typeof lib.toCanvas !== 'function') {
+      if (attempt < 20) {
+        return new Promise(function (resolve) {
+          setTimeout(function () {
+            paintQr(canvas, attempt + 1).then(resolve);
+          }, 50);
+        });
+      }
+      console.warn('[share-kit] QRCode library missing — load js/vendor/qrcode.min.js before share-kit.js');
+      showQrFallback(canvas, url);
+      return Promise.resolve(false);
     }
-    return global.QRCode.toCanvas(canvas, url, {
-      width: 200,
+
+    // Fixed pixel size; CSS can scale display size
+    const size = 200;
+    canvas.width = size;
+    canvas.height = size;
+    canvas.style.display = '';
+
+    var opts = {
+      width: size,
       margin: 2,
+      errorCorrectionLevel: 'M',
       color: { dark: '#0D0E12', light: '#ffffff' },
+    };
+
+    return new Promise(function (resolve) {
+      var settled = false;
+      function done(ok) {
+        if (settled) return;
+        settled = true;
+        resolve(ok);
+      }
+      function fail(err) {
+        console.warn('[share-kit] QR render failed', err);
+        showQrFallback(canvas, url);
+        done(false);
+      }
+      try {
+        var result = lib.toCanvas(canvas, url, opts, function (err) {
+          if (err) fail(err);
+          else done(true);
+        });
+        // Promise-style API (no callback used / returns Promise)
+        if (result && typeof result.then === 'function') {
+          result.then(function () {
+            done(true);
+          }).catch(fail);
+        }
+      } catch (e) {
+        fail(e);
+      }
     });
   }
 
+  /** Last-resort: external QR image API so the box is never blank */
+  function showQrFallback(canvas, url) {
+    if (!canvas || !canvas.parentNode) return;
+    var img = canvas.parentNode.querySelector('[data-invite-qr-img]');
+    if (!img) {
+      img = document.createElement('img');
+      img.setAttribute('data-invite-qr-img', '1');
+      img.alt = 'Invite QR code';
+      img.width = 200;
+      img.height = 200;
+      img.className = 'rounded-xl bg-white p-2 shadow-card h-[200px] w-[200px] object-contain';
+      canvas.style.display = 'none';
+      canvas.parentNode.appendChild(img);
+    }
+    img.src =
+      'https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=' +
+      encodeURIComponent(url);
+    img.hidden = false;
+  }
+
   function downloadQr(canvas, filename) {
-    if (!canvas) return;
-    const a = document.createElement('a');
-    a.href = canvas.toDataURL('image/png');
+    var img = canvas && canvas.parentNode && canvas.parentNode.querySelector('[data-invite-qr-img]');
+    var href = null;
+    if (img && img.src && !img.hidden) {
+      href = img.src;
+    } else if (canvas) {
+      try {
+        href = canvas.toDataURL('image/png');
+      } catch (e) {
+        href = null;
+      }
+    }
+    if (!href) {
+      global.showToast?.(t('toast.copy_fail'));
+      return;
+    }
+    var a = document.createElement('a');
+    a.href = href;
     a.download = filename || 'dzbanek-bot-invite-qr.png';
+    a.target = '_blank';
+    a.rel = 'noopener';
     a.click();
   }
 
@@ -43,9 +134,7 @@
 
     function refresh() {
       if (!canvas) return;
-      paintQr(canvas).catch(function () {
-        /* ignore missing lib on non-share pages */
-      });
+      paintQr(canvas);
     }
 
     copyBtn?.addEventListener('click', function () {
@@ -67,9 +156,6 @@
     return { refresh };
   }
 
-  /**
-   * Light confetti burst from a point (invite CTAs).
-   */
   function confettiBurst(originEl) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const rect = originEl?.getBoundingClientRect?.();

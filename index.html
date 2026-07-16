@@ -109,9 +109,9 @@
       .nav-link.is-active::after {
         content: '';
         position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -4px;
+        left: 0.6rem;
+        right: 0.6rem;
+        bottom: 0.15rem;
         height: 2px;
         border-radius: 999px;
         background: #5865f2;
@@ -224,32 +224,35 @@
 
   <body class="bg-discord-bg text-white antialiased">
     <!-- ========== NAVIGATION ========== -->
-    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/80 backdrop-blur-xl">
-      <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <a href="#home" class="flex items-center gap-2.5 group">
+    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/85 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-7xl items-center gap-3 px-4 py-2.5 sm:px-6 lg:px-8">
+        <a href="#home" class="flex shrink-0 items-center gap-2.5 group">
           <img
             src="assets/bot-avatar.png"
             alt=""
             width="36"
             height="36"
-            class="h-9 w-9 rounded-2xl object-cover shadow-glow ring-2 ring-discord-blurple/40 transition group-hover:ring-discord-blurple"
+            class="h-9 w-9 rounded-full object-cover shadow-glow ring-2 ring-discord-blurple/40 transition group-hover:ring-discord-blurple"
           />
-          <span class="text-lg font-bold tracking-tight">dzbanek-bot</span>
+          <span class="whitespace-nowrap text-base font-bold tracking-tight sm:text-lg">dzbanek-bot</span>
         </a>
 
-        <div class="hidden items-center gap-5 lg:flex">
-          <a href="#home" data-nav class="nav-link relative text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.home">Home</a>
-          <a href="#features" data-nav class="nav-link relative text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.features">Features</a>
-          <a href="#commands" data-nav class="nav-link relative text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.commands">Commands</a>
-          <a href="stats.html" class="text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.stats">Stats</a>
-          <a href="leaderboards.html" class="text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.leaderboards">Leaderboards</a>
-          <a href="status.html" class="text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.status">Status</a>
-          <a href="permissions.html" class="text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.permissions">Permissions</a>
-          <a href="#faq" data-nav class="nav-link relative text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.faq">FAQ</a>
-          <a href="changelog.html" class="text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.changelog">Changelog</a>
-          <a href="admin.html" class="text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.admin">Admin</a>
+        <div class="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex">
+          <a href="#home" data-nav class="nav-link relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.home">Home</a>
+          <a href="#features" data-nav class="nav-link relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.features">Features</a>
+          <a href="#commands" data-nav class="nav-link relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.commands">Commands</a>
+          <a href="stats.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.stats">Stats</a>
+          <a href="leaderboards.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.leaderboards">Leaderboards</a>
+          <a href="status.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.status">Status</a>
+          <a href="permissions.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.permissions">Permissions</a>
+          <a href="#faq" data-nav class="nav-link relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.faq">FAQ</a>
+          <a href="changelog.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.changelog">Changelog</a>
+          <a href="admin.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.admin">Admin</a>
+        </div>
+
+        <div class="ml-auto hidden items-center gap-2 xl:flex">
           <div
-            class="flex items-center gap-0.5 rounded-full border border-white/10 bg-discord-elevated/50 p-0.5"
+            class="flex items-center gap-0.5 rounded-full border border-white/10 bg-discord-elevated/60 p-0.5"
             role="group"
             data-i18n-aria="lang.label"
             aria-label="Language"
@@ -261,7 +264,7 @@
             href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn-shine rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold shadow-glow transition hover:bg-discord-blurple-hover hover:scale-[1.02] active:scale-[0.98]"
+            class="btn-shine whitespace-nowrap rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold shadow-glow transition hover:bg-discord-blurple-hover hover:scale-[1.02] active:scale-[0.98]"
             data-i18n="nav.invite"
             data-invite-confetti
           >
@@ -269,10 +272,22 @@
           </a>
         </div>
 
+        <div class="ml-auto flex items-center gap-2 xl:hidden">
+          <div
+            class="flex items-center gap-0.5 rounded-full border border-white/10 bg-discord-elevated/60 p-0.5"
+            role="group"
+            data-i18n-aria="lang.label"
+            aria-label="Language"
+          >
+            <button type="button" data-set-lang="en" class="rounded-full px-2 py-1 text-xs font-semibold transition" aria-pressed="true">EN</button>
+            <button type="button" data-set-lang="cs" class="rounded-full px-2 py-1 text-xs font-semibold transition" aria-pressed="false">CS</button>
+          </div>
+        </div>
+
         <button
           id="menu-btn"
           type="button"
-          class="inline-flex items-center justify-center rounded-lg p-2 text-discord-muted hover:bg-discord-elevated hover:text-white lg:hidden"
+          class="inline-flex items-center justify-center rounded-lg p-2 text-discord-muted hover:bg-discord-elevated hover:text-white xl:hidden"
           data-i18n-aria="nav.menu"
           aria-label="Toggle navigation menu"
           aria-expanded="false"
@@ -289,7 +304,7 @@
         </button>
       </nav>
 
-      <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker lg:hidden">
+      <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker xl:hidden">
         <div class="flex flex-col gap-1 px-4 py-3">
           <a href="#home" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.home">Home</a>
           <a href="#features" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.features">Features</a>
@@ -301,15 +316,6 @@
           <a href="#faq" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.faq">FAQ</a>
           <a href="changelog.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.changelog">Changelog</a>
           <a href="admin.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.admin">Admin</a>
-          <div
-            class="mt-1 flex items-center gap-0.5 rounded-full border border-white/10 bg-discord-elevated/50 p-0.5 self-start"
-            role="group"
-            data-i18n-aria="lang.label"
-            aria-label="Language"
-          >
-            <button type="button" data-set-lang="en" class="rounded-full px-3 py-1.5 text-xs font-semibold transition" aria-pressed="true">EN</button>
-            <button type="button" data-set-lang="cs" class="rounded-full px-3 py-1.5 text-xs font-semibold transition" aria-pressed="false">CS</button>
-          </div>
           <a
             href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands"
             target="_blank"
@@ -1084,7 +1090,16 @@
               </div>
             </div>
             <div class="flex flex-col items-center justify-center gap-3">
-              <canvas id="invite-qr-canvas" width="200" height="200" class="rounded-xl bg-white p-2 shadow-card" data-i18n-aria="share.qr_label" aria-label="Invite QR code"></canvas>
+              <div class="rounded-xl bg-white p-3 shadow-card">
+                <canvas
+                  id="invite-qr-canvas"
+                  width="200"
+                  height="200"
+                  class="block h-[200px] w-[200px]"
+                  data-i18n-aria="share.qr_label"
+                  aria-label="Invite QR code"
+                ></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -1300,7 +1315,7 @@
     <script src="js/site.js"></script>
     <script src="js/stats-api.js"></script>
     <script src="js/public-feed.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="js/vendor/qrcode.min.js"></script>
     <script src="js/share-kit.js"></script>
     <script src="js/command-playground.js"></script>
     <script>
