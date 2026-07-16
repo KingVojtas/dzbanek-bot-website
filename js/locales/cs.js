@@ -237,6 +237,7 @@
       deals: 'Deals Pulse',
       milestones: 'Milníky',
       live_badge: 'LIVE',
+      not_playing_badge: 'NEHRAJE',
       playing_prefix: 'Hraje:',
       idle_playing: 'Právě nic nehraje.',
       empty_tracks: 'Zatím žádný žebříček — bot ho doplní, až bude k dispozici.',

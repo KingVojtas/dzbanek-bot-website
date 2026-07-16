@@ -187,8 +187,9 @@ header.sticky {
     transform: translateY(-42px) translateX(12px) scale(1.1);
   }
 }
-/* Pulsating neon + LIVE badge — used on “Currently playing” */
-.now-card-activity {
+/* Pulsating neon when music is actively playing */
+.now-card-live.is-playing {
+  overflow: visible;
   border: 1px solid rgba(88, 101, 242, 0.35);
   box-shadow:
     0 0 0 1px rgba(88, 101, 242, 0.12),
@@ -196,9 +197,11 @@ header.sticky {
     0 0 36px -8px rgba(155, 89, 255, 0.35);
   animation: neon-breathe 2.8s ease-in-out infinite;
 }
-.now-card-live.now-card-activity {
-  /* playing card hosts pulse + notes */
+.now-card-live.is-idle {
   overflow: visible;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.5);
+  animation: none;
 }
 .now-live-badge {
   position: absolute;
@@ -216,6 +219,9 @@ header.sticky {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #ed4245;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 .now-live-badge .dot {
   width: 0.45rem;
@@ -224,6 +230,18 @@ header.sticky {
   background: #ed4245;
   box-shadow: 0 0 8px #ed4245;
   opacity: 0.85;
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.now-card-live.is-idle .now-live-badge {
+  color: #949ba4;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+.now-card-live.is-idle .now-live-badge .dot {
+  background: #6d6f78;
+  box-shadow: none;
+  opacity: 0.9;
 }
 @keyframes neon-breathe {
   0%,
@@ -241,7 +259,7 @@ header.sticky {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .now-card-activity {
+  .now-card-live.is-playing {
     animation: none;
   }
   .now-notes span {

@@ -236,6 +236,7 @@
       deals: 'Deals Pulse',
       milestones: 'Milestones',
       live_badge: 'LIVE',
+      not_playing_badge: 'NOT PLAYING',
       playing_prefix: 'Playing:',
       idle_playing: 'Nothing playing right now.',
       empty_tracks: 'No rankings yet — the bot will fill top tracks when available.',

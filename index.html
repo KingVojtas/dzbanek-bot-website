@@ -1023,8 +1023,11 @@
           </div>
 
           <!-- Currently playing -->
-          <article class="now-card now-card-live now-card-activity reveal mt-10" data-now-card="playing">
-            <span class="now-live-badge"><span class="dot" aria-hidden="true"></span><span data-i18n="now.live_badge">LIVE</span></span>
+          <article class="now-card now-card-live is-idle reveal mt-10" data-now-card="playing">
+            <span class="now-live-badge">
+              <span class="dot" aria-hidden="true"></span>
+              <span data-now="status-label">NOT PLAYING</span>
+            </span>
             <h3 class="pr-16 text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.live">Currently playing</h3>
             <div class="mt-4 now-playing-row" data-now="playing"></div>
             <div class="now-notes" data-now="notes" aria-hidden="true" hidden>

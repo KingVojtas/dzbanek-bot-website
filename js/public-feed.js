@@ -119,7 +119,17 @@
     return '<p class="text-sm text-discord-muted py-2">' + escapeHtml(msg) + '</p>';
   }
 
-  function renderPlaying(el, notesEl, np) {
+  function setPlayingCardState(cardEl, isPlaying) {
+    if (!cardEl) return;
+    cardEl.classList.toggle('is-playing', isPlaying);
+    cardEl.classList.toggle('is-idle', !isPlaying);
+    var label = cardEl.querySelector('[data-now="status-label"]');
+    if (label) {
+      label.textContent = isPlaying ? t('now.live_badge') : t('now.not_playing_badge');
+    }
+  }
+
+  function renderPlaying(el, notesEl, np, cardEl) {
     if (!el) return;
     if (!np || !np.title) {
       el.innerHTML =
@@ -129,6 +139,7 @@
         escapeHtml(t('now.idle_playing')) +
         '</p></div>';
       if (notesEl) notesEl.hidden = true;
+      setPlayingCardState(cardEl, false);
       return;
     }
     var art =
@@ -151,6 +162,7 @@
       line +
       '</p></div>';
     if (notesEl) notesEl.hidden = false;
+    setPlayingCardState(cardEl, true);
   }
 
   function renderCommands(el, cmds) {
@@ -270,6 +282,7 @@
       root.querySelector('[data-now="playing"]'),
       root.querySelector('[data-now="notes"]'),
       pub.nowPlaying,
+      root.querySelector('[data-now-card="playing"]') || root.querySelector('.now-card-live'),
     );
     renderCommands(root.querySelector('[data-now="commands"]'), pub.recentCommands);
     renderDeals(root.querySelector('[data-now="deals"]'), pub.recentDeals);
