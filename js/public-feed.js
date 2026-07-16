@@ -120,10 +120,14 @@
   }
 
   function setPlayingCardState(cardEl, isPlaying) {
-    if (!cardEl) return;
-    cardEl.classList.toggle('is-playing', isPlaying);
-    cardEl.classList.toggle('is-idle', !isPlaying);
-    var label = cardEl.querySelector('[data-now="status-label"]');
+    var card =
+      cardEl ||
+      document.getElementById('now-playing-card') ||
+      document.querySelector('[data-now-card="playing"]');
+    if (!card) return;
+    card.classList.toggle('is-playing', !!isPlaying);
+    card.classList.toggle('is-idle', !isPlaying);
+    var label = card.querySelector('[data-now="status-label"]');
     if (label) {
       label.textContent = isPlaying ? t('now.live_badge') : t('now.not_playing_badge');
     }
@@ -131,7 +135,8 @@
 
   function renderPlaying(el, notesEl, np, cardEl) {
     if (!el) return;
-    if (!np || !np.title) {
+    var playing = !!(np && String(np.title || '').trim());
+    if (!playing) {
       el.innerHTML =
         '<div class="flex items-center gap-3 text-discord-muted">' +
         '<div class="now-album flex items-center justify-center text-lg opacity-40">♪</div>' +
@@ -157,7 +162,7 @@
     el.innerHTML =
       '<img class="now-album" src="' +
       escapeHtml(art) +
-      '" alt="" width="56" height="56" loading="lazy" />' +
+      '" alt="" width="56" height="56" loading="lazy" onerror="this.style.opacity=0.4" />' +
       '<div class="min-w-0"><p class="text-sm leading-relaxed">' +
       line +
       '</p></div>';
@@ -282,7 +287,9 @@
       root.querySelector('[data-now="playing"]'),
       root.querySelector('[data-now="notes"]'),
       pub.nowPlaying,
-      root.querySelector('[data-now-card="playing"]') || root.querySelector('.now-card-live'),
+      root.querySelector('#now-playing-card') ||
+        root.querySelector('[data-now-card="playing"]') ||
+        root.querySelector('.now-card-live'),
     );
     renderCommands(root.querySelector('[data-now="commands"]'), pub.recentCommands);
     renderDeals(root.querySelector('[data-now="deals"]'), pub.recentDeals);
