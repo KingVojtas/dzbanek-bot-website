@@ -145,6 +145,8 @@
       'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands',
     GITHUB: 'https://github.com/KingVojtas/dzbanek-bot',
     GITHUB_SITE: 'https://github.com/KingVojtas/dzbanek-bot-website',
+    /** Optional tip jar — shown in footers */
+    COFFEE_URL: 'https://buymeacoffee.com/vojtas?status=1',
     SITE_URL: detectSiteUrl(),
     OG_IMAGE:
       'https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png',

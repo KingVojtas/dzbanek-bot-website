@@ -168,6 +168,7 @@ Test link previews with [opengraph.xyz](https://www.opengraph.xyz) or by pasting
 |------|--------|
 | Invite link | `js/config.js` → `INVITE_URL` (also hardcoded CTAs use client id `923262419923513445`) |
 | Support server | `index.html` → Support Server button `href` |
+| Buy me a coffee | `js/config.js` → `COFFEE_URL` (also linked in page footers) |
 | Bot avatar | Replace `assets/bot-avatar.png` |
 | API base | `js/config.js` or `localStorage.dzbanek_api_base` |
 
