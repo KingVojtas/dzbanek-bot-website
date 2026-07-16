@@ -1422,28 +1422,42 @@
           document.getElementById('live-users').textContent = S.formatNum(stats.users);
           document.getElementById('live-uptime').textContent = S.formatUptime(stats.uptimeSec);
           if (hint) {
-            hint.textContent =
-              'Live from ' + S.apiBase() + '/api/stats · ' + new Date().toLocaleTimeString();
-            hint.className = 'mt-2 text-xs text-discord-green';
+            if (stats.source === 'snapshot') {
+              hint.textContent =
+                'Public snapshot · updated ' +
+                new Date(stats.generatedAt).toLocaleString() +
+                ' · <a href="stats.html" class="text-discord-blurple hover:underline">Full stats</a>';
+              // allow HTML for the link
+              hint.innerHTML = hint.textContent.replace(
+                '· Full stats',
+                '· <a href="stats.html" class="text-discord-blurple hover:underline">Full stats</a>',
+              );
+              hint.innerHTML =
+                'Public snapshot · updated ' +
+                new Date(stats.generatedAt).toLocaleString() +
+                ' · <a href="stats.html" class="text-discord-blurple hover:underline">Full stats</a>';
+              hint.className = 'mt-2 text-xs text-discord-muted';
+            } else {
+              hint.textContent =
+                'Live from ' +
+                (S.apiBase() || 'API') +
+                '/api/stats · ' +
+                new Date().toLocaleTimeString();
+              hint.className = 'mt-2 text-xs text-discord-green';
+            }
           }
         } catch (err) {
           console.error(err);
           if (hint) {
-            if (window.DZBANEK && window.DZBANEK.IS_STATIC_HOSTING) {
-              hint.innerHTML =
-                'Live Servers/Users/Uptime need a public bot API (GitHub Pages is static). Set <code class="text-white/80">PRODUCTION_API_BASE</code> in <code class="text-white/80">js/config.js</code>. Capability numbers below still apply.';
-            } else {
-              hint.innerHTML =
-                'Cannot reach live stats at <code class="text-white/80">' +
-                (S.apiBase() || '(not configured)') +
-                '/api/stats</code>. Start the bot or fix the API URL, then refresh. Capability numbers below still apply. · <a href="stats.html" class="text-discord-blurple hover:underline">Stats page</a>';
-            }
+            hint.innerHTML =
+              'Stats unavailable. On the public site, commit <code class="text-white/80">data/stats.json</code> (run <code class="text-white/80">node scripts/export-stats.mjs</code>). · <a href="stats.html" class="text-discord-blurple hover:underline">Stats page</a>';
             hint.className = 'mt-2 text-xs text-discord-muted';
           }
         }
       }
       loadLive();
-      setInterval(loadLive, 15_000);
+      // Live API: refresh often. Snapshot: refresh occasionally (file rarely changes).
+      setInterval(loadLive, 60_000);
     </script>
   </body>
 </html>

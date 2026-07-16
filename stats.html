@@ -302,11 +302,21 @@
           document.getElementById('generated-at').textContent =
             'Last updated: ' + new Date(data.generatedAt).toLocaleString();
           renderChart(data.history);
-          setStatus(true, 'online · live from bot');
+          if (data.source === 'snapshot') {
+            setStatus(true, 'public snapshot · not live process');
+          } else {
+            setStatus(true, 'online · live from bot');
+          }
           window.DzbanekStatsCard?.setStats(data);
         } catch (err) {
           console.error(err);
-          setStatus(false, 'offline — cannot reach ' + S.apiBase() + '/api/stats');
+          const base = S.apiBase();
+          setStatus(
+            false,
+            base
+              ? 'offline — cannot reach ' + base + '/api/stats or data/stats.json'
+              : 'offline — missing data/stats.json snapshot',
+          );
           renderChart([]);
           window.DzbanekStatsCard?.setStats(null);
         }
@@ -314,7 +324,7 @@
 
       document.getElementById('refresh-btn').addEventListener('click', loadStats);
       loadStats();
-      setInterval(loadStats, 15_000);
+      setInterval(loadStats, 60_000);
     </script>
   </body>
 </html>

@@ -1,0 +1,28 @@
+{
+  "servers": 1,
+  "approxUsers": 12,
+  "totalPlays": 95,
+  "totalSkips": 3,
+  "totalWishlistAdds": 3,
+  "uniqueUsersTracked": 2,
+  "uptimeSec": null,
+  "generatedAt": "2026-07-16T11:48:55.575Z",
+  "history": [
+    {
+      "date": "2026-07-15",
+      "servers": 1,
+      "approxUsers": 12,
+      "totalPlays": 95,
+      "uniqueUsersTracked": 2
+    },
+    {
+      "date": "2026-07-16",
+      "servers": 1,
+      "approxUsers": 12,
+      "totalPlays": 95,
+      "uniqueUsersTracked": 2
+    }
+  ],
+  "source": "snapshot",
+  "note": "Public snapshot for static hosting. Refresh with: node scripts/export-stats.mjs"
+}

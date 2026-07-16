@@ -1,6 +1,9 @@
 /**
- * Fetch and normalize live bot stats.
- * API base comes from js/config.js (auto: localhost→:3848, else same origin).
+ * Fetch and normalize bot stats.
+ *
+ * Order:
+ *   1. Live API (config API_BASE + /api/stats) when configured
+ *   2. Static snapshot data/stats.json (works on GitHub Pages / custom domain)
  *
  * Supports both payload shapes:
  *   { serverCount, userCount, uptime }
@@ -9,7 +12,7 @@
 (function (global) {
   function apiBase() {
     if (global.DZBANEK && typeof global.DZBANEK.refreshApiBase === 'function') {
-      return String(global.DZBANEK.refreshApiBase()).replace(/\/$/, '');
+      return String(global.DZBANEK.refreshApiBase() || '').replace(/\/$/, '');
     }
     const base = (global.DZBANEK && global.DZBANEK.API_BASE) || '';
     if (base) return String(base).replace(/\/$/, '');
@@ -17,12 +20,22 @@
       if (typeof location !== 'undefined' && location.origin && location.origin !== 'null') {
         const h = location.hostname;
         if (h === 'localhost' || h === '127.0.0.1') return 'http://127.0.0.1:3848';
-        return location.origin;
       }
     } catch (e) {
       /* ignore */
     }
-    return 'http://127.0.0.1:3848';
+    return '';
+  }
+
+  function snapshotUrl() {
+    const path =
+      (global.DZBANEK && global.DZBANEK.STATS_SNAPSHOT) || 'data/stats.json';
+    // Resolve relative to current page directory (works on / and /stats.html)
+    try {
+      return new URL(path, location.href).href;
+    } catch (e) {
+      return path;
+    }
   }
 
   /**
@@ -40,6 +53,10 @@
     const totalWishlistAdds = num(raw.totalWishlistAdds ?? raw.wishlistAdds);
     const uniqueUsersTracked = num(raw.uniqueUsersTracked ?? raw.trackedUsers);
     const history = Array.isArray(raw.history) ? raw.history : [];
+    const source =
+      typeof raw.source === 'string'
+        ? raw.source
+        : null;
 
     return {
       servers,
@@ -51,6 +68,7 @@
       uniqueUsersTracked,
       history,
       generatedAt: typeof raw.generatedAt === 'string' ? raw.generatedAt : new Date().toISOString(),
+      source,
       raw,
     };
   }
@@ -77,10 +95,20 @@
     return `${m}m`;
   }
 
-  async function fetchStats() {
+  async function fetchLiveStats() {
     const base = apiBase();
-    if (!base) {
-      throw new Error('No API base configured (static host / GitHub Pages)');
+    if (!base) return null;
+    // Block mixed content: HTTPS page → HTTP API
+    try {
+      if (
+        typeof location !== 'undefined' &&
+        location.protocol === 'https:' &&
+        base.startsWith('http://')
+      ) {
+        return null;
+      }
+    } catch (e) {
+      /* ignore */
     }
     const res = await fetch(base + '/api/stats', {
       credentials: 'omit',
@@ -90,13 +118,55 @@
     const raw = await res.json();
     const normalized = normalizeStats(raw);
     if (!normalized) throw new Error('Invalid stats payload');
+    normalized.source = normalized.source || 'live';
     return normalized;
+  }
+
+  async function fetchSnapshotStats() {
+    const res = await fetch(snapshotUrl(), {
+      credentials: 'omit',
+      cache: 'no-store',
+    });
+    if (!res.ok) throw new Error('Snapshot HTTP ' + res.status);
+    const raw = await res.json();
+    const normalized = normalizeStats(raw);
+    if (!normalized) throw new Error('Invalid snapshot');
+    normalized.source = normalized.source || 'snapshot';
+    // Snapshot uptime is stale — don't pretend the process is still up
+    if (normalized.source === 'snapshot') {
+      normalized.uptimeSec = null;
+    }
+    return normalized;
+  }
+
+  /**
+   * Live API first, then public snapshot (for GitHub Pages / custom domain).
+   */
+  async function fetchStats() {
+    try {
+      const live = await fetchLiveStats();
+      if (live) return live;
+    } catch (e) {
+      // fall through to snapshot
+    }
+    return fetchSnapshotStats();
   }
 
   async function fetchHealth() {
     try {
       const base = apiBase();
-      if (!base) return { ok: false };
+      if (!base) return { ok: false, snapshot: true };
+      try {
+        if (
+          typeof location !== 'undefined' &&
+          location.protocol === 'https:' &&
+          base.startsWith('http://')
+        ) {
+          return { ok: false, snapshot: true };
+        }
+      } catch (e) {
+        /* ignore */
+      }
       const res = await fetch(base + '/api/health', {
         credentials: 'omit',
         cache: 'no-store',
@@ -115,10 +185,13 @@
 
   global.DzbanekStats = {
     apiBase,
+    snapshotUrl,
     normalizeStats,
     formatNum,
     formatUptime,
     fetchStats,
+    fetchLiveStats,
+    fetchSnapshotStats,
     fetchHealth,
   };
 })(typeof window !== 'undefined' ? window : globalThis);
