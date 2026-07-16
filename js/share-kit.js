@@ -156,32 +156,40 @@
     return { refresh };
   }
 
-  function confettiBurst(originEl) {
+  /**
+   * @param {Element} [originEl]
+   * @param {{ count?: number, spread?: number, durationMs?: number }} [opts]
+   */
+  function confettiBurst(originEl, opts) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    opts = opts || {};
+    const count = opts.count || 28;
+    const spread = opts.spread || 90;
+    const durationMs = opts.durationMs || 900;
     const rect = originEl?.getBoundingClientRect?.();
     const cx = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
     const cy = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
-    const colors = ['#5865F2', '#23A559', '#FEE75C', '#EB459E', '#57F287'];
+    const colors = ['#5865F2', '#23A559', '#FEE75C', '#EB459E', '#57F287', '#ffffff'];
     const layer = document.createElement('div');
     layer.className = 'confetti-layer';
     layer.setAttribute('aria-hidden', 'true');
     document.body.appendChild(layer);
-    for (let i = 0; i < 28; i++) {
+    for (let i = 0; i < count; i++) {
       const p = document.createElement('span');
       p.className = 'confetti-piece';
-      const angle = (Math.PI * 2 * i) / 28 + Math.random() * 0.4;
-      const dist = 60 + Math.random() * 90;
+      const angle = (Math.PI * 2 * i) / count + Math.random() * 0.5;
+      const dist = 50 + Math.random() * spread;
       p.style.left = cx + 'px';
       p.style.top = cy + 'px';
       p.style.background = colors[i % colors.length];
       p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
-      p.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
-      p.style.animationDelay = Math.random() * 0.05 + 's';
+      p.style.setProperty('--dy', Math.sin(angle) * dist - 20 + 'px');
+      p.style.animationDelay = Math.random() * 0.08 + 's';
       layer.appendChild(p);
     }
     setTimeout(function () {
       layer.remove();
-    }, 900);
+    }, durationMs);
   }
 
   function bindInviteDelight() {

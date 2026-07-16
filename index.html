@@ -1022,9 +1022,10 @@
             <a href="leaderboards.html" class="mt-3 inline-block text-sm font-medium text-discord-blurple hover:underline" data-i18n="now.view_boards">Open leaderboards →</a>
           </div>
 
-          <!-- Now.Live: currently playing -->
-          <article class="now-card now-card-live reveal mt-10" data-now-card="playing">
-            <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.live">Now.Live</h3>
+          <!-- Currently playing -->
+          <article class="now-card now-card-live now-card-activity reveal mt-10" data-now-card="playing">
+            <span class="now-live-badge"><span class="dot" aria-hidden="true"></span><span data-i18n="now.live_badge">LIVE</span></span>
+            <h3 class="pr-16 text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.live">Currently playing</h3>
             <div class="mt-4 now-playing-row" data-now="playing"></div>
             <div class="now-notes" data-now="notes" aria-hidden="true" hidden>
               <span>♪</span><span>♫</span><span>♪</span><span>♩</span>
@@ -1032,10 +1033,9 @@
           </article>
 
           <div class="mt-4 grid gap-4 md:grid-cols-2">
-            <!-- Now.Activity -->
-            <article class="now-card now-card-activity reveal reveal-delay-1" data-now-card="activity">
-              <span class="now-live-badge"><span class="dot" aria-hidden="true"></span><span data-i18n="now.live_badge">LIVE</span></span>
-              <h3 class="pr-16 text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.activity">Now.Activity</h3>
+            <!-- Current Activity -->
+            <article class="now-card reveal reveal-delay-1" data-now-card="activity">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.activity">Current Activity</h3>
               <ul class="mt-4 space-y-0" data-now="commands"></ul>
             </article>
             <!-- Deals Pulse -->

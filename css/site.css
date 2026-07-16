@@ -187,6 +187,7 @@ header.sticky {
     transform: translateY(-42px) translateX(12px) scale(1.1);
   }
 }
+/* Pulsating neon + LIVE badge — used on “Currently playing” */
 .now-card-activity {
   border: 1px solid rgba(88, 101, 242, 0.35);
   box-shadow:
@@ -194,6 +195,10 @@ header.sticky {
     0 0 22px -4px rgba(88, 101, 242, 0.45),
     0 0 36px -8px rgba(155, 89, 255, 0.35);
   animation: neon-breathe 2.8s ease-in-out infinite;
+}
+.now-card-live.now-card-activity {
+  /* playing card hosts pulse + notes */
+  overflow: visible;
 }
 .now-live-badge {
   position: absolute;

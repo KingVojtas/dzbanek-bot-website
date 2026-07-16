@@ -230,8 +230,8 @@
     now: {
       title: 'Dzbanek Now',
       lead: 'Live activity from the bot — tracks, commands, deals, and milestones.',
-      live: 'Now.Live',
-      activity: 'Now.Activity',
+      live: 'Currently playing',
+      activity: 'Current Activity',
       tracks: 'Top tracks',
       deals: 'Deals Pulse',
       milestones: 'Milestones',

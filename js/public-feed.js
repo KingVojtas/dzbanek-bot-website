@@ -52,7 +52,12 @@
 
   function confettiAt(el) {
     if (global.DzbanekShareKit && global.DzbanekShareKit.confettiBurst) {
-      global.DzbanekShareKit.confettiBurst(el || document.body);
+      // Stronger burst for milestones
+      global.DzbanekShareKit.confettiBurst(el || document.body, {
+        count: 48,
+        spread: 140,
+        durationMs: 1200,
+      });
     }
   }
 
@@ -98,13 +103,8 @@
       return m.id && !seenSet[m.id];
     });
     if (!fresh.length) return;
-    // First visit: seed without confetti spam
-    if (!seen.length) {
-      writeSeenMilestones(milestones.map(function (m) {
-        return m.id;
-      }));
-      return;
-    }
+
+    // Celebrate new milestones (including first time we see any)
     confettiAt(cardEl);
     writeSeenMilestones(
       seen.concat(
