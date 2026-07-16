@@ -17,6 +17,7 @@
   /**
    * Public bot API (HTTPS) for GitHub Pages / custom domain.
    * Railway always-on deploy — admin + live stats without local npm start.
+   * Prefer same-origin admin on Railway: https://bot-production-c393.up.railway.app/admin.html
    */
   var PRODUCTION_API_BASE = 'https://bot-production-c393.up.railway.app';
 
@@ -32,6 +33,8 @@
   /** Hosts that only serve static files (no Node bot). */
   function isStaticSiteHost(hostname) {
     if (!hostname) return false;
+    // Railway hosts the bot API + static site together
+    if (/\.up\.railway\.app$/i.test(hostname)) return false;
     if (/\.github\.io$/i.test(hostname)) return true;
     if (hostname === 'dzbanek-bot.vojtas.io') return true;
     return false;
