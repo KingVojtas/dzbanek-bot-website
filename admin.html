@@ -99,16 +99,18 @@
         <p id="api-offline-detail" class="mt-2 text-sm text-discord-muted"></p>
         <ul class="mt-3 list-disc space-y-1 pl-5 text-sm text-discord-muted">
           <li>
-            Default API base is
-            <code class="text-white/80">http://127.0.0.1:3848</code>
-            (stats + admin on the bot Website API).
+            API base is auto-detected (same origin in production; local bot on
+            <code class="text-white/80">:3848</code> when developing).
           </li>
           <li>
-            Bot must be running with <code class="text-white/80">API_ENABLED=true</code> and
-            <code class="text-white/80">API_PORT=3848</code> (default).
+            Public site (e.g. GitHub Pages): set
+            <code class="text-white/80">PRODUCTION_API_BASE</code> in
+            <code class="text-white/80">js/config.js</code>, or paste the public API URL below.
           </li>
           <li>
-            CORS: bot allows localhost / Live Server origins; restart the bot after API changes.
+            Bot must allow this site’s origin in <code class="text-white/80">WEBSITE_ORIGIN</code> and
+            set <code class="text-white/80">OAUTH_REDIRECT_URI</code> to your public
+            <code class="text-white/80">…/api/auth/callback</code>.
           </li>
         </ul>
         <div class="mt-4 flex flex-wrap items-end gap-2">
@@ -117,7 +119,7 @@
             <input
               id="api-base-input"
               type="url"
-              placeholder="http://127.0.0.1:3848"
+              placeholder="https://your-api.example.com"
               class="mt-1 w-full rounded-xl border border-white/10 bg-discord-elevated px-3 py-2 text-sm text-white"
             />
           </label>
@@ -157,9 +159,9 @@
           Login with Discord
         </a>
         <p id="login-hint" class="mt-4 text-xs text-discord-muted">
-          Requires <code class="text-white/70">DISCORD_CLIENT_SECRET</code> in the bot
-          <code class="text-white/70">.env</code> and this redirect in the Discord portal:
-          <code class="text-white/70">http://127.0.0.1:3848/api/auth/callback</code>
+          Requires <code class="text-white/70">DISCORD_CLIENT_SECRET</code> on the bot and an OAuth2
+          redirect matching <code id="oauth-callback-hint" class="text-white/70">…/api/auth/callback</code>
+          in the Discord Developer Portal.
         </p>
         <p id="login-error" class="mt-4 hidden text-sm text-red-400"></p>
         <div
@@ -181,7 +183,7 @@
             <li>Copy <strong class="text-white/80">Client Secret</strong> → bot <code class="text-white/70">.env</code> as <code class="text-white/70">DISCORD_CLIENT_SECRET=…</code></li>
             <li>
               Under Redirects, add
-              <code class="text-white/70">http://127.0.0.1:3848/api/auth/callback</code>
+              <code id="oauth-callback-help" class="text-white/70">…/api/auth/callback</code>
             </li>
             <li>Save <code class="text-white/70">.env</code>, <strong class="text-white/80">restart the bot</strong>, then try Login again</li>
           </ol>
@@ -554,11 +556,34 @@
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
     <script>
-      const DEFAULT_API = 'http://127.0.0.1:3848';
       const SESSION_KEY = 'dzbanek_admin_session';
 
       function apiBase() {
-        return (window.DZBANEK?.API_BASE || DEFAULT_API).replace(/\/$/, '');
+        if (window.DZBANEK?.refreshApiBase) {
+          return String(window.DZBANEK.refreshApiBase()).replace(/\/$/, '');
+        }
+        const base = window.DZBANEK?.API_BASE || '';
+        if (base) return String(base).replace(/\/$/, '');
+        try {
+          if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            return 'http://127.0.0.1:3848';
+          }
+          return location.origin;
+        } catch (e) {
+          return 'http://127.0.0.1:3848';
+        }
+      }
+
+      function oauthCallbackUrl() {
+        return apiBase() + '/api/auth/callback';
+      }
+
+      function updateOAuthHints() {
+        const cb = oauthCallbackUrl();
+        const a = document.getElementById('oauth-callback-hint');
+        const b = document.getElementById('oauth-callback-help');
+        if (a) a.textContent = cb;
+        if (b) b.textContent = cb;
       }
 
       const $ = (id) => document.getElementById(id);
@@ -597,22 +622,22 @@
       }
 
       function setLoginHref() {
-        // Prefer returning to the API host (serves admin.html) so OAuth never hits a dead Live Server port.
-        const apiOrigin = apiBase().replace(/\/$/, '');
+        // Prefer same origin as API when possible so OAuth lands on a live host.
         let retOrigin = location.origin;
         try {
-          const apiUrl = new URL(apiOrigin.includes('://') ? apiOrigin : 'http://127.0.0.1:3848');
-          // If site is opened from API port, use that; otherwise still ask API to return to itself when possible
-          if (location.port === apiUrl.port || location.host === apiUrl.host) {
+          const apiUrl = new URL(apiBase());
+          if (location.host === apiUrl.host) {
             retOrigin = location.origin;
           } else {
-            retOrigin = apiUrl.origin;
+            // Cross-origin admin (e.g. GitHub Pages → public API): return to this page’s origin
+            retOrigin = location.origin;
           }
         } catch {
-          retOrigin = 'http://127.0.0.1:3848';
+          retOrigin = location.origin;
         }
         $('login-btn').href =
           apiBase() + '/api/auth/login?return=' + encodeURIComponent(retOrigin);
+        updateOAuthHints();
       }
       setLoginHref();
 
@@ -621,7 +646,9 @@
       if (oauthErr) {
         const messages = {
           token_exchange:
-            'Discord token exchange failed. Confirm DISCORD_CLIENT_SECRET matches this app (client id 923262419923513445), OAUTH_REDIRECT_URI is exactly http://127.0.0.1:3848/api/auth/callback, then restart the bot. Check the bot console for the Discord error body.',
+            'Discord token exchange failed. Confirm DISCORD_CLIENT_SECRET and that OAUTH_REDIRECT_URI matches ' +
+            oauthCallbackUrl() +
+            ' exactly, then restart the bot.',
           no_token: 'Discord did not return an access token.',
           user_fetch: 'Could not load your Discord profile after login.',
           missing_code: 'OAuth callback missing authorization code.',
@@ -1133,7 +1160,10 @@
           return;
         }
         localStorage.setItem('dzbanek_api_base', raw);
-        if (window.DZBANEK) window.DZBANEK.API_BASE = raw;
+        if (window.DZBANEK) {
+          window.DZBANEK.API_BASE = raw;
+          if (window.DZBANEK.refreshApiBase) window.DZBANEK.refreshApiBase();
+        }
         setLoginHref();
         window.showToast?.('API base saved');
         init();

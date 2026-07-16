@@ -1,5 +1,6 @@
 /**
- * Fetch and normalize live bot stats (default http://127.0.0.1:3848/api/stats).
+ * Fetch and normalize live bot stats.
+ * API base comes from js/config.js (auto: localhost→:3848, else same origin).
  *
  * Supports both payload shapes:
  *   { serverCount, userCount, uptime }
@@ -7,8 +8,21 @@
  */
 (function (global) {
   function apiBase() {
-    const base = (global.DZBANEK && global.DZBANEK.API_BASE) || 'http://127.0.0.1:3848';
-    return String(base).replace(/\/$/, '');
+    if (global.DZBANEK && typeof global.DZBANEK.refreshApiBase === 'function') {
+      return String(global.DZBANEK.refreshApiBase()).replace(/\/$/, '');
+    }
+    const base = (global.DZBANEK && global.DZBANEK.API_BASE) || '';
+    if (base) return String(base).replace(/\/$/, '');
+    try {
+      if (typeof location !== 'undefined' && location.origin && location.origin !== 'null') {
+        const h = location.hostname;
+        if (h === 'localhost' || h === '127.0.0.1') return 'http://127.0.0.1:3848';
+        return location.origin;
+      }
+    } catch (e) {
+      /* ignore */
+    }
+    return 'http://127.0.0.1:3848';
   }
 
   /**
