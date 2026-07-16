@@ -78,7 +78,11 @@
   }
 
   async function fetchStats() {
-    const res = await fetch(apiBase() + '/api/stats', {
+    const base = apiBase();
+    if (!base) {
+      throw new Error('No API base configured (static host / GitHub Pages)');
+    }
+    const res = await fetch(base + '/api/stats', {
       credentials: 'omit',
       cache: 'no-store',
     });
@@ -91,7 +95,9 @@
 
   async function fetchHealth() {
     try {
-      const res = await fetch(apiBase() + '/api/health', {
+      const base = apiBase();
+      if (!base) return { ok: false };
+      const res = await fetch(base + '/api/health', {
         credentials: 'omit',
         cache: 'no-store',
       });

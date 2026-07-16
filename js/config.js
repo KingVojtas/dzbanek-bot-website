@@ -5,23 +5,21 @@
  *   Override: localStorage.setItem('dzbanek_api_base', 'https://api.example.com')
  *
  * PRODUCTION_API_BASE — set when the site host does not reverse-proxy /api to the bot.
- *   Leave '' to auto-detect:
- *     - localhost / 127.0.0.1 → http://127.0.0.1:3848 (local bot)
- *     - otherwise → same origin (bot serves site or reverse-proxy /api)
+ *   Required for GitHub Pages (static host cannot serve /api/stats).
+ *   Example: 'https://your-vps.example.com' or a tunnel URL (HTTPS preferred).
  *
  * SITE_URL — absolute site origin for Open Graph / share previews.
- *   Production default: https://dzbanek-bot.vojtas.io
- *
- * OG_IMAGE — absolute image URL (Discord/Twitter need absolute paths).
  */
 (function () {
-  /** Canonical public site (custom domain). */
+  /** Canonical public site (custom domain, if configured). */
   var PUBLIC_SITE = 'https://dzbanek-bot.vojtas.io';
 
   /**
-   * Public bot API origin if /api is not on the same host as the site.
-   * Example: 'https://bot-api.vojtas.io' or leave '' if the bot is reverse-proxied
-   * at https://dzbanek-bot.vojtas.io/api/...
+   * Public bot API origin when the website is static (e.g. GitHub Pages).
+   * Leave '' only if the bot serves this site / reverse-proxies /api on the same host.
+   *
+   * Example after you deploy the bot publicly:
+   *   var PRODUCTION_API_BASE = 'https://bot.yourdomain.com';
    */
   var PRODUCTION_API_BASE = '';
 
@@ -34,11 +32,15 @@
     );
   }
 
+  /** GitHub Pages cannot run the Node bot — never treat it as the API host. */
+  function isGitHubPagesHost(hostname) {
+    return /\.github\.io$/i.test(hostname || '');
+  }
+
   function detectSiteUrl() {
     try {
       if (typeof location !== 'undefined' && /^https?:$/i.test(location.protocol)) {
         if (!isLocalHost(location.hostname)) {
-          // Custom domain (or any non-local host) → use that origin as site root
           return location.origin;
         }
       }
@@ -65,7 +67,11 @@
         if (isLocalHost(location.hostname)) {
           return 'http://127.0.0.1:3848';
         }
-        // Production: same origin (bot hosts static files or reverse-proxy /api)
+        // Static hosts (GitHub Pages): no bot process — leave unset until PRODUCTION_API_BASE
+        if (isGitHubPagesHost(location.hostname)) {
+          return '';
+        }
+        // Custom domain / VPS that reverse-proxies /api or co-hosts the bot
         return location.origin;
       }
     } catch (e) {
@@ -75,10 +81,28 @@
     return 'http://127.0.0.1:3848';
   }
 
+  function detectStaticHosting() {
+    try {
+      if (typeof location === 'undefined') return false;
+      if (isLocalHost(location.hostname)) return false;
+      if (PRODUCTION_API_BASE) return false;
+      try {
+        if (localStorage.getItem('dzbanek_api_base')) return false;
+      } catch (e) {
+        /* ignore */
+      }
+      return isGitHubPagesHost(location.hostname);
+    } catch (e) {
+      return false;
+    }
+  }
+
   window.DZBANEK = {
     PUBLIC_SITE: PUBLIC_SITE,
     PRODUCTION_API_BASE: PRODUCTION_API_BASE,
     API_BASE: detectApiBase(),
+    /** True when site is on GitHub Pages with no API base configured. */
+    IS_STATIC_HOSTING: detectStaticHosting(),
     INVITE_URL:
       'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands',
     GITHUB: 'https://github.com/KingVojtas/dzbanek-bot',
@@ -86,9 +110,9 @@
     SITE_URL: detectSiteUrl(),
     OG_IMAGE:
       'https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png',
-    /** Recompute API base after localStorage change */
     refreshApiBase: function () {
       window.DZBANEK.API_BASE = detectApiBase();
+      window.DZBANEK.IS_STATIC_HOSTING = detectStaticHosting();
       return window.DZBANEK.API_BASE;
     },
   };

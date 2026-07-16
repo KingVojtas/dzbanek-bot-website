@@ -1233,6 +1233,24 @@
         const dot = document.getElementById('status-dot');
         const text = document.getElementById('status-text');
         if (!dot || !text) return;
+
+        // GitHub Pages is static HTML only — it cannot host the bot API.
+        if (window.DZBANEK && window.DZBANEK.IS_STATIC_HOSTING) {
+          dot.classList.add('is-offline');
+          text.textContent =
+            'Live stats need a public bot API. This site is on GitHub Pages (static only) — set PRODUCTION_API_BASE in js/config.js to your bot host.';
+          text.className = 'text-discord-muted';
+          return;
+        }
+
+        if (!S.apiBase()) {
+          dot.classList.add('is-offline');
+          text.textContent =
+            'No stats API URL configured. Set PRODUCTION_API_BASE or localStorage dzbanek_api_base.';
+          text.className = 'text-discord-muted';
+          return;
+        }
+
         const health = await S.fetchHealth();
         if (health.ok) {
           dot.classList.add('is-online');
@@ -1251,7 +1269,9 @@
           } catch {
             dot.classList.add('is-offline');
             text.textContent =
-              'Stats API offline at ' + S.apiBase() + ' (start the bot for live numbers).';
+              'Stats API offline at ' +
+              S.apiBase() +
+              ' (start the bot or fix PRODUCTION_API_BASE / CORS).';
           }
         }
       })();
@@ -1409,10 +1429,15 @@
         } catch (err) {
           console.error(err);
           if (hint) {
-            hint.innerHTML =
-              'Cannot reach live stats at <code class="text-white/80">' +
-              S.apiBase() +
-              '/api/stats</code>. Start the bot, then refresh. Capability numbers below still apply. · <a href="stats.html" class="text-discord-blurple hover:underline">Stats page</a>';
+            if (window.DZBANEK && window.DZBANEK.IS_STATIC_HOSTING) {
+              hint.innerHTML =
+                'Live Servers/Users/Uptime need a public bot API (GitHub Pages is static). Set <code class="text-white/80">PRODUCTION_API_BASE</code> in <code class="text-white/80">js/config.js</code>. Capability numbers below still apply.';
+            } else {
+              hint.innerHTML =
+                'Cannot reach live stats at <code class="text-white/80">' +
+                (S.apiBase() || '(not configured)') +
+                '/api/stats</code>. Start the bot or fix the API URL, then refresh. Capability numbers below still apply. · <a href="stats.html" class="text-discord-blurple hover:underline">Stats page</a>';
+            }
             hint.className = 'mt-2 text-xs text-discord-muted';
           }
         }
