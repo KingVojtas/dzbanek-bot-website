@@ -64,7 +64,7 @@
   }
 
   function siteUrl() {
-    return (global.DZBANEK && global.DZBANEK.SITE_URL) || 'https://kingvojtas.github.io/dzbanek-bot-website';
+    return (global.DZBANEK && global.DZBANEK.SITE_URL) || 'https://dzbanek-bot.vojtas.io';
   }
 
   function roundRect(ctx, x, y, w, h, r) {

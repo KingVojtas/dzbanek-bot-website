@@ -33,49 +33,59 @@ Or open HTML files directly (API admin cookies need a real origin; prefer `serve
 
 ### With the bot API (live stats + admin)
 
-This site talks to **one** bot HTTP API (default):
+`js/config.js` **auto-detects** the API base:
+
+| Where you open the site | API base used |
+|-------------------------|----------------|
+| `localhost` / `127.0.0.1` | `http://127.0.0.1:3848` (local bot) |
+| Production domain / bot host | **Same origin** (bot serves the site or reverse-proxy `/api`) |
+| GitHub Pages + remote bot | Set `PRODUCTION_API_BASE` in `js/config.js` to your public API URL |
+
+**Public site (custom domain):**
 
 ```
-http://127.0.0.1:3848
+https://dzbanek-bot.vojtas.io/
 ```
 
-When the bot runs next to this repo, it also **serves these HTML files** on the same port so OAuth never redirects to a dead Live Server. Prefer:
-
-```
-http://127.0.0.1:3848/admin.html
-http://127.0.0.1:3848/
-```
+(GitHub Pages fallback: `https://kingvojtas.github.io/dzbanek-bot-website/`)
 
 | Endpoint | Use |
 |----------|-----|
 | `GET /api/stats` | Servers, users, uptime (+ plays/history when available) |
 | `GET /api/health` | Online / ready |
 | `/api/auth/*` + `/api/admin/*` | Admin dashboard (Discord OAuth) |
-| static `/admin.html`, `/`, … | Marketing site (embedded by bot when folder is found) |
+| static `/admin.html`, `/`, … | Marketing site (when bot serves files or GitHub Pages) |
 
-**Per-guild digests (admin):** Steam min discount / min rating, news keywords, and UTC post hour for news/steam/epic. Post hours only work if the bot host cron runs at least hourly (see bot `config.json` crons).
+**Production bot `.env` (not localhost):**
 
-**Leveling (admin):** toggle chat XP, level-up notification channel, cooldown, and reset leaderboard. Bot needs **Message Content Intent**. Discord commands: `/rank`, `/leaderboard`.
+```env
+PUBLIC_BASE_URL=https://dzbanek-bot.vojtas.io
+WEBSITE_ORIGIN=https://dzbanek-bot.vojtas.io,https://kingvojtas.github.io
+OAUTH_REDIRECT_URI=https://dzbanek-bot.vojtas.io/api/auth/callback
+DISCORD_CLIENT_SECRET=…
+SESSION_SECRET=long-random-string
+```
 
-1. In the bot repo, set `.env` (see bot `.env.example`):
-   - `API_ENABLED=true`
-   - `API_PORT=3848`
-   - `WEBSITE_ORIGIN` including every origin you serve the site from, e.g.  
-     `http://127.0.0.1:3000,http://localhost:3000,http://127.0.0.1:5500,http://localhost:5500,null`  
-     (bot also allows any `localhost` / `127.0.0.1` port in dev)
-   - For admin: `DISCORD_CLIENT_SECRET`, `SESSION_SECRET`,  
-     `OAUTH_REDIRECT_URI=http://127.0.0.1:3848/api/auth/callback`
-2. Start the bot (`npm start` / `npm run dev`) and **restart** after `.env` or API changes.
-3. Serve this site (`npx serve` or Live Server); open `admin.html` or `stats.html`.
+If only the **static** site is on `dzbanek-bot.vojtas.io` and the bot API is elsewhere, set `PRODUCTION_API_BASE` in `js/config.js` to that API origin and use that origin in `OAUTH_REDIRECT_URI` / Discord redirects instead.
+
+Add the OAuth callback URL under Discord Developer Portal → OAuth2 → Redirects.
+
+**Local development:**
+
+```env
+OAUTH_REDIRECT_URI=http://127.0.0.1:3848/api/auth/callback
+```
+
+Then open `http://127.0.0.1:3848/admin.html` (bot serves the site) or set `localStorage.dzbanek_api_base`.
 
 **Override API URL in the browser** (no rebuild):
 
 ```js
-localStorage.setItem('dzbanek_api_base', 'http://127.0.0.1:3848');
+localStorage.setItem('dzbanek_api_base', 'https://bot.yourdomain.com');
 // then reload
 ```
 
-Default is set in `js/config.js` → `window.DZBANEK.API_BASE`.
+Default logic is in `js/config.js` → `window.DZBANEK.API_BASE`.
 
 ## Features
 
@@ -117,9 +127,19 @@ Pages ship with **absolute** `og:image` / `twitter:image` pointing at:
 https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png
 ```
 
-`js/config.js` sets `SITE_URL` (GitHub Pages default) and `OG_IMAGE`. `js/seo.js` rewrites `og:url` when the site is served.
+`js/config.js` sets `SITE_URL` (`https://dzbanek-bot.vojtas.io`) and `OG_IMAGE`. `js/seo.js` rewrites `og:url` when the site is served.
 
-Enable **GitHub Pages** (Settings → Pages → Deploy from `main` / root) for:
+### Custom domain (GitHub Pages)
+
+1. Repo **Settings → Pages → Custom domain**: `dzbanek-bot.vojtas.io` (or rely on the `CNAME` file in this repo).
+2. DNS at your domain host (for `vojtas.io`):
+   - **Type:** `CNAME`
+   - **Name / host:** `dzbanek-bot`
+   - **Value / target:** `kingvojtas.github.io`
+3. Wait for DNS + GitHub HTTPS certificate (can take minutes to hours).
+4. Open **https://dzbanek-bot.vojtas.io/**
+
+Fallback without custom domain:
 
 ```
 https://kingvojtas.github.io/dzbanek-bot-website/
