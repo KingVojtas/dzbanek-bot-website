@@ -671,21 +671,15 @@
       }
 
       function setLoginHref() {
-        // Prefer same origin as API when possible so OAuth lands on a live host.
-        let retOrigin = location.origin;
+        // Directory that contains admin.html (supports GitHub project pages: /repo-name/)
+        let returnBase = location.origin;
         try {
-          const apiUrl = new URL(apiBase());
-          if (location.host === apiUrl.host) {
-            retOrigin = location.origin;
-          } else {
-            // Cross-origin admin (e.g. GitHub Pages → public API): return to this page’s origin
-            retOrigin = location.origin;
-          }
+          returnBase = new URL('.', location.href).href.replace(/\/$/, '');
         } catch {
-          retOrigin = location.origin;
+          returnBase = location.origin;
         }
         $('login-btn').href =
-          apiBase() + '/api/auth/login?return=' + encodeURIComponent(retOrigin);
+          apiBase() + '/api/auth/login?return=' + encodeURIComponent(returnBase);
         updateOAuthHints();
       }
       setLoginHref();
