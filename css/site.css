@@ -156,6 +156,14 @@ header.sticky {
   font-size: 1rem;
   line-height: 1;
 }
+.lang-flag-svg {
+  display: block;
+  width: 1.15rem;
+  height: 0.78rem;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
 @media (max-width: 640px) {
   header.sticky {
     padding-right: 1rem;

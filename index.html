@@ -1028,23 +1028,35 @@
           <div class="reveal mx-auto max-w-2xl text-center">
             <h2 class="text-3xl font-bold tracking-tight sm:text-4xl" data-i18n="now.title">Dzbanek Now</h2>
             <p class="mt-3 text-discord-muted" data-i18n="now.lead">
-              Public activity from the bot — top tracks, deals pulse, and milestones.
+              Live numbers from the bot API — no sample data.
             </p>
             <p class="mt-2 text-xs text-discord-muted" data-now="note"></p>
             <a href="leaderboards.html" class="mt-3 inline-block text-sm font-medium text-discord-blurple hover:underline" data-i18n="now.view_boards">Open leaderboards →</a>
           </div>
           <div class="mt-10 grid gap-4 md:grid-cols-3">
             <article class="reveal rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.tracks">Top tracks</h3>
-              <ul class="mt-3" data-now="tracks"></ul>
+              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.live">Live totals</h3>
+              <ul class="mt-3" data-now="live"></ul>
             </article>
             <article class="reveal reveal-delay-1 rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.deals">Deals pulse</h3>
-              <ul class="mt-3" data-now="deals"></ul>
+              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.activity">Activity</h3>
+              <ul class="mt-3" data-now="activity"></ul>
             </article>
             <article class="reveal reveal-delay-2 rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.milestones">Milestones</h3>
+              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.milestones">Highlights</h3>
               <ul class="mt-3" data-now="milestones"></ul>
+            </article>
+          </div>
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <article class="reveal rounded-2xl border border-white/5 bg-discord-card/80 p-5 shadow-card">
+              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.tracks">Top tracks</h3>
+              <p class="mt-1 text-xs text-discord-muted" data-i18n="now.tracks_hint">From the bot when it publishes rankings</p>
+              <ul class="mt-3" data-now="tracks"></ul>
+            </article>
+            <article class="reveal reveal-delay-1 rounded-2xl border border-white/5 bg-discord-card/80 p-5 shadow-card">
+              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.deals">Deals pulse</h3>
+              <p class="mt-1 text-xs text-discord-muted" data-i18n="now.deals_hint">From the bot when it publishes deal posts</p>
+              <ul class="mt-3" data-now="deals"></ul>
             </article>
           </div>
         </div>

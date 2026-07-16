@@ -213,37 +213,14 @@
     return normalized;
   }
 
-  function isPublicEmpty(pub) {
-    if (!pub) return true;
-    return (
-      !(pub.topTracks && pub.topTracks.length) &&
-      !(pub.recentDeals && pub.recentDeals.length) &&
-      !(pub.milestones && pub.milestones.length) &&
-      !(pub.topServers && pub.topServers.length)
-    );
-  }
-
   /**
    * Live API first, then public snapshot (for GitHub Pages / custom domain).
-   * If live stats lack marketing `public` data, merge snapshot public (sample/export).
+   * Never invent marketing rows — only real API / exported snapshot fields.
    */
   async function fetchStats() {
     try {
       const live = await fetchLiveStats();
-      if (live) {
-        if (isPublicEmpty(live.public)) {
-          try {
-            const snap = await fetchSnapshotStats();
-            if (snap && !isPublicEmpty(snap.public)) {
-              live.public = snap.public;
-              live.publicFromSnapshot = true;
-            }
-          } catch (e2) {
-            /* keep live as-is */
-          }
-        }
-        return live;
-      }
+      if (live) return live;
     } catch (e) {
       // fall through to snapshot
     }

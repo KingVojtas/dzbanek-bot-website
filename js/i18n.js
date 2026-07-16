@@ -167,11 +167,28 @@
     el.className = 'lang-corner';
     el.setAttribute('role', 'group');
     el.setAttribute('aria-label', 'Language');
+    // SVG flags (Windows often cannot render regional-indicator emoji flags)
+    var flagGb =
+      '<svg class="lang-flag-svg" viewBox="0 0 60 40" width="18" height="12" aria-hidden="true" focusable="false">' +
+      '<rect width="60" height="40" fill="#012169"/>' +
+      '<path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>' +
+      '<path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="4"/>' +
+      '<path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>' +
+      '<path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="6"/>' +
+      '</svg>';
+    var flagCz =
+      '<svg class="lang-flag-svg" viewBox="0 0 60 40" width="18" height="12" aria-hidden="true" focusable="false">' +
+      '<rect width="60" height="40" fill="#fff"/>' +
+      '<rect y="20" width="60" height="20" fill="#D7141A"/>' +
+      '<path d="M0,0 L30,20 L0,40 Z" fill="#11457E"/>' +
+      '</svg>';
     el.innerHTML =
       '<button type="button" data-set-lang="en" class="lang-corner-btn" aria-pressed="false" title="English">' +
-      '<span class="lang-flag" aria-hidden="true">🇬🇧</span><span>EN</span></button>' +
+      flagGb +
+      '<span>EN</span></button>' +
       '<button type="button" data-set-lang="cs" class="lang-corner-btn" aria-pressed="false" title="Čeština">' +
-      '<span class="lang-flag" aria-hidden="true">🇨🇿</span><span>CS</span></button>';
+      flagCz +
+      '<span>CS</span></button>';
     document.body.appendChild(el);
   }
 
