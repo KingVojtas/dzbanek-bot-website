@@ -55,6 +55,8 @@ http://127.0.0.1:3848/
 
 **Per-guild digests (admin):** Steam min discount / min rating, news keywords, and UTC post hour for news/steam/epic. Post hours only work if the bot host cron runs at least hourly (see bot `config.json` crons).
 
+**Leveling (admin):** toggle chat XP, level-up notification channel, cooldown, and reset leaderboard. Bot needs **Message Content Intent**. Discord commands: `/rank`, `/leaderboard`.
+
 1. In the bot repo, set `.env` (see bot `.env.example`):
    - `API_ENABLED=true`
    - `API_PORT=3848`
