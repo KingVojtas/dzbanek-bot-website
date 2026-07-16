@@ -1228,51 +1228,36 @@
       const S = window.DzbanekStats;
       const apiBase = () => S.apiBase();
 
-      // Status strip (stats API health — not Discord online status)
+      // Status strip — live API or public snapshot (GitHub Pages has no bot process)
       (async function statusStrip() {
         const dot = document.getElementById('status-dot');
         const text = document.getElementById('status-text');
         if (!dot || !text) return;
 
-        // GitHub Pages is static HTML only — it cannot host the bot API.
-        if (window.DZBANEK && window.DZBANEK.IS_STATIC_HOSTING) {
-          dot.classList.add('is-offline');
-          text.textContent =
-            'Live stats need a public bot API. This site is on GitHub Pages (static only) — set PRODUCTION_API_BASE in js/config.js to your bot host.';
-          text.className = 'text-discord-muted';
-          return;
-        }
-
-        if (!S.apiBase()) {
-          dot.classList.add('is-offline');
-          text.textContent =
-            'No stats API URL configured. Set PRODUCTION_API_BASE or localStorage dzbanek_api_base.';
-          text.className = 'text-discord-muted';
-          return;
-        }
-
-        const health = await S.fetchHealth();
-        if (health.ok) {
+        try {
+          const stats = await S.fetchStats();
+          if (stats.source === 'snapshot') {
+            // Public site: snapshot is the expected “online” state for friends
+            dot.classList.add('is-online');
+            text.textContent =
+              'Public stats online (snapshot · ' +
+              new Date(stats.generatedAt).toLocaleString() +
+              ')';
+            text.className = 'text-discord-muted';
+            return;
+          }
+          const health = await S.fetchHealth();
           dot.classList.add('is-online');
           text.textContent =
-            'Stats API online at ' +
-            S.apiBase() +
-            (health.ready ? ' · bot connected to Discord' : ' · bot still connecting…');
+            'Live stats online · ' +
+            (S.apiBase() || 'API') +
+            (health.ok && health.ready ? ' · bot connected to Discord' : '');
           text.className = 'text-discord-muted';
-        } else {
-          // Health optional — try stats endpoint as proof of life
-          try {
-            await S.fetchStats();
-            dot.classList.add('is-online');
-            text.textContent = 'Live stats online · ' + S.apiBase() + '/api/stats';
-            text.className = 'text-discord-muted';
-          } catch {
-            dot.classList.add('is-offline');
-            text.textContent =
-              'Stats API offline at ' +
-              S.apiBase() +
-              ' (start the bot or fix PRODUCTION_API_BASE / CORS).';
-          }
+        } catch {
+          dot.classList.add('is-offline');
+          text.textContent =
+            'Stats unavailable — missing data/stats.json or live API. Run node scripts/export-stats.mjs and push.';
+          text.className = 'text-discord-muted';
         }
       })();
 
