@@ -66,7 +66,7 @@
           <a href="changelog.html" class="text-sm font-medium text-discord-muted hover:text-white">Changelog</a>
           <a href="admin.html" class="text-sm font-medium text-discord-muted hover:text-white">Admin</a>
           <a
-            href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
+            href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands"
             target="_blank"
             rel="noopener noreferrer"
             class="btn-shine rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold"
@@ -98,14 +98,35 @@
             <span id="api-status" class="font-medium text-discord-muted">checking…</span>
           </p>
         </div>
-        <button
-          id="refresh-btn"
-          type="button"
-          class="rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-discord-muted hover:border-discord-blurple/40 hover:text-white"
-        >
-          Refresh
-        </button>
+        <div class="flex flex-wrap gap-2">
+          <button
+            id="stats-share-download"
+            type="button"
+            disabled
+            class="rounded-full border border-discord-blurple/40 bg-discord-blurple/15 px-4 py-2 text-sm font-medium text-white opacity-50 cursor-not-allowed hover:bg-discord-blurple/25"
+            title="Download a shareable PNG of current KPIs"
+          >
+            Download card
+          </button>
+          <button
+            id="stats-share-copy"
+            type="button"
+            disabled
+            class="rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-discord-muted opacity-50 cursor-not-allowed hover:border-discord-blurple/40 hover:text-white"
+            title="Copy stats card image to clipboard"
+          >
+            Copy card
+          </button>
+          <button
+            id="refresh-btn"
+            type="button"
+            class="rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-discord-muted hover:border-discord-blurple/40 hover:text-white"
+          >
+            Refresh
+          </button>
+        </div>
       </div>
+      <canvas id="stats-share-canvas" class="sr-only" width="1200" height="630" aria-hidden="true"></canvas>
 
       <!-- Live KPIs from /api/stats (serverCount, userCount, uptime) -->
       <dl class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -178,6 +199,7 @@
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
     <script src="js/stats-api.js"></script>
+    <script src="js/stats-card.js"></script>
     <script>
       const S = window.DzbanekStats;
       document.getElementById('api-base-label').textContent = S.apiBase();
@@ -281,10 +303,12 @@
             'Last updated: ' + new Date(data.generatedAt).toLocaleString();
           renderChart(data.history);
           setStatus(true, 'online · live from bot');
+          window.DzbanekStatsCard?.setStats(data);
         } catch (err) {
           console.error(err);
           setStatus(false, 'offline — cannot reach ' + S.apiBase() + '/api/stats');
           renderChart([]);
+          window.DzbanekStatsCard?.setStats(null);
         }
       }
 

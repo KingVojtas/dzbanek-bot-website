@@ -1,10 +1,8 @@
 /**
- * Fetch and normalize live bot stats from the Express stats API
- * (default http://127.0.0.1:3848/api/stats).
+ * Fetch and normalize live bot stats (default http://127.0.0.1:3848/api/stats).
  *
- * Supports both the simple Express shape:
+ * Supports both payload shapes:
  *   { serverCount, userCount, uptime }
- * and the richer Website API shape:
  *   { servers, approxUsers, totalPlays, uptimeSec, history, ... }
  */
 (function (global) {

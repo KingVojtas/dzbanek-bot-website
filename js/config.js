@@ -11,9 +11,10 @@
  * OG_IMAGE — absolute image URL (Discord/Twitter need absolute paths).
  */
 window.DZBANEK = {
+  // Bot HTTP API (stats + admin OAuth) — default matches EXPRESS/API on :3848
   API_BASE: localStorage.getItem('dzbanek_api_base') || 'http://127.0.0.1:3848',
   INVITE_URL:
-    'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands',
+    'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands',
   GITHUB: 'https://github.com/KingVojtas/dzbanek-bot',
   GITHUB_SITE: 'https://github.com/KingVojtas/dzbanek-bot-website',
   SITE_URL: 'https://kingvojtas.github.io/dzbanek-bot-website',

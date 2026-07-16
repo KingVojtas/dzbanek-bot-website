@@ -72,7 +72,7 @@
           <a href="changelog.html" class="text-sm font-medium text-discord-muted hover:text-white">Changelog</a>
           <a href="admin.html" data-nav-page="admin.html" class="text-sm font-medium text-discord-muted hover:text-white">Admin</a>
           <a
-            href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
+            href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands"
             target="_blank"
             rel="noopener noreferrer"
             class="btn-shine rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold shadow-glow hover:bg-discord-blurple-hover"
@@ -168,6 +168,119 @@
         </div>
       </div>
 
+      <!-- Permissions calculator -->
+      <section
+        id="perm-calc"
+        class="mt-10 rounded-2xl border border-discord-blurple/25 bg-discord-card p-5 shadow-card sm:p-6"
+        aria-labelledby="perm-calc-title"
+      >
+        <p class="text-sm font-medium text-discord-blurple">Interactive</p>
+        <h2 id="perm-calc-title" class="mt-1 text-xl font-bold tracking-tight sm:text-2xl">
+          Permissions calculator
+        </h2>
+        <p class="mt-2 max-w-2xl text-sm text-discord-muted">
+          Toggle feature packs to build a custom invite. Core text permissions stay on — the bot
+          always needs to see channels, reply, and post embeds. Music-only servers can turn off
+          Manage Messages if they never use digests.
+        </p>
+
+        <div class="mt-6 grid gap-6 lg:grid-cols-2">
+          <div class="space-y-3">
+            <label
+              class="flex cursor-not-allowed items-start gap-3 rounded-xl border border-white/10 bg-discord-elevated/40 px-4 py-3 opacity-90"
+            >
+              <input
+                type="checkbox"
+                checked
+                disabled
+                class="mt-1 h-4 w-4 rounded border-white/20 bg-discord-darker text-discord-blurple"
+                aria-label="Core text permissions (required)"
+              />
+              <span>
+                <span class="block font-semibold text-white">Core text <span class="text-xs font-medium text-discord-muted">(required)</span></span>
+                <span class="mt-0.5 block text-sm text-discord-muted"
+                  >View Channel · Send Messages · Embed Links</span
+                >
+              </span>
+            </label>
+
+            <label
+              class="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-discord-elevated/30 px-4 py-3 transition hover:border-discord-blurple/40"
+            >
+              <input
+                id="perm-music"
+                type="checkbox"
+                checked
+                class="mt-1 h-4 w-4 rounded border-white/20 bg-discord-darker text-discord-blurple focus:ring-discord-blurple"
+              />
+              <span>
+                <span class="block font-semibold text-white">Music</span>
+                <span class="mt-0.5 block text-sm text-discord-muted">Connect · Speak — join voice and play audio</span>
+              </span>
+            </label>
+
+            <label
+              class="flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-discord-elevated/30 px-4 py-3 transition hover:border-discord-blurple/40"
+            >
+              <input
+                id="perm-digest"
+                type="checkbox"
+                checked
+                class="mt-1 h-4 w-4 rounded border-white/20 bg-discord-darker text-discord-blurple focus:ring-discord-blurple"
+              />
+              <span>
+                <span class="block font-semibold text-white">Digest cleanup</span>
+                <span class="mt-0.5 block text-sm text-discord-muted"
+                  >Manage Messages — delete the bot’s own previous Steam/Epic digest posts</span
+                >
+              </span>
+            </label>
+          </div>
+
+          <div class="rounded-xl border border-white/5 bg-discord-darker/80 p-4">
+            <p class="text-xs font-semibold uppercase tracking-wider text-discord-muted">Selected</p>
+            <ul id="perm-list" class="mt-2 space-y-1.5 text-sm text-white"></ul>
+
+            <p class="mt-4 text-xs font-semibold uppercase tracking-wider text-discord-muted">Bitfield</p>
+            <p id="perm-bitfield" class="mt-1 font-mono text-2xl font-bold text-discord-blurple">—</p>
+
+            <p class="mt-4 text-xs font-semibold uppercase tracking-wider text-discord-muted">Invite URL</p>
+            <a
+              id="perm-url"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-1 block break-all font-mono text-xs text-discord-muted hover:text-discord-blurple"
+            ></a>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              <a
+                id="perm-open"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-shine rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold shadow-glow hover:bg-discord-blurple-hover"
+                >Open invite</a
+              >
+              <button
+                id="perm-copy"
+                type="button"
+                class="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-discord-muted hover:border-discord-blurple/40 hover:text-white"
+              >
+                Copy link
+              </button>
+              <button
+                id="perm-reset"
+                type="button"
+                class="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-discord-muted hover:border-white/20 hover:text-white"
+              >
+                Reset recommended
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div class="mt-8 grid gap-4 sm:grid-cols-2">
         <div class="rounded-2xl border border-white/5 bg-discord-card p-5">
           <h2 class="font-semibold">OAuth scopes</h2>
@@ -189,11 +302,12 @@
 
       <div class="mt-10 flex flex-wrap gap-3">
         <a
-          href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3166376&scope=bot%20applications.commands"
+          data-perm-invite
+          href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands"
           target="_blank"
           rel="noopener noreferrer"
           class="btn-shine rounded-full bg-discord-blurple px-6 py-3 text-sm font-semibold shadow-glow hover:bg-discord-blurple-hover"
-          >Invite with recommended permissions</a
+          >Invite with selected permissions</a
         >
         <a
           href="privacy.html"
@@ -218,5 +332,6 @@
     <script src="js/config.js"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
+    <script src="js/permissions-calc.js"></script>
   </body>
 </html>

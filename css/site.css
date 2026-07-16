@@ -108,6 +108,18 @@ input:focus-visible {
 .cmd-row.hidden-by-filter {
   display: none;
 }
+.cmd-row.is-playground-active {
+  background-color: rgba(88, 101, 242, 0.12);
+  box-shadow: inset 3px 0 0 #5865f2;
+}
+.cmd-chip.is-active {
+  border-color: rgba(88, 101, 242, 0.55);
+  background: rgba(88, 101, 242, 0.2);
+  color: #fff;
+}
+.playground-flash {
+  animation: mock-in 0.35s ease;
+}
 .faq-item[open] summary {
   color: #fff;
 }
@@ -188,7 +200,8 @@ input:focus-visible {
   .avatar-float,
   .avatar-glow,
   .btn-shine::after,
-  .mock-slide.is-active {
+  .mock-slide.is-active,
+  .playground-flash {
     animation: none !important;
     transition: none !important;
   }
