@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="dzbanek-bot — your Discord music DJ, Steam & Epic deal hunter, and RSS news desk in one open-source bot."
+      content="dzbanek-bot — Discord music, Steam & Epic deals, RSS news, chat leveling, welcome messages, and wishlist alerts. Open source discord.js bot."
     />
-    <title>dzbanek-bot — Music, Deals & News for Discord</title>
+    <title>dzbanek-bot — Music, Deals, Levels & News for Discord</title>
     <!-- Open Graph / Twitter — absolute image for Discord link previews -->
-    <meta property="og:title" content="dzbanek-bot — Music, Deals & News for Discord" />
+    <meta property="og:title" content="dzbanek-bot — Music, Deals, Levels & News for Discord" />
     <meta
       property="og:description"
-      content="Your server’s music DJ, Steam & Epic deal hunter, and RSS news desk — open source discord.js bot."
+      content="Music, Steam & Epic deals, RSS news, XP leveling, welcome/goodbye, and wishlist DMs — open source discord.js bot."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://dzbanek-bot.vojtas.io/" />
@@ -24,7 +24,7 @@
     <meta name="twitter:title" content="dzbanek-bot" />
     <meta
       name="twitter:description"
-      content="Music, Steam deals, Epic free games, RSS news & wishlist alerts for Discord."
+      content="Music, Steam deals, Epic free games, RSS news, XP levels, welcome messages & wishlist alerts."
     />
     <meta
       name="twitter:image"
@@ -326,14 +326,16 @@
               >
             </h1>
             <p class="reveal reveal-delay-2 mt-4 text-xl font-semibold text-white sm:text-2xl">
-              Your server’s music DJ, deal hunter, and news desk — in one bot.
+              Music, deals, news, levels &amp; welcomes — one multipurpose bot.
             </p>
             <p
               class="reveal reveal-delay-2 mt-3 max-w-xl text-base leading-relaxed text-discord-muted sm:text-lg mx-auto lg:mx-0"
             >
-              Queue tracks from YouTube, Spotify &amp; SoundCloud. Wake up to curated Steam sales
-              and Epic free games. Point news &amp; deals at any channel with
-              <code class="text-discord-blurple">/setup</code> — plus wishlist DM alerts when prices drop.
+              Queue YouTube, Spotify &amp; SoundCloud. Daily Steam digests and Epic free games.
+              RSS news, chat XP with <code class="text-discord-blurple">/rank</code> &amp;
+              <code class="text-discord-blurple">/leaderboard</code>, styled welcome &amp; goodbye
+              embeds, and wishlist DMs when prices drop — all configurable with
+              <code class="text-discord-blurple">/setup</code> or the web Admin UI.
             </p>
 
             <!-- Tech badges -->
@@ -501,8 +503,8 @@
           <div class="reveal mx-auto max-w-2xl text-center">
             <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Built for real servers</h2>
             <p class="mt-3 text-discord-muted">
-              Not a kitchen-sink bot — three sharp pillars that actually get used every day: music,
-              deals, and automated news. Preview them in the hero mock above.
+              Everything listed here is live in the bot today: music, deals, news, chat leveling,
+              greetings, stats, and a web admin — not a roadmap.
             </p>
           </div>
 
@@ -567,7 +569,7 @@
 
             <!-- News -->
             <article
-              class="reveal reveal-delay-3 group rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-discord-blurple/40 hover:shadow-glow sm:col-span-2 lg:col-span-1"
+              class="reveal reveal-delay-3 group rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-discord-blurple/40 hover:shadow-glow"
             >
               <div
                 class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-discord-blurple/15 text-2xl transition group-hover:bg-discord-blurple/25"
@@ -589,7 +591,95 @@
                   <span class="text-discord-blurple">✓</span> Persistent seen-store (no reposts)
                 </li>
                 <li class="flex items-center gap-2">
-                  <span class="text-discord-blurple">✓</span> Channel stays tidy
+                  <span class="text-discord-blurple">✓</span> Optional keyword filters
+                </li>
+              </ul>
+            </article>
+
+            <!-- Leveling -->
+            <article
+              class="reveal reveal-delay-1 group rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-discord-blurple/40 hover:shadow-glow"
+            >
+              <div
+                class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-discord-blurple/15 text-2xl transition group-hover:bg-discord-blurple/25"
+                aria-hidden="true"
+              >
+                🏅
+              </div>
+              <h3 class="text-lg font-semibold">Chat XP &amp; levels</h3>
+              <p class="mt-2 text-sm leading-relaxed text-discord-muted">
+                Per-server leveling with cooldowns so chat can’t be spammed for XP. Members check
+                progress with embeds — complete with emoji progress bars and guild ranks.
+              </p>
+              <ul class="mt-4 space-y-1.5 text-xs text-discord-muted">
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span>
+                  <code class="text-white/80">/rank</code> ·
+                  <code class="text-white/80">/leaderboard</code>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Level-up posts in a channel you choose
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Toggle &amp; reset from web Admin
+                </li>
+              </ul>
+            </article>
+
+            <!-- Welcome -->
+            <article
+              class="reveal reveal-delay-2 group rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-discord-blurple/40 hover:shadow-glow"
+            >
+              <div
+                class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-discord-blurple/15 text-2xl transition group-hover:bg-discord-blurple/25"
+                aria-hidden="true"
+              >
+                👋
+              </div>
+              <h3 class="text-lg font-semibold">Welcome &amp; goodbye</h3>
+              <p class="mt-2 text-sm leading-relaxed text-discord-muted">
+                Styled join and leave embeds with avatars, member count, and optional custom
+                messages. Turn on per server and pick channels from Admin or bot config.
+              </p>
+              <ul class="mt-4 space-y-1.5 text-xs text-discord-muted">
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Separate welcome / goodbye channels
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Custom templates (user, server, …)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Needs Server Members Intent
+                </li>
+              </ul>
+            </article>
+
+            <!-- Admin / multi-server -->
+            <article
+              class="reveal reveal-delay-3 group rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-discord-blurple/40 hover:shadow-glow"
+            >
+              <div
+                class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-discord-blurple/15 text-2xl transition group-hover:bg-discord-blurple/25"
+                aria-hidden="true"
+              >
+                ⚙️
+              </div>
+              <h3 class="text-lg font-semibold">Multi-server admin</h3>
+              <p class="mt-2 text-sm leading-relaxed text-discord-muted">
+                Per-guild channels for news, Steam, Epic, logs, and leveling. Slash
+                <code class="text-white/80">/setup</code> for Discord-side config, or the OAuth
+                <a href="admin.html" class="text-discord-blurple hover:underline">Admin</a> dashboard
+                for filters, digests, and resets.
+              </p>
+              <ul class="mt-4 space-y-1.5 text-xs text-discord-muted">
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Music / stats per guild
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Audit log channel embeds
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-discord-blurple">✓</span> Live public stats API
                 </li>
               </ul>
             </article>
@@ -641,12 +731,12 @@
                 class="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-discord-blurple text-sm font-bold"
                 >3</span
               >
-              <h3 class="text-lg font-semibold">Play &amp; enjoy</h3>
+              <h3 class="text-lg font-semibold">Play &amp; level up</h3>
               <p class="mt-2 text-sm text-discord-muted">
-                Join voice and run <code class="text-discord-blurple">/play</code>. Build wishlists
-                with <code class="text-discord-blurple">/wishlist-add</code>, check
-                <code class="text-discord-blurple">/stats</code>, and climb
-                <code class="text-discord-blurple">/top</code>.
+                Join voice and run <code class="text-discord-blurple">/play</code>. Chat for XP with
+                <code class="text-discord-blurple">/rank</code> &amp;
+                <code class="text-discord-blurple">/leaderboard</code>, build wishlists, and check
+                <code class="text-discord-blurple">/stats</code>.
               </p>
             </li>
           </ol>
@@ -693,6 +783,7 @@
                 <button type="button" class="mock-tab is-active" data-playground-cat="all" role="tab" aria-selected="true">All</button>
                 <button type="button" class="mock-tab" data-playground-cat="music" role="tab" aria-selected="false">Music</button>
                 <button type="button" class="mock-tab" data-playground-cat="deals" role="tab" aria-selected="false">Deals</button>
+                <button type="button" class="mock-tab" data-playground-cat="leveling" role="tab" aria-selected="false">Levels</button>
                 <button type="button" class="mock-tab" data-playground-cat="stats" role="tab" aria-selected="false">Stats</button>
                 <button type="button" class="mock-tab" data-playground-cat="setup" role="tab" aria-selected="false">Setup</button>
               </div>
@@ -717,7 +808,7 @@
             </div>
           </div>
 
-          <div class="mt-12 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
+          <div class="mt-12 grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
             <!-- Music -->
             <div
               class="reveal reveal-delay-1 rounded-2xl border border-white/5 bg-discord-card overflow-hidden"
@@ -811,6 +902,32 @@
               </div>
             </div>
 
+            <!-- Leveling -->
+            <div
+              class="reveal reveal-delay-2 rounded-2xl border border-white/5 bg-discord-card overflow-hidden"
+            >
+              <div class="border-b border-white/5 bg-discord-elevated/40 px-5 py-3">
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple">
+                  🏅 Leveling
+                </h3>
+              </div>
+              <ul class="divide-y divide-white/5 text-sm">
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/rank" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/rank</code>
+                  <span class="text-discord-muted">Level, XP bar &amp; guild rank</span>
+                </li>
+                <li class="cmd-row flex flex-col gap-0.5 px-5 py-3 sm:flex-row sm:items-baseline sm:gap-3" data-cmd="/leaderboard" role="button" tabindex="0" title="Click to copy">
+                  <code class="shrink-0 font-mono text-white">/leaderboard</code>
+                  <span class="text-discord-muted">Top 10 by XP in this server</span>
+                </li>
+              </ul>
+              <div class="border-t border-white/5 px-5 py-4 text-xs text-discord-muted">
+                Off by default — enable per server in
+                <a href="admin.html" class="text-discord-blurple hover:underline">Admin</a>
+                (cooldown + level-up channel). Chat awards XP automatically when on.
+              </div>
+            </div>
+
             <!-- Stats -->
             <div
               class="reveal reveal-delay-3 rounded-2xl border border-white/5 bg-discord-card overflow-hidden"
@@ -834,7 +951,7 @@
 
             <!-- Setup (admin) -->
             <div
-              class="reveal reveal-delay-4 rounded-2xl border border-white/5 bg-discord-card overflow-hidden"
+              class="reveal reveal-delay-4 rounded-2xl border border-white/5 bg-discord-card overflow-hidden sm:col-span-2 xl:col-span-1"
             >
               <div class="border-b border-white/5 bg-discord-elevated/40 px-5 py-3">
                 <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple">
@@ -864,10 +981,36 @@
                 </li>
               </ul>
               <div class="border-t border-white/5 px-5 py-4 text-xs text-discord-muted">
-                Requires <strong class="text-white/80">Manage Server</strong>. Music works without setup;
-                use these to pick where news &amp; deals post.
+                Requires <strong class="text-white/80">Manage Server</strong>. Music works without setup.
+                Welcome, leveling, filters &amp; more →
+                <a href="admin.html" class="text-discord-blurple hover:underline">Admin</a>.
               </div>
             </div>
+          </div>
+
+          <!-- Always-on automations (no slash command) -->
+          <div
+            class="reveal mt-8 rounded-2xl border border-white/5 bg-discord-card/80 px-5 py-5 text-sm text-discord-muted"
+          >
+            <p class="font-semibold text-white">Also running automatically (no slash command)</p>
+            <ul class="mt-3 grid gap-2 sm:grid-cols-2">
+              <li class="flex gap-2">
+                <span class="text-discord-blurple">✓</span>
+                Steam daily deal digests &amp; Epic free-game embeds
+              </li>
+              <li class="flex gap-2">
+                <span class="text-discord-blurple">✓</span>
+                RSS news posts on a schedule
+              </li>
+              <li class="flex gap-2">
+                <span class="text-discord-blurple">✓</span>
+                Welcome / goodbye embeds when members join or leave
+              </li>
+              <li class="flex gap-2">
+                <span class="text-discord-blurple">✓</span>
+                Chat XP awards (when leveling is enabled for the guild)
+              </li>
+            </ul>
           </div>
         </div>
       </section>
@@ -904,7 +1047,7 @@
           <dl class="mt-6 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
             <div class="reveal reveal-delay-1 rounded-2xl border border-white/5 bg-discord-card px-4 py-8 text-center shadow-card sm:px-6">
               <div class="text-2xl" aria-hidden="true">⚡</div>
-              <dd class="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl" data-count="19">0</dd>
+              <dd class="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl" data-count="21">0</dd>
               <dt class="mt-2 text-xs font-medium uppercase tracking-wider text-discord-muted sm:text-sm">Slash commands</dt>
             </div>
             <div class="reveal reveal-delay-2 rounded-2xl border border-white/5 bg-discord-card px-4 py-8 text-center shadow-card sm:px-6">
@@ -919,7 +1062,7 @@
             </div>
             <div class="reveal reveal-delay-4 rounded-2xl border border-white/5 bg-discord-card px-4 py-8 text-center shadow-card sm:px-6">
               <div class="text-2xl" aria-hidden="true">🧩</div>
-              <dd class="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl" data-count="6">0</dd>
+              <dd class="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl" data-count="8">0</dd>
               <dt class="mt-2 text-xs font-medium uppercase tracking-wider text-discord-muted sm:text-sm">Core modules</dt>
             </div>
           </dl>
@@ -940,9 +1083,26 @@
                 <span class="text-discord-blurple text-lg leading-none">+</span>
               </summary>
               <p class="mt-3 text-sm leading-relaxed text-discord-muted">
-                No free-text search log. We track aggregated play stats, skips, wishlist game IDs, and
-                feed dedup IDs so content isn’t reposted. See the
+                No free-text search log. We track aggregated play stats, skips, wishlist game IDs,
+                feed dedup IDs, and (if leveling is on) per-guild XP / level for chat activity.
+                See the
                 <a href="privacy.html" class="text-discord-blurple hover:underline">Privacy Policy</a>.
+              </p>
+            </details>
+            <details class="faq-item group rounded-2xl border border-white/5 bg-discord-card px-5 py-4">
+              <summary class="cursor-pointer list-none font-medium text-discord-muted transition group-open:text-white flex items-center justify-between gap-3">
+                How do leveling and welcome messages work?
+                <span class="text-discord-blurple text-lg leading-none">+</span>
+              </summary>
+              <p class="mt-3 text-sm leading-relaxed text-discord-muted">
+                <strong class="text-white/90">Leveling</strong> is off by default. Admins enable it in
+                the <a href="admin.html" class="text-discord-blurple hover:underline">Admin</a> UI,
+                pick a level-up channel, and members use
+                <code class="text-white">/rank</code> and
+                <code class="text-white">/leaderboard</code>. XP uses a short cooldown so spam doesn’t
+                farm levels. <strong class="text-white/90">Welcome / goodbye</strong> embeds are also
+                toggled per server (channels + optional custom text). The bot needs the privileged
+                <em>Server Members</em> and <em>Message Content</em> intents for those features.
               </p>
             </details>
             <details class="faq-item group rounded-2xl border border-white/5 bg-discord-card px-5 py-4">
