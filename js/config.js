@@ -15,13 +15,11 @@
   var PUBLIC_SITE = 'https://dzbanek-bot.vojtas.io';
 
   /**
-   * Public bot API origin when the website is static (e.g. GitHub Pages).
-   * Leave '' only if the bot serves this site / reverse-proxies /api on the same host.
-   *
-   * Example after you deploy the bot publicly:
-   *   var PRODUCTION_API_BASE = 'https://bot.yourdomain.com';
+   * Bot API origin when the website is not co-hosted with the bot.
+   * Temporary: localhost while developing. Replace with a public HTTPS URL later
+   * (GitHub Pages over HTTPS may block http://localhost as mixed content).
    */
-  var PRODUCTION_API_BASE = '';
+  var PRODUCTION_API_BASE = 'http://127.0.0.1:3848';
 
   function isLocalHost(hostname) {
     return (
