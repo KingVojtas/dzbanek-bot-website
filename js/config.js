@@ -15,11 +15,10 @@
   var PUBLIC_SITE = 'https://dzbanek-bot.vojtas.io';
 
   /**
-   * Optional public bot API (HTTPS). Example after you host the bot publicly:
-   *   var PRODUCTION_API_BASE = 'https://api.yourdomain.com';
-   * Leave empty while only GitHub Pages is public — stats use data/stats.json.
+   * Public bot API (HTTPS) for GitHub Pages / custom domain.
+   * Railway always-on deploy — admin + live stats without local npm start.
    */
-  var PRODUCTION_API_BASE = '';
+  var PRODUCTION_API_BASE = 'https://bot-production-c393.up.railway.app';
 
   function isLocalHost(hostname) {
     return (
