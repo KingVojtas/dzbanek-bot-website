@@ -89,6 +89,39 @@
         you manage (requires Manage Server). Bot must already be in the guild.
       </p>
 
+      <!-- Static hosting: admin needs the local bot URL (GitHub Pages has no API) -->
+      <div
+        id="api-static-host"
+        class="mt-8 hidden rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 shadow-card"
+        role="status"
+      >
+        <h2 class="text-lg font-semibold text-amber-200">Admin runs on your bot, not GitHub Pages</h2>
+        <p class="mt-2 text-sm text-discord-muted">
+          This marketing site is static (no Discord OAuth / guild settings API). Start the bot on your
+          PC, then open the dashboard from the bot process itself:
+        </p>
+        <ol class="mt-3 list-decimal space-y-1 pl-5 text-sm text-discord-muted">
+          <li>
+            In the bot folder run <code class="text-white/80">npm start</code> (API on port
+            <code class="text-white/80">3848</code>).
+          </li>
+          <li>
+            Open
+            <a
+              id="local-admin-link"
+              href="http://127.0.0.1:3848/admin.html"
+              class="font-medium text-discord-blurple hover:underline"
+              >http://127.0.0.1:3848/admin.html</a
+            >
+            (same origin as the API — login works).
+          </li>
+        </ol>
+        <p class="mt-3 text-xs text-discord-muted">
+          Friends using github.io only get the public site + stats snapshot. Live admin needs a public
+          HTTPS bot API later (<code class="text-white/70">PRODUCTION_API_BASE</code>).
+        </p>
+      </div>
+
       <!-- API connectivity / diagnostics -->
       <div
         id="api-offline"
@@ -99,18 +132,20 @@
         <p id="api-offline-detail" class="mt-2 text-sm text-discord-muted"></p>
         <ul class="mt-3 list-disc space-y-1 pl-5 text-sm text-discord-muted">
           <li>
-            API base is auto-detected (same origin in production; local bot on
-            <code class="text-white/80">:3848</code> when developing).
+            Prefer opening
+            <a href="http://127.0.0.1:3848/admin.html" class="text-discord-blurple hover:underline"
+              >http://127.0.0.1:3848/admin.html</a
+            >
+            while the bot is running (site + API on the same port).
           </li>
           <li>
-            Public site (e.g. GitHub Pages): set
+            Public site (e.g. GitHub Pages) cannot call <code class="text-white/80">127.0.0.1</code>
+            — browsers block it. Use the local admin URL above.
+          </li>
+          <li>
+            Later, for remote admin: host the bot with HTTPS and set
             <code class="text-white/80">PRODUCTION_API_BASE</code> in
-            <code class="text-white/80">js/config.js</code>, or paste the public API URL below.
-          </li>
-          <li>
-            Bot must allow this site’s origin in <code class="text-white/80">WEBSITE_ORIGIN</code> and
-            set <code class="text-white/80">OAUTH_REDIRECT_URI</code> to your public
-            <code class="text-white/80">…/api/auth/callback</code>.
+            <code class="text-white/80">js/config.js</code>.
           </li>
         </ul>
         <div class="mt-4 flex flex-wrap items-end gap-2">
@@ -119,7 +154,7 @@
             <input
               id="api-base-input"
               type="url"
-              placeholder="https://your-api.example.com"
+              placeholder="http://127.0.0.1:3848"
               class="mt-1 w-full rounded-xl border border-white/10 bg-discord-elevated px-3 py-2 text-sm text-white"
             />
           </label>
@@ -566,11 +601,24 @@
         if (base) return String(base).replace(/\/$/, '');
         try {
           if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            if (String(location.port) === '3848') return location.origin;
             return 'http://127.0.0.1:3848';
           }
+          // Static hosts without PRODUCTION_API_BASE — no API
+          if (window.DZBANEK?.IS_STATIC_HOSTING) return '';
           return location.origin;
         } catch (e) {
           return 'http://127.0.0.1:3848';
+        }
+      }
+
+      function isStaticAdminHost() {
+        if (window.DZBANEK?.IS_STATIC_HOSTING) return true;
+        try {
+          const h = location.hostname || '';
+          return /\.github\.io$/i.test(h) || h === 'dzbanek-bot.vojtas.io';
+        } catch {
+          return false;
         }
       }
 
@@ -590,6 +638,7 @@
       const loggedOut = $('logged-out');
       const loggedIn = $('logged-in');
       const apiOffline = $('api-offline');
+      const apiStaticHost = $('api-static-host');
 
       function getStoredSession() {
         try {
@@ -989,17 +1038,26 @@
         }
       }
 
+      function showStaticHostHelp() {
+        if (apiStaticHost) apiStaticHost.classList.remove('hidden');
+        apiOffline.classList.add('hidden');
+        loggedOut.classList.add('hidden');
+        loggedIn.classList.add('hidden');
+      }
+
       function showOffline(detail) {
+        if (apiStaticHost) apiStaticHost.classList.add('hidden');
         apiOffline.classList.remove('hidden');
         loggedOut.classList.add('hidden');
         loggedIn.classList.add('hidden');
         $('api-offline-detail').textContent = detail;
-        $('api-base-input').value = apiBase();
+        $('api-base-input').value = apiBase() || 'http://127.0.0.1:3848';
         $('api-offline-meta').textContent =
-          'This page origin: ' + location.origin + ' · API base: ' + apiBase();
+          'This page origin: ' + location.origin + ' · API base: ' + (apiBase() || '(none)');
       }
 
       function showLogin(extraMsg) {
+        if (apiStaticHost) apiStaticHost.classList.add('hidden');
         apiOffline.classList.add('hidden');
         loggedOut.classList.remove('hidden');
         loggedIn.classList.add('hidden');
@@ -1016,6 +1074,16 @@
        */
       async function probeApi() {
         const base = apiBase();
+        if (!base) {
+          return {
+            healthOk: false,
+            healthReady: false,
+            authStatus: 'network',
+            authBody: null,
+            base: '',
+            noBase: true,
+          };
+        }
         let healthOk = false;
         let healthReady = false;
         try {
@@ -1040,19 +1108,29 @@
           authStatus = 'network';
         }
 
-        return { healthOk, healthReady, authStatus, authBody, base };
+        return { healthOk, healthReady, authStatus, authBody, base, noBase: false };
       }
 
       async function init() {
+        // GitHub Pages / custom domain without PRODUCTION_API_BASE cannot host admin
+        if (isStaticAdminHost() && !apiBase()) {
+          showStaticHostHelp();
+          return;
+        }
+
         const probe = await probeApi();
 
         // Network/CORS failure on both endpoints
         if (!probe.healthOk && probe.authStatus === 'network') {
+          if (isStaticAdminHost() || probe.noBase) {
+            showStaticHostHelp();
+            return;
+          }
           showOffline(
             'No response from ' +
-              probe.base +
-              '. Is the bot running with API_ENABLED=true on port 3848? ' +
-              'Restart the bot after pulling API changes (stats + admin share this port).',
+              (probe.base || '(no API base)') +
+              '. Start the bot (npm start) and open http://127.0.0.1:3848/admin.html — ' +
+              'do not use GitHub Pages for login (browsers block localhost from https://).',
           );
           return;
         }
