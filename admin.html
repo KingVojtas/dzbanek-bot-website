@@ -102,14 +102,14 @@
         <p class="mt-3">
           <a
             id="local-admin-link"
-            href="https://bot-production-c393.up.railway.app/admin.html"
+            href="https://dzbanek-bot.up.railway.app/admin.html"
             class="inline-flex rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold text-white hover:bg-discord-blurple-hover"
             >Open production admin →</a
           >
         </p>
         <p class="mt-3 text-xs text-discord-muted">
           If login fails, add this redirect in the Discord Developer Portal (OAuth2 → Redirects):
-          <code class="text-white/80">https://bot-production-c393.up.railway.app/api/auth/callback</code>
+          <code class="text-white/80">https://dzbanek-bot.up.railway.app/api/auth/callback</code>
         </p>
       </div>
 
@@ -591,7 +591,7 @@
     <script>
       const SESSION_KEY = 'dzbanek_admin_session';
       /** Hard fallback if config.js is cached empty on GitHub Pages */
-      const FALLBACK_PUBLIC_API = 'https://bot-production-c393.up.railway.app';
+      const FALLBACK_PUBLIC_API = 'https://dzbanek-bot.up.railway.app';
 
       function apiBase() {
         if (window.DZBANEK?.refreshApiBase) {

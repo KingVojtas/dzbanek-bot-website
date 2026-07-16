@@ -17,9 +17,9 @@
   /**
    * Public bot API (HTTPS) for GitHub Pages / custom domain.
    * Railway always-on deploy — admin + live stats without local npm start.
-   * Prefer same-origin admin on Railway: https://bot-production-c393.up.railway.app/admin.html
+   * Prefer same-origin admin on Railway: https://dzbanek-bot.up.railway.app/admin.html
    */
-  var PRODUCTION_API_BASE = 'https://bot-production-c393.up.railway.app';
+  var PRODUCTION_API_BASE = 'https://dzbanek-bot.up.railway.app';
 
   function isLocalHost(hostname) {
     return (

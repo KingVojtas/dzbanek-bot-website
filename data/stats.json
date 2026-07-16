@@ -1,12 +1,12 @@
 {
   "servers": 2,
   "approxUsers": 26,
-  "totalPlays": 10,
+  "totalPlays": 13,
   "totalSkips": 0,
   "totalWishlistAdds": 0,
   "uniqueUsersTracked": 1,
   "uptimeSec": null,
-  "generatedAt": "2026-07-16T21:23:15.745Z",
+  "generatedAt": "2026-07-16T22:06:57.994Z",
   "history": [
     {
       "date": "2026-07-16",
@@ -16,6 +16,72 @@
       "uniqueUsersTracked": 0
     }
   ],
+  "public": {
+    "topTracks": [
+      {
+        "title": "Viktor Sheen - Lavazza",
+        "plays": 6
+      },
+      {
+        "title": "Obézní Radosti",
+        "plays": 4
+      },
+      {
+        "title": "Viktor Sheen",
+        "plays": 1
+      },
+      {
+        "title": "Vice City (feat. Hugo Toxxx)",
+        "plays": 1
+      },
+      {
+        "title": "Helldivers 2 Main Theme - \"A Cup Of Liber-Tea\"",
+        "plays": 1
+      }
+    ],
+    "nowPlaying": {
+      "title": "Vice City (feat. Hugo Toxxx)",
+      "artist": "Viktor Sheen",
+      "albumArtUrl": "https://i.ytimg.com/vi/AICZcDAfpws/hq720.jpg?sqp=-oaymwEfCNAFEJQDSFXyq4qpAxEIARUAAIhCGAFwAcABBrgCGaLzl_8DDgj2mOiNBhjg6gQg4KgB&rs=AOn4CLAeb5XbhT_RGAwik9WCzk-IcUAnOw&usqp=CBk"
+    },
+    "recentCommands": [
+      {
+        "command": "/play viktor sheen vice city",
+        "at": "2026-07-16T22:05:00.301Z"
+      },
+      {
+        "command": "/queue",
+        "at": "2026-07-16T22:04:30.846Z"
+      },
+      {
+        "command": "/queue",
+        "at": "2026-07-16T22:02:18.884Z"
+      }
+    ],
+    "recentDeals": [],
+    "milestones": [
+      {
+        "id": "plays-10",
+        "text": "Dzbanek-bot reached 10 total tracks played!",
+        "at": "2026-07-16T22:06:57.993Z"
+      },
+      {
+        "id": "servers-2",
+        "text": "Dzbanek-bot is on 2+ Discord servers!",
+        "at": "2026-07-16T22:06:57.993Z"
+      }
+    ],
+    "topServers": [
+      {
+        "name": "dzbanek team",
+        "plays": 12
+      },
+      {
+        "name": "Pekelní Potápěči",
+        "plays": 1
+      }
+    ]
+  },
   "source": "snapshot",
-  "note": "Public snapshot of real bot aggregates only. No sample marketing rows. Refresh with: node scripts/export-stats.mjs"
+  "note": "Public snapshot for static hosting. Refresh with: node scripts/export-stats.mjs"
 }
