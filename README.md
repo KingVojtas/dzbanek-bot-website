@@ -53,6 +53,8 @@ http://127.0.0.1:3848/
 | `/api/auth/*` + `/api/admin/*` | Admin dashboard (Discord OAuth) |
 | static `/admin.html`, `/`, … | Marketing site (embedded by bot when folder is found) |
 
+**Per-guild digests (admin):** Steam min discount / min rating, news keywords, and UTC post hour for news/steam/epic. Post hours only work if the bot host cron runs at least hourly (see bot `config.json` crons).
+
 1. In the bot repo, set `.env` (see bot `.env.example`):
    - `API_ENABLED=true`
    - `API_PORT=3848`
