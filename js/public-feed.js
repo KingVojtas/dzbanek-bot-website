@@ -50,13 +50,57 @@
     }
   }
 
+  var EMOJI_CONFETTI = ['🎉', '🎊', '✨', '⭐', '🥳', '🎈', '💫', '🏆', '👏', '🍾'];
+
+  /** Little confetti emojis popping up on the milestones card */
+  function emojiConfettiOnCard(cardEl) {
+    if (!cardEl) return;
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    } catch (e) {
+      /* ignore */
+    }
+    var layer = document.createElement('div');
+    layer.className = 'emoji-confetti-layer';
+    layer.setAttribute('aria-hidden', 'true');
+    cardEl.appendChild(layer);
+
+    var count = 14;
+    for (var i = 0; i < count; i++) {
+      var span = document.createElement('span');
+      span.className = 'emoji-confetti-piece';
+      span.textContent = EMOJI_CONFETTI[i % EMOJI_CONFETTI.length];
+      var x = 12 + Math.random() * 76;
+      var y = 55 + Math.random() * 35;
+      var dx = (Math.random() - 0.5) * 70;
+      var dy = -(30 + Math.random() * 70);
+      var rot = (Math.random() - 0.5) * 40;
+      span.style.setProperty('--ex', x + '%');
+      span.style.setProperty('--ey', y + '%');
+      span.style.setProperty('--edx', dx + 'px');
+      span.style.setProperty('--edy', dy + 'px');
+      span.style.setProperty('--erot', rot + 'deg');
+      span.style.setProperty('--erot2', rot * -1.4 + 'deg');
+      span.style.setProperty('--es', 0.85 + Math.random() * 0.55 + 'rem');
+      span.style.setProperty('--ed', 0.9 + Math.random() * 0.5 + 's');
+      span.style.setProperty('--edelay', Math.random() * 0.25 + 's');
+      layer.appendChild(span);
+    }
+
+    setTimeout(function () {
+      if (layer.parentNode) layer.parentNode.removeChild(layer);
+    }, 1800);
+  }
+
   function confettiAt(el) {
+    // Emoji pops on the milestones card
+    emojiConfettiOnCard(el);
+    // Optional colored bits in the background
     if (global.DzbanekShareKit && global.DzbanekShareKit.confettiBurst) {
-      // Stronger burst for milestones
       global.DzbanekShareKit.confettiBurst(el || document.body, {
-        count: 48,
-        spread: 140,
-        durationMs: 1200,
+        count: 24,
+        spread: 100,
+        durationMs: 1000,
       });
     }
   }

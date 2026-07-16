@@ -90,12 +90,51 @@ input:focus-visible {
     transform: translate(var(--dx), var(--dy)) scale(0.4) rotate(220deg);
   }
 }
+/* Emoji confetti on milestones card */
+.now-card-milestones {
+  position: relative;
+  overflow: visible;
+}
+.emoji-confetti-layer {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow: visible;
+}
+.emoji-confetti-piece {
+  position: absolute;
+  left: var(--ex, 50%);
+  top: var(--ey, 40%);
+  font-size: var(--es, 1rem);
+  line-height: 1;
+  opacity: 0;
+  animation: emoji-pop var(--ed, 1.1s) ease-out forwards;
+  animation-delay: var(--edelay, 0s);
+  will-change: transform, opacity;
+}
+@keyframes emoji-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.4) rotate(0deg);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -8px) scale(1.15) rotate(var(--erot, 12deg));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--edx, 0px)), var(--edy, -48px)) scale(0.7)
+      rotate(var(--erot2, -20deg));
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .avatar-float,
   .avatar-glow {
     animation: none;
   }
-  .confetti-layer {
+  .confetti-layer,
+  .emoji-confetti-layer {
     display: none;
   }
 }
