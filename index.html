@@ -1423,15 +1423,6 @@
           document.getElementById('live-uptime').textContent = S.formatUptime(stats.uptimeSec);
           if (hint) {
             if (stats.source === 'snapshot') {
-              hint.textContent =
-                'Public snapshot · updated ' +
-                new Date(stats.generatedAt).toLocaleString() +
-                ' · <a href="stats.html" class="text-discord-blurple hover:underline">Full stats</a>';
-              // allow HTML for the link
-              hint.innerHTML = hint.textContent.replace(
-                '· Full stats',
-                '· <a href="stats.html" class="text-discord-blurple hover:underline">Full stats</a>',
-              );
               hint.innerHTML =
                 'Public snapshot · updated ' +
                 new Date(stats.generatedAt).toLocaleString() +

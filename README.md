@@ -87,6 +87,21 @@ localStorage.setItem('dzbanek_api_base', 'https://bot.yourdomain.com');
 
 Default logic is in `js/config.js` → `window.DZBANEK.API_BASE`.
 
+### Public stats (works without a public bot API)
+
+GitHub Pages / `dzbanek-bot.vojtas.io` cannot reach your PC. The site reads **`data/stats.json`** on those hosts.
+
+Refresh numbers for friends (bot running):
+
+```bash
+node scripts/export-stats.mjs
+git add data/stats.json
+git commit -m "Update public stats snapshot"
+git push
+```
+
+For **true live** stats later, host the bot on HTTPS and set `PRODUCTION_API_BASE` in `js/config.js`.
+
 ## Features
 
 ### Trust & onboarding
