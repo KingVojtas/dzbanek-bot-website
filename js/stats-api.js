@@ -84,66 +84,120 @@
    * @param {unknown} block
    */
   function normalizePublic(block) {
-    if (!block || typeof block !== 'object') {
-      return {
-        topTracks: [],
-        recentDeals: [],
-        milestones: [],
-        topServers: [],
-      };
-    }
+    const empty = {
+      topTracks: [],
+      recentDeals: [],
+      milestones: [],
+      topServers: [],
+      nowPlaying: null,
+      recentCommands: [],
+    };
+    if (!block || typeof block !== 'object') return empty;
     const b = /** @type {Record<string, unknown>} */ (block);
+
+    const topTracks = asArray(b.topTracks)
+      .map((row) => {
+        if (!row || typeof row !== 'object') return null;
+        const r = /** @type {Record<string, unknown>} */ (row);
+        const title = String(r.title || r.name || r.key || '').trim();
+        if (!title) return null;
+        return {
+          title,
+          plays: num(r.plays ?? r.count) ?? 0,
+          durationSec: num(r.durationSec ?? r.duration ?? r.lengthSec),
+        };
+      })
+      .filter(Boolean)
+      .slice(0, 3);
+
+    const recentDeals = asArray(b.recentDeals)
+      .map((row) => {
+        if (!row || typeof row !== 'object') return null;
+        const r = /** @type {Record<string, unknown>} */ (row);
+        const title = String(r.title || r.name || '').trim();
+        if (!title) return null;
+        const src = String(r.source || '').toLowerCase();
+        return {
+          source: src === 'epic' ? 'epic' : src === 'steam' ? 'steam' : 'other',
+          title,
+          subtitle: String(r.subtitle || r.detail || r.discount || '').trim(),
+        };
+      })
+      .filter(Boolean)
+      .slice(0, 8);
+
+    const milestones = asArray(b.milestones)
+      .map((row) => {
+        if (!row || typeof row !== 'object') return null;
+        const r = /** @type {Record<string, unknown>} */ (row);
+        const text = String(r.text || r.message || '').trim();
+        if (!text) return null;
+        const id =
+          typeof r.id === 'string' && r.id
+            ? r.id
+            : 'ms-' + text.slice(0, 48).replace(/\s+/g, '-').toLowerCase();
+        return {
+          id,
+          text,
+          at: typeof r.at === 'string' ? r.at : null,
+        };
+      })
+      .filter(Boolean)
+      .slice(0, 10);
+
+    const topServers = asArray(b.topServers)
+      .map((row) => {
+        if (!row || typeof row !== 'object') return null;
+        const r = /** @type {Record<string, unknown>} */ (row);
+        const name = String(r.name || r.displayName || '').trim();
+        if (!name) return null;
+        return {
+          name,
+          plays: num(r.plays ?? r.count) ?? 0,
+        };
+      })
+      .filter(Boolean);
+
+    let nowPlaying = null;
+    const np = b.nowPlaying;
+    if (np && typeof np === 'object') {
+      const r = /** @type {Record<string, unknown>} */ (np);
+      const title = String(r.title || r.name || '').trim();
+      if (title) {
+        nowPlaying = {
+          title,
+          artist: String(r.artist || r.author || '').trim(),
+          albumArtUrl: String(r.albumArtUrl || r.thumbnail || r.artworkUrl || '').trim() || null,
+          guildName: r.guildName != null ? String(r.guildName) : null,
+        };
+      }
+    }
+
+    const recentCommands = asArray(b.recentCommands)
+      .map((row) => {
+        if (typeof row === 'string') {
+          const cmd = row.trim();
+          return cmd ? { command: cmd, at: null } : null;
+        }
+        if (!row || typeof row !== 'object') return null;
+        const r = /** @type {Record<string, unknown>} */ (row);
+        const command = String(r.command || r.name || r.cmd || '').trim();
+        if (!command) return null;
+        return {
+          command: command.startsWith('/') ? command : '/' + command,
+          at: typeof r.at === 'string' ? r.at : null,
+        };
+      })
+      .filter(Boolean)
+      .slice(0, 12);
+
     return {
-      topTracks: asArray(b.topTracks)
-        .map((row) => {
-          if (!row || typeof row !== 'object') return null;
-          const r = /** @type {Record<string, unknown>} */ (row);
-          const title = String(r.title || r.name || '').trim();
-          if (!title) return null;
-          return {
-            title,
-            plays: num(r.plays ?? r.count) ?? 0,
-          };
-        })
-        .filter(Boolean),
-      recentDeals: asArray(b.recentDeals)
-        .map((row) => {
-          if (!row || typeof row !== 'object') return null;
-          const r = /** @type {Record<string, unknown>} */ (row);
-          const title = String(r.title || r.name || '').trim();
-          if (!title) return null;
-          const src = String(r.source || '').toLowerCase();
-          return {
-            source: src === 'epic' ? 'epic' : src === 'steam' ? 'steam' : 'other',
-            title,
-            subtitle: String(r.subtitle || r.detail || '').trim(),
-          };
-        })
-        .filter(Boolean),
-      milestones: asArray(b.milestones)
-        .map((row) => {
-          if (!row || typeof row !== 'object') return null;
-          const r = /** @type {Record<string, unknown>} */ (row);
-          const text = String(r.text || r.message || '').trim();
-          if (!text) return null;
-          return {
-            text,
-            at: typeof r.at === 'string' ? r.at : null,
-          };
-        })
-        .filter(Boolean),
-      topServers: asArray(b.topServers)
-        .map((row) => {
-          if (!row || typeof row !== 'object') return null;
-          const r = /** @type {Record<string, unknown>} */ (row);
-          const name = String(r.name || r.displayName || '').trim();
-          if (!name) return null;
-          return {
-            name,
-            plays: num(r.plays ?? r.count) ?? 0,
-          };
-        })
-        .filter(Boolean),
+      topTracks,
+      recentDeals,
+      milestones,
+      topServers,
+      nowPlaying,
+      recentCommands,
     };
   }
 
@@ -167,6 +221,19 @@
     if (d > 0) return `${d}d ${h}h`;
     if (h > 0) return `${h}h ${m}m`;
     return `${m}m`;
+  }
+
+  /** Track duration: seconds → m:ss or h:mm:ss */
+  function formatDuration(sec) {
+    if (sec == null || Number.isNaN(Number(sec))) return null;
+    const s = Math.max(0, Math.floor(Number(sec)));
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const r = s % 60;
+    if (h > 0) {
+      return h + ':' + String(m).padStart(2, '0') + ':' + String(r).padStart(2, '0');
+    }
+    return m + ':' + String(r).padStart(2, '0');
   }
 
   async function fetchLiveStats() {
@@ -278,6 +345,7 @@
     normalizePublic,
     formatNum,
     formatUptime,
+    formatDuration,
     fetchStats,
     fetchLiveStats,
     fetchSnapshotStats,

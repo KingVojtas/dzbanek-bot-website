@@ -108,13 +108,36 @@ git push
 
 For **true live** stats later, host the bot on HTTPS and set `PRODUCTION_API_BASE` in `js/config.js`.
 
+### Public `public` block (Dzbanek Now)
+
+Optional object on `/api/stats` (or nested under `public`) for the landing live wall. **No user IDs / private guild IDs.**
+
+```json
+{
+  "public": {
+    "topTracks": [{ "title": "Track", "plays": 123, "durationSec": 214 }],
+    "nowPlaying": {
+      "title": "Song",
+      "artist": "Artist",
+      "albumArtUrl": "https://…"
+    },
+    "recentCommands": [{ "command": "/play never gonna", "at": "2026-07-16T12:00:00Z" }],
+    "recentDeals": [{ "source": "steam", "title": "Game", "subtitle": "−80% off" }],
+    "milestones": [{ "id": "plays-10000", "text": "…", "at": "…" }],
+    "topServers": [{ "name": "Opt-in name", "plays": 50 }]
+  }
+}
+```
+
+Until the bot fills these fields, Now cards show honest idle/empty states (plus play-count milestone thresholds on the site).
+
 ## Features
 
 ### Trust & onboarding
 - Permissions table (no Administrator required; Manage Messages = bot’s own digest cleanup)
 - **Permissions calculator** — toggle Music / Digest cleanup packs → live bitfield + custom invite URL
 - FAQ (search history, language, permissions, music sources, invite vs self-host)
-- **EN / CS language toggle** — landing copy + shared nav/footer; preference in `localStorage` / `?lang=`
+- **EN / CZ language toggle** (GB + Czech SVG flags, corner) · `localStorage` / `?lang=`
 
 ### Commands UX
 - Live filter search on the landing commands section
@@ -177,7 +200,7 @@ Test link previews with [opengraph.xyz](https://www.opengraph.xyz) or by pasting
 | Support server | `js/config.js` → `SUPPORT_URL` (empty = “coming soon” toast) |
 | Buy me a coffee | `js/config.js` → `COFFEE_URL` (also linked in page footers) |
 | Language (EN/CS) | Header toggle · `?lang=cs` · `localStorage.dzbanek_lang` · strings in `js/locales/` |
-| Public live wall / boards | Optional `public` on `/api/stats` or in `data/stats.json` |
+| Public live wall / boards | Optional `public` on `/api/stats` (see below) |
 | Bot avatar | Replace `assets/bot-avatar.png` |
 | API base | `js/config.js` or `localStorage.dzbanek_api_base` |
 

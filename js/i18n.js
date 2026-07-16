@@ -188,7 +188,7 @@
       '<span>EN</span></button>' +
       '<button type="button" data-set-lang="cs" class="lang-corner-btn" aria-pressed="false" title="Čeština">' +
       flagCz +
-      '<span>CS</span></button>';
+      '<span>CZ</span></button>';
     document.body.appendChild(el);
   }
 

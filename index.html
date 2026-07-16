@@ -224,67 +224,55 @@
 
   <body class="bg-discord-bg text-white antialiased">
     <!-- ========== NAVIGATION ========== -->
-    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/85 backdrop-blur-xl">
-      <nav class="mx-auto flex max-w-7xl items-center gap-3 px-4 py-2.5 sm:px-6 lg:px-8">
-        <a href="#home" class="flex shrink-0 items-center gap-2.5 group">
+    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/90 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-5xl items-center gap-4 px-4 py-2.5 sm:px-6">
+        <a href="#home" class="flex shrink-0 items-center gap-2 group">
           <img
             src="assets/bot-avatar.png"
             alt=""
-            width="36"
-            height="36"
-            class="h-9 w-9 rounded-full object-cover shadow-glow ring-2 ring-discord-blurple/40 transition group-hover:ring-discord-blurple"
+            width="32"
+            height="32"
+            class="h-8 w-8 rounded-full object-cover ring-2 ring-discord-blurple/30 transition group-hover:ring-discord-blurple"
           />
-          <span class="whitespace-nowrap text-base font-bold tracking-tight sm:text-lg">dzbanek-bot</span>
+          <span class="whitespace-nowrap text-sm font-semibold tracking-tight sm:text-base">dzbanek-bot</span>
         </a>
 
-        <div class="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex">
-          <a href="#home" data-nav class="nav-link relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.home">Home</a>
-          <a href="#features" data-nav class="nav-link relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.features">Features</a>
-          <a href="#commands" data-nav class="nav-link relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.commands">Commands</a>
-          <a href="stats.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.stats">Stats</a>
-          <a href="leaderboards.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.leaderboards">Leaderboards</a>
-          <a href="status.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.status">Status</a>
-          <a href="permissions.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.permissions">Permissions</a>
-          <a href="#faq" data-nav class="nav-link relative whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.faq">FAQ</a>
-          <a href="changelog.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.changelog">Changelog</a>
-          <a href="admin.html" class="whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.admin">Admin</a>
+        <div class="hidden min-w-0 flex-1 items-center justify-center gap-0.5 sm:flex">
+          <a href="#home" data-nav class="nav-link relative whitespace-nowrap rounded-md px-2.5 py-1 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.home">Home</a>
+          <a href="#features" data-nav class="nav-link relative whitespace-nowrap rounded-md px-2.5 py-1 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.features">Features</a>
+          <a href="#commands" data-nav class="nav-link relative whitespace-nowrap rounded-md px-2.5 py-1 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.commands">Commands</a>
+          <a href="stats.html" class="whitespace-nowrap rounded-md px-2.5 py-1 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.stats">Stats</a>
         </div>
 
-        <div class="ml-auto hidden items-center gap-2 xl:flex">
+        <div class="ml-auto flex items-center gap-2">
           <a
             href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn-shine whitespace-nowrap rounded-full bg-discord-blurple px-4 py-2 text-sm font-semibold shadow-glow transition hover:bg-discord-blurple-hover hover:scale-[1.02] active:scale-[0.98]"
+            class="btn-shine hidden whitespace-nowrap rounded-full bg-discord-blurple px-3.5 py-1.5 text-xs font-semibold shadow-glow transition hover:bg-discord-blurple-hover sm:inline-flex"
             data-i18n="nav.invite"
             data-invite-confetti
           >
             Add to Server
           </a>
+          <button
+            id="menu-btn"
+            type="button"
+            class="inline-flex items-center justify-center rounded-lg p-2 text-discord-muted hover:bg-discord-elevated hover:text-white sm:hidden"
+            data-i18n-aria="nav.menu"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
-
-        <button
-          id="menu-btn"
-          type="button"
-          class="ml-auto inline-flex items-center justify-center rounded-lg p-2 text-discord-muted hover:bg-discord-elevated hover:text-white xl:hidden"
-          data-i18n-aria="nav.menu"
-          aria-label="Toggle navigation menu"
-          aria-expanded="false"
-          aria-controls="mobile-menu"
-        >
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
       </nav>
 
-      <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker xl:hidden">
-        <div class="flex flex-col gap-1 px-4 py-3">
+      <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker sm:hidden">
+        <div class="flex flex-col gap-0.5 px-3 py-3">
           <a href="#home" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.home">Home</a>
           <a href="#features" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.features">Features</a>
           <a href="#commands" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.commands">Commands</a>
@@ -1024,39 +1012,49 @@
 
       <!-- ========== DZBANEK NOW ========== -->
       <section id="now" class="border-t border-white/5 bg-discord-darker/40 py-16 sm:py-20">
-        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8" id="now-root">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8" id="now-root">
           <div class="reveal mx-auto max-w-2xl text-center">
             <h2 class="text-3xl font-bold tracking-tight sm:text-4xl" data-i18n="now.title">Dzbanek Now</h2>
             <p class="mt-3 text-discord-muted" data-i18n="now.lead">
-              Live numbers from the bot API — no sample data.
+              Live activity from the bot — tracks, commands, deals, and milestones.
             </p>
             <p class="mt-2 text-xs text-discord-muted" data-now="note"></p>
             <a href="leaderboards.html" class="mt-3 inline-block text-sm font-medium text-discord-blurple hover:underline" data-i18n="now.view_boards">Open leaderboards →</a>
           </div>
-          <div class="mt-10 grid gap-4 md:grid-cols-3">
-            <article class="reveal rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.live">Live totals</h3>
-              <ul class="mt-3" data-now="live"></ul>
+
+          <!-- Now.Live: currently playing -->
+          <article class="now-card now-card-live reveal mt-10" data-now-card="playing">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.live">Now.Live</h3>
+            <div class="mt-4 now-playing-row" data-now="playing"></div>
+            <div class="now-notes" data-now="notes" aria-hidden="true" hidden>
+              <span>♪</span><span>♫</span><span>♪</span><span>♩</span>
+            </div>
+          </article>
+
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <!-- Now.Activity -->
+            <article class="now-card now-card-activity reveal reveal-delay-1" data-now-card="activity">
+              <span class="now-live-badge"><span class="dot" aria-hidden="true"></span><span data-i18n="now.live_badge">LIVE</span></span>
+              <h3 class="pr-16 text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.activity">Now.Activity</h3>
+              <ul class="mt-4 space-y-0" data-now="commands"></ul>
             </article>
-            <article class="reveal reveal-delay-1 rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.activity">Activity</h3>
-              <ul class="mt-3" data-now="activity"></ul>
-            </article>
-            <article class="reveal reveal-delay-2 rounded-2xl border border-white/5 bg-discord-card p-5 shadow-card">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.milestones">Highlights</h3>
-              <ul class="mt-3" data-now="milestones"></ul>
+            <!-- Deals Pulse -->
+            <article class="now-card reveal reveal-delay-2">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.deals">Deals Pulse</h3>
+              <ul class="mt-4" data-now="deals"></ul>
             </article>
           </div>
+
           <div class="mt-4 grid gap-4 md:grid-cols-2">
-            <article class="reveal rounded-2xl border border-white/5 bg-discord-card/80 p-5 shadow-card">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.tracks">Top tracks</h3>
-              <p class="mt-1 text-xs text-discord-muted" data-i18n="now.tracks_hint">From the bot when it publishes rankings</p>
-              <ul class="mt-3" data-now="tracks"></ul>
+            <!-- Top tracks -->
+            <article class="now-card reveal">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.tracks">Top tracks</h3>
+              <ol class="mt-4 list-none space-y-0" data-now="tracks"></ol>
             </article>
-            <article class="reveal reveal-delay-1 rounded-2xl border border-white/5 bg-discord-card/80 p-5 shadow-card">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.deals">Deals pulse</h3>
-              <p class="mt-1 text-xs text-discord-muted" data-i18n="now.deals_hint">From the bot when it publishes deal posts</p>
-              <ul class="mt-3" data-now="deals"></ul>
+            <!-- Milestones -->
+            <article class="now-card reveal reveal-delay-1" id="now-milestones-card">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.milestones">Milestones</h3>
+              <ul class="mt-4" data-now="milestones"></ul>
             </article>
           </div>
         </div>
@@ -1592,7 +1590,7 @@
       }
       document.addEventListener('dzbanek:lang', loadNow);
       loadNow();
-      setInterval(loadNow, 60_000);
+      setInterval(loadNow, 15_000);
     </script>
   </body>
 </html>
