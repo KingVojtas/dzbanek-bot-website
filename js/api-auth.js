@@ -1,0 +1,106 @@
+/**
+ * Shared Discord OAuth session helpers (admin + server checker).
+ * Session token: sessionStorage.dzbanek_admin_session (handoff from ?session=)
+ */
+(function (global) {
+  var SESSION_KEY = 'dzbanek_admin_session';
+  var FALLBACK_PUBLIC_API = 'https://dzbanek-bot.up.railway.app';
+
+  function apiBase() {
+    if (global.DZBANEK && typeof global.DZBANEK.refreshApiBase === 'function') {
+      var b = String(global.DZBANEK.refreshApiBase() || '').replace(/\/$/, '');
+      if (b) return b;
+    }
+    var base =
+      (global.DZBANEK && (global.DZBANEK.API_BASE || global.DZBANEK.PRODUCTION_API_BASE)) || '';
+    if (base) return String(base).replace(/\/$/, '');
+    try {
+      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        if (String(location.port) === '3848') return location.origin;
+        return 'http://127.0.0.1:3848';
+      }
+      if (/\.up\.railway\.app$/i.test(location.hostname)) return location.origin;
+      return FALLBACK_PUBLIC_API;
+    } catch (e) {
+      return FALLBACK_PUBLIC_API;
+    }
+  }
+
+  function getSession() {
+    try {
+      return sessionStorage.getItem(SESSION_KEY) || '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function setSession(token) {
+    try {
+      if (token) sessionStorage.setItem(SESSION_KEY, token);
+      else sessionStorage.removeItem(SESSION_KEY);
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  /** Capture ?session= handoff from OAuth callback */
+  function captureHandoff() {
+    try {
+      var params = new URLSearchParams(location.search);
+      var handoff = params.get('session');
+      if (!handoff) return false;
+      setSession(handoff);
+      params.delete('session');
+      var clean =
+        location.pathname + (params.toString() ? '?' + params.toString() : '') + location.hash;
+      history.replaceState({}, '', clean);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function loginUrl(returnPage) {
+    var ret = returnPage;
+    if (!ret) {
+      try {
+        ret = location.href.split('#')[0].split('?')[0];
+      } catch (e) {
+        ret = location.origin;
+      }
+    }
+    return apiBase() + '/api/auth/login?return=' + encodeURIComponent(ret);
+  }
+
+  async function api(path, opts) {
+    opts = opts || {};
+    var headers = Object.assign({}, opts.headers || {});
+    var token = getSession();
+    if (token) headers.Authorization = 'Bearer ' + token;
+    if (opts.body && !headers['Content-Type']) {
+      headers['Content-Type'] = 'application/json';
+    }
+    return fetch(apiBase() + path, Object.assign({}, opts, {
+      credentials: 'include',
+      headers: headers,
+      cache: 'no-store',
+    }));
+  }
+
+  function normalizeGuilds(data) {
+    if (data && Array.isArray(data.guilds)) return data.guilds;
+    if (Array.isArray(data)) return data;
+    return [];
+  }
+
+  global.DzbanekAuth = {
+    SESSION_KEY: SESSION_KEY,
+    apiBase: apiBase,
+    getSession: getSession,
+    setSession: setSession,
+    captureHandoff: captureHandoff,
+    loginUrl: loginUrl,
+    api: api,
+    normalizeGuilds: normalizeGuilds,
+  };
+})(typeof window !== 'undefined' ? window : globalThis);

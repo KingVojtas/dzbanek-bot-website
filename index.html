@@ -270,8 +270,11 @@
       <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker sm:hidden">
         <div class="flex flex-col gap-0.5 px-3 py-3">
           <a href="#home" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.home">Home</a>
+          <a href="#demo" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="demo.title">Screenshots &amp; demo</a>
           <a href="#features" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.features">Features</a>
           <a href="#commands" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.commands">Commands</a>
+          <a href="check.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.check">Server check</a>
+          <a href="support.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.support">Support</a>
           <a href="stats.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.stats">Stats</a>
           <a href="leaderboards.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.leaderboards">Leaderboards</a>
           <a href="status.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.status">Status</a>
@@ -365,14 +368,18 @@
                 <span data-i18n="hero.invite">Invite Bot</span>
               </a>
               <a
-                href="https://discord.gg/9CnkKWWP26"
-                data-support-cta
-                target="_blank"
-                rel="noopener noreferrer"
+                href="check.html"
                 class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-discord-elevated/60 px-6 py-3 text-sm font-semibold text-white transition hover:border-discord-blurple/50 hover:bg-discord-elevated"
-                data-i18n="hero.support"
+                data-i18n="nav.check"
               >
-                Support Server
+                Server check
+              </a>
+              <a
+                href="support.html"
+                class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-discord-elevated/40 px-5 py-3 text-sm font-semibold text-discord-muted transition hover:border-amber-400/40 hover:text-amber-100"
+                data-i18n="nav.support"
+              >
+                Support
               </a>
               <a
                 href="https://github.com/KingVojtas/dzbanek-bot"
@@ -496,6 +503,95 @@
               </div>
               <p class="mt-2 text-center text-xs text-discord-muted" data-i18n="hero.mock_caption">See it in Discord — mock previews of real bot embeds</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== DEMO / SCREENSHOTS ========== -->
+      <section id="demo" class="border-t border-white/5 py-16 sm:py-20">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div class="reveal mx-auto max-w-2xl text-center">
+            <p class="text-sm font-medium text-discord-blurple" data-i18n="demo.kicker">See it in action</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl" data-i18n="demo.title">Screenshots &amp; demo</h2>
+            <p class="mt-3 text-discord-muted" data-i18n="demo.lead">
+              Real Discord-style embeds the bot posts — music, Steam digests, and Epic free games.
+            </p>
+          </div>
+
+          <div class="reveal reveal-delay-1 mt-10 grid items-start gap-8 lg:grid-cols-2">
+            <!-- Teaser video -->
+            <figure class="overflow-hidden rounded-2xl border border-white/5 bg-discord-card shadow-card">
+              <video
+                class="aspect-video w-full bg-black object-cover"
+                controls
+                playsinline
+                muted
+                loop
+                poster="assets/demo/hero-poster.jpg"
+                aria-label="Product teaser"
+              >
+                <source src="assets/demo/hero-teaser.mp4" type="video/mp4" />
+              </video>
+              <figcaption class="border-t border-white/5 px-4 py-3 text-center text-xs text-discord-muted" data-i18n="demo.video_label">
+                Short product teaser
+              </figcaption>
+            </figure>
+
+            <!-- Screenshot-style embed cards -->
+            <div class="space-y-4">
+              <article class="rounded-xl border border-white/5 bg-[#313338] p-3 shadow-card">
+                <p class="mb-2 text-[10px] font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="demo.music_title">Music</p>
+                <div class="flex items-start gap-3">
+                  <img src="assets/bot-avatar.png" alt="" class="h-9 w-9 shrink-0 rounded-full object-cover" />
+                  <div class="min-w-0 flex-1">
+                    <p class="text-sm font-semibold text-white">dzbanek-bot <span class="rounded bg-discord-blurple px-1 text-[10px] font-bold uppercase">Bot</span></p>
+                    <p class="mt-1 text-sm text-[#DBDEE1]">▶️ Now playing</p>
+                    <div class="mt-2 rounded border-l-4 border-discord-blurple bg-[#2B2D31] p-3">
+                      <p class="text-xs font-semibold text-discord-blurple">Now Playing</p>
+                      <p class="mt-1 text-sm font-semibold text-white">Lofi beats to code to</p>
+                      <p class="mt-1 text-xs text-[#B5BAC1]">Duration · 2:45:00</p>
+                    </div>
+                    <p class="mt-2 text-xs text-discord-muted" data-i18n="demo.music_cap">Now playing embeds with queue controls</p>
+                  </div>
+                </div>
+              </article>
+              <article class="rounded-xl border border-white/5 bg-[#313338] p-3 shadow-card">
+                <p class="mb-2 text-[10px] font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="demo.steam_title">Steam deals</p>
+                <div class="flex items-start gap-3">
+                  <img src="assets/bot-avatar.png" alt="" class="h-9 w-9 shrink-0 rounded-full object-cover" />
+                  <div class="min-w-0 flex-1">
+                    <p class="text-sm font-semibold text-white">dzbanek-bot <span class="rounded bg-discord-blurple px-1 text-[10px] font-bold uppercase">Bot</span></p>
+                    <p class="mt-1 text-sm text-[#DBDEE1]">🎮 Steam Daily Deals</p>
+                    <div class="mt-2 rounded border-l-4 border-discord-blurple bg-[#2B2D31] p-3">
+                      <p class="text-xs font-semibold text-discord-blurple">Top deals · review filtered</p>
+                      <p class="mt-1 text-sm font-semibold text-white">Hades II</p>
+                      <p class="mt-1 text-xs text-[#B5BAC1]"><span class="line-through opacity-70">41,99€</span> → <strong class="text-white">8,39€</strong> (-80%)</p>
+                    </div>
+                    <p class="mt-2 text-xs text-discord-muted" data-i18n="demo.steam_cap">Daily digests with review-filtered sales</p>
+                  </div>
+                </div>
+              </article>
+              <article class="rounded-xl border border-white/5 bg-[#313338] p-3 shadow-card">
+                <p class="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[#0078F2]" data-i18n="demo.epic_title">Epic free</p>
+                <div class="flex items-start gap-3">
+                  <img src="assets/bot-avatar.png" alt="" class="h-9 w-9 shrink-0 rounded-full object-cover" />
+                  <div class="min-w-0 flex-1">
+                    <p class="text-sm font-semibold text-white">dzbanek-bot <span class="rounded bg-discord-blurple px-1 text-[10px] font-bold uppercase">Bot</span></p>
+                    <p class="mt-1 text-sm text-[#DBDEE1]">🆓 Epic Free Games</p>
+                    <div class="mt-2 rounded border-l-4 border-[#0078F2] bg-[#2B2D31] p-3">
+                      <p class="text-xs font-semibold text-[#0078F2]">Free now on Epic Games Store</p>
+                      <p class="mt-1 text-sm font-semibold text-white">Control</p>
+                      <p class="mt-1 text-xs text-[#B5BAC1]">Claim before it leaves the free rotation.</p>
+                    </div>
+                    <p class="mt-2 text-xs text-discord-muted" data-i18n="demo.epic_cap">Free-game announcements when they drop</p>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="reveal mt-8 text-center">
+            <a href="check.html" class="text-sm font-medium text-discord-blurple hover:underline" data-i18n="demo.check_cta">Check my servers →</a>
           </div>
         </div>
       </section>
@@ -1271,9 +1367,7 @@
               >Contact / GitHub</a
             >
             <a
-              href="https://buymeacoffee.com/vojtas?status=1"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="support.html"
               class="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-amber-200/90 transition hover:border-amber-400/50 hover:bg-amber-500/15 hover:text-amber-100"
               data-i18n="footer.coffee"
               >☕ Buy me a coffee</a

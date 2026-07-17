@@ -8,13 +8,16 @@ Dark Discord-inspired UI: HTML + Tailwind CDN + Inter + vanilla JS. Live data co
 
 | File | Description |
 |------|-------------|
-| `index.html` | Landing: hero, Dzbanek Now, share/QR kit, features, commands, stats, FAQ |
+| `index.html` | Landing: hero, demo gallery, Dzbanek Now, share/QR kit, features, commands, stats, FAQ |
+| `check.html` | “Is the bot in my server?” — Discord OAuth guild + pipeline checker |
+| `support.html` | Tips (Buy Me a Coffee), free-forever note, community support |
 | `stats.html` | Live dashboard (KPIs + Chart.js growth chart) |
 | `leaderboards.html` | Public top tracks / top servers |
 | `status.html` | Website + stats API + bot readiness |
 | `permissions.html` | Why each Discord permission is requested |
 | `changelog.html` | Project milestones / what’s new |
 | `admin.html` | Discord OAuth admin: per-guild news / Steam / Epic channel settings |
+| `assets/demo/` | Hero poster + short teaser video |
 | `terms.html` / `privacy.html` | Legal (same dark theme) |
 | `assets/bot-avatar.png` | Logo / favicon / OG image asset |
 | `assets/dzbanek-labs-logo.png` | Made by Dzbanek Labs footer mark |
