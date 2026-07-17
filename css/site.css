@@ -1,25 +1,15 @@
 /* Shared site styles (used with Tailwind CDN pages) */
 
 /* ============================================================================
-   THEME SYSTEM
-   Source of truth: html[data-theme="dark"|"light"] (also .dark / .light)
-   RGB channel vars work with Tailwind: rgb(var(--discord-bg) / <alpha-value>)
-   Purple (blurple) is constant in both themes.
+   THEME SYSTEM — dark defaults live here.
+   Light mode is css/theme-light.css (loaded by theme-boot.js / theme.js).
+   Source of truth: html[data-theme="dark"|"light"]
    ============================================================================ */
 
-/* Brand constants (shared) */
 :root {
   --discord-blurple: 88 101 242;
   --discord-blurple-hover: 71 82 196;
   --discord-green: 35 165 89;
-}
-
-/* ---------- DARK (default) ---------- */
-/* Do NOT use bare `html` here — it fights light mode specificity. */
-html:not([data-theme='light']):not(.light),
-html[data-theme='dark'],
-html.dark {
-  color-scheme: dark;
 
   --discord-bg: 13 14 18;
   --discord-darker: 17 18 20;
@@ -33,9 +23,16 @@ html.dark {
   --color-muted: 181 186 193;
   --color-surface-border: rgba(255, 255, 255, 0.08);
 
+  --hex-bg: #0d0e12;
+  --hex-darker: #111214;
+  --hex-card: #1e1f22;
+  --hex-elevated: #2b2d31;
+  --hex-fg: #ecedf0;
+  --hex-fg-strong: #ffffff;
+  --hex-muted: #b5bac1;
+
   --shadow-card: 0 8px 32px -8px rgba(0, 0, 0, 0.5);
   --shadow-glow: 0 0 60px -12px rgba(88, 101, 242, 0.45);
-
   --scrollbar-track: #0d0e12;
   --scrollbar-thumb: #2b2d31;
   --hero-glow-1: rgba(88, 101, 242, 0.35);
@@ -57,227 +54,37 @@ html.dark {
   --faq-open-color: #fff;
   --chip-active-color: #fff;
 
-  /* Hex mirrors for hard overrides */
-  --hex-bg: #0d0e12;
-  --hex-darker: #111214;
-  --hex-card: #1e1f22;
-  --hex-elevated: #2b2d31;
-  --hex-fg: #ecedf0;
-  --hex-fg-strong: #ffffff;
-  --hex-muted: #b5bac1;
+  color-scheme: dark;
 }
 
-/* ---------- LIGHT ---------- */
-html[data-theme='light'],
-html.light {
-  color-scheme: light;
-
-  --discord-bg: 241 243 248;
-  --discord-darker: 232 235 242;
-  --discord-card: 255 255 255;
-  --discord-elevated: 228 231 239;
-  --discord-muted: 74 80 96;
-  --discord-embed: 244 245 250;
-
-  --color-fg: 32 34 40;
-  --color-fg-strong: 17 18 22;
-  --color-muted: 74 80 96;
-  --color-surface-border: rgba(17, 18, 22, 0.12);
-
-  --shadow-card: 0 10px 36px -12px rgba(17, 18, 22, 0.14);
-  --shadow-glow: 0 0 48px -12px rgba(88, 101, 242, 0.3);
-
-  --scrollbar-track: #e6e9f0;
-  --scrollbar-thumb: #b8bdc9;
-  --hero-glow-1: rgba(88, 101, 242, 0.16);
-  --hero-glow-2: rgba(88, 101, 242, 0.08);
-
-  --lang-corner-bg: rgba(255, 255, 255, 0.94);
-  --lang-corner-border: rgba(17, 18, 22, 0.1);
-  --lang-corner-shadow: 0 8px 24px -8px rgba(17, 18, 22, 0.16);
-  --lang-btn-color: #5b6270;
-  --lang-btn-hover-bg: rgba(17, 18, 22, 0.06);
-  --lang-btn-hover-color: #111216;
-
-  --now-card-bg: #ffffff;
-  --now-card-border: rgba(17, 18, 22, 0.1);
-  --now-album-bg: #e8ebf2;
-  --status-strip-bg: rgba(232, 235, 242, 0.95);
-  --mock-tab-bg: #eef0f6;
-  --mock-tab-color: #4a5060;
-  --faq-open-color: #111216;
-  --chip-active-color: #111216;
-
-  --hex-bg: #f1f3f8;
-  --hex-darker: #e8ebf2;
-  --hex-card: #ffffff;
-  --hex-elevated: #e4e7ef;
-  --hex-fg: #202228;
-  --hex-fg-strong: #111216;
-  --hex-muted: #4a5060;
+html[data-theme='dark'],
+html.dark {
+  color-scheme: dark;
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--hex-bg);
 }
 
 body {
   font-family: Inter, system-ui, sans-serif;
-  background-color: var(--hex-bg) !important;
-  color: var(--hex-fg) !important;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+  background-color: var(--hex-bg);
+  color: var(--hex-fg);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Theme-aware strong text utility (used by public-feed.js) */
 .text-theme-strong {
-  color: var(--hex-fg-strong) !important;
-}
-.text-theme-strong\/90 {
-  color: color-mix(in srgb, var(--hex-fg-strong) 90%, transparent) !important;
-}
-.text-theme {
-  color: var(--hex-fg) !important;
-}
-
-/* ============================================================================
-   LIGHT MODE — force readable UI regardless of Tailwind utility timing
-   ============================================================================ */
-html[data-theme='light'] body,
-html.light body {
-  background-color: var(--hex-bg) !important;
-  color: var(--hex-fg-strong) !important;
-}
-
-/* Surfaces (include opacity modifiers like bg-discord-bg/90) */
-html[data-theme='light'] .bg-discord-bg,
-html[data-theme='light'] [class*='bg-discord-bg'] {
-  background-color: var(--hex-bg) !important;
-}
-html[data-theme='light'] .bg-discord-darker,
-html[data-theme='light'] [class*='bg-discord-darker'] {
-  background-color: var(--hex-darker) !important;
-}
-html[data-theme='light'] .bg-discord-card,
-html[data-theme='light'] [class*='bg-discord-card'] {
-  background-color: var(--hex-card) !important;
-}
-html[data-theme='light'] .bg-discord-elevated,
-html[data-theme='light'] [class*='bg-discord-elevated'] {
-  background-color: var(--hex-elevated) !important;
-}
-html[data-theme='light'] .bg-discord-embed,
-html[data-theme='light'] [class*='bg-discord-embed'] {
-  background-color: var(--hex-elevated) !important;
-}
-
-/* Text: white utilities → near-black */
-html[data-theme='light'] .text-white,
-html[data-theme='light'] [class~='text-white'],
-html[data-theme='light'] [class*='text-white/'] {
-  color: var(--hex-fg-strong) !important;
-}
-html[data-theme='light'] .text-discord-muted {
-  color: var(--hex-muted) !important;
-}
-html[data-theme='light'] .hover\:text-white:hover {
-  color: var(--hex-fg-strong) !important;
-}
-html[data-theme='light'] h1,
-html[data-theme='light'] h2,
-html[data-theme='light'] h3,
-html[data-theme='light'] h4,
-html[data-theme='light'] strong,
-html[data-theme='light'] .font-bold,
-html[data-theme='light'] .font-semibold,
-html[data-theme='light'] .font-extrabold {
   color: var(--hex-fg-strong);
 }
-
-/* Keep purple accents */
-html[data-theme='light'] .text-discord-blurple,
-html[data-theme='light'] a.text-discord-blurple {
-  color: #5865f2 !important;
-}
-html[data-theme='light'] .bg-discord-blurple {
-  background-color: #5865f2 !important;
-  color: #fff !important;
-}
-html[data-theme='light'] .bg-discord-blurple-hover,
-html[data-theme='light'] .hover\:bg-discord-blurple-hover:hover {
-  background-color: #4752c4 !important;
-}
-html[data-theme='light'] .bg-discord-blurple *,
-html[data-theme='light'] a.bg-discord-blurple,
-html[data-theme='light'] button.bg-discord-blurple,
-html[data-theme='light'] .btn-shine.bg-discord-blurple,
-html[data-theme='light'] #toast {
-  color: #fff !important;
-}
-html[data-theme='light'] .lang-corner-btn.is-lang-active,
-html[data-theme='light'] .lang-corner-btn[aria-pressed='true'] {
-  color: #fff !important;
-  background: #5865f2 !important;
+.text-theme {
+  color: var(--hex-fg);
 }
 
-/* Borders */
-html[data-theme='light'] .border-white\/5,
-html[data-theme='light'] .border-white\/10,
-html[data-theme='light'] .border-white\/15,
-html[data-theme='light'] .border-white\/20,
-html[data-theme='light'] [class*='border-white/'] {
-  border-color: rgba(17, 18, 22, 0.12) !important;
-}
-
-/* Gradients used on hero title */
-html[data-theme='light'] .from-white {
-  --tw-gradient-from: #111216 var(--tw-gradient-from-position) !important;
-  --tw-gradient-to: rgb(17 18 22 / 0) var(--tw-gradient-to-position) !important;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
-}
-html[data-theme='light'] .via-white {
-  --tw-gradient-stops: var(--tw-gradient-from), #111216 var(--tw-gradient-via-position),
-    var(--tw-gradient-to) !important;
-}
-
-/* Form controls */
-html[data-theme='light'] input,
-html[data-theme='light'] select,
-html[data-theme='light'] textarea {
-  color: var(--hex-fg-strong) !important;
-  background-color: var(--hex-elevated) !important;
-  border-color: rgba(17, 18, 22, 0.12) !important;
-}
-html[data-theme='light'] code {
-  color: var(--hex-fg-strong) !important;
-}
-
-/* Discord mock frames stay dark (product previews) */
-html[data-theme='light'] [class*='bg-[#2'],
-html[data-theme='light'] [class*='bg-[#3'],
-html[data-theme='light'] [class*='bg-[#1'] {
-  color: #dbdee1;
-}
-html[data-theme='light'] [class*='bg-[#2'] .text-white,
-html[data-theme='light'] [class*='bg-[#3'] .text-white,
-html[data-theme='light'] [class*='bg-[#1'] .text-white,
-html[data-theme='light'] [class*='bg-[#2'] [class*='text-white'],
-html[data-theme='light'] [class*='bg-[#3'] [class*='text-white'],
-html[data-theme='light'] [class*='bg-[#1'] [class*='text-white'] {
-  color: #dbdee1 !important;
-}
-
-/* Sticky header glass in light mode */
-html[data-theme='light'] header.sticky {
-  background-color: rgba(241, 243, 248, 0.92) !important;
-  border-bottom-color: rgba(17, 18, 22, 0.1) !important;
-}
-
-/* ── Theme toggle button ── */
+/* Theme toggle */
 .theme-toggle {
   position: relative;
-  z-index: 2;
+  z-index: 60;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -289,14 +96,11 @@ html[data-theme='light'] header.sticky {
   border: 1px solid transparent;
   cursor: pointer;
   flex-shrink: 0;
-  transition:
-    color 0.15s ease,
-    background-color 0.15s ease,
-    border-color 0.15s ease;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 .theme-toggle:hover {
   color: var(--hex-fg-strong);
-  background: color-mix(in srgb, var(--hex-elevated) 85%, transparent);
+  background: rgba(255, 255, 255, 0.06);
   border-color: var(--color-surface-border);
 }
 .theme-toggle:focus-visible {
@@ -304,21 +108,23 @@ html[data-theme='light'] header.sticky {
   outline-offset: 2px;
 }
 .theme-toggle-icon {
-  display: none;
+  display: none !important;
   pointer-events: none;
+  width: 18px;
+  height: 18px;
 }
-/* Show sun in dark (click → light), moon in light (click → dark) */
 html[data-theme='dark'] .theme-icon-sun,
-html.dark .theme-icon-sun {
-  display: block;
+html.dark .theme-icon-sun,
+html:not([data-theme='light']) .theme-icon-sun {
+  display: block !important;
+}
+html[data-theme='light'] .theme-icon-sun,
+html.light .theme-icon-sun {
+  display: none !important;
 }
 html[data-theme='light'] .theme-icon-moon,
 html.light .theme-icon-moon {
-  display: block;
-}
-/* Fallback if data-theme missing: prefer sun (dark brand default) */
-html:not([data-theme]) .theme-icon-sun {
-  display: block;
+  display: block !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -326,7 +132,6 @@ html:not([data-theme]) .theme-icon-sun {
     transition: none;
   }
 }
-
 .hero-glow {
   background:
     radial-gradient(ellipse 80% 50% at 50% -20%, var(--hero-glow-1), transparent),

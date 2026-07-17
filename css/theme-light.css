@@ -1,0 +1,313 @@
+/**
+ * Light theme overrides — loaded only when data-theme="light".
+ * Solid hex + !important so Tailwind utilities cannot keep the page dark.
+ * Purple (blurple) accents stay brand-colored.
+ */
+
+html[data-theme='light'],
+html.light {
+  color-scheme: light !important;
+
+  --discord-bg: 245 246 250;
+  --discord-darker: 232 235 242;
+  --discord-card: 255 255 255;
+  --discord-elevated: 228 232 240;
+  --discord-muted: 75 82 96;
+  --discord-embed: 245 246 250;
+  --discord-blurple: 88 101 242;
+  --discord-blurple-hover: 71 82 196;
+  --discord-green: 35 165 89;
+
+  --color-fg: 24 26 32;
+  --color-fg-strong: 15 16 20;
+  --color-muted: 75 82 96;
+  --color-surface-border: rgba(15, 16, 20, 0.1);
+
+  --hex-bg: #f5f6fa;
+  --hex-darker: #e8ebf2;
+  --hex-card: #ffffff;
+  --hex-elevated: #e4e8f0;
+  --hex-fg: #181a20;
+  --hex-fg-strong: #0f1014;
+  --hex-muted: #4b5260;
+
+  --shadow-card: 0 10px 36px -12px rgba(15, 16, 20, 0.12);
+  --shadow-glow: 0 0 40px -10px rgba(88, 101, 242, 0.28);
+  --hero-glow-1: rgba(88, 101, 242, 0.12);
+  --hero-glow-2: rgba(88, 101, 242, 0.06);
+  --scrollbar-track: #e6e9f0;
+  --scrollbar-thumb: #b4b9c6;
+
+  --lang-corner-bg: rgba(255, 255, 255, 0.96);
+  --lang-corner-border: rgba(15, 16, 20, 0.1);
+  --lang-corner-shadow: 0 8px 24px -8px rgba(15, 16, 20, 0.14);
+  --lang-btn-color: #4b5260;
+  --lang-btn-hover-bg: rgba(15, 16, 20, 0.06);
+  --lang-btn-hover-color: #0f1014;
+
+  --now-card-bg: #ffffff;
+  --now-card-border: rgba(15, 16, 20, 0.1);
+  --now-album-bg: #e8ebf2;
+  --status-strip-bg: #eef0f6;
+  --mock-tab-bg: #eef0f6;
+  --mock-tab-color: #4b5260;
+  --faq-open-color: #0f1014;
+  --chip-active-color: #0f1014;
+
+  background-color: #f5f6fa !important;
+}
+
+/* Page chrome */
+html[data-theme='light'] body,
+html.light body {
+  background-color: #f5f6fa !important;
+  background-image: none !important;
+  color: #0f1014 !important;
+}
+
+html[data-theme='light'] main,
+html[data-theme='light'] section,
+html[data-theme='light'] article,
+html[data-theme='light'] footer,
+html[data-theme='light'] header {
+  color: #181a20;
+}
+
+/* Surfaces */
+html[data-theme='light'] .bg-discord-bg,
+html[data-theme='light'] [class*='bg-discord-bg'] {
+  background-color: #f5f6fa !important;
+}
+html[data-theme='light'] .bg-discord-darker,
+html[data-theme='light'] [class*='bg-discord-darker'] {
+  background-color: #e8ebf2 !important;
+}
+html[data-theme='light'] .bg-discord-card,
+html[data-theme='light'] [class*='bg-discord-card'] {
+  background-color: #ffffff !important;
+}
+html[data-theme='light'] .bg-discord-elevated,
+html[data-theme='light'] [class*='bg-discord-elevated'] {
+  background-color: #e4e8f0 !important;
+}
+html[data-theme='light'] .bg-discord-embed,
+html[data-theme='light'] [class*='bg-discord-embed'] {
+  background-color: #eef0f6 !important;
+}
+
+/* Text → near black (includes opacity variants text-white/80 etc.) */
+html[data-theme='light'] .text-white,
+html[data-theme='light'] [class*='text-white'] {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .text-discord-muted {
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .text-theme-strong,
+html[data-theme='light'] .text-theme {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .hover\:text-white:hover {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] h1,
+html[data-theme='light'] h2,
+html[data-theme='light'] h3,
+html[data-theme='light'] h4,
+html[data-theme='light'] h5,
+html[data-theme='light'] strong,
+html[data-theme='light'] b,
+html[data-theme='light'] .font-bold,
+html[data-theme='light'] .font-semibold,
+html[data-theme='light'] .font-extrabold {
+  color: #0f1014;
+}
+html[data-theme='light'] p,
+html[data-theme='light'] li,
+html[data-theme='light'] td,
+html[data-theme='light'] th,
+html[data-theme='light'] label,
+html[data-theme='light'] summary,
+html[data-theme='light'] dt,
+html[data-theme='light'] dd {
+  color: #181a20;
+}
+html[data-theme='light'] .text-discord-muted p,
+html[data-theme='light'] p.text-discord-muted,
+html[data-theme='light'] span.text-discord-muted,
+html[data-theme='light'] li.text-discord-muted {
+  color: #4b5260 !important;
+}
+
+/* Purple accents kept */
+html[data-theme='light'] .text-discord-blurple,
+html[data-theme='light'] a.text-discord-blurple {
+  color: #5865f2 !important;
+}
+html[data-theme='light'] .bg-discord-blurple,
+html[data-theme='light'] a.bg-discord-blurple,
+html[data-theme='light'] button.bg-discord-blurple,
+html[data-theme='light'] .btn-shine.bg-discord-blurple {
+  background-color: #5865f2 !important;
+  color: #ffffff !important;
+}
+html[data-theme='light'] .hover\:bg-discord-blurple-hover:hover,
+html[data-theme='light'] .bg-discord-blurple-hover {
+  background-color: #4752c4 !important;
+}
+html[data-theme='light'] .bg-discord-blurple,
+html[data-theme='light'] .bg-discord-blurple *,
+html[data-theme='light'] a.bg-discord-blurple,
+html[data-theme='light'] button.bg-discord-blurple,
+html[data-theme='light'] .btn-shine.bg-discord-blurple,
+html[data-theme='light'] #toast,
+html[data-theme='light'] #toast * {
+  color: #ffffff !important;
+}
+html[data-theme='light'] .lang-corner-btn.is-lang-active,
+html[data-theme='light'] .lang-corner-btn[aria-pressed='true'] {
+  background: #5865f2 !important;
+  color: #ffffff !important;
+}
+html[data-theme='light'] .bg-discord-blurple\/10,
+html[data-theme='light'] [class*='bg-discord-blurple/'] {
+  color: #5865f2;
+}
+
+/* Borders that were white-on-dark */
+html[data-theme='light'] .border-white\/5,
+html[data-theme='light'] .border-white\/10,
+html[data-theme='light'] .border-white\/15,
+html[data-theme='light'] .border-white\/20,
+html[data-theme='light'] [class*='border-white/'] {
+  border-color: rgba(15, 16, 20, 0.12) !important;
+}
+html[data-theme='light'] .divide-white\/5 > :not([hidden]) ~ :not([hidden]),
+html[data-theme='light'] [class*='divide-white'] > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(15, 16, 20, 0.1) !important;
+}
+
+/* Hero title gradients (were white → ink) */
+html[data-theme='light'] .from-white {
+  --tw-gradient-from: #0f1014 var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(15 16 20 / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+html[data-theme='light'] .via-white {
+  --tw-gradient-stops: var(--tw-gradient-from), #0f1014 var(--tw-gradient-via-position),
+    var(--tw-gradient-to) !important;
+}
+html[data-theme='light'] .bg-clip-text {
+  -webkit-text-fill-color: #0f1014;
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .hero-glow {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 101, 242, 0.12), transparent),
+    radial-gradient(ellipse 50% 40% at 100% 30%, rgba(88, 101, 242, 0.06), transparent) !important;
+}
+
+/* Header / footer */
+html[data-theme='light'] header.sticky {
+  background-color: rgba(245, 246, 250, 0.95) !important;
+  border-bottom-color: rgba(15, 16, 20, 0.1) !important;
+  color: #0f1014 !important;
+}
+html[data-theme='light'] footer {
+  border-top-color: rgba(15, 16, 20, 0.1) !important;
+  color: #4b5260 !important;
+}
+
+/* Cards / components */
+html[data-theme='light'] .now-card {
+  background: #ffffff !important;
+  border-color: rgba(15, 16, 20, 0.1) !important;
+  color: #0f1014 !important;
+  box-shadow: 0 10px 36px -12px rgba(15, 16, 20, 0.12) !important;
+}
+html[data-theme='light'] .now-card-live.is-idle {
+  border-color: rgba(15, 16, 20, 0.1) !important;
+  box-shadow: 0 10px 36px -12px rgba(15, 16, 20, 0.12) !important;
+}
+html[data-theme='light'] .now-album {
+  background: #e8ebf2 !important;
+  box-shadow: 0 0 0 1px rgba(15, 16, 20, 0.08) !important;
+}
+html[data-theme='light'] .status-strip {
+  background: #eef0f6 !important;
+  border-bottom-color: rgba(15, 16, 20, 0.1) !important;
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .mock-tab {
+  background: #eef0f6 !important;
+  color: #4b5260 !important;
+  border-color: rgba(15, 16, 20, 0.12) !important;
+}
+html[data-theme='light'] .mock-tab:hover {
+  color: #0f1014 !important;
+  border-color: rgba(88, 101, 242, 0.4) !important;
+}
+html[data-theme='light'] .mock-tab.is-active {
+  background: rgba(88, 101, 242, 0.12) !important;
+  color: #5865f2 !important;
+  border-color: rgba(88, 101, 242, 0.45) !important;
+}
+html[data-theme='light'] .faq-item[open] summary {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .cmd-chip.is-active {
+  color: #0f1014 !important;
+}
+
+/* Forms */
+html[data-theme='light'] input,
+html[data-theme='light'] select,
+html[data-theme='light'] textarea {
+  background-color: #e4e8f0 !important;
+  color: #0f1014 !important;
+  border-color: rgba(15, 16, 20, 0.12) !important;
+}
+html[data-theme='light'] input::placeholder,
+html[data-theme='light'] textarea::placeholder {
+  color: #6b7280 !important;
+}
+html[data-theme='light'] code {
+  color: #0f1014 !important;
+}
+
+/* Theme toggle */
+html[data-theme='light'] .theme-toggle {
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .theme-toggle:hover {
+  color: #0f1014 !important;
+  background: #e4e8f0 !important;
+  border-color: rgba(15, 16, 20, 0.12) !important;
+}
+
+/* Discord mock embeds keep dark product chrome */
+html[data-theme='light'] [class*='bg-[#2'],
+html[data-theme='light'] [class*='bg-[#3'],
+html[data-theme='light'] [class*='bg-[#1'] {
+  color: #dbdee1;
+}
+html[data-theme='light'] [class*='bg-[#2'] .text-white,
+html[data-theme='light'] [class*='bg-[#3'] .text-white,
+html[data-theme='light'] [class*='bg-[#1'] .text-white,
+html[data-theme='light'] [class*='bg-[#2'] [class*='text-white'],
+html[data-theme='light'] [class*='bg-[#3'] [class*='text-white'],
+html[data-theme='light'] [class*='bg-[#1'] [class*='text-white'],
+html[data-theme='light'] [class*='bg-[#2'] .text-discord-muted,
+html[data-theme='light'] [class*='bg-[#3'] .text-discord-muted {
+  color: #dbdee1 !important;
+}
+html[data-theme='light'] [class*='bg-[#2'] .text-discord-blurple,
+html[data-theme='light'] [class*='bg-[#3'] .text-discord-blurple {
+  color: #5865f2 !important;
+}
+
+/* Soft blurple chips / badges on light */
+html[data-theme='light'] .border-discord-blurple\/30,
+html[data-theme='light'] [class*='border-discord-blurple'] {
+  border-color: rgba(88, 101, 242, 0.35) !important;
+}
