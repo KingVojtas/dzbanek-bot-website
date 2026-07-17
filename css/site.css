@@ -15,7 +15,8 @@
 }
 
 /* ---------- DARK (default) ---------- */
-html,
+/* Do NOT use bare `html` here — it fights light mode specificity. */
+html:not([data-theme='light']):not(.light),
 html[data-theme='dark'],
 html.dark {
   color-scheme: dark;
