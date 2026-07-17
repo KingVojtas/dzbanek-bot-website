@@ -392,11 +392,6 @@ html[data-theme='light'] .cmd-empty {
   border-color: rgba(15, 16, 20, 0.12) !important;
   color: #4b5260 !important;
 }
-html[data-theme='light'] .cmd-discord-chrome {
-  /* keep Discord product chrome dark */
-  color: #dbdee1;
-}
-
 /* Forms */
 html[data-theme='light'] input,
 html[data-theme='light'] select,
@@ -423,25 +418,168 @@ html[data-theme='light'] .theme-toggle:hover {
   border-color: rgba(15, 16, 20, 0.12) !important;
 }
 
-/* Discord mock embeds keep dark product chrome */
-html[data-theme='light'] [class*='bg-[#2'],
-html[data-theme='light'] [class*='bg-[#3'],
-html[data-theme='light'] [class*='bg-[#1'] {
-  color: #dbdee1;
+/*
+ * Discord mock islands — always dark product chrome in light mode.
+ * Site-wide light text rules (text-white→black, code→black, strong, etc.)
+ * must not leak into these previews.
+ */
+html[data-theme='light'] .cmd-discord-chrome,
+html[data-theme='light'] .product-teaser,
+html[data-theme='light'] .discord-mock,
+html[data-theme='light'] #mock-carousel > div:first-child {
+  background-color: #313338 !important;
+  color: #dbdee1 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  color-scheme: dark;
 }
-html[data-theme='light'] [class*='bg-[#2'] .text-white,
-html[data-theme='light'] [class*='bg-[#3'] .text-white,
-html[data-theme='light'] [class*='bg-[#1'] .text-white,
-html[data-theme='light'] [class*='bg-[#2'] [class*='text-white'],
-html[data-theme='light'] [class*='bg-[#3'] [class*='text-white'],
-html[data-theme='light'] [class*='bg-[#1'] [class*='text-white'],
-html[data-theme='light'] [class*='bg-[#2'] .text-discord-muted,
-html[data-theme='light'] [class*='bg-[#3'] .text-discord-muted {
+
+/* Default text inside mocks = Discord message grey (beats light p/li/strong rules) */
+html[data-theme='light'] .cmd-discord-chrome p,
+html[data-theme='light'] .cmd-discord-chrome span,
+html[data-theme='light'] .cmd-discord-chrome div,
+html[data-theme='light'] .cmd-discord-chrome li,
+html[data-theme='light'] .product-teaser p,
+html[data-theme='light'] .product-teaser span,
+html[data-theme='light'] .product-teaser div,
+html[data-theme='light'] .discord-mock p,
+html[data-theme='light'] .discord-mock span,
+html[data-theme='light'] .discord-mock div,
+html[data-theme='light'] #mock-carousel > div:first-child p,
+html[data-theme='light'] #mock-carousel > div:first-child span,
+html[data-theme='light'] #mock-carousel > div:first-child div {
   color: #dbdee1 !important;
 }
-html[data-theme='light'] [class*='bg-[#2'] .text-discord-blurple,
-html[data-theme='light'] [class*='bg-[#3'] .text-discord-blurple {
+
+/* Channel bar / teaser chrome */
+html[data-theme='light'] .cmd-discord-chrome-bar,
+html[data-theme='light'] .product-teaser-chrome {
+  background: #2b2d31 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+  color: #f2f3f5 !important;
+}
+html[data-theme='light'] .cmd-discord-chan {
+  color: #80848e !important;
+}
+html[data-theme='light'] .cmd-discord-chan-name,
+html[data-theme='light'] .product-teaser-title,
+html[data-theme='light'] .product-teaser-botname,
+html[data-theme='light'] .cmd-discord-name {
+  color: #f2f3f5 !important;
+}
+html[data-theme='light'] .product-teaser-hash,
+html[data-theme='light'] .product-teaser-server,
+html[data-theme='light'] .product-teaser-time,
+html[data-theme='light'] .cmd-discord-chrome .text-xs,
+html[data-theme='light'] #mock-carousel .text-xs {
+  color: #949ba4 !important;
+}
+html[data-theme='light'] .product-teaser-line,
+html[data-theme='light'] .cmd-discord-body > p,
+html[data-theme='light'] .cmd-bot-msg > div > p {
+  color: #dbdee1 !important;
+}
+
+/* Names, titles, strong text inside mocks */
+html[data-theme='light'] .cmd-discord-chrome .text-white,
+html[data-theme='light'] .cmd-discord-chrome [class*='text-white'],
+html[data-theme='light'] .product-teaser .text-white,
+html[data-theme='light'] .product-teaser [class*='text-white'],
+html[data-theme='light'] .discord-mock .text-white,
+html[data-theme='light'] .discord-mock [class*='text-white'],
+html[data-theme='light'] #mock-carousel > div:first-child .text-white,
+html[data-theme='light'] #mock-carousel > div:first-child [class*='text-white'],
+html[data-theme='light'] .cmd-embed-body,
+html[data-theme='light'] .product-teaser-embed-title {
+  color: #f2f3f5 !important;
+}
+
+html[data-theme='light'] .cmd-discord-chrome .text-discord-muted,
+html[data-theme='light'] .product-teaser .text-discord-muted,
+html[data-theme='light'] #mock-carousel > div:first-child .text-discord-muted,
+html[data-theme='light'] .cmd-embed-field,
+html[data-theme='light'] .product-teaser-embed-sub,
+html[data-theme='light'] .cmd-slash-opt {
+  color: #b5bac1 !important;
+}
+
+html[data-theme='light'] .cmd-discord-chrome .text-discord-blurple,
+html[data-theme='light'] .product-teaser .text-discord-blurple,
+html[data-theme='light'] #mock-carousel > div:first-child .text-discord-blurple,
+html[data-theme='light'] .cmd-embed-title,
+html[data-theme='light'] .product-teaser-embed-kicker,
+html[data-theme='light'] .product-teaser-link {
   color: #5865f2 !important;
+}
+
+/* code / slash pills must stay Discord-blue, not light-mode black */
+html[data-theme='light'] .cmd-discord-chrome code,
+html[data-theme='light'] .cmd-slash-pill code,
+html[data-theme='light'] .product-teaser code,
+html[data-theme='light'] #mock-carousel > div:first-child code {
+  color: #00a8fc !important;
+  background: transparent !important;
+}
+html[data-theme='light'] .cmd-slash-pill {
+  background: rgba(88, 101, 242, 0.12) !important;
+  border-color: rgba(88, 101, 242, 0.22) !important;
+  color: #dbdee1 !important;
+}
+html[data-theme='light'] .cmd-slash-opt em {
+  color: #dbdee1 !important;
+}
+
+/* bold / strong / headings inside mocks stay light */
+html[data-theme='light'] .cmd-discord-chrome strong,
+html[data-theme='light'] .cmd-discord-chrome b,
+html[data-theme='light'] .cmd-discord-chrome h1,
+html[data-theme='light'] .cmd-discord-chrome h2,
+html[data-theme='light'] .cmd-discord-chrome h3,
+html[data-theme='light'] .cmd-discord-chrome .font-bold,
+html[data-theme='light'] .cmd-discord-chrome .font-semibold,
+html[data-theme='light'] .product-teaser strong,
+html[data-theme='light'] .product-teaser b,
+html[data-theme='light'] .product-teaser .font-bold,
+html[data-theme='light'] .product-teaser .font-semibold,
+html[data-theme='light'] #mock-carousel > div:first-child strong,
+html[data-theme='light'] #mock-carousel > div:first-child b,
+html[data-theme='light'] #mock-carousel > div:first-child .font-bold,
+html[data-theme='light'] #mock-carousel > div:first-child .font-semibold {
+  color: #f2f3f5 !important;
+}
+
+/* embed panel + art tiles */
+html[data-theme='light'] .cmd-embed,
+html[data-theme='light'] .product-teaser-embed {
+  background: #2b2d31 !important;
+}
+html[data-theme='light'] .cmd-embed-inner {
+  color: #dbdee1 !important;
+}
+html[data-theme='light'] .cmd-progress {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+html[data-theme='light'] .cmd-user-avatar {
+  color: #ffffff !important;
+}
+html[data-theme='light'] .cmd-discord-bot,
+html[data-theme='light'] .product-teaser-botbadge {
+  color: #ffffff !important;
+  background: #5865f2 !important;
+}
+html[data-theme='light'] .product-teaser-stage {
+  background: #313338 !important;
+}
+html[data-theme='light'] .product-teaser-footer {
+  background: #2b2d31 !important;
+  border-top-color: rgba(255, 255, 255, 0.06) !important;
+  color: #dbdee1 !important;
+}
+html[data-theme='light'] .product-teaser-tab {
+  color: #b5bac1 !important;
+}
+html[data-theme='light'] .product-teaser-tab.is-active {
+  color: #ffffff !important;
+  background: rgba(88, 101, 242, 0.25) !important;
 }
 
 /* Soft blurple chips / badges on light */
