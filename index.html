@@ -1337,10 +1337,15 @@
           </article>
 
           <div class="mt-4 grid gap-4 md:grid-cols-2">
-            <!-- Recently Used -->
-            <article class="now-card reveal reveal-delay-1" data-now-card="activity">
-              <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.activity">Recently Used</h3>
-              <ul class="mt-4 space-y-0" data-now="commands"></ul>
+            <!-- Milestones -->
+            <article
+              class="now-card now-card-milestones reveal reveal-delay-1"
+              id="now-milestones-card"
+              data-now-card="milestones"
+            >
+              <span class="ms-trophy" aria-hidden="true">🏆</span>
+              <h3 class="pr-10 text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.milestones">Milestones</h3>
+              <ul class="mt-4 ms-list" data-now="milestones"></ul>
             </article>
             <!-- Deals Pulse — always-on pulse UI -->
             <article
@@ -1368,15 +1373,10 @@
               <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.tracks">Top tracks</h3>
               <ol class="mt-4 list-none space-y-0" data-now="tracks"></ol>
             </article>
-            <!-- Milestones -->
-            <article
-              class="now-card now-card-milestones reveal reveal-delay-1"
-              id="now-milestones-card"
-              data-now-card="milestones"
-            >
-              <span class="ms-trophy" aria-hidden="true">🏆</span>
-              <h3 class="pr-10 text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.milestones">Milestones</h3>
-              <ul class="mt-4 ms-list" data-now="milestones"></ul>
+            <!-- Recently Used -->
+            <article class="now-card reveal reveal-delay-1" data-now-card="activity">
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.activity">Recently Used</h3>
+              <ul class="mt-4 space-y-0" data-now="commands"></ul>
             </article>
           </div>
         </div>
