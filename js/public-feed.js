@@ -5,11 +5,43 @@
   var MILESTONE_KEY = 'dzbanek_seen_milestones';
   var PLAY_THRESHOLDS = [10, 100, 1000, 10000, 50000, 100000];
 
+  /** English fallbacks so UI never shows raw keys if locale files are stale/cached. */
+  var T_FALLBACK = {
+    'now.deals_live': 'Live',
+    'now.deals_watching': 'Watching',
+    'now.deals_watch_steam': 'Steam digests',
+    'now.deals_watch_steam_sub':
+      'Pulse is live — posting when sales clear the review filter.',
+    'now.deals_watch_epic': 'Epic free games',
+    'now.deals_watch_epic_sub': 'Watching for the next free drop.',
+    'now.deal_new': 'New:',
+    'now.empty_deals': 'No recent deals yet.',
+    'now.empty_commands': 'No recent commands yet.',
+    'now.empty_milestones': 'No milestones yet — keep playing!',
+    'now.empty_tracks': 'No rankings yet — the bot will fill top tracks when available.',
+    'now.idle_playing': 'Nothing playing right now.',
+    'now.playing_prefix': 'Playing:',
+    'now.live_badge': 'LIVE',
+    'now.not_playing_badge': 'Sleeping',
+    'now.source_live': 'Live from bot API',
+    'now.source_snapshot': 'From stats snapshot',
+  };
+
   function t(key, vars) {
+    var out = null;
     if (global.DZBANEK_I18N && typeof global.DZBANEK_I18N.t === 'function') {
-      return global.DZBANEK_I18N.t(key, vars);
+      out = global.DZBANEK_I18N.t(key, vars);
     }
-    return key;
+    // Missing keys return the key string itself — treat that as a miss
+    if (out == null || out === '' || out === key) {
+      out = T_FALLBACK[key] || key;
+      if (vars && typeof out === 'string') {
+        out = out.replace(/\{\{(\w+)\}\}/g, function (_, k) {
+          return vars[k] != null ? String(vars[k]) : '';
+        });
+      }
+    }
+    return out;
   }
 
   function escapeHtml(s) {
