@@ -569,6 +569,62 @@ html[data-theme='light'] .product-teaser-botbadge {
 html[data-theme='light'] .product-teaser-stage {
   background: #313338 !important;
 }
+
+/* Components V2 mock palette (always Discord-dark) */
+html[data-theme='light'] .dc-v2 {
+  background: #2b2d31 !important;
+  color: #dbdee1 !important;
+}
+html[data-theme='light'] .dc-msg-name,
+html[data-theme='light'] .dc-v2-h3,
+html[data-theme='light'] .dc-v2-status strong,
+html[data-theme='light'] .dc-v2-kicker strong,
+html[data-theme='light'] .dc-v2-price strong {
+  color: #f2f3f5 !important;
+}
+html[data-theme='light'] .dc-v2-title,
+html[data-theme='light'] .dc-v2-h2,
+html[data-theme='light'] .dc-v2-deal-title,
+html[data-theme='light'] .dc-v2-link {
+  color: #00a8fc !important;
+}
+html[data-theme='light'] .dc-v2-artist,
+html[data-theme='light'] .dc-v2-sub,
+html[data-theme='light'] .dc-v2-times,
+html[data-theme='light'] .dc-msg-time {
+  color: #b5bac1 !important;
+}
+html[data-theme='light'] .dc-v2-muted {
+  color: #949ba4 !important;
+}
+html[data-theme='light'] .dc-v2-progress,
+html[data-theme='light'] .dc-v2-times code,
+html[data-theme='light'] .dc-v2-select {
+  background: #1e1f22 !important;
+  color: #dbdee1 !important;
+}
+html[data-theme='light'] .dc-v2-discount {
+  color: #23a559 !important;
+}
+html[data-theme='light'] .dc-v2-price .strike,
+html[data-theme='light'] .dc-v2-price s {
+  color: #949ba4 !important;
+}
+html[data-theme='light'] .dc-v2-btn {
+  color: #ffffff !important;
+}
+html[data-theme='light'] .dc-v2-btn--primary {
+  background: #5865f2 !important;
+}
+html[data-theme='light'] .dc-v2-btn--danger {
+  background: #da373c !important;
+}
+html[data-theme='light'] .dc-v2-btn:not(.dc-v2-btn--primary):not(.dc-v2-btn--danger):not(.dc-v2-btn--success) {
+  background: #4e5058 !important;
+}
+html[data-theme='light'] .dc-v2-sep {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
 html[data-theme='light'] .product-teaser-footer {
   background: #2b2d31 !important;
   border-top-color: rgba(255, 255, 255, 0.06) !important;

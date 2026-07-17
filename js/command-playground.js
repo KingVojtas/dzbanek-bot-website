@@ -6,33 +6,43 @@
   const DEMOS = {
     '/play': {
       category: 'music',
-      title: 'Now Playing',
-      body: 'Lofi beats to code to',
-      fields: ['Duration · 3:21', 'Requested by · you', 'Source · YouTube'],
-      accent: '#5865F2',
-      line: '▶️ Now playing',
+      layout: 'music-player',
+      title: 'Lofi beats to code to',
+      artist: 'Lofi Girl',
+      source: 'YouTube',
+      status: 'Now Playing',
+      queueLength: 4,
+      loopLabel: '🔁 Off',
+      pos: '1:42',
+      dur: '3:21',
+      progressBar: '━━━━━━●─────────',
+      accent: '#8b5cf6',
       usage: '/play query: lofi beats',
       opts: [{ name: 'query', value: 'lofi beats' }],
-      progress: 0.38,
     },
     '/queue': {
       category: 'music',
       title: 'Queue · 4 tracks',
       body: '1. Lofi beats to code to  ← now\n2. Midnight City\n3. Blinding Lights\n4. Take On Me',
       fields: ['Loop · off', 'Total · 14:02'],
-      accent: '#5865F2',
+      accent: '#8b5cf6',
       line: '📋 Music queue',
       usage: '/queue',
     },
     '/playing': {
       category: 'music',
-      title: 'Now Playing',
-      body: 'Midnight City — M83',
-      fields: ['Progress · 1:42 / 4:03'],
-      accent: '#5865F2',
-      line: '🎧 Currently playing',
+      layout: 'music-player',
+      title: 'Midnight City',
+      artist: 'M83',
+      source: 'YouTube',
+      status: 'Now Playing',
+      queueLength: 3,
+      loopLabel: '🔁 Off',
+      pos: '1:42',
+      dur: '4:03',
+      progressBar: '━━━━━━●─────────',
+      accent: '#8b5cf6',
       usage: '/playing',
-      progress: 0.42,
     },
     '/skip': {
       category: 'music',
@@ -300,23 +310,9 @@
       .join('');
   }
 
-  function renderEmbed(demo, cmd) {
-    const d = demo || fallbackDemo(cmd);
-    const fieldsHtml = (d.fields || [])
-      .map(function (f) {
-        return '<p class="cmd-embed-field">' + escapeHtml(f) + '</p>';
-      })
-      .join('');
-    const bodyHtml = escapeHtml(d.body || '').replace(/\n/g, '<br />');
-    const progress =
-      typeof d.progress === 'number'
-        ? '<div class="cmd-progress" aria-hidden="true"><span style="width:' +
-          Math.round(Math.max(0, Math.min(1, d.progress)) * 100) +
-          '%"></span></div>'
-        : '';
+  function renderUserSlash(cmd, d) {
     const usedLabel = t('commands.used', 'used');
     const youLabel = t('commands.you', 'You');
-
     return (
       '<div class="cmd-slash-msg">' +
       '<span class="cmd-user-avatar" aria-hidden="true">YOU</span>' +
@@ -338,20 +334,104 @@
       '</code>' +
       renderOpts(d.opts) +
       '</div>' +
-      '</div></div>' +
-      '<div class="cmd-bot-msg">' +
-      '<img src="assets/bot-avatar.png" alt="" class="cmd-discord-avatar" width="40" height="40" />' +
-      '<div class="min-w-0 flex-1">' +
+      '</div></div>'
+    );
+  }
+
+  function renderBotHeader() {
+    return (
       '<div class="flex flex-wrap items-center gap-1.5">' +
       '<span class="cmd-discord-name">dzbanek-bot</span>' +
       '<span class="cmd-discord-bot">BOT</span>' +
       '<span class="text-xs text-[#949BA4]">Today at ' +
       escapeHtml(timeLabel()) +
       '</span>' +
-      '</div>' +
-      '<p class="mt-1 text-sm text-[#DBDEE1]">' +
-      escapeHtml(d.line || cmd) +
+      '</div>'
+    );
+  }
+
+  /** Matches buildMusicPlayerDisplay (Components V2). */
+  function renderMusicPlayer(d) {
+    const accent = d.accent || '#8b5cf6';
+    const q = d.queueLength != null ? d.queueLength : 4;
+    return (
+      '<div class="cmd-bot-msg">' +
+      '<img src="assets/bot-avatar.png" alt="" class="cmd-discord-avatar" width="40" height="40" />' +
+      '<div class="min-w-0 flex-1">' +
+      renderBotHeader() +
+      '<div class="dc-v2 dc-v2--music" style="border-left-color:' +
+      escapeAttr(accent) +
+      '">' +
+      '<div class="dc-v2-section">' +
+      '<div class="dc-v2-text">' +
+      '<p class="dc-v2-kicker"><strong>Music Player</strong> · ' +
+      escapeHtml(d.source || 'YouTube') +
       '</p>' +
+      '<p class="dc-v2-title">' +
+      escapeHtml(d.title || 'Track') +
+      '</p>' +
+      (d.artist
+        ? '<p class="dc-v2-artist">' + escapeHtml(d.artist) + '</p>'
+        : '') +
+      '<div class="dc-v2-progress" aria-hidden="true">' +
+      escapeHtml(d.progressBar || '━━━━━━●─────────') +
+      '</div>' +
+      '<p class="dc-v2-times"><code>' +
+      escapeHtml(d.pos || '0:00') +
+      '</code> &nbsp;/&nbsp; <code>' +
+      escapeHtml(d.dur || '0:00') +
+      '</code></p>' +
+      '<p class="dc-v2-status"><strong>' +
+      escapeHtml(d.status || 'Now Playing') +
+      '</strong> · Queue: <strong>' +
+      escapeHtml(String(q)) +
+      '</strong> track' +
+      (q === 1 ? '' : 's') +
+      ' · ' +
+      escapeHtml(d.loopLabel || '🔁 Off') +
+      '</p>' +
+      '</div>' +
+      '<div class="dc-v2-thumb" aria-hidden="true">🎵</div>' +
+      '</div>' +
+      '<div class="dc-v2-sep" aria-hidden="true"></div>' +
+      '<div class="dc-v2-actions" aria-hidden="true">' +
+      '<span class="dc-v2-btn dc-v2-btn--primary">⏸️ Pause</span>' +
+      '<span class="dc-v2-btn">⏭️ Skip</span>' +
+      '<span class="dc-v2-btn dc-v2-btn--danger">⏹️ Stop</span>' +
+      '<span class="dc-v2-btn">🔁 Loop</span>' +
+      '<span class="dc-v2-btn">🔀 Shuffle</span>' +
+      '</div></div></div></div>'
+    );
+  }
+
+  function renderEmbed(demo, cmd) {
+    const d = demo || fallbackDemo(cmd);
+    if (d.layout === 'music-player') {
+      return renderUserSlash(cmd, d) + renderMusicPlayer(d);
+    }
+
+    const fieldsHtml = (d.fields || [])
+      .map(function (f) {
+        return '<p class="cmd-embed-field">' + escapeHtml(f) + '</p>';
+      })
+      .join('');
+    const bodyHtml = escapeHtml(d.body || '').replace(/\n/g, '<br />');
+    const progress =
+      typeof d.progress === 'number'
+        ? '<div class="cmd-progress" aria-hidden="true"><span style="width:' +
+          Math.round(Math.max(0, Math.min(1, d.progress)) * 100) +
+          '%"></span></div>'
+        : '';
+
+    return (
+      renderUserSlash(cmd, d) +
+      '<div class="cmd-bot-msg">' +
+      '<img src="assets/bot-avatar.png" alt="" class="cmd-discord-avatar" width="40" height="40" />' +
+      '<div class="min-w-0 flex-1">' +
+      renderBotHeader() +
+      (d.line
+        ? '<p class="mt-1 text-sm text-[#DBDEE1]">' + escapeHtml(d.line) + '</p>'
+        : '') +
       '<div class="cmd-embed" style="border-left-color:' +
       escapeAttr(d.accent || '#5865F2') +
       '">' +

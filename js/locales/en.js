@@ -51,7 +51,7 @@
       chip_news: 'News',
       chip_levels: 'Levels',
       chip_welcome: 'Welcomes',
-      mock_caption: 'See it in Discord — mock previews of real bot embeds',
+      mock_caption: 'See it in Discord — mock of real Components V2 messages',
       tab_music: 'Music',
       tab_steam: 'Steam',
       tab_epic: 'Epic',

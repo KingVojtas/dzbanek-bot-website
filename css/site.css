@@ -1940,6 +1940,292 @@ header.sticky {
   display: block;
   animation: mock-in 0.35s ease;
 }
+
+/* —— Discord Components V2 mock (matches bot display.ts) —— */
+.dc-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  text-align: left;
+}
+.dc-msg-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.dc-msg-body {
+  min-width: 0;
+  flex: 1;
+}
+.dc-msg-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.45rem;
+}
+.dc-msg-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f2f3f5;
+}
+.dc-msg-bot {
+  border-radius: 0.2rem;
+  background: #5865f2;
+  color: #fff;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.1rem 0.28rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+.dc-msg-time {
+  font-size: 0.7rem;
+  color: #949ba4;
+}
+/* Components V2 container */
+.dc-v2 {
+  margin-top: 0.4rem;
+  border-radius: 0.5rem;
+  background: #2b2d31;
+  border-left: 4px solid #8b5cf6;
+  overflow: hidden;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+.dc-v2--music {
+  border-left-color: #8b5cf6;
+}
+.dc-v2--spotify {
+  border-left-color: #1db954;
+}
+.dc-v2--steam {
+  border-left-color: #1b2838;
+}
+.dc-v2--epic {
+  border-left-color: #1a1a1a;
+}
+.dc-v2-section {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  align-items: flex-start;
+}
+.dc-v2-text {
+  flex: 1;
+  min-width: 0;
+}
+.dc-v2-kicker {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #dbdee1;
+  line-height: 1.35;
+}
+.dc-v2-kicker strong {
+  color: #f2f3f5;
+  font-weight: 700;
+}
+.dc-v2-title {
+  margin: 0.35rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #00a8fc;
+  line-height: 1.3;
+  text-decoration: none;
+}
+.dc-v2-title:hover {
+  text-decoration: underline;
+}
+.dc-v2-title--plain {
+  color: #f2f3f5;
+}
+.dc-v2-h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #00a8fc;
+  line-height: 1.3;
+}
+.dc-v2-h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f2f3f5;
+  line-height: 1.35;
+}
+.dc-v2-artist {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #b5bac1;
+}
+.dc-v2-progress {
+  margin: 0.55rem 0 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: #dbdee1;
+  background: #1e1f22;
+  border-radius: 0.25rem;
+  padding: 0.28rem 0.4rem;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.dc-v2-times {
+  margin: 0.3rem 0 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  color: #b5bac1;
+}
+.dc-v2-times code {
+  font-family: inherit;
+  background: #1e1f22;
+  border-radius: 0.2rem;
+  padding: 0.1rem 0.3rem;
+  color: #dbdee1;
+}
+.dc-v2-status {
+  margin: 0.55rem 0 0;
+  font-size: 0.82rem;
+  color: #dbdee1;
+  line-height: 1.4;
+}
+.dc-v2-status strong {
+  color: #f2f3f5;
+  font-weight: 700;
+}
+.dc-v2-sub {
+  margin: 0.25rem 0 0;
+  font-size: 0.78rem;
+  color: #b5bac1;
+  line-height: 1.4;
+}
+.dc-v2-muted {
+  margin: 0.35rem 0 0;
+  font-size: 0.72rem;
+  color: #949ba4;
+  line-height: 1.35;
+}
+.dc-v2-thumb {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+  object-fit: cover;
+  background: linear-gradient(145deg, #4c1d95, #1e1f22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+.dc-v2-thumb--steam {
+  background: linear-gradient(145deg, #1b2838, #2a475e);
+}
+.dc-v2-thumb--epic {
+  background: linear-gradient(145deg, #2a2a2a, #0078f2);
+}
+.dc-v2-sep {
+  height: 1px;
+  margin: 0 0.85rem;
+  background: rgba(255, 255, 255, 0.08);
+}
+.dc-v2-deal {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  align-items: flex-start;
+}
+.dc-v2-deal-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #00a8fc;
+  line-height: 1.3;
+}
+.dc-v2-price {
+  margin: 0.25rem 0 0;
+  font-size: 0.82rem;
+  color: #dbdee1;
+}
+.dc-v2-price strong {
+  color: #f2f3f5;
+}
+.dc-v2-price s,
+.dc-v2-price .strike {
+  color: #949ba4;
+  text-decoration: line-through;
+}
+.dc-v2-discount {
+  color: #23a559;
+  font-weight: 800;
+}
+.dc-v2-link {
+  color: #00a8fc;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.dc-v2-link:hover {
+  text-decoration: underline;
+}
+.dc-v2-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.55rem 0.75rem 0.7rem;
+}
+.dc-v2-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  font-family: inherit;
+  line-height: 1.2;
+  cursor: default;
+  color: #fff;
+  background: #4e5058;
+  white-space: nowrap;
+}
+.dc-v2-btn--primary {
+  background: #5865f2;
+}
+.dc-v2-btn--danger {
+  background: #da373c;
+}
+.dc-v2-btn--success {
+  background: #248046;
+}
+.dc-v2-select {
+  margin: 0 0.75rem 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background: #1e1f22;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.78rem;
+  color: #949ba4;
+}
+.dc-v2-select-chevron {
+  color: #b5bac1;
+  font-size: 0.65rem;
+}
+.dc-v2-block {
+  padding: 0.65rem 0.85rem 0.15rem;
+}
+.dc-v2-block + .dc-v2-sep {
+  margin-top: 0.35rem;
+}
 @keyframes mock-in {
   from {
     opacity: 0;
@@ -2042,7 +2328,7 @@ header.sticky {
 }
 .product-teaser-stage {
   position: relative;
-  min-height: 15.5rem;
+  min-height: 22rem;
   background:
     radial-gradient(ellipse 80% 60% at 10% 0%, rgba(88, 101, 242, 0.12), transparent 55%),
     #313338;

@@ -42,8 +42,8 @@
       rel="stylesheet"
     />
     <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
-    <script src="js/theme-boot.js?v=20260718k"></script>
-    <link rel="stylesheet" href="css/site.css?v=20260718j" />
+    <script src="js/theme-boot.js?v=20260718m"></script>
+    <link rel="stylesheet" href="css/site.css?v=20260718m" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -409,81 +409,127 @@
               />
             </div>
 
-            <!-- Discord-style mock embed carousel -->
+            <!-- Discord Components V2 mocks (matches bot display.ts) -->
             <div class="w-full max-w-sm" id="mock-carousel">
               <div
                 class="discord-mock rounded-lg border border-white/5 bg-[#313338] p-3 shadow-card text-left"
                 aria-live="polite"
               >
-                <!-- Music -->
+                <!-- Music — buildMusicPlayerDisplay -->
                 <div class="mock-slide is-active" data-slide="music">
-                  <div class="flex items-start gap-3">
-                    <img src="assets/bot-avatar.png" alt="" class="h-10 w-10 shrink-0 rounded-full object-cover" />
-                    <div class="min-w-0 flex-1">
-                      <div class="flex flex-wrap items-center gap-1.5">
-                        <span class="text-sm font-semibold text-white">dzbanek-bot</span>
-                        <span class="rounded bg-discord-blurple px-1 py-px text-[10px] font-bold uppercase leading-none text-white">Bot</span>
-                        <span class="text-xs text-[#949BA4]">Today at 3:33 PM</span>
+                  <div class="dc-msg">
+                    <img src="assets/bot-avatar.png" alt="" class="dc-msg-avatar" width="40" height="40" />
+                    <div class="dc-msg-body">
+                      <div class="dc-msg-meta">
+                        <span class="dc-msg-name">dzbanek-bot</span>
+                        <span class="dc-msg-bot">BOT</span>
+                        <span class="dc-msg-time">Today at 3:33 PM</span>
                       </div>
-                      <p class="mt-1 text-sm text-[#DBDEE1]">▶️ Now playing</p>
-                      <div class="mt-2 flex overflow-hidden rounded border-l-4 border-discord-blurple bg-[#2B2D31]">
-                        <div class="flex-1 p-3">
-                          <p class="text-xs font-semibold text-discord-blurple">Now Playing</p>
-                          <p class="mt-1 text-sm font-semibold text-white">Lofi beats to code to</p>
-                          <p class="mt-1 text-xs text-[#B5BAC1]">Duration · 2:45:00<br />Requested by · you</p>
-                          <div class="mt-2 flex gap-1.5">
-                            <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">⏯️</span>
-                            <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">⏭️</span>
-                            <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">🔀</span>
-                            <span class="rounded bg-[#1E1F22] px-2 py-0.5 text-[10px] text-[#DBDEE1]">🔁</span>
+                      <div class="dc-v2 dc-v2--music">
+                        <div class="dc-v2-section">
+                          <div class="dc-v2-text">
+                            <p class="dc-v2-kicker"><strong>Music Player</strong> · YouTube</p>
+                            <p class="dc-v2-title">Lofi beats to code to</p>
+                            <p class="dc-v2-artist">Lofi Girl</p>
+                            <div class="dc-v2-progress" aria-hidden="true">━━━━━━●─────────</div>
+                            <p class="dc-v2-times"><code>1:42</code> &nbsp;/&nbsp; <code>3:21</code></p>
+                            <p class="dc-v2-status"><strong>Now Playing</strong> · Queue: <strong>4</strong> tracks · 🔁 Off</p>
                           </div>
+                          <div class="dc-v2-thumb" aria-hidden="true">🎵</div>
+                        </div>
+                        <div class="dc-v2-sep" aria-hidden="true"></div>
+                        <div class="dc-v2-actions" aria-hidden="true">
+                          <span class="dc-v2-btn dc-v2-btn--primary">⏸️ Pause</span>
+                          <span class="dc-v2-btn">⏭️ Skip</span>
+                          <span class="dc-v2-btn dc-v2-btn--danger">⏹️ Stop</span>
+                          <span class="dc-v2-btn">🔁 Loop</span>
+                          <span class="dc-v2-btn">🔀 Shuffle</span>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <!-- Steam -->
+                <!-- Steam — buildSteamDealsDisplay -->
                 <div class="mock-slide" data-slide="steam">
-                  <div class="flex items-start gap-3">
-                    <img src="assets/bot-avatar.png" alt="" class="h-10 w-10 shrink-0 rounded-full object-cover" />
-                    <div class="min-w-0 flex-1">
-                      <div class="flex flex-wrap items-center gap-1.5">
-                        <span class="text-sm font-semibold text-white">dzbanek-bot</span>
-                        <span class="rounded bg-discord-blurple px-1 py-px text-[10px] font-bold uppercase leading-none text-white">Bot</span>
-                        <span class="text-xs text-[#949BA4]">Today at 3:33 AM</span>
+                  <div class="dc-msg">
+                    <img src="assets/bot-avatar.png" alt="" class="dc-msg-avatar" width="40" height="40" />
+                    <div class="dc-msg-body">
+                      <div class="dc-msg-meta">
+                        <span class="dc-msg-name">dzbanek-bot</span>
+                        <span class="dc-msg-bot">BOT</span>
+                        <span class="dc-msg-time">Today at 3:33 AM</span>
                       </div>
-                      <p class="mt-1 text-sm text-[#DBDEE1]">🎮 Steam Daily Deals</p>
-                      <div class="mt-2 flex overflow-hidden rounded border-l-4 border-discord-blurple bg-[#2B2D31]">
-                        <div class="flex-1 p-3">
-                          <p class="text-xs font-semibold text-discord-blurple">Top deals · review filtered</p>
-                          <p class="mt-1 text-sm font-semibold text-white">Hades II</p>
-                          <p class="mt-1 text-xs text-[#B5BAC1]">
-                            <span class="line-through opacity-70">41,99€</span> → <strong class="text-white">8,39€</strong> (-80%)
-                          </p>
-                          <p class="mt-1 text-xs text-[#B5BAC1]">⭐ Very Positive (95%) · Expires soon</p>
-                          <p class="mt-2 text-xs text-discord-blurple">View on Steam →</p>
+                      <div class="dc-v2 dc-v2--steam">
+                        <div class="dc-v2-block">
+                          <p class="dc-v2-h2">Steam Sales — Best Deals (up to 90% off)</p>
+                          <p class="dc-v2-sub"><strong>Top 2</strong> deals · deepest discounts first</p>
+                          <p class="dc-v2-muted">Use the dropdown to wishlist games for sale DMs.</p>
+                        </div>
+                        <div class="dc-v2-sep" aria-hidden="true"></div>
+                        <div class="dc-v2-deal">
+                          <div class="dc-v2-text">
+                            <p class="dc-v2-deal-title">A Plague Tale: Innocence</p>
+                            <p class="dc-v2-price"><span class="dc-v2-discount">-90%</span> · <span class="strike">€39.99</span> → <strong>€3.99</strong></p>
+                            <p class="dc-v2-sub">⭐ Very Positive (94%)</p>
+                            <p class="dc-v2-muted">Expires <strong>24 Jul</strong> · <span class="dc-v2-link">Store →</span></p>
+                          </div>
+                          <div class="dc-v2-thumb dc-v2-thumb--steam" aria-hidden="true">🎮</div>
+                        </div>
+                        <div class="dc-v2-sep" aria-hidden="true"></div>
+                        <div class="dc-v2-deal">
+                          <div class="dc-v2-text">
+                            <p class="dc-v2-deal-title">Hades II</p>
+                            <p class="dc-v2-price"><span class="dc-v2-discount">-20%</span> · <span class="strike">€29.99</span> → <strong>€23.99</strong></p>
+                            <p class="dc-v2-sub">⭐ Overwhelmingly Positive (97%)</p>
+                            <p class="dc-v2-muted"><span class="dc-v2-link">Store →</span></p>
+                          </div>
+                          <div class="dc-v2-thumb dc-v2-thumb--steam" aria-hidden="true">⚔️</div>
+                        </div>
+                        <div class="dc-v2-select" aria-hidden="true">
+                          <span>❤️ Add to my wishlist (get notified on sales)</span>
+                          <span class="dc-v2-select-chevron">▼</span>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <!-- Epic -->
+                <!-- Epic — buildEpicFreeGamesDisplay -->
                 <div class="mock-slide" data-slide="epic">
-                  <div class="flex items-start gap-3">
-                    <img src="assets/bot-avatar.png" alt="" class="h-10 w-10 shrink-0 rounded-full object-cover" />
-                    <div class="min-w-0 flex-1">
-                      <div class="flex flex-wrap items-center gap-1.5">
-                        <span class="text-sm font-semibold text-white">dzbanek-bot</span>
-                        <span class="rounded bg-discord-blurple px-1 py-px text-[10px] font-bold uppercase leading-none text-white">Bot</span>
-                        <span class="text-xs text-[#949BA4]">Today at 5:00 PM</span>
+                  <div class="dc-msg">
+                    <img src="assets/bot-avatar.png" alt="" class="dc-msg-avatar" width="40" height="40" />
+                    <div class="dc-msg-body">
+                      <div class="dc-msg-meta">
+                        <span class="dc-msg-name">dzbanek-bot</span>
+                        <span class="dc-msg-bot">BOT</span>
+                        <span class="dc-msg-time">Today at 5:00 PM</span>
                       </div>
-                      <p class="mt-1 text-sm text-[#DBDEE1]">🆓 Epic Free Games</p>
-                      <div class="mt-2 flex overflow-hidden rounded border-l-4 border-[#0078F2] bg-[#2B2D31]">
-                        <div class="flex-1 p-3">
-                          <p class="text-xs font-semibold text-[#0078F2]">Free now on Epic Games Store</p>
-                          <p class="mt-1 text-sm font-semibold text-white">Control</p>
-                          <p class="mt-1 text-xs text-[#B5BAC1]">Claim before it leaves the free rotation.</p>
-                          <p class="mt-2 text-xs text-[#0078F2]">Open in Epic →</p>
+                      <div class="dc-v2 dc-v2--epic">
+                        <div class="dc-v2-block">
+                          <p class="dc-v2-h2">Epic Free Games</p>
+                          <p class="dc-v2-sub">Claim free titles this week — no purchase needed.</p>
+                        </div>
+                        <div class="dc-v2-block">
+                          <p class="dc-v2-h3">This Week · 2 free</p>
+                        </div>
+                        <div class="dc-v2-sep" aria-hidden="true"></div>
+                        <div class="dc-v2-deal">
+                          <div class="dc-v2-text">
+                            <p class="dc-v2-deal-title">Luto</p>
+                            <p class="dc-v2-price"><strong>FREE</strong> · <span class="strike">€19.99</span></p>
+                            <p class="dc-v2-sub">Until <strong>24 Jul 2026</strong></p>
+                            <p class="dc-v2-muted"><span class="dc-v2-link">Claim →</span></p>
+                          </div>
+                          <div class="dc-v2-thumb dc-v2-thumb--epic" aria-hidden="true">🆓</div>
+                        </div>
+                        <div class="dc-v2-sep" aria-hidden="true"></div>
+                        <div class="dc-v2-deal">
+                          <div class="dc-v2-text">
+                            <p class="dc-v2-deal-title">Echo Generation: Midnight Edition</p>
+                            <p class="dc-v2-price"><strong>FREE</strong> · <span class="strike">€16.79</span></p>
+                            <p class="dc-v2-sub">Until <strong>24 Jul 2026</strong></p>
+                            <p class="dc-v2-muted"><span class="dc-v2-link">Claim →</span></p>
+                          </div>
+                          <div class="dc-v2-thumb dc-v2-thumb--epic" aria-hidden="true">👾</div>
                         </div>
                       </div>
                     </div>
@@ -495,7 +541,7 @@
                 <button type="button" class="mock-tab" data-mock-tab="steam" role="tab" aria-selected="false" data-i18n="hero.tab_steam">Steam</button>
                 <button type="button" class="mock-tab" data-mock-tab="epic" role="tab" aria-selected="false" data-i18n="hero.tab_epic">Epic</button>
               </div>
-              <p class="mt-2 text-center text-xs text-discord-muted" data-i18n="hero.mock_caption">See it in Discord — mock previews of real bot embeds</p>
+              <p class="mt-2 text-center text-xs text-discord-muted" data-i18n="hero.mock_caption">See it in Discord — mock of real Components V2 messages</p>
             </div>
           </div>
         </div>
@@ -532,83 +578,124 @@
               </div>
 
               <div class="product-teaser-stage">
-                <!-- MUSIC -->
+                <!-- MUSIC — buildMusicPlayerDisplay -->
                 <article class="product-teaser-slide is-active" data-teaser-slide="music" aria-hidden="false">
-                  <div class="product-teaser-msg">
-                    <img src="assets/bot-avatar.png" alt="" class="product-teaser-avatar" width="40" height="40" />
-                    <div class="min-w-0 flex-1">
-                      <div class="product-teaser-meta">
-                        <span class="product-teaser-botname">dzbanek-bot</span>
-                        <span class="product-teaser-botbadge">BOT</span>
-                        <span class="product-teaser-time">Today at 3:33 PM</span>
+                  <div class="dc-msg">
+                    <img src="assets/bot-avatar.png" alt="" class="dc-msg-avatar" width="40" height="40" />
+                    <div class="dc-msg-body">
+                      <div class="dc-msg-meta">
+                        <span class="dc-msg-name">dzbanek-bot</span>
+                        <span class="dc-msg-bot">BOT</span>
+                        <span class="dc-msg-time">Today at 3:33 PM</span>
                       </div>
-                      <p class="product-teaser-line">▶️ Now playing</p>
-                      <div class="product-teaser-embed product-teaser-embed--music">
-                        <div class="product-teaser-embed-body">
-                          <p class="product-teaser-embed-kicker">Now Playing</p>
-                          <p class="product-teaser-embed-title">Lofi beats to code to</p>
-                          <p class="product-teaser-embed-sub">Duration · 2:45:00<br />Requested by · you</p>
-                          <div class="product-teaser-controls" aria-hidden="true">
-                            <span>⏯️</span><span>⏭️</span><span>🔀</span><span>🔁</span>
+                      <div class="dc-v2 dc-v2--music">
+                        <div class="dc-v2-section">
+                          <div class="dc-v2-text">
+                            <p class="dc-v2-kicker"><strong>Music Player</strong> · YouTube</p>
+                            <p class="dc-v2-title">Lofi beats to code to</p>
+                            <p class="dc-v2-artist">Lofi Girl</p>
+                            <div class="dc-v2-progress" aria-hidden="true">━━━━━━●─────────</div>
+                            <p class="dc-v2-times"><code>1:42</code> &nbsp;/&nbsp; <code>3:21</code></p>
+                            <p class="dc-v2-status"><strong>Now Playing</strong> · Queue: <strong>4</strong> tracks · 🔁 Off</p>
                           </div>
-                          <div class="product-teaser-progress" aria-hidden="true">
-                            <div class="product-teaser-progress-bar"></div>
-                          </div>
+                          <div class="dc-v2-thumb" aria-hidden="true">🎵</div>
                         </div>
-                        <div class="product-teaser-art" aria-hidden="true">🎵</div>
+                        <div class="dc-v2-sep" aria-hidden="true"></div>
+                        <div class="dc-v2-actions" aria-hidden="true">
+                          <span class="dc-v2-btn dc-v2-btn--primary">⏸️ Pause</span>
+                          <span class="dc-v2-btn">⏭️ Skip</span>
+                          <span class="dc-v2-btn dc-v2-btn--danger">⏹️ Stop</span>
+                          <span class="dc-v2-btn">🔁 Loop</span>
+                          <span class="dc-v2-btn">🔀 Shuffle</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </article>
 
-                <!-- STEAM -->
+                <!-- STEAM — buildSteamDealsDisplay -->
                 <article class="product-teaser-slide" data-teaser-slide="steam" aria-hidden="true">
-                  <div class="product-teaser-msg">
-                    <img src="assets/bot-avatar.png" alt="" class="product-teaser-avatar" width="40" height="40" />
-                    <div class="min-w-0 flex-1">
-                      <div class="product-teaser-meta">
-                        <span class="product-teaser-botname">dzbanek-bot</span>
-                        <span class="product-teaser-botbadge">BOT</span>
-                        <span class="product-teaser-time">Today at 3:33 AM</span>
+                  <div class="dc-msg">
+                    <img src="assets/bot-avatar.png" alt="" class="dc-msg-avatar" width="40" height="40" />
+                    <div class="dc-msg-body">
+                      <div class="dc-msg-meta">
+                        <span class="dc-msg-name">dzbanek-bot</span>
+                        <span class="dc-msg-bot">BOT</span>
+                        <span class="dc-msg-time">Today at 3:33 AM</span>
                       </div>
-                      <p class="product-teaser-line">🎮 Steam Daily Deals</p>
-                      <div class="product-teaser-embed product-teaser-embed--steam">
-                        <div class="product-teaser-embed-body">
-                          <p class="product-teaser-embed-kicker">Top deals · review filtered</p>
-                          <p class="product-teaser-embed-title">Hades II</p>
-                          <p class="product-teaser-embed-sub">
-                            <span class="line-through opacity-70">41,99€</span>
-                            → <strong class="text-white">8,39€</strong>
-                            <span class="product-teaser-discount">−80%</span>
-                          </p>
-                          <p class="product-teaser-embed-sub">⭐ Very Positive (95%) · Expires soon</p>
-                          <p class="product-teaser-link">View on Steam →</p>
+                      <div class="dc-v2 dc-v2--steam">
+                        <div class="dc-v2-block">
+                          <p class="dc-v2-h2">Steam Sales — Best Deals (up to 90% off)</p>
+                          <p class="dc-v2-sub"><strong>Top 2</strong> deals · deepest discounts first</p>
+                          <p class="dc-v2-muted">Use the dropdown to wishlist games for sale DMs.</p>
                         </div>
-                        <div class="product-teaser-art product-teaser-art--steam" aria-hidden="true">🎮</div>
+                        <div class="dc-v2-sep" aria-hidden="true"></div>
+                        <div class="dc-v2-deal">
+                          <div class="dc-v2-text">
+                            <p class="dc-v2-deal-title">A Plague Tale: Innocence</p>
+                            <p class="dc-v2-price"><span class="dc-v2-discount">-90%</span> · <span class="strike">€39.99</span> → <strong>€3.99</strong></p>
+                            <p class="dc-v2-sub">⭐ Very Positive (94%)</p>
+                            <p class="dc-v2-muted">Expires <strong>24 Jul</strong> · <span class="dc-v2-link">Store →</span></p>
+                          </div>
+                          <div class="dc-v2-thumb dc-v2-thumb--steam" aria-hidden="true">🎮</div>
+                        </div>
+                        <div class="dc-v2-sep" aria-hidden="true"></div>
+                        <div class="dc-v2-deal">
+                          <div class="dc-v2-text">
+                            <p class="dc-v2-deal-title">Hades II</p>
+                            <p class="dc-v2-price"><span class="dc-v2-discount">-20%</span> · <span class="strike">€29.99</span> → <strong>€23.99</strong></p>
+                            <p class="dc-v2-sub">⭐ Overwhelmingly Positive (97%)</p>
+                            <p class="dc-v2-muted"><span class="dc-v2-link">Store →</span></p>
+                          </div>
+                          <div class="dc-v2-thumb dc-v2-thumb--steam" aria-hidden="true">⚔️</div>
+                        </div>
+                        <div class="dc-v2-select" aria-hidden="true">
+                          <span>❤️ Add to my wishlist (get notified on sales)</span>
+                          <span class="dc-v2-select-chevron">▼</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </article>
 
-                <!-- EPIC -->
+                <!-- EPIC — buildEpicFreeGamesDisplay -->
                 <article class="product-teaser-slide" data-teaser-slide="epic" aria-hidden="true">
-                  <div class="product-teaser-msg">
-                    <img src="assets/bot-avatar.png" alt="" class="product-teaser-avatar" width="40" height="40" />
-                    <div class="min-w-0 flex-1">
-                      <div class="product-teaser-meta">
-                        <span class="product-teaser-botname">dzbanek-bot</span>
-                        <span class="product-teaser-botbadge">BOT</span>
-                        <span class="product-teaser-time">Today at 5:00 PM</span>
+                  <div class="dc-msg">
+                    <img src="assets/bot-avatar.png" alt="" class="dc-msg-avatar" width="40" height="40" />
+                    <div class="dc-msg-body">
+                      <div class="dc-msg-meta">
+                        <span class="dc-msg-name">dzbanek-bot</span>
+                        <span class="dc-msg-bot">BOT</span>
+                        <span class="dc-msg-time">Today at 5:00 PM</span>
                       </div>
-                      <p class="product-teaser-line">🆓 Epic Free Games</p>
-                      <div class="product-teaser-embed product-teaser-embed--epic">
-                        <div class="product-teaser-embed-body">
-                          <p class="product-teaser-embed-kicker product-teaser-embed-kicker--epic">Free now on Epic Games Store</p>
-                          <p class="product-teaser-embed-title">Control</p>
-                          <p class="product-teaser-embed-sub">Claim before it leaves the free rotation.</p>
-                          <p class="product-teaser-link product-teaser-link--epic">Open in Epic →</p>
+                      <div class="dc-v2 dc-v2--epic">
+                        <div class="dc-v2-block">
+                          <p class="dc-v2-h2">Epic Free Games</p>
+                          <p class="dc-v2-sub">Claim free titles this week — no purchase needed.</p>
                         </div>
-                        <div class="product-teaser-art product-teaser-art--epic" aria-hidden="true">🆓</div>
+                        <div class="dc-v2-block">
+                          <p class="dc-v2-h3">This Week · 2 free</p>
+                        </div>
+                        <div class="dc-v2-sep" aria-hidden="true"></div>
+                        <div class="dc-v2-deal">
+                          <div class="dc-v2-text">
+                            <p class="dc-v2-deal-title">Luto</p>
+                            <p class="dc-v2-price"><strong>FREE</strong> · <span class="strike">€19.99</span></p>
+                            <p class="dc-v2-sub">Until <strong>24 Jul 2026</strong></p>
+                            <p class="dc-v2-muted"><span class="dc-v2-link">Claim →</span></p>
+                          </div>
+                          <div class="dc-v2-thumb dc-v2-thumb--epic" aria-hidden="true">🆓</div>
+                        </div>
+                        <div class="dc-v2-sep" aria-hidden="true"></div>
+                        <div class="dc-v2-deal">
+                          <div class="dc-v2-text">
+                            <p class="dc-v2-deal-title">Echo Generation: Midnight Edition</p>
+                            <p class="dc-v2-price"><strong>FREE</strong> · <span class="strike">€16.79</span></p>
+                            <p class="dc-v2-sub">Until <strong>24 Jul 2026</strong></p>
+                            <p class="dc-v2-muted"><span class="dc-v2-link">Claim →</span></p>
+                          </div>
+                          <div class="dc-v2-thumb dc-v2-thumb--epic" aria-hidden="true">👾</div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1347,17 +1434,17 @@
 
     <!-- ========== SCRIPTS ========== -->
     <script src="js/config.js?v=20260718h"></script>
-    <script src="js/locales/en.js?v=20260718k"></script>
-    <script src="js/locales/cs.js?v=20260718k"></script>
+    <script src="js/locales/en.js?v=20260718m"></script>
+    <script src="js/locales/cs.js?v=20260718m"></script>
     <script src="js/i18n.js?v=20260718h"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
-    <script src="js/theme.js?v=20260718k"></script>
+    <script src="js/theme.js?v=20260718m"></script>
     <script src="js/stats-api.js?v=20260718g"></script>
     <script src="js/public-feed.js?v=20260718j"></script>
     <script src="js/vendor/qrcode.min.js"></script>
     <script src="js/share-kit.js"></script>
-    <script src="js/command-playground.js?v=20260718k"></script>
+    <script src="js/command-playground.js?v=20260718m"></script>
     <script src="js/product-teaser.js?v=20260718d"></script>
     <script>
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -127,7 +127,7 @@
       chip_news: 'Novinky',
       chip_levels: 'Levely',
       chip_welcome: 'Uvítání',
-      mock_caption: 'Takto to vypadá na Discordu — ukázky reálných embedů bota',
+      mock_caption: 'Takto to vypadá na Discordu — mock reálných Components V2 zpráv',
       tab_music: 'Hudba',
       tab_steam: 'Steam',
       tab_epic: 'Epic',
