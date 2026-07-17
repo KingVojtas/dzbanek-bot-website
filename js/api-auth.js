@@ -64,12 +64,16 @@
     var ret = returnPage;
     if (!ret) {
       try {
+        // Full page URL so the bot can return to check.html or admin.html
         ret = location.href.split('#')[0].split('?')[0];
       } catch (e) {
-        ret = location.origin;
+        ret = location.origin + '/admin.html';
       }
     }
-    return apiBase() + '/api/auth/login?return=' + encodeURIComponent(ret);
+    // Always absolute https API base (never relative)
+    var base = apiBase().replace(/\/$/, '');
+    if (!base) base = FALLBACK_PUBLIC_API;
+    return base + '/api/auth/login?return=' + encodeURIComponent(ret);
   }
 
   async function api(path, opts) {
