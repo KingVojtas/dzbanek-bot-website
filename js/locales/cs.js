@@ -356,6 +356,12 @@
       not_playing_badge: 'Spí',
       playing_prefix: 'Hraje:',
       idle_playing: 'Právě nic nehraje.',
+      idle_playing_hint: 'Až někdo spustí /play, skladba se tu ukáže živě.',
+      paused_badge: 'Pauza',
+      time_left: 'zbývá {{t}}',
+      time_left_unknown: 'Zbývající čas neznámý',
+      duration_unknown: 'Živě',
+      queue_n: 'Fronta · {{n}}',
       empty_tracks: 'Zatím žádný žebříček — bot ho doplní, až bude k dispozici.',
       empty_deals:
         'Ve veřejném feedu zatím žádné slevy. Bot je obnoví po každém Steam / Epic pollu.',

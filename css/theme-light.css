@@ -287,6 +287,28 @@ html[data-theme='light'] .now-album {
   background: #e8ebf2 !important;
   box-shadow: 0 0 0 1px rgba(15, 16, 20, 0.08) !important;
 }
+html[data-theme='light'] .now-track-title {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .now-track-artist,
+html[data-theme='light'] .now-progress-times,
+html[data-theme='light'] .now-progress-mono {
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .now-progress-times [data-np='pos'] {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .now-progress-left {
+  color: #4752c4 !important;
+}
+html[data-theme='light'] .now-progress-track {
+  background: rgba(15, 16, 20, 0.08) !important;
+}
+html[data-theme='light'] .now-meta-chip {
+  background: rgba(88, 101, 242, 0.08) !important;
+  border-color: rgba(88, 101, 242, 0.2) !important;
+  color: #4752c4 !important;
+}
 html[data-theme='light'] .status-strip {
   background: #eef0f6 !important;
   border-bottom-color: rgba(15, 16, 20, 0.1) !important;

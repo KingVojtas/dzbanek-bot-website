@@ -11,7 +11,7 @@
 
   var KEY = 'dzbanek_theme';
   var LINK_ID = 'dzbanek-theme-light-css';
-  var CSS_HREF = 'css/theme-light.css?v=20260718m';
+  var CSS_HREF = 'css/theme-light.css?v=20260718n';
   var bound = false;
 
   function readStored() {
@@ -53,7 +53,7 @@
       for (var i = scripts.length - 1; i >= 0; i--) {
         var src = scripts[i].src || '';
         if (src.indexOf('theme.js') !== -1) {
-          return src.replace(/\/js\/theme\.js(\?[^#]*)?(#.*)?$/i, '/css/theme-light.css?v=20260718m');
+          return src.replace(/\/js\/theme\.js(\?[^#]*)?(#.*)?$/i, '/css/theme-light.css?v=20260718n');
         }
       }
     } catch (e) {

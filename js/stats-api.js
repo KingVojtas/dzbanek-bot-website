@@ -188,11 +188,29 @@
       const r = /** @type {Record<string, unknown>} */ (np);
       const title = String(r.title || r.name || '').trim();
       if (title) {
+        const durationSec = num(r.durationSec ?? r.duration ?? r.lengthSec);
+        const positionSec = num(r.positionSec ?? r.position ?? r.progressSec);
+        let remainingSec = num(r.remainingSec ?? r.timeLeftSec ?? r.leftSec);
+        if (
+          remainingSec == null &&
+          durationSec != null &&
+          durationSec > 0 &&
+          positionSec != null
+        ) {
+          remainingSec = Math.max(0, durationSec - Math.min(positionSec, durationSec));
+        }
         nowPlaying = {
           title,
-          artist: String(r.artist || r.author || '').trim(),
+          artist: String(r.artist || r.author || r.uploader || '').trim(),
           albumArtUrl: String(r.albumArtUrl || r.thumbnail || r.artworkUrl || '').trim() || null,
           guildName: r.guildName != null ? String(r.guildName) : null,
+          source: r.source != null ? String(r.source).trim().toLowerCase() : null,
+          durationSec: durationSec != null && durationSec > 0 ? durationSec : null,
+          positionSec: positionSec != null && positionSec >= 0 ? positionSec : null,
+          remainingSec: remainingSec != null && remainingSec >= 0 ? remainingSec : null,
+          queueLength: num(r.queueLength ?? r.queueSize ?? r.queue),
+          paused: Boolean(r.paused),
+          at: typeof r.at === 'string' ? r.at : null,
         };
       }
     }

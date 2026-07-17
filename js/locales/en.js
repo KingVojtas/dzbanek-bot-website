@@ -279,6 +279,12 @@
       not_playing_badge: 'Sleeping',
       playing_prefix: 'Playing:',
       idle_playing: 'Nothing playing right now.',
+      idle_playing_hint: 'When someone runs /play, the track shows up here live.',
+      paused_badge: 'Paused',
+      time_left: '{{t}} left',
+      time_left_unknown: 'Time left unknown',
+      duration_unknown: 'Live',
+      queue_n: 'Queue · {{n}}',
       empty_tracks: 'No rankings yet — the bot will fill top tracks when available.',
       empty_deals:
         'No deals in the public feed yet. The bot refreshes this after each Steam / Epic poll.',

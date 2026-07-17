@@ -20,9 +20,15 @@
     'now.empty_milestones': 'No milestones yet — keep playing!',
     'now.empty_tracks': 'No rankings yet — the bot will fill top tracks when available.',
     'now.idle_playing': 'Nothing playing right now.',
+    'now.idle_playing_hint': 'When someone runs /play, the track shows up here live.',
     'now.playing_prefix': 'Playing:',
     'now.live_badge': 'LIVE',
+    'now.paused_badge': 'Paused',
     'now.not_playing_badge': 'Sleeping',
+    'now.time_left': '{{t}} left',
+    'now.time_left_unknown': 'Time left unknown',
+    'now.duration_unknown': 'Live',
+    'now.queue_n': 'Queue · {{n}}',
     'now.source_live': 'Live from bot API',
     'now.source_snapshot': 'From stats snapshot',
   };
@@ -230,55 +236,244 @@
     return '<p class="text-sm text-discord-muted py-2">' + escapeHtml(msg) + '</p>';
   }
 
-  function setPlayingCardState(cardEl, isPlaying) {
+  var playingTickTimer = null;
+  var playingSnapshot = null;
+
+  function setPlayingCardState(cardEl, isPlaying, paused) {
     var card =
       cardEl ||
       document.getElementById('now-playing-card') ||
       document.querySelector('[data-now-card="playing"]');
     if (!card) return;
-    card.classList.toggle('is-playing', !!isPlaying);
+    card.classList.toggle('is-playing', !!isPlaying && !paused);
+    card.classList.toggle('is-paused', !!isPlaying && !!paused);
     card.classList.toggle('is-idle', !isPlaying);
     var label = card.querySelector('[data-now="status-label"]');
     if (label) {
-      label.textContent = isPlaying ? t('now.live_badge') : t('now.not_playing_badge');
+      if (!isPlaying) label.textContent = t('now.not_playing_badge');
+      else if (paused) label.textContent = t('now.paused_badge');
+      else label.textContent = t('now.live_badge');
     }
+  }
+
+  function fmtClock(sec) {
+    if (sec == null || !Number.isFinite(sec) || sec < 0) return '—';
+    return fmtDur(sec) || '0:00';
+  }
+
+  function sourceLabel(src) {
+    if (!src) return null;
+    var s = String(src).toLowerCase();
+    if (s === 'youtube' || s === 'yt') return 'YouTube';
+    if (s === 'spotify') return 'Spotify';
+    if (s === 'soundcloud') return 'SoundCloud';
+    return src.charAt(0).toUpperCase() + src.slice(1);
+  }
+
+  function progressBarString(pos, dur, width) {
+    width = width || 18;
+    if (!dur || dur <= 0) return '─'.repeat(width);
+    var ratio = Math.min(1, Math.max(0, pos / dur));
+    var filled = Math.min(width - 1, Math.max(0, Math.round(ratio * (width - 1))));
+    return '━'.repeat(filled) + '●' + '─'.repeat(Math.max(0, width - filled - 1));
+  }
+
+  function stopPlayingTick() {
+    if (playingTickTimer) {
+      clearInterval(playingTickTimer);
+      playingTickTimer = null;
+    }
+  }
+
+  function currentInterpolatedPos() {
+    if (!playingSnapshot) return 0;
+    var base = playingSnapshot.positionSec || 0;
+    if (playingSnapshot.paused) return base;
+    var atMs = playingSnapshot.atMs || Date.now();
+    var elapsed = (Date.now() - atMs) / 1000;
+    var pos = base + Math.max(0, elapsed);
+    if (playingSnapshot.durationSec > 0) {
+      pos = Math.min(pos, playingSnapshot.durationSec);
+    }
+    return pos;
+  }
+
+  function paintPlayingProgress(root) {
+    if (!root || !playingSnapshot) return;
+    var pos = currentInterpolatedPos();
+    var dur = playingSnapshot.durationSec || 0;
+    var remaining = dur > 0 ? Math.max(0, dur - pos) : null;
+    var barEl = root.querySelector('[data-np="bar"]');
+    var posEl = root.querySelector('[data-np="pos"]');
+    var remEl = root.querySelector('[data-np="remaining"]');
+    var fillEl = root.querySelector('[data-np="fill"]');
+    if (barEl) barEl.textContent = progressBarString(pos, dur);
+    if (posEl) posEl.textContent = fmtClock(pos);
+    if (remEl) {
+      remEl.textContent =
+        remaining != null
+          ? t('now.time_left', { t: fmtClock(remaining) })
+          : t('now.time_left_unknown');
+    }
+    if (fillEl && dur > 0) {
+      fillEl.style.width = Math.min(100, Math.max(0, (pos / dur) * 100)).toFixed(2) + '%';
+    }
+  }
+
+  function startPlayingTick(root) {
+    stopPlayingTick();
+    if (!playingSnapshot || playingSnapshot.paused) return;
+    if (!(playingSnapshot.durationSec > 0)) return;
+    playingTickTimer = setInterval(function () {
+      paintPlayingProgress(root);
+      if (
+        playingSnapshot &&
+        playingSnapshot.durationSec > 0 &&
+        currentInterpolatedPos() >= playingSnapshot.durationSec
+      ) {
+        stopPlayingTick();
+      }
+    }, 1000);
   }
 
   function renderPlaying(el, notesEl, np, cardEl) {
     if (!el) return;
     var playing = !!(np && String(np.title || '').trim());
     if (!playing) {
+      stopPlayingTick();
+      playingSnapshot = null;
       el.innerHTML =
-        '<div class="flex items-center gap-3 text-discord-muted">' +
-        '<div class="now-album flex items-center justify-center text-lg opacity-40">♪</div>' +
-        '<p class="text-sm">' +
+        '<div class="now-playing-idle">' +
+        '<div class="now-album now-album--idle" aria-hidden="true">♪</div>' +
+        '<div class="min-w-0">' +
+        '<p class="text-sm text-discord-muted">' +
         escapeHtml(t('now.idle_playing')) +
-        '</p></div>';
+        '</p>' +
+        '<p class="mt-1 text-xs text-discord-muted opacity-80">' +
+        escapeHtml(t('now.idle_playing_hint')) +
+        '</p></div></div>';
       if (notesEl) notesEl.hidden = true;
-      setPlayingCardState(cardEl, false);
+      setPlayingCardState(cardEl, false, false);
       return;
     }
+
     var art =
       np.albumArtUrl ||
       (global.DZBANEK && global.DZBANEK.OG_IMAGE) ||
       'assets/bot-avatar.png';
-    var line =
-      escapeHtml(t('now.playing_prefix')) +
-      ' <strong class="text-theme-strong">' +
-      escapeHtml(np.title) +
-      '</strong>' +
-      (np.artist
-        ? ' <span class="text-discord-muted">— ' + escapeHtml(np.artist) + '</span>'
-        : '');
+    var title = String(np.title || '').trim();
+    var artist = String(np.artist || '').trim();
+    // Avoid "Title — Title" when SoundCloud puts the same string in both
+    if (artist && title.toLowerCase() === artist.toLowerCase()) artist = '';
+    if (artist && title.toLowerCase().indexOf(artist.toLowerCase()) !== -1) {
+      // e.g. "METALICa by Амирка" with artist "Амирка" — keep artist chip
+    }
+
+    var durationSec =
+      np.durationSec != null && Number(np.durationSec) > 0 ? Number(np.durationSec) : 0;
+    var positionSec =
+      np.positionSec != null && Number(np.positionSec) >= 0 ? Number(np.positionSec) : 0;
+    var paused = !!np.paused;
+    var atMs = np.at ? Date.parse(np.at) : Date.now();
+    if (!Number.isFinite(atMs)) atMs = Date.now();
+
+    playingSnapshot = {
+      positionSec: positionSec,
+      durationSec: durationSec,
+      paused: paused,
+      atMs: atMs,
+    };
+
+    var src = sourceLabel(np.source);
+    var queueLen = np.queueLength != null ? Number(np.queueLength) : null;
+    var remaining =
+      durationSec > 0 ? Math.max(0, durationSec - Math.min(positionSec, durationSec)) : null;
+    var pct = durationSec > 0 ? Math.min(100, (positionSec / durationSec) * 100) : 0;
+
+    var metaBits = [];
+    if (src) {
+      metaBits.push(
+        '<span class="now-source-pill now-source-pill--' +
+          escapeHtml(String(np.source || '').toLowerCase()) +
+          '">' +
+          escapeHtml(src) +
+          '</span>',
+      );
+    }
+    if (queueLen != null && Number.isFinite(queueLen)) {
+      metaBits.push(
+        '<span class="now-meta-chip">' +
+          escapeHtml(t('now.queue_n', { n: Math.max(0, Math.floor(queueLen)) })) +
+          '</span>',
+      );
+    }
+    if (paused) {
+      metaBits.push(
+        '<span class="now-meta-chip now-meta-chip--paused">' +
+          escapeHtml(t('now.paused_badge')) +
+          '</span>',
+      );
+    }
+
     el.innerHTML =
+      '<div class="now-playing-live">' +
+      '<div class="now-playing-main">' +
+      '<div class="now-album-wrap' +
+      (paused ? ' is-paused' : '') +
+      '">' +
       '<img class="now-album" src="' +
       escapeHtml(art) +
-      '" alt="" width="56" height="56" loading="lazy" onerror="this.style.opacity=0.4" />' +
-      '<div class="min-w-0"><p class="text-sm leading-relaxed">' +
-      line +
-      '</p></div>';
-    if (notesEl) notesEl.hidden = false;
-    setPlayingCardState(cardEl, true);
+      '" alt="" width="72" height="72" loading="lazy" onerror="this.classList.add(\'is-broken\')" />' +
+      '<span class="now-album-eq" aria-hidden="true"><i></i><i></i><i></i></span>' +
+      '</div>' +
+      '<div class="now-playing-info min-w-0">' +
+      '<p class="now-track-title" title="' +
+      escapeHtml(title) +
+      '">' +
+      escapeHtml(title) +
+      '</p>' +
+      (artist
+        ? '<p class="now-track-artist" title="' +
+          escapeHtml(artist) +
+          '">' +
+          escapeHtml(artist) +
+          '</p>'
+        : '') +
+      (metaBits.length
+        ? '<div class="now-track-meta">' + metaBits.join('') + '</div>'
+        : '') +
+      '</div></div>' +
+      '<div class="now-progress-block">' +
+      '<div class="now-progress-track" aria-hidden="true">' +
+      '<span class="now-progress-fill" data-np="fill" style="width:' +
+      pct.toFixed(2) +
+      '%"></span>' +
+      '</div>' +
+      '<p class="now-progress-mono" data-np="bar" aria-hidden="true">' +
+      escapeHtml(progressBarString(positionSec, durationSec)) +
+      '</p>' +
+      '<div class="now-progress-times">' +
+      '<span data-np="pos">' +
+      escapeHtml(fmtClock(positionSec)) +
+      '</span>' +
+      '<span class="now-progress-dur">' +
+      (durationSec > 0
+        ? escapeHtml(fmtClock(durationSec))
+        : escapeHtml(t('now.duration_unknown'))) +
+      '</span>' +
+      '<span class="now-progress-left" data-np="remaining">' +
+      escapeHtml(
+        remaining != null
+          ? t('now.time_left', { t: fmtClock(remaining) })
+          : t('now.time_left_unknown'),
+      ) +
+      '</span>' +
+      '</div></div></div>';
+
+    if (notesEl) notesEl.hidden = paused;
+    setPlayingCardState(cardEl, true, paused);
+    paintPlayingProgress(el);
+    startPlayingTick(el);
   }
 
   function renderCommands(el, cmds) {
