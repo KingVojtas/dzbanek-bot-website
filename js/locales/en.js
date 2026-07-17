@@ -6,7 +6,7 @@
   window.DZBANEK_LOCALES.en = {
     meta: {
       description:
-        'dzbanek-bot — Discord music, Steam & Epic deals, RSS news, chat leveling, welcome messages, and wishlist alerts. Open source discord.js bot.',
+        'dzbanek-bot — one multipurpose Discord bot for music, deals, news, levels, and welcomes. Open source.',
     },
     lang: {
       label: 'Language',
@@ -35,10 +35,10 @@
       menu: 'Toggle navigation menu',
     },
     hero: {
-      badge: 'Open source · discord.js v14 · slash commands',
-      tagline: 'Music, deals, news, levels & welcomes — one multipurpose bot.',
+      badge: 'Open source · slash commands',
+      tagline: 'One multipurpose bot for Discord.',
       lead:
-        'Queue YouTube, Spotify & SoundCloud. Daily Steam digests and Epic free games. RSS news, chat XP with /rank & /leaderboard, styled welcome & goodbye embeds, and wishlist DMs when prices drop — all configurable with /setup or the web Admin UI.',
+        'Music, Steam & Epic deals, RSS news, XP leveling, and welcome embeds — set up with /setup or the web Admin UI.',
       invite: 'Invite Bot',
       support: 'Support Server',
       github: 'GitHub',
@@ -46,6 +46,11 @@
       badge_djs: 'discord.js v14',
       badge_slash: 'Slash commands',
       badge_oss: 'Open source',
+      chip_music: 'Music',
+      chip_deals: 'Deals',
+      chip_news: 'News',
+      chip_levels: 'Levels',
+      chip_welcome: 'Welcomes',
       mock_caption: 'See it in Discord — mock previews of real bot embeds',
       tab_music: 'Music',
       tab_steam: 'Steam',
@@ -250,6 +255,12 @@
       empty_deals: 'No recent deals yet.',
       empty_commands: 'No recent commands yet.',
       empty_milestones: 'No milestones yet — keep playing!',
+      deals_live: 'Live',
+      deals_watching: 'Watching',
+      deals_watch_steam: 'Steam digests',
+      deals_watch_steam_sub: 'Pulse is live — posting when sales clear the review filter.',
+      deals_watch_epic: 'Epic free games',
+      deals_watch_epic_sub: 'Watching for the next free drop.',
       deal_new: 'New:',
       plays: '{{n}} plays',
       view_boards: 'Open leaderboards →',

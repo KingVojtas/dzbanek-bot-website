@@ -6,7 +6,7 @@
   window.DZBANEK_LOCALES.cs = {
     meta: {
       description:
-        'dzbanek-bot — Discord bot pro hudbu, Steam & Epic slevy, RSS novinky, levelování chatu, uvítací zprávy a wishlist. Open source discord.js bot.',
+        'dzbanek-bot — jeden univerzální Discord bot pro hudbu, slevy, novinky, levely a uvítání. Open source.',
     },
     lang: {
       label: 'Jazyk',
@@ -111,10 +111,10 @@
       check_cta: 'Zkontrolovat moje servery →',
     },
     hero: {
-      badge: 'Open source · discord.js v14 · slash příkazy',
-      tagline: 'Hudba, slevy, novinky, levely a uvítání — jeden univerzální bot.',
+      badge: 'Open source · slash příkazy',
+      tagline: 'Jeden univerzální bot pro Discord.',
       lead:
-        'Fronta z YouTube, Spotify a SoundCloud. Denní Steam digesty a free hry z Epic. RSS novinky, chat XP přes /rank a /leaderboard, stylované welcome i goodbye embedy a DM při slevě na wishlist — vše nastavíte přes /setup nebo webový Admin.',
+        'Hudba, Steam & Epic slevy, RSS novinky, XP levelování a welcome embedy — nastavíte přes /setup nebo webový Admin.',
       invite: 'Pozvat bota',
       support: 'Support server',
       github: 'GitHub',
@@ -122,6 +122,11 @@
       badge_djs: 'discord.js v14',
       badge_slash: 'Slash příkazy',
       badge_oss: 'Open source',
+      chip_music: 'Hudba',
+      chip_deals: 'Slevy',
+      chip_news: 'Novinky',
+      chip_levels: 'Levely',
+      chip_welcome: 'Uvítání',
       mock_caption: 'Takto to vypadá na Discordu — ukázky reálných embedů bota',
       tab_music: 'Hudba',
       tab_steam: 'Steam',
@@ -327,6 +332,12 @@
       empty_deals: 'Zatím žádné slevy.',
       empty_commands: 'Zatím žádné nedávné příkazy.',
       empty_milestones: 'Zatím žádné milníky — hrajte dál!',
+      deals_live: 'Živě',
+      deals_watching: 'Sleduji',
+      deals_watch_steam: 'Steam digesty',
+      deals_watch_steam_sub: 'Pulse běží — postne, až slevy projdou filtrem recenzí.',
+      deals_watch_epic: 'Epic free hry',
+      deals_watch_epic_sub: 'Čekám na další free drop.',
       deal_new: 'Nové:',
       plays: '{{n}} přehrání',
       view_boards: 'Otevřít žebříčky →',

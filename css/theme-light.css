@@ -206,6 +206,32 @@ html[data-theme='light'] .hero-glow {
     radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 101, 242, 0.12), transparent),
     radial-gradient(ellipse 50% 40% at 100% 30%, rgba(88, 101, 242, 0.06), transparent) !important;
 }
+html[data-theme='light'] .hero-kicker {
+  border-color: rgba(88, 101, 242, 0.28) !important;
+  background: rgba(88, 101, 242, 0.1) !important;
+  color: #4f5fd6 !important;
+}
+html[data-theme='light'] .hero-title-mark {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  color: #0f1014 !important;
+  -webkit-text-fill-color: #0f1014 !important;
+}
+html[data-theme='light'] .hero-tagline {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .hero-lead {
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .hero-chip {
+  border-color: rgba(88, 101, 242, 0.28) !important;
+  background: rgba(88, 101, 242, 0.08) !important;
+  color: #4f5fd6 !important;
+}
+html[data-theme='light'] .hero-stack {
+  color: #6b7280 !important;
+}
 
 /* Header / footer */
 html[data-theme='light'] header.sticky {
@@ -228,6 +254,34 @@ html[data-theme='light'] .now-card {
 html[data-theme='light'] .now-card-live.is-idle {
   border-color: rgba(15, 16, 20, 0.1) !important;
   box-shadow: 0 10px 36px -12px rgba(15, 16, 20, 0.12) !important;
+}
+html[data-theme='light'] .now-card-milestones {
+  border-color: rgba(202, 138, 4, 0.28) !important;
+  background:
+    radial-gradient(ellipse 70% 55% at 100% 0%, rgba(250, 204, 21, 0.12), transparent 55%),
+    #ffffff !important;
+}
+html[data-theme='light'] .ms-item {
+  border-bottom-color: rgba(15, 16, 20, 0.08) !important;
+}
+html[data-theme='light'] .ms-item-icon {
+  background: rgba(250, 204, 21, 0.14) !important;
+  border-color: rgba(202, 138, 4, 0.3) !important;
+}
+html[data-theme='light'] .now-card-deals {
+  border-color: rgba(22, 163, 74, 0.28) !important;
+  background:
+    radial-gradient(ellipse 60% 50% at 100% 0%, rgba(34, 197, 94, 0.1), transparent 55%),
+    #ffffff !important;
+}
+html[data-theme='light'] .now-deals-badge {
+  background: rgba(34, 197, 94, 0.1) !important;
+  border-color: rgba(22, 163, 74, 0.35) !important;
+  color: #15803d !important;
+}
+html[data-theme='light'] .deals-watch-row,
+html[data-theme='light'] .deals-item {
+  border-bottom-color: rgba(15, 16, 20, 0.08) !important;
 }
 html[data-theme='light'] .now-album {
   background: #e8ebf2 !important;

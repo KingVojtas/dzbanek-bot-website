@@ -137,6 +137,117 @@ html.light .theme-icon-moon {
     radial-gradient(ellipse 80% 50% at 50% -20%, var(--hero-glow-1), transparent),
     radial-gradient(ellipse 50% 40% at 100% 30%, var(--hero-glow-2), transparent);
 }
+
+/* Hero copy — cleaner hierarchy for the landing intro */
+.hero-copy {
+  max-width: 36rem;
+}
+@media (min-width: 1024px) {
+  .hero-copy {
+    max-width: none;
+  }
+}
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.1rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(88, 101, 242, 0.28);
+  background: rgba(88, 101, 242, 0.1);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #7289da;
+  line-height: 1.3;
+}
+.hero-kicker-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: rgb(var(--discord-green));
+  box-shadow: 0 0 0 3px rgba(35, 165, 89, 0.2);
+  flex-shrink: 0;
+}
+.hero-title {
+  margin: 0;
+  font-size: clamp(2.35rem, 5vw, 3.65rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+.hero-title-mark {
+  background: linear-gradient(
+    105deg,
+    var(--hex-fg-strong) 0%,
+    var(--hex-fg-strong) 55%,
+    rgb(var(--discord-muted)) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-tagline {
+  margin: 0.85rem 0 0;
+  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--hex-fg-strong);
+}
+.hero-lead {
+  margin: 0.85rem auto 0;
+  max-width: 32rem;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--hex-muted);
+}
+@media (min-width: 1024px) {
+  .hero-lead {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 1024px) {
+  .hero-chips {
+    justify-content: flex-start;
+  }
+}
+.hero-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(88, 101, 242, 0.22);
+  background: rgba(88, 101, 242, 0.08);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #a5b0f5;
+  line-height: 1.2;
+}
+.hero-stack {
+  margin: 0.9rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(181, 186, 193, 0.75);
+  line-height: 1.4;
+}
+.hero-stack-sep {
+  margin: 0 0.35rem;
+  opacity: 0.55;
+}
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -217,10 +328,80 @@ input:focus-visible {
     transform: translate(var(--dx), var(--dy)) scale(0.4) rotate(220deg);
   }
 }
-/* Emoji confetti on milestones card */
+/* —— Milestones card effects —— */
 .now-card-milestones {
   position: relative;
   overflow: visible;
+  border-color: rgba(250, 204, 21, 0.18);
+  background:
+    radial-gradient(ellipse 70% 55% at 100% 0%, rgba(250, 204, 21, 0.1), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(88, 101, 242, 0.08), transparent 50%),
+    var(--now-card-bg, #1e1f22);
+  animation: ms-border-glow 4.5s ease-in-out infinite;
+}
+.ms-trophy {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.85rem;
+  font-size: 1.05rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.45));
+  animation: ms-trophy-bob 2.8s ease-in-out infinite;
+  z-index: 2;
+}
+.ms-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+.ms-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.7rem 0.15rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  animation: ms-item-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--mi, 0) * 0.08s);
+}
+.ms-item:last-child {
+  border-bottom: 0;
+}
+.ms-item-icon {
+  flex-shrink: 0;
+  width: 1.85rem;
+  height: 1.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.55rem;
+  background: rgba(250, 204, 21, 0.1);
+  border: 1px solid rgba(250, 204, 21, 0.22);
+  font-size: 0.95rem;
+  line-height: 1;
+  box-shadow: 0 0 12px -4px rgba(250, 204, 21, 0.35);
+}
+.ms-sparkle-layer {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  z-index: 0;
+}
+.ms-sparkle {
+  position: absolute;
+  left: var(--sx, 50%);
+  top: var(--sy, 40%);
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #facc15;
+  box-shadow: 0 0 8px 1px rgba(250, 204, 21, 0.7);
+  opacity: 0;
+  animation: ms-sparkle var(--sd, 3s) ease-in-out infinite;
+  animation-delay: var(--sdelay, 0s);
 }
 .emoji-confetti-layer {
   pointer-events: none;
@@ -255,14 +436,257 @@ input:focus-visible {
       rotate(var(--erot2, -20deg));
   }
 }
+@keyframes ms-border-glow {
+  0%,
+  100% {
+    box-shadow:
+      var(--shadow-card),
+      0 0 0 1px rgba(250, 204, 21, 0.08),
+      0 0 20px -8px rgba(250, 204, 21, 0.2);
+  }
+  50% {
+    box-shadow:
+      var(--shadow-card),
+      0 0 0 1px rgba(250, 204, 21, 0.22),
+      0 0 28px -4px rgba(250, 204, 21, 0.35);
+  }
+}
+@keyframes ms-trophy-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(6deg);
+  }
+}
+@keyframes ms-item-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes ms-sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  40% {
+    opacity: 0.9;
+    transform: scale(1.2);
+  }
+  70% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+}
+
+/* —— Deals Pulse (always-on) —— */
+.now-card-deals {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(35, 165, 89, 0.22);
+  background:
+    radial-gradient(ellipse 60% 50% at 100% 0%, rgba(35, 165, 89, 0.1), transparent 55%),
+    var(--now-card-bg, #1e1f22);
+}
+.now-card-deals.is-watching {
+  animation: deals-watch-breathe 3.2s ease-in-out infinite;
+}
+.now-card-deals.is-live {
+  border-color: rgba(35, 165, 89, 0.4);
+  animation: deals-live-breathe 2.4s ease-in-out infinite;
+}
+.now-deals-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  background: rgba(35, 165, 89, 0.12);
+  border: 1px solid rgba(35, 165, 89, 0.35);
+  padding: 0.2rem 0.55rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #23a559;
+}
+.now-deals-badge .dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #23a559;
+  box-shadow: 0 0 8px #23a559;
+  animation: deals-dot-pulse 1.4s ease-in-out infinite;
+}
+.deals-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+.deals-watch-row,
+.deals-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.deals-watch-row:last-child,
+.deals-item:last-child {
+  border-bottom: 0;
+}
+.deals-item {
+  animation: ms-item-in 0.45s ease both;
+  animation-delay: calc(var(--di, 0) * 0.06s);
+}
+.deals-pulse-dot {
+  flex-shrink: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.35rem;
+  border-radius: 999px;
+  background: #23a559;
+  box-shadow: 0 0 0 0 rgba(35, 165, 89, 0.55);
+  animation: deals-radar-ping 1.8s ease-out infinite;
+}
+.deals-pulse-dot--epic {
+  background: #5865f2;
+  box-shadow: 0 0 0 0 rgba(88, 101, 242, 0.55);
+  animation-name: deals-radar-ping-epic;
+  animation-delay: 0.35s;
+}
+.deals-radar {
+  pointer-events: none;
+  position: absolute;
+  right: -1.25rem;
+  bottom: -1.25rem;
+  width: 7.5rem;
+  height: 7.5rem;
+  z-index: 0;
+  opacity: 0.55;
+}
+.deals-radar-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(35, 165, 89, 0.35);
+  animation: deals-radar-expand 2.8s ease-out infinite;
+}
+.deals-radar-ring:nth-child(2) {
+  animation-delay: 0.9s;
+}
+.deals-radar-ring:nth-child(3) {
+  animation-delay: 1.8s;
+}
+@keyframes deals-dot-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+@keyframes deals-radar-ping {
+  0% {
+    box-shadow: 0 0 0 0 rgba(35, 165, 89, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(35, 165, 89, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(35, 165, 89, 0);
+  }
+}
+@keyframes deals-radar-ping-epic {
+  0% {
+    box-shadow: 0 0 0 0 rgba(88, 101, 242, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(88, 101, 242, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(88, 101, 242, 0);
+  }
+}
+@keyframes deals-radar-expand {
+  0% {
+    transform: scale(0.35);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+@keyframes deals-watch-breathe {
+  0%,
+  100% {
+    box-shadow:
+      var(--shadow-card),
+      0 0 0 1px rgba(35, 165, 89, 0.1),
+      0 0 16px -8px rgba(35, 165, 89, 0.2);
+  }
+  50% {
+    box-shadow:
+      var(--shadow-card),
+      0 0 0 1px rgba(35, 165, 89, 0.22),
+      0 0 24px -6px rgba(35, 165, 89, 0.35);
+  }
+}
+@keyframes deals-live-breathe {
+  0%,
+  100% {
+    box-shadow:
+      var(--shadow-card),
+      0 0 0 1px rgba(35, 165, 89, 0.22),
+      0 0 22px -6px rgba(35, 165, 89, 0.4);
+  }
+  50% {
+    box-shadow:
+      var(--shadow-card),
+      0 0 0 1px rgba(35, 165, 89, 0.4),
+      0 0 32px -4px rgba(35, 165, 89, 0.55);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .avatar-float,
   .avatar-glow {
     animation: none;
   }
   .confetti-layer,
-  .emoji-confetti-layer {
+  .emoji-confetti-layer,
+  .ms-sparkle-layer,
+  .deals-radar {
     display: none;
+  }
+  .now-card-milestones,
+  .ms-trophy,
+  .now-card-deals.is-watching,
+  .now-card-deals.is-live,
+  .deals-pulse-dot,
+  .now-deals-badge .dot {
+    animation: none !important;
+  }
+  .ms-item,
+  .deals-item {
+    animation: none !important;
+    opacity: 1;
   }
 }
 .status-pill-ok {

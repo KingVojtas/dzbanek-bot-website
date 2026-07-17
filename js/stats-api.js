@@ -110,18 +110,42 @@
       .filter(Boolean)
       .slice(0, 3);
 
-    const recentDeals = asArray(b.recentDeals)
+    // Accept several bot payload shapes so Deals Pulse isn't empty when keys differ
+    const dealCandidates = []
+      .concat(asArray(b.recentDeals))
+      .concat(asArray(b.deals))
+      .concat(asArray(b.steamDeals))
+      .concat(asArray(b.epicDeals))
+      .concat(asArray(b.epicFreeGames))
+      .concat(asArray(b.freeGames));
+    const seenDeal = Object.create(null);
+    const recentDeals = dealCandidates
       .map((row) => {
         if (!row || typeof row !== 'object') return null;
         const r = /** @type {Record<string, unknown>} */ (row);
-        const title = String(r.title || r.name || '').trim();
+        const title = String(
+          r.title || r.name || r.game || r.gameName || r.appName || '',
+        ).trim();
         if (!title) return null;
-        const src = String(r.source || '').toLowerCase();
-        return {
-          source: src === 'epic' ? 'epic' : src === 'steam' ? 'steam' : 'other',
-          title,
-          subtitle: String(r.subtitle || r.detail || r.discount || '').trim(),
-        };
+        const srcRaw = String(r.source || r.platform || r.store || '').toLowerCase();
+        let source = 'other';
+        if (srcRaw.includes('epic') || r.epic) source = 'epic';
+        else if (srcRaw.includes('steam') || r.steam) source = 'steam';
+        const discount =
+          r.discount != null
+            ? String(r.discount)
+            : r.percentOff != null
+              ? '−' + String(r.percentOff) + '%'
+              : r.discountPercent != null
+                ? '−' + String(r.discountPercent) + '%'
+                : '';
+        const subtitle = String(
+          r.subtitle || r.detail || discount || r.price || r.priceText || '',
+        ).trim();
+        const key = source + '|' + title.toLowerCase();
+        if (seenDeal[key]) return null;
+        seenDeal[key] = true;
+        return { source, title, subtitle };
       })
       .filter(Boolean)
       .slice(0, 8);

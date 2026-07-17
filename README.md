@@ -174,8 +174,10 @@ If admin shows “Could not reach the admin API” while stats used to work: an 
 Pages ship with **absolute** `og:image` / `twitter:image` pointing at:
 
 ```
-https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png
+https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/og-card.png
 ```
+
+(1200×630 share card for Discord / Twitter large previews. Avatar-only fallback remains at `assets/bot-avatar.png`.)
 
 `js/config.js` sets `SITE_URL` (`https://dzbanek-bot.vojtas.io`) and `OG_IMAGE`. `js/seo.js` rewrites `og:url` when the site is served.
 

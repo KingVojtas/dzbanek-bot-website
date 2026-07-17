@@ -181,7 +181,7 @@
     COFFEE_URL: 'https://buymeacoffee.com/vojtas?status=1',
     SITE_URL: detectSiteUrl(),
     OG_IMAGE:
-      'https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png',
+      'https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/og-card.png',
     isDeadApiBase: isDeadApiBase,
     refreshApiBase: function () {
       window.DZBANEK.API_BASE = detectApiBase();

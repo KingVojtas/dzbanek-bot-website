@@ -5,30 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="dzbanek-bot — Discord music, Steam & Epic deals, RSS news, chat leveling, welcome messages, and wishlist alerts. Open source discord.js bot."
+      content="dzbanek-bot — one multipurpose Discord bot for music, deals, news, levels, and welcomes. Open source."
     />
-    <title>dzbanek-bot — Music, Deals, Levels & News for Discord</title>
+    <title>dzbanek-bot — Music, deals, levels &amp; news</title>
     <!-- Open Graph / Twitter — absolute image for Discord link previews -->
-    <meta property="og:title" content="dzbanek-bot — Music, Deals, Levels & News for Discord" />
+    <meta property="og:title" content="dzbanek-bot — Music, deals, levels &amp; news" />
     <meta
       property="og:description"
-      content="Music, Steam & Epic deals, RSS news, XP leveling, welcome/goodbye, and wishlist DMs — open source discord.js bot."
+      content="One multipurpose Discord bot. Music, Steam &amp; Epic deals, RSS news, XP leveling, and welcome embeds — open source."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://dzbanek-bot.vojtas.io/" />
+    <meta property="og:site_name" content="dzbanek-bot" />
     <meta
       property="og:image"
-      content="https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png"
+      content="https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/og-card.png"
     />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="dzbanek-bot — multipurpose Discord bot" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="dzbanek-bot" />
+    <meta name="twitter:title" content="dzbanek-bot — Music, deals, levels &amp; news" />
     <meta
       name="twitter:description"
-      content="Music, Steam deals, Epic free games, RSS news, XP levels, welcome messages & wishlist alerts."
+      content="One multipurpose Discord bot. Music, deals, news, levels &amp; welcomes — open source."
     />
     <meta
       name="twitter:image"
-      content="https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png"
+      content="https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/og-card.png"
     />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -39,7 +43,7 @@
     />
     <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
     <script src="js/theme-boot.js?v=20260718a"></script>
-    <link rel="stylesheet" href="css/site.css?v=20260718d" />
+    <link rel="stylesheet" href="css/site.css?v=20260718f" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -314,41 +318,39 @@
           class="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-2 lg:gap-10 lg:px-8 lg:py-28"
         >
           <!-- Copy -->
-          <div class="text-center lg:text-left">
-            <p
-              class="reveal mb-4 inline-flex items-center gap-2 rounded-full border border-discord-blurple/30 bg-discord-blurple/10 px-3 py-1 text-xs font-medium text-discord-blurple"
-            >
-              <span class="h-1.5 w-1.5 rounded-full bg-discord-green animate-pulse"></span>
-              <span data-i18n="hero.badge">Open source · discord.js v14 · slash commands</span>
+          <div class="hero-copy text-center lg:text-left">
+            <p class="hero-kicker reveal">
+              <span class="hero-kicker-dot" aria-hidden="true"></span>
+              <span data-i18n="hero.badge">Open source · slash commands</span>
             </p>
-            <h1 class="reveal reveal-delay-1 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-              <span
-                class="bg-gradient-to-r from-white via-white to-discord-muted bg-clip-text text-transparent"
-                >dzbanek-bot</span
-              >
+            <h1 class="hero-title reveal reveal-delay-1">
+              <span class="hero-title-mark">dzbanek-bot</span>
             </h1>
-            <p class="reveal reveal-delay-2 mt-4 text-xl font-semibold text-white sm:text-2xl" data-i18n="hero.tagline">
-              Music, deals, news, levels &amp; welcomes — one multipurpose bot.
+            <p class="hero-tagline reveal reveal-delay-2" data-i18n="hero.tagline">
+              One multipurpose bot for Discord.
             </p>
-            <p
-              class="reveal reveal-delay-2 mt-3 max-w-xl text-base leading-relaxed text-discord-muted sm:text-lg mx-auto lg:mx-0"
-              data-i18n="hero.lead"
-            >
-              Queue YouTube, Spotify &amp; SoundCloud. Daily Steam digests and Epic free games.
-              RSS news, chat XP with /rank &amp; /leaderboard, styled welcome &amp; goodbye
-              embeds, and wishlist DMs when prices drop — all configurable with
-              /setup or the web Admin UI.
+            <p class="hero-lead reveal reveal-delay-2" data-i18n="hero.lead">
+              Music, Steam &amp; Epic deals, RSS news, XP leveling, and welcome embeds —
+              set up with /setup or the web Admin UI.
             </p>
 
-            <!-- Tech badges -->
-            <div
-              class="reveal reveal-delay-3 mt-5 flex flex-wrap items-center justify-center gap-2 lg:justify-start"
-            >
-              <span class="rounded-full border border-white/10 bg-discord-elevated/50 px-3 py-1 text-xs font-medium text-discord-muted" data-i18n="hero.badge_ts">TypeScript</span>
-              <span class="rounded-full border border-white/10 bg-discord-elevated/50 px-3 py-1 text-xs font-medium text-discord-muted" data-i18n="hero.badge_djs">discord.js v14</span>
-              <span class="rounded-full border border-white/10 bg-discord-elevated/50 px-3 py-1 text-xs font-medium text-discord-muted" data-i18n="hero.badge_slash">Slash commands</span>
-              <span class="rounded-full border border-white/10 bg-discord-elevated/50 px-3 py-1 text-xs font-medium text-discord-muted" data-i18n="hero.badge_oss">Open source</span>
-            </div>
+            <!-- Capability chips (scannable, not a wall of text) -->
+            <ul class="hero-chips reveal reveal-delay-3" aria-label="Features">
+              <li class="hero-chip" data-i18n="hero.chip_music">Music</li>
+              <li class="hero-chip" data-i18n="hero.chip_deals">Deals</li>
+              <li class="hero-chip" data-i18n="hero.chip_news">News</li>
+              <li class="hero-chip" data-i18n="hero.chip_levels">Levels</li>
+              <li class="hero-chip" data-i18n="hero.chip_welcome">Welcomes</li>
+            </ul>
+
+            <!-- Tech stack — secondary, quieter -->
+            <p class="hero-stack reveal reveal-delay-3">
+              <span data-i18n="hero.badge_ts">TypeScript</span>
+              <span class="hero-stack-sep" aria-hidden="true">·</span>
+              <span data-i18n="hero.badge_djs">discord.js v14</span>
+              <span class="hero-stack-sep" aria-hidden="true">·</span>
+              <span data-i18n="hero.badge_oss">Open source</span>
+            </p>
 
             <div
               class="reveal reveal-delay-3 mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
@@ -1193,10 +1195,23 @@
               <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.activity">Recently Used</h3>
               <ul class="mt-4 space-y-0" data-now="commands"></ul>
             </article>
-            <!-- Deals Pulse -->
-            <article class="now-card reveal reveal-delay-2">
-              <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.deals">Deals Pulse</h3>
-              <ul class="mt-4" data-now="deals"></ul>
+            <!-- Deals Pulse — always-on pulse UI -->
+            <article
+              class="now-card now-card-deals is-watching reveal reveal-delay-2"
+              id="now-deals-card"
+              data-now-card="deals"
+            >
+              <span class="now-deals-badge">
+                <span class="dot" aria-hidden="true"></span>
+                <span data-now="deals-status">Watching</span>
+              </span>
+              <h3 class="pr-24 text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.deals">Deals Pulse</h3>
+              <ul class="mt-4 deals-list" data-now="deals"></ul>
+              <div class="deals-radar" aria-hidden="true">
+                <span class="deals-radar-ring"></span>
+                <span class="deals-radar-ring"></span>
+                <span class="deals-radar-ring"></span>
+              </div>
             </article>
           </div>
 
@@ -1207,9 +1222,14 @@
               <ol class="mt-4 list-none space-y-0" data-now="tracks"></ol>
             </article>
             <!-- Milestones -->
-            <article class="now-card now-card-milestones reveal reveal-delay-1" id="now-milestones-card">
-              <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.milestones">Milestones</h3>
-              <ul class="mt-4" data-now="milestones"></ul>
+            <article
+              class="now-card now-card-milestones reveal reveal-delay-1"
+              id="now-milestones-card"
+              data-now-card="milestones"
+            >
+              <span class="ms-trophy" aria-hidden="true">🏆</span>
+              <h3 class="pr-10 text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.milestones">Milestones</h3>
+              <ul class="mt-4 ms-list" data-now="milestones"></ul>
             </article>
           </div>
         </div>
@@ -1456,8 +1476,8 @@
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
     <script src="js/theme.js?v=20260718a"></script>
-    <script src="js/stats-api.js"></script>
-    <script src="js/public-feed.js"></script>
+    <script src="js/stats-api.js?v=20260718f"></script>
+    <script src="js/public-feed.js?v=20260718f"></script>
     <script src="js/vendor/qrcode.min.js"></script>
     <script src="js/share-kit.js"></script>
     <script src="js/command-playground.js"></script>

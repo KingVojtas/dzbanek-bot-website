@@ -137,7 +137,7 @@
   }
 
   function maybeCelebrate(milestones, cardEl) {
-    if (!milestones || !milestones.length) return;
+    if (!milestones || !milestones.length || !cardEl) return;
     var seen = readSeenMilestones();
     var seenSet = Object.create(null);
     seen.forEach(function (id) {
@@ -146,17 +146,52 @@
     var fresh = milestones.filter(function (m) {
       return m.id && !seenSet[m.id];
     });
-    if (!fresh.length) return;
 
-    // Celebrate new milestones (including first time we see any)
+    // Always celebrate brand-new milestone ids once
+    if (fresh.length) {
+      confettiAt(cardEl);
+      writeSeenMilestones(
+        seen.concat(
+          fresh.map(function (m) {
+            return m.id;
+          }),
+        ),
+      );
+      return;
+    }
+
+    // Re-pop once per browser session when the card is first shown (so the
+    // effect is visible on every visit, not only the first lifetime view)
+    try {
+      if (sessionStorage.getItem('dzbanek_ms_session_pop')) return;
+      sessionStorage.setItem('dzbanek_ms_session_pop', '1');
+    } catch (e) {
+      /* still celebrate below */
+    }
     confettiAt(cardEl);
-    writeSeenMilestones(
-      seen.concat(
-        fresh.map(function (m) {
-          return m.id;
-        }),
-      ),
-    );
+  }
+
+  /** Soft ambient sparkles on the milestones card (always on). */
+  function ensureMilestoneFx(cardEl) {
+    if (!cardEl || cardEl.querySelector('.ms-sparkle-layer')) return;
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    } catch (e) {
+      /* ignore */
+    }
+    var layer = document.createElement('div');
+    layer.className = 'ms-sparkle-layer';
+    layer.setAttribute('aria-hidden', 'true');
+    for (var i = 0; i < 8; i++) {
+      var s = document.createElement('span');
+      s.className = 'ms-sparkle';
+      s.style.setProperty('--sx', 8 + Math.random() * 84 + '%');
+      s.style.setProperty('--sy', 10 + Math.random() * 70 + '%');
+      s.style.setProperty('--sd', 2.4 + Math.random() * 2.8 + 's');
+      s.style.setProperty('--sdelay', Math.random() * 2.5 + 's');
+      layer.appendChild(s);
+    }
+    cardEl.appendChild(layer);
   }
 
   function emptyHtml(msg) {
@@ -233,21 +268,56 @@
       .join('');
   }
 
-  function renderDeals(el, deals) {
+  function setDealsPulseState(cardEl, hasDeals) {
+    if (!cardEl) return;
+    cardEl.classList.toggle('is-live', !!hasDeals);
+    cardEl.classList.toggle('is-watching', !hasDeals);
+    var label = cardEl.querySelector('[data-now="deals-status"]');
+    if (label) {
+      label.textContent = hasDeals ? t('now.deals_live') : t('now.deals_watching');
+    }
+  }
+
+  function renderDeals(el, deals, cardEl) {
     if (!el) return;
-    if (!deals || !deals.length) {
-      el.innerHTML = emptyHtml(t('now.empty_deals'));
+    var list = Array.isArray(deals) ? deals : [];
+    setDealsPulseState(cardEl, list.length > 0);
+
+    if (!list.length) {
+      // Always show an alive pipeline pulse — never a dead empty card
+      el.innerHTML =
+        '<li class="deals-watch-row">' +
+        '<span class="deals-pulse-dot" aria-hidden="true"></span>' +
+        '<div><p class="text-sm text-theme-strong">' +
+        escapeHtml(t('now.deals_watch_steam')) +
+        '</p><p class="mt-0.5 text-xs text-discord-muted">' +
+        escapeHtml(t('now.deals_watch_steam_sub')) +
+        '</p></div></li>' +
+        '<li class="deals-watch-row">' +
+        '<span class="deals-pulse-dot deals-pulse-dot--epic" aria-hidden="true"></span>' +
+        '<div><p class="text-sm text-theme-strong">' +
+        escapeHtml(t('now.deals_watch_epic')) +
+        '</p><p class="mt-0.5 text-xs text-discord-muted">' +
+        escapeHtml(t('now.deals_watch_epic_sub')) +
+        '</p></div></li>';
       return;
     }
-    el.innerHTML = deals
-      .map(function (d) {
+
+    el.innerHTML = list
+      .map(function (d, i) {
         var badge =
           d.source === 'epic' ? 'Epic' : d.source === 'steam' ? 'Steam' : 'Deal';
         var sub = d.subtitle
           ? ' <span class="text-discord-muted">' + escapeHtml(d.subtitle) + '</span>'
           : '';
         return (
-          '<li class="border-b border-white/5 py-2.5 text-sm last:border-0">' +
+          '<li class="deals-item border-b border-white/5 py-2.5 text-sm last:border-0" style="--di:' +
+          i +
+          '">' +
+          '<span class="deals-pulse-dot' +
+          (d.source === 'epic' ? ' deals-pulse-dot--epic' : '') +
+          '" aria-hidden="true"></span>' +
+          '<div class="min-w-0">' +
           '<span class="text-xs font-semibold text-discord-blurple">' +
           escapeHtml(t('now.deal_new')) +
           '</span> ' +
@@ -257,7 +327,7 @@
           sub +
           ' <span class="text-[10px] uppercase text-discord-muted">(' +
           escapeHtml(badge) +
-          ')</span></li>'
+          ')</span></div></li>'
         );
       })
       .join('');
@@ -292,6 +362,15 @@
       .join('');
   }
 
+  function milestoneIcon(id, text) {
+    var s = String(id || '') + ' ' + String(text || '');
+    if (/server/i.test(s)) return '🏠';
+    if (/play|track|music/i.test(s)) return '🎵';
+    if (/user|member/i.test(s)) return '👥';
+    if (/wish/i.test(s)) return '💝';
+    return '🏆';
+  }
+
   function renderMilestones(el, items) {
     if (!el) return;
     if (!items || !items.length) {
@@ -299,7 +378,7 @@
       return;
     }
     el.innerHTML = items
-      .map(function (m) {
+      .map(function (m, i) {
         var when = '';
         if (m.at) {
           try {
@@ -309,14 +388,20 @@
           }
         }
         return (
-          '<li class="border-b border-white/5 py-2.5 last:border-0">' +
+          '<li class="ms-item" style="--mi:' +
+          i +
+          '">' +
+          '<span class="ms-item-icon" aria-hidden="true">' +
+          milestoneIcon(m.id, m.text) +
+          '</span>' +
+          '<div class="min-w-0">' +
           '<p class="text-sm text-theme-strong">' +
           escapeHtml(m.text) +
           '</p>' +
           (when
             ? '<p class="mt-0.5 text-xs text-discord-muted">' + escapeHtml(when) + '</p>'
             : '') +
-          '</li>'
+          '</div></li>'
         );
       })
       .join('');
@@ -336,12 +421,39 @@
         root.querySelector('.now-card-live'),
     );
     renderCommands(root.querySelector('[data-now="commands"]'), pub.recentCommands);
-    renderDeals(root.querySelector('[data-now="deals"]'), pub.recentDeals);
+
+    // Merge deals from public block + any alternate keys on raw stats
+    var deals = (pub.recentDeals || []).slice();
+    if (!deals.length && stats.raw) {
+      try {
+        var extra = global.DzbanekStats
+          ? global.DzbanekStats.normalizePublic(
+              stats.raw.public ||
+                stats.raw.publicActivity || {
+                  recentDeals: stats.raw.recentDeals || stats.raw.deals,
+                },
+            )
+          : null;
+        if (extra && extra.recentDeals && extra.recentDeals.length) {
+          deals = extra.recentDeals;
+        }
+      } catch (e) {
+        /* ignore */
+      }
+    }
+    var dealsCard =
+      root.querySelector('#now-deals-card') ||
+      root.querySelector('[data-now-card="deals"]');
+    renderDeals(root.querySelector('[data-now="deals"]'), deals, dealsCard);
     renderTracks(root.querySelector('[data-now="tracks"]'), pub.topTracks);
 
     var milestones = collectMilestones(stats, pub);
+    var msCard =
+      root.querySelector('#now-milestones-card') ||
+      root.querySelector('[data-now-card="milestones"]');
+    ensureMilestoneFx(msCard);
     renderMilestones(root.querySelector('[data-now="milestones"]'), milestones);
-    maybeCelebrate(milestones, root.querySelector('#now-milestones-card'));
+    maybeCelebrate(milestones, msCard);
 
     var noteEl = root.querySelector('[data-now="note"]');
     if (noteEl) {
