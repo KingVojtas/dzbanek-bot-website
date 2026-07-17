@@ -389,9 +389,11 @@
     },
     demo: {
       kicker: 'See it in action',
-      title: 'Screenshots & demo',
-      lead: 'Real Discord-style embeds the bot posts — music, Steam digests, and Epic free games.',
-      video_label: 'Short product teaser',
+      title: 'Product teaser',
+      lead:
+        'A quick loop of what dzbanek-bot posts in Discord — music player, Steam deals, and Epic free games.',
+      video_label: 'Interactive product teaser — music, Steam digests, Epic free games',
+      autoplay: 'Autoplay',
       music_title: 'Music',
       music_cap: 'Now playing embeds with queue controls',
       steam_title: 'Steam deals',

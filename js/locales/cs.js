@@ -97,9 +97,11 @@
     },
     demo: {
       kicker: 'Podívejte se v akci',
-      title: 'Screenshoty a demo',
-      lead: 'Embedy ve stylu Discordu, které bot posílá — hudba, Steam digesty a Epic free hry.',
-      video_label: 'Krátké product teaser',
+      title: 'Product teaser',
+      lead:
+        'Rychlá smyčka toho, co dzbanek-bot posílá na Discord — music player, Steam slevy a Epic free hry.',
+      video_label: 'Interaktivní product teaser — hudba, Steam digesty, Epic free',
+      autoplay: 'Automaticky',
       music_title: 'Hudba',
       music_cap: 'Now playing embedy s ovládáním fronty',
       steam_title: 'Steam slevy',
