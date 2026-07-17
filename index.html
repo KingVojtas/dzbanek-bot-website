@@ -184,14 +184,6 @@
         transform: translateX(120%);
       }
 
-      /* Command row hover */
-      .cmd-row {
-        transition: background-color 0.15s ease;
-      }
-      .cmd-row:hover {
-        background-color: rgba(88, 101, 242, 0.08);
-      }
-
       @media (prefers-reduced-motion: reduce) {
         html {
           scroll-behavior: auto;
@@ -907,7 +899,7 @@
             </p>
             <h2 class="mt-3 text-3xl font-bold tracking-tight sm:text-4xl" data-i18n="commands.title">Slash commands</h2>
             <p class="mt-3 text-discord-muted" data-i18n="commands.lead">
-              Type / in Discord. Click any command to copy it — or try the playground preview below.
+              Type / in Discord. Pick a command in the playground to preview the bot reply and copy it.
             </p>
             <ul class="cmd-stat-row mt-5" aria-label="Command breakdown">
               <li class="cmd-stat-pill"><span class="cmd-stat-n">13</span> <span data-i18n="commands.stat_music">music</span></li>
@@ -933,7 +925,7 @@
             </div>
             <p class="cmd-hint mt-2">
               <kbd class="cmd-kbd">/</kbd>
-              <span data-i18n="commands.hint">Focus search · click a row to copy · playground previews the reply</span>
+              <span data-i18n="commands.hint">Focus search · pick a chip to preview &amp; copy</span>
             </p>
           </div>
 
@@ -1018,270 +1010,8 @@
             </div>
           </div>
 
-          <p id="cmd-empty" class="cmd-empty reveal mt-8" hidden data-i18n="commands.empty">No commands match your search.</p>
-
-          <div class="cmd-catalog-head reveal mt-12">
-            <h3 class="cmd-catalog-title" data-i18n="commands.catalog_title">Full command list</h3>
-            <p class="cmd-catalog-lead" data-i18n="commands.catalog_lead">Click to copy · selecting also updates the playground</p>
-          </div>
-
-          <div class="cmd-catalog mt-4">
-            <!-- Music -->
-            <article class="cmd-card cmd-card--music reveal reveal-delay-1" data-cmd-group data-cmd-cat="music">
-              <header class="cmd-card-head">
-                <span class="cmd-card-icon" aria-hidden="true">🎵</span>
-                <h3 class="cmd-card-title" data-i18n="commands.cat_music_h">Music</h3>
-                <span class="cmd-card-count">13</span>
-              </header>
-              <ul class="cmd-list" id="cmd-list-music">
-                <li class="cmd-row" data-cmd="/play" data-cmd-params="query:" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/play</code>
-                    <span class="cmd-params">query:</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.play">YouTube, Spotify, or SoundCloud</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/queue" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/queue</code>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.queue">Queue &amp; now-playing</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/playing" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/playing</code>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.playing">Current track only</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/skip" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/skip</code>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.skip">Skip to next</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/stop" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/stop</code>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.stop">Stop &amp; leave voice</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/pause" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/pause</code>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.pause">Pause playback</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/resume" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/resume</code>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.resume">Resume playback</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/shuffle" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/shuffle</code>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.shuffle">Shuffle the queue</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/loop" data-cmd-params="mode:" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/loop</code>
-                    <span class="cmd-params">mode:</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.loop">off / track / queue</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/remove" data-cmd-params="position:" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/remove</code>
-                    <span class="cmd-params">position:</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.remove">Remove from queue</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/lyrics" data-cmd-params="query?" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/lyrics</code>
-                    <span class="cmd-params">query?</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.lyrics">Show lyrics</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/game" data-cmd-params="name:" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/game</code>
-                    <span class="cmd-params">name:</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.game">Game soundtrack</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/playlist" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/playlist</code>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.playlist">Dzbanek playlist</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-              </ul>
-            </article>
-
-            <!-- Deals -->
-            <article class="cmd-card cmd-card--deals reveal reveal-delay-2" data-cmd-group data-cmd-cat="deals">
-              <header class="cmd-card-head">
-                <span class="cmd-card-icon" aria-hidden="true">🎮</span>
-                <h3 class="cmd-card-title" data-i18n="commands.cat_deals_h">Deals &amp; wishlist</h3>
-                <span class="cmd-card-count">3</span>
-              </header>
-              <ul class="cmd-list">
-                <li class="cmd-row" data-cmd="/wishlist-add" data-cmd-params="game:" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/wishlist-add</code>
-                    <span class="cmd-params">game:</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.w_add">Add Steam game for alerts</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/wishlist-list" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/wishlist-list</code>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.w_list">List your wishlist</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/wishlist-remove" data-cmd-params="name:" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/wishlist-remove</code>
-                    <span class="cmd-params">name:</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.w_remove">Remove by name</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-              </ul>
-              <p class="cmd-card-note" data-i18n="commands.deals_note">
-                Plus automated daily Steam digests and Epic free-game posts in configured channels.
-              </p>
-            </article>
-
-            <!-- Leveling -->
-            <article class="cmd-card cmd-card--levels reveal reveal-delay-2" data-cmd-group data-cmd-cat="leveling">
-              <header class="cmd-card-head">
-                <span class="cmd-card-icon" aria-hidden="true">🏅</span>
-                <h3 class="cmd-card-title" data-i18n="commands.cat_levels_h">Leveling</h3>
-                <span class="cmd-card-count">2</span>
-              </header>
-              <ul class="cmd-list">
-                <li class="cmd-row" data-cmd="/rank" data-cmd-params="user?" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/rank</code>
-                    <span class="cmd-params">user?</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.rank">Level, XP bar &amp; guild rank</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/leaderboard" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/leaderboard</code>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.leaderboard">Top 10 by XP in this server</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-              </ul>
-              <p class="cmd-card-note" data-i18n="commands.levels_note">
-                Off by default — enable per server in Admin (cooldown + level-up channel). Chat awards XP automatically when on.
-              </p>
-            </article>
-
-            <!-- Stats -->
-            <article class="cmd-card cmd-card--stats reveal reveal-delay-3" data-cmd-group data-cmd-cat="stats">
-              <header class="cmd-card-head">
-                <span class="cmd-card-icon" aria-hidden="true">📊</span>
-                <h3 class="cmd-card-title" data-i18n="commands.cat_stats_h">Stats</h3>
-                <span class="cmd-card-count">2</span>
-              </header>
-              <ul class="cmd-list">
-                <li class="cmd-row" data-cmd="/stats" data-cmd-params="user?" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/stats</code>
-                    <span class="cmd-params">user?</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.stats">Server or user activity</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/top" data-cmd-params="metric:" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/top</code>
-                    <span class="cmd-params">metric:</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.top">plays · duration · skips · tracks</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-              </ul>
-            </article>
-
-            <!-- Setup -->
-            <article class="cmd-card cmd-card--setup reveal reveal-delay-3" data-cmd-group data-cmd-cat="setup">
-              <header class="cmd-card-head">
-                <span class="cmd-card-icon" aria-hidden="true">⚙️</span>
-                <h3 class="cmd-card-title" data-i18n="commands.cat_setup_h">Setup</h3>
-                <span class="cmd-card-count">5</span>
-              </header>
-              <ul class="cmd-list">
-                <li class="cmd-row" data-cmd="/setup status" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/setup status</code>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.setup_status">Show this server’s feed settings</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/setup news" data-cmd-params="channel:" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/setup news</code>
-                    <span class="cmd-params">channel:</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.setup_news">Set RSS news channel (enables news)</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/setup steam" data-cmd-params="channel:" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/setup steam</code>
-                    <span class="cmd-params">channel:</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.setup_steam">Set Steam deals channel</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/setup epic" data-cmd-params="channel:" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/setup epic</code>
-                    <span class="cmd-params">channel:</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.setup_epic">Set Epic free-games channel</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-                <li class="cmd-row" data-cmd="/setup disable" data-cmd-params="what:" role="button" tabindex="0" data-i18n-title="commands.copy_title" title="Click to copy">
-                  <div class="cmd-row-main">
-                    <code class="cmd-name">/setup disable</code>
-                    <span class="cmd-params">what:</span>
-                  </div>
-                  <span class="cmd-desc" data-i18n="commands.setup_disable">Turn off news, Steam, Epic, or all</span>
-                  <span class="cmd-copy" aria-hidden="true">Copy</span>
-                </li>
-              </ul>
-              <p class="cmd-card-note" data-i18n="commands.setup_note">
-                Requires Manage Server. Music works without setup. Welcome, leveling, filters &amp; more → Admin.
-              </p>
-            </article>
-          </div>
-
           <!-- Always-on automations -->
-          <div class="cmd-auto reveal mt-8">
+          <div class="cmd-auto reveal mt-10">
             <div class="cmd-auto-head">
               <span class="cmd-auto-badge" data-i18n="commands.auto_badge">Auto</span>
               <div>
@@ -1617,8 +1347,8 @@
 
     <!-- ========== SCRIPTS ========== -->
     <script src="js/config.js?v=20260718h"></script>
-    <script src="js/locales/en.js?v=20260718j"></script>
-    <script src="js/locales/cs.js?v=20260718j"></script>
+    <script src="js/locales/en.js?v=20260718k"></script>
+    <script src="js/locales/cs.js?v=20260718k"></script>
     <script src="js/i18n.js?v=20260718h"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
@@ -1627,7 +1357,7 @@
     <script src="js/public-feed.js?v=20260718j"></script>
     <script src="js/vendor/qrcode.min.js"></script>
     <script src="js/share-kit.js"></script>
-    <script src="js/command-playground.js?v=20260718i"></script>
+    <script src="js/command-playground.js?v=20260718k"></script>
     <script src="js/product-teaser.js?v=20260718d"></script>
     <script>
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1807,110 +1537,6 @@
       window.addEventListener('scroll', setActiveNav, { passive: true });
       setActiveNav();
 
-      // Command search + copy
-      const cmdSearch = document.getElementById('cmd-search');
-      const cmdSearchClear = document.getElementById('cmd-search-clear');
-      const cmdRows = document.querySelectorAll('.cmd-row[data-cmd]');
-      const cmdGroups = document.querySelectorAll('[data-cmd-group]');
-      const cmdEmpty = document.getElementById('cmd-empty');
-      const cmdFilterCount = document.getElementById('cmd-filter-count');
-      const cmdCopiedLabel = () => t('commands.copied') || 'Copied';
-      const cmdCopyShort = () => t('commands.copy_short') || 'Copy';
-
-      function activeCmdCategory() {
-        return window.DzbanekCmdPlayground?.getCategory?.() || 'all';
-      }
-
-      function applyCmdFilter() {
-        const q = (cmdSearch?.value || '').trim().toLowerCase();
-        const cat = activeCmdCategory();
-        cmdRows.forEach((row) => {
-          const name = (row.getAttribute('data-cmd') || '').toLowerCase();
-          const text = (row.textContent || '').toLowerCase();
-          const params = (row.getAttribute('data-cmd-params') || '').toLowerCase();
-          const show = !q || name.includes(q) || text.includes(q) || params.includes(q);
-          row.classList.toggle('hidden-by-filter', !show);
-        });
-        // Visible count only within the active category (for empty state + badge)
-        let visibleInCat = 0;
-        cmdGroups.forEach((group) => {
-          const groupCat = group.getAttribute('data-cmd-cat') || '';
-          const catMatch = cat === 'all' || groupCat === cat;
-          const n = group.querySelectorAll('.cmd-row[data-cmd]:not(.hidden-by-filter)').length;
-          const any = catMatch && n > 0;
-          group.classList.toggle('is-filtered-out', !any);
-          const countEl = group.querySelector('.cmd-card-count');
-          if (countEl) countEl.textContent = String(n);
-          if (catMatch) visibleInCat += n;
-        });
-        if (cmdEmpty) cmdEmpty.hidden = visibleInCat > 0;
-        if (cmdFilterCount) {
-          if (!q) {
-            cmdFilterCount.hidden = true;
-          } else {
-            cmdFilterCount.hidden = false;
-            const key = visibleInCat === 1 ? 'commands.filter_count' : 'commands.filter_count_plural';
-            cmdFilterCount.textContent = t(key, { n: visibleInCat }) || visibleInCat + ' match';
-          }
-        }
-        if (cmdSearchClear) cmdSearchClear.hidden = !q;
-      }
-
-      window.__dzbanekApplyCmdFilter = applyCmdFilter;
-
-      cmdSearch?.addEventListener('input', applyCmdFilter);
-      document.addEventListener('dzbanek:lang', applyCmdFilter);
-
-      cmdSearchClear?.addEventListener('click', () => {
-        if (cmdSearch) {
-          cmdSearch.value = '';
-          cmdSearch.focus();
-        }
-        applyCmdFilter();
-      });
-
-      // Focus search with / when not typing in an input
-      document.addEventListener('keydown', (e) => {
-        if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
-        const tag = (document.activeElement?.tagName || '').toLowerCase();
-        if (tag === 'input' || tag === 'textarea' || document.activeElement?.isContentEditable) return;
-        if (!cmdSearch) return;
-        e.preventDefault();
-        document.getElementById('commands')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        cmdSearch.focus();
-        cmdSearch.select?.();
-      });
-
-      cmdSearch?.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          cmdSearch.value = '';
-          applyCmdFilter();
-          cmdSearch.blur();
-        }
-      });
-
-      cmdRows.forEach((row) => {
-        const flashCopied = () => {
-          row.classList.add('is-copied');
-          const hint = row.querySelector('.cmd-copy');
-          if (hint) hint.textContent = cmdCopiedLabel();
-          window.setTimeout(() => {
-            row.classList.remove('is-copied');
-            if (hint) hint.textContent = cmdCopyShort();
-          }, 900);
-        };
-        const copy = () => {
-          window.copyText?.(row.getAttribute('data-cmd') || '');
-          flashCopied();
-        };
-        row.addEventListener('click', copy);
-        row.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            copy();
-          }
-        });
-      });
 
       // Live stats from Website API /api/stats
       let liveHintState = { kind: 'connecting' };

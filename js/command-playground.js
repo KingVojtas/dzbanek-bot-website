@@ -380,8 +380,12 @@
     const usageEl = document.getElementById('cmd-playground-usage');
     const copyActiveBtn = document.getElementById('cmd-copy-active');
     const catTabs = document.querySelectorAll('[data-cmd-cat]');
+    const searchInput = document.getElementById('cmd-search');
+    const searchClear = document.getElementById('cmd-search-clear');
+    const filterCount = document.getElementById('cmd-filter-count');
     let activeCat = 'all';
     let activeCmd = '/play';
+    let searchQ = '';
 
     const allCmds = Object.keys(DEMOS);
 
@@ -390,15 +394,60 @@
     }
 
     function filteredCmds() {
-      if (activeCat === 'all') return allCmds;
-      return allCmds.filter(function (c) {
+      let list = activeCat === 'all' ? allCmds.slice() : allCmds.filter(function (c) {
         return DEMOS[c].category === activeCat;
       });
+      if (searchQ) {
+        list = list.filter(function (c) {
+          const demo = DEMOS[c] || {};
+          const hay = (
+            c +
+            ' ' +
+            (demo.title || '') +
+            ' ' +
+            (demo.line || '') +
+            ' ' +
+            (demo.usage || '') +
+            ' ' +
+            (demo.category || '')
+          ).toLowerCase();
+          return hay.indexOf(searchQ) !== -1;
+        });
+      }
+      return list;
+    }
+
+    function updateFilterChrome(count) {
+      if (filterCount) {
+        if (!searchQ) {
+          filterCount.hidden = true;
+        } else {
+          filterCount.hidden = false;
+          const key =
+            count === 1 ? 'commands.filter_count' : 'commands.filter_count_plural';
+          try {
+            if (window.DZBANEK_I18N && typeof window.DZBANEK_I18N.t === 'function') {
+              const label = window.DZBANEK_I18N.t(key, { n: count });
+              if (label && label !== key) {
+                filterCount.textContent = label;
+              } else {
+                filterCount.textContent = count + (count === 1 ? ' match' : ' matches');
+              }
+            } else {
+              filterCount.textContent = count + (count === 1 ? ' match' : ' matches');
+            }
+          } catch (_) {
+            filterCount.textContent = String(count);
+          }
+        }
+      }
+      if (searchClear) searchClear.hidden = !searchQ;
     }
 
     function renderChips() {
       if (!chipsHost) return;
       const list = filteredCmds();
+      updateFilterChrome(list.length);
       if (!list.length) {
         chipsHost.innerHTML =
           '<p class="text-sm text-discord-muted m-0">' +
@@ -424,6 +473,15 @@
           selectCmd(btn.getAttribute('data-playground-cmd'), true);
         });
       });
+    }
+
+    function applySearch() {
+      searchQ = (searchInput && searchInput.value ? searchInput.value : '').trim().toLowerCase();
+      renderChips();
+      const list = filteredCmds();
+      if (list.length && list.indexOf(activeCmd) === -1) {
+        selectCmd(list[0], false);
+      }
     }
 
     function refreshPreview() {
@@ -456,14 +514,10 @@
         tab.setAttribute('aria-selected', on ? 'true' : 'false');
       });
       renderChips();
-      if (typeof window.__dzbanekApplyCmdFilter === 'function') {
-        window.__dzbanekApplyCmdFilter();
-      }
       if (opts.ensureActiveVisible) {
-        const demo = DEMOS[activeCmd];
-        if (activeCat !== 'all' && demo && demo.category !== activeCat) {
-          const first = filteredCmds()[0];
-          if (first) selectCmd(first, false);
+        const list = filteredCmds();
+        if (list.length && list.indexOf(activeCmd) === -1) {
+          selectCmd(list[0], false);
         }
       }
     }
@@ -493,9 +547,6 @@
         }
       }
       renderChips();
-      document.querySelectorAll('.cmd-row[data-cmd]').forEach(function (row) {
-        row.classList.toggle('is-playground-active', row.getAttribute('data-cmd') === cmd);
-      });
       document.querySelectorAll('[data-cmd-pick]').forEach(function (btn) {
         btn.classList.toggle('is-active', btn.getAttribute('data-cmd-pick') === cmd);
       });
@@ -508,6 +559,41 @@
       });
     });
 
+    if (searchInput) {
+      searchInput.addEventListener('input', applySearch);
+      searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          searchInput.value = '';
+          applySearch();
+          searchInput.blur();
+        }
+      });
+    }
+    if (searchClear) {
+      searchClear.addEventListener('click', function () {
+        if (searchInput) {
+          searchInput.value = '';
+          searchInput.focus();
+        }
+        applySearch();
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+      const tag = (document.activeElement && document.activeElement.tagName
+        ? document.activeElement.tagName
+        : ''
+      ).toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || (document.activeElement && document.activeElement.isContentEditable))
+        return;
+      if (!searchInput) return;
+      e.preventDefault();
+      const sec = document.getElementById('commands');
+      if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      searchInput.focus();
+      if (searchInput.select) searchInput.select();
+    });
+
     document.querySelectorAll('[data-cmd-pick]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         const cmd = btn.getAttribute('data-cmd-pick');
@@ -517,17 +603,6 @@
         }
         selectCmd(cmd, true);
         root.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
-    });
-
-    document.querySelectorAll('.cmd-row[data-cmd]').forEach(function (row) {
-      row.addEventListener('click', function () {
-        selectCmd(row.getAttribute('data-cmd'), false);
-      });
-      row.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          selectCmd(row.getAttribute('data-cmd'), false);
-        }
       });
     });
 
@@ -558,10 +633,12 @@
         return activeCmd;
       },
       demos: DEMOS,
+      applySearch: applySearch,
     };
 
     document.addEventListener('dzbanek:lang', function () {
       refreshPreview();
+      renderChips();
       if (copyActiveBtn && !copyActiveBtn.classList.contains('is-copied')) {
         copyActiveBtn.textContent = t('commands.copy_short', 'Copy');
       }
@@ -581,9 +658,7 @@
       }
       if (deep) {
         if (!deep.startsWith('/')) deep = '/' + deep;
-        if (DEMOS[deep] || document.querySelector('.cmd-row[data-cmd="' + deep.replace(/"/g, '') + '"]')) {
-          selectCmd(deep, false);
-        }
+        if (DEMOS[deep]) selectCmd(deep, false);
       }
     } catch (_) {
       /* ignore */

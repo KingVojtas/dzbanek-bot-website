@@ -191,8 +191,8 @@
       kicker: '25 slash příkazů',
       title: 'Slash příkazy',
       lead:
-        'V Discordu napište /. Kliknutím příkaz zkopírujete — nebo vyzkoušejte playground níže.',
-      hint: 'Zaměří hledání · kliknutím zkopírujete · playground ukáže odpověď',
+        'V Discordu napište /. V playgroundu vyberte příkaz — náhled odpovědi bota a kopírování.',
+      hint: 'Zaměří hledání · chipem náhled a kopírování',
       search_label: 'Hledat příkazy',
       search_ph: 'Hledat příkazy… např. play, wishlist, top',
       clear_search: 'Vymazat hledání',

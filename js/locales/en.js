@@ -115,8 +115,8 @@
       kicker: '25 slash commands',
       title: 'Slash commands',
       lead:
-        'Type / in Discord. Click any command to copy it — or try the playground preview below.',
-      hint: 'Focus search · click a row to copy · playground previews the reply',
+        'Type / in Discord. Pick a command in the playground to preview the bot reply and copy it.',
+      hint: 'Focus search · pick a chip to preview & copy',
       search_label: 'Search commands',
       search_ph: 'Search commands… e.g. play, wishlist, top',
       clear_search: 'Clear search',
