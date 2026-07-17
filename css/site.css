@@ -2,49 +2,15 @@
 
 /* ============================================================================
    Theme tokens (CSS custom properties)
-   - Light: default on :root / body without .dark
-   - Dark:  body.dark or html.dark (mirrored by theme.js / theme-boot.js)
-   Space-separated RGB channels so Tailwind can use / <alpha-value>
+   Source of truth: html[data-theme="light"|"dark"] (+ .dark class for dark)
+   Space-separated RGB so Tailwind can use / <alpha-value>
+   Purple (blurple) stays brand-consistent in both modes.
    ============================================================================ */
-:root {
-  color-scheme: light;
 
-  --discord-bg: 244 245 248;
-  --discord-darker: 232 234 239;
-  --discord-card: 255 255 255;
-  --discord-elevated: 228 230 236;
-  --discord-blurple: 88 101 242;
-  --discord-blurple-hover: 71 82 196;
-  --discord-muted: 91 96 110;
-  --discord-green: 35 165 89;
-  --discord-embed: 240 241 245;
-
-  --color-fg: 30 31 34;
-  --color-fg-strong: 15 16 20;
-  --color-border: 15 16 20;
-  --color-border-alpha: 0.1;
-  --color-hover-surface: 15 16 20;
-
-  --shadow-card: 0 8px 32px -8px rgba(15, 16, 20, 0.12);
-  --shadow-glow: 0 0 60px -12px rgba(88, 101, 242, 0.35);
-
-  --scrollbar-track: #e8eaef;
-  --scrollbar-thumb: #c4c7d0;
-
-  --hero-glow-1: rgba(88, 101, 242, 0.18);
-  --hero-glow-2: rgba(88, 101, 242, 0.08);
-
-  --lang-corner-bg: rgba(255, 255, 255, 0.92);
-  --lang-corner-border: rgba(15, 16, 20, 0.1);
-  --lang-corner-shadow: 0 8px 24px -8px rgba(15, 16, 20, 0.18);
-  --lang-btn-color: #5b606e;
-  --lang-btn-hover-bg: rgba(15, 16, 20, 0.06);
-  --lang-btn-hover-color: #0f1014;
-}
-
-/* Dark theme — toggled via class on body (source of truth) and html (FOUC) */
-html.dark,
-body.dark {
+/* Dark is the brand default so first paint matches Discord chrome if boot is slow */
+:root,
+html[data-theme='dark'],
+html.dark {
   color-scheme: dark;
 
   --discord-bg: 13 14 18;
@@ -54,14 +20,17 @@ body.dark {
   --discord-blurple: 88 101 242;
   --discord-blurple-hover: 71 82 196;
   --discord-muted: 181 186 193;
+  --discord-muted-on-dark: 181 186 193;
   --discord-green: 35 165 89;
   --discord-embed: 43 45 49;
 
-  --color-fg: 255 255 255;
+  /* Readable foregrounds */
+  --color-fg: 236 237 240;
   --color-fg-strong: 255 255 255;
+  --color-muted: 181 186 193;
   --color-border: 255 255 255;
-  --color-border-alpha: 0.05;
-  --color-hover-surface: 255 255 255;
+  --color-border-alpha: 0.08;
+  --color-surface-border: rgba(255, 255, 255, 0.08);
 
   --shadow-card: 0 8px 32px -8px rgba(0, 0, 0, 0.5);
   --shadow-glow: 0 0 60px -12px rgba(88, 101, 242, 0.45);
@@ -78,6 +47,73 @@ body.dark {
   --lang-btn-color: #b5bac1;
   --lang-btn-hover-bg: rgba(255, 255, 255, 0.06);
   --lang-btn-hover-color: #fff;
+
+  --now-card-bg: #1e1f22;
+  --now-card-border: rgba(255, 255, 255, 0.06);
+  --now-album-bg: #2b2d31;
+  --status-strip-bg: rgba(17, 18, 20, 0.92);
+  --mock-tab-bg: #1e1f22;
+  --mock-tab-color: #b5bac1;
+  --faq-open-color: #fff;
+  --chip-active-color: #fff;
+}
+
+/* Light mode — black-ish text, soft surfaces, purple accents kept */
+html[data-theme='light'],
+html.light {
+  color-scheme: light;
+
+  --discord-bg: 241 243 248;
+  --discord-darker: 232 235 242;
+  --discord-card: 255 255 255;
+  --discord-elevated: 228 231 239;
+  --discord-blurple: 88 101 242;
+  --discord-blurple-hover: 71 82 196;
+  --discord-muted: 74 80 96;
+  --discord-muted-on-dark: 181 186 193;
+  --discord-green: 35 165 89;
+  --discord-embed: 244 245 250;
+
+  --color-fg: 32 34 40;
+  --color-fg-strong: 17 18 22;
+  --color-muted: 74 80 96;
+  --color-border: 17 18 22;
+  --color-border-alpha: 0.12;
+  --color-surface-border: rgba(17, 18, 22, 0.1);
+
+  --shadow-card: 0 10px 36px -12px rgba(17, 18, 22, 0.14);
+  --shadow-glow: 0 0 48px -12px rgba(88, 101, 242, 0.3);
+
+  --scrollbar-track: #e6e9f0;
+  --scrollbar-thumb: #b8bdc9;
+
+  --hero-glow-1: rgba(88, 101, 242, 0.16);
+  --hero-glow-2: rgba(88, 101, 242, 0.08);
+
+  --lang-corner-bg: rgba(255, 255, 255, 0.94);
+  --lang-corner-border: rgba(17, 18, 22, 0.1);
+  --lang-corner-shadow: 0 8px 24px -8px rgba(17, 18, 22, 0.16);
+  --lang-btn-color: #5b6270;
+  --lang-btn-hover-bg: rgba(17, 18, 22, 0.06);
+  --lang-btn-hover-color: #111216;
+
+  --now-card-bg: #ffffff;
+  --now-card-border: rgba(17, 18, 22, 0.1);
+  --now-album-bg: #e8ebf2;
+  --status-strip-bg: rgba(232, 235, 242, 0.95);
+  --mock-tab-bg: #eef0f6;
+  --mock-tab-color: #4a5060;
+  --faq-open-color: #111216;
+  --chip-active-color: #111216;
+}
+
+/* Mirror tokens on body for legacy body.dark selectors */
+body.dark {
+  color-scheme: dark;
+}
+body:not(.dark)[data-theme='light'],
+html[data-theme='light'] body {
+  color-scheme: light;
 }
 
 html {
@@ -88,49 +124,152 @@ body {
   background-color: rgb(var(--discord-bg));
   color: rgb(var(--color-fg));
   transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+    background-color 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease;
 }
 
-/* ── Theme-aware remaps for utilities used as “page chrome” ── */
-/* Primary text: body uses text-white in markup; map to token in light mode */
-body:not(.dark) .text-white {
-  color: rgb(var(--color-fg-strong));
+/* ============================================================================
+   LIGHT MODE TEXT + SURFACE REMAPS
+   Markup uses text-white / border-white/* everywhere. Force readable
+   black-ish copy while keeping blurple CTAs and Discord mock embeds.
+   ============================================================================ */
+html[data-theme='light'] body,
+html[data-theme='light'] body.text-white,
+html.light body,
+html.light body.text-white {
+  color: rgb(var(--color-fg-strong)) !important;
 }
-/* Solid brand CTAs keep white label text */
-body:not(.dark) .bg-discord-blurple,
-body:not(.dark) .bg-discord-blurple-hover,
-body:not(.dark) .btn-shine.bg-discord-blurple,
-body:not(.dark) a.bg-discord-blurple,
-body:not(.dark) button.bg-discord-blurple,
-body:not(.dark) [class*='bg-discord-blurple'].text-white {
-  color: #fff;
+
+/* Any text-white* utility → near-black (including opacity variants) */
+html[data-theme='light'] .text-white,
+html[data-theme='light'] [class*='text-white'],
+html[data-theme='light'] .text-white\/90,
+html[data-theme='light'] .text-white\/80,
+html[data-theme='light'] .text-white\/70,
+html[data-theme='light'] .text-white\/60,
+html[data-theme='light'] .text-white\/50 {
+  color: rgb(var(--color-fg-strong)) !important;
 }
-body:not(.dark) .bg-discord-blurple .text-white,
-body:not(.dark) .btn-shine .text-white {
-  color: #fff;
+
+/* Muted body copy stays slate, not washed-out */
+html[data-theme='light'] .text-discord-muted {
+  color: rgb(var(--color-muted)) !important;
 }
-/* Hover “go white” → strong foreground in light mode */
-body:not(.dark) .hover\:text-white:hover {
-  color: rgb(var(--color-fg-strong));
+
+/* Hover:text-white → dark ink */
+html[data-theme='light'] .hover\:text-white:hover,
+html[data-theme='light'] a.hover\:text-white:hover,
+html[data-theme='light'] button.hover\:text-white:hover {
+  color: rgb(var(--color-fg-strong)) !important;
 }
-/* Subtle borders used as dividers */
-body:not(.dark) .border-white\/5,
-body:not(.dark) .border-white\/10,
-body:not(.dark) .border-white\/15,
-body:not(.dark) .border-white\/20 {
-  border-color: rgb(var(--color-border) / var(--color-border-alpha));
+
+/* Borders that used white at low opacity */
+html[data-theme='light'] .border-white\/5,
+html[data-theme='light'] .border-white\/10,
+html[data-theme='light'] .border-white\/15,
+html[data-theme='light'] .border-white\/20,
+html[data-theme='light'] [class*='border-white/'] {
+  border-color: var(--color-surface-border) !important;
 }
-/* Gradient wordmarks that used pure white stops */
-body:not(.dark) .from-white {
-  --tw-gradient-from: rgb(var(--color-fg-strong)) var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(var(--color-fg-strong) / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+
+/* Gradient titles (from-white / via-white) → ink */
+html[data-theme='light'] .from-white {
+  --tw-gradient-from: rgb(var(--color-fg-strong)) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(var(--color-fg-strong) / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
 }
-body:not(.dark) .via-white {
-  --tw-gradient-to: rgb(var(--color-fg-strong) / 0) var(--tw-gradient-to-position);
+html[data-theme='light'] .via-white {
+  --tw-gradient-to: rgb(var(--color-fg-strong) / 0) var(--tw-gradient-to-position) !important;
   --tw-gradient-stops: var(--tw-gradient-from),
-    rgb(var(--color-fg-strong)) var(--tw-gradient-via-position), var(--tw-gradient-to);
+    rgb(var(--color-fg-strong)) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+html[data-theme='light'] .to-discord-muted {
+  --tw-gradient-to: rgb(var(--color-muted)) var(--tw-gradient-to-position) !important;
+}
+
+/* Strong text that is not blurple */
+html[data-theme='light'] h1,
+html[data-theme='light'] h2,
+html[data-theme='light'] h3,
+html[data-theme='light'] h4,
+html[data-theme='light'] strong {
+  color: rgb(var(--color-fg-strong));
+}
+html[data-theme='light'] .text-discord-blurple,
+html[data-theme='light'] a.text-discord-blurple {
+  color: rgb(var(--discord-blurple)) !important;
+}
+
+/* Keep white labels on solid purple CTAs (not hover:bg-discord-blurple only) */
+html[data-theme='light'] .bg-discord-blurple,
+html[data-theme='light'] .bg-discord-blurple-hover,
+html[data-theme='light'] a.bg-discord-blurple,
+html[data-theme='light'] button.bg-discord-blurple,
+html[data-theme='light'] .btn-shine.bg-discord-blurple,
+html[data-theme='light'] #toast,
+html[data-theme='light'] .lang-corner-btn.is-lang-active,
+html[data-theme='light'] .lang-corner-btn[aria-pressed='true'] {
+  color: #fff !important;
+}
+html[data-theme='light'] .bg-discord-blurple .text-white,
+html[data-theme='light'] .bg-discord-blurple [class*='text-white'],
+html[data-theme='light'] .btn-shine.bg-discord-blurple .text-white,
+html[data-theme='light'] #toast .text-white {
+  color: #fff !important;
+}
+
+/*
+ * Discord mock embeds keep dark UI + light text (intentional product mock).
+ * Match arbitrary Tailwind dark frames: bg-[#313338], bg-[#2B2D31], etc.
+ */
+html[data-theme='light'] [class*='bg-[#2'],
+html[data-theme='light'] [class*='bg-[#3'],
+html[data-theme='light'] [class*='bg-[#1'] {
+  color: #dbdee1;
+}
+html[data-theme='light'] [class*='bg-[#2'] .text-white,
+html[data-theme='light'] [class*='bg-[#3'] .text-white,
+html[data-theme='light'] [class*='bg-[#1'] .text-white,
+html[data-theme='light'] [class*='bg-[#2'] [class*='text-white'],
+html[data-theme='light'] [class*='bg-[#3'] [class*='text-white'],
+html[data-theme='light'] [class*='bg-[#1'] [class*='text-white'],
+html[data-theme='light'] [class*='bg-[#2'] .text-discord-muted,
+html[data-theme='light'] [class*='bg-[#3'] .text-discord-muted {
+  color: #dbdee1 !important;
+}
+html[data-theme='light'] [class*='bg-[#2'] .text-discord-blurple,
+html[data-theme='light'] [class*='bg-[#3'] .text-discord-blurple {
+  color: rgb(var(--discord-blurple)) !important;
+}
+
+/* Inputs / selects readable on light cards */
+html[data-theme='light'] input,
+html[data-theme='light'] select,
+html[data-theme='light'] textarea {
+  color: rgb(var(--color-fg-strong));
+  background-color: rgb(var(--discord-elevated));
+  border-color: var(--color-surface-border);
+}
+html[data-theme='light'] input::placeholder,
+html[data-theme='light'] textarea::placeholder {
+  color: rgb(var(--color-muted) / 0.85);
+}
+
+/* Code chips: dark ink on soft elevated surface */
+html[data-theme='light'] code {
+  color: rgb(var(--color-fg-strong));
+}
+
+/* Theme-aware strong text (prefer over hard-coded text-white in JS) */
+.text-theme-strong {
+  color: rgb(var(--color-fg-strong));
+}
+.text-theme-strong\/90 {
+  color: rgb(var(--color-fg-strong) / 0.9);
+}
+.text-theme {
+  color: rgb(var(--color-fg));
 }
 
 /* ── Theme toggle (header) ── */
@@ -154,8 +293,8 @@ body:not(.dark) .via-white {
 }
 .theme-toggle:hover {
   color: rgb(var(--color-fg-strong));
-  background: rgb(var(--discord-elevated) / 0.7);
-  border-color: rgb(var(--color-border) / var(--color-border-alpha));
+  background: rgb(var(--discord-elevated) / 0.85);
+  border-color: var(--color-surface-border);
 }
 .theme-toggle:focus-visible {
   outline: 2px solid #5865f2;
@@ -165,13 +304,13 @@ body:not(.dark) .via-white {
   display: none;
   flex-shrink: 0;
 }
-/* Icon shows the mode you will switch TO (sun → light, moon → dark) */
+/* Icon = mode you will switch TO */
 html[data-theme='dark'] .theme-toggle-icon--sun,
-body[data-theme='dark'] .theme-toggle-icon--sun {
+html.dark .theme-toggle-icon--sun {
   display: block;
 }
 html[data-theme='light'] .theme-toggle-icon--moon,
-body[data-theme='light'] .theme-toggle-icon--moon {
+html.light .theme-toggle-icon--moon {
   display: block;
 }
 .theme-toggle-sr {
@@ -340,10 +479,11 @@ header.sticky {
 .now-card {
   position: relative;
   border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: #1e1f22;
-  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--now-card-border, rgba(255, 255, 255, 0.05));
+  background: var(--now-card-bg, #1e1f22);
+  box-shadow: var(--shadow-card);
   padding: 1.25rem;
+  color: rgb(var(--color-fg));
 }
 .now-card-live {
   overflow: hidden;
@@ -360,9 +500,9 @@ header.sticky {
   height: 56px;
   border-radius: 0.65rem;
   object-fit: cover;
-  background: #2b2d31;
+  background: var(--now-album-bg, #2b2d31);
   flex-shrink: 0;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 1px var(--color-surface-border);
 }
 .now-notes {
   pointer-events: none;
@@ -424,8 +564,8 @@ header.sticky {
 }
 .now-card-live.is-idle {
   overflow: visible;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--now-card-border);
+  box-shadow: var(--shadow-card);
   animation: none;
 }
 .now-live-badge {
@@ -460,9 +600,9 @@ header.sticky {
     box-shadow 0.2s ease;
 }
 .now-card-live.is-idle .now-live-badge {
-  color: #8b8e97;
-  border-color: rgba(148, 155, 164, 0.25);
-  background: rgba(43, 45, 49, 0.9);
+  color: rgb(var(--color-muted));
+  border-color: var(--color-surface-border);
+  background: rgb(var(--discord-elevated) / 0.95);
 }
 .now-card-live.is-idle .now-live-badge .dot {
   background: #72767d;
@@ -620,13 +760,13 @@ header.sticky {
 .cmd-chip.is-active {
   border-color: rgba(88, 101, 242, 0.55);
   background: rgba(88, 101, 242, 0.2);
-  color: #fff;
+  color: var(--chip-active-color, #fff);
 }
 .playground-flash {
   animation: mock-in 0.35s ease;
 }
 .faq-item[open] summary {
-  color: #fff;
+  color: var(--faq-open-color, #fff);
 }
 .faq-item summary::-webkit-details-marker {
   display: none;
@@ -650,9 +790,9 @@ header.sticky {
   }
 }
 .mock-tab {
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #1e1f22;
-  color: #b5bac1;
+  border: 1px solid var(--color-surface-border);
+  background: var(--mock-tab-bg, #1e1f22);
+  color: var(--mock-tab-color, #b5bac1);
   border-radius: 999px;
   padding: 0.35rem 0.85rem;
   font-size: 0.75rem;
@@ -663,20 +803,21 @@ header.sticky {
     border-color 0.15s ease;
 }
 .mock-tab:hover {
-  color: #fff;
+  color: rgb(var(--color-fg-strong));
   border-color: rgba(88, 101, 242, 0.4);
 }
 .mock-tab.is-active {
-  background: rgba(88, 101, 242, 0.2);
+  background: rgba(88, 101, 242, 0.18);
   border-color: rgba(88, 101, 242, 0.55);
-  color: #fff;
+  color: rgb(var(--discord-blurple));
 }
 
 /* API status strip */
 .status-strip {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(17, 18, 20, 0.9);
+  border-bottom: 1px solid var(--color-surface-border);
+  background: var(--status-strip-bg, rgba(17, 18, 20, 0.9));
   font-size: 0.75rem;
+  color: rgb(var(--color-muted));
 }
 .status-dot {
   width: 0.4rem;

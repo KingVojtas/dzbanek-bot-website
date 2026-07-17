@@ -1,13 +1,12 @@
 /**
- * FOUC-safe theme bootstrap — load synchronously in <head> before paint.
+ * FOUC-safe theme bootstrap — load synchronously in <head> before CSS.
  *
- * Mirrors js/theme.js resolve rules:
- *   localStorage.dzbanek_theme → prefers-color-scheme → dark
+ * Rules (same as js/theme.js):
+ *   1. localStorage.dzbanek_theme = "light" | "dark"
+ *   2. else prefers-color-scheme
+ *   3. else dark (brand default)
  *
- * Sets `dark` on <html> immediately; theme.js copies to <body> on init.
- *
- * Usage:
- *   <script src="js/theme-boot.js"></script>
+ * Sets data-theme + .dark/.light on <html> immediately.
  */
 (function () {
   try {
@@ -18,19 +17,31 @@
     } catch (e) {
       /* ignore */
     }
-    var dark;
-    if (stored === 'dark') dark = true;
-    else if (stored === 'light') dark = false;
-    else {
-      dark =
-        !window.matchMedia ||
-        window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    var theme;
+    if (stored === 'light' || stored === 'dark') {
+      theme = stored;
+    } else {
+      var prefersDark = true;
+      try {
+        prefersDark =
+          !window.matchMedia ||
+          window.matchMedia('(prefers-color-scheme: dark)').matches;
+      } catch (e2) {
+        prefersDark = true;
+      }
+      theme = prefersDark ? 'dark' : 'light';
     }
+
     var root = document.documentElement;
-    root.classList.toggle('dark', dark);
-    root.setAttribute('data-theme', dark ? 'dark' : 'light');
-    root.style.colorScheme = dark ? 'dark' : 'light';
+    var isDark = theme === 'dark';
+    root.classList.toggle('dark', isDark);
+    root.classList.toggle('light', !isDark);
+    root.setAttribute('data-theme', theme);
+    root.style.colorScheme = theme;
   } catch (e) {
     document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('light');
+    document.documentElement.setAttribute('data-theme', 'dark');
   }
 })();

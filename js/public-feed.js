@@ -197,7 +197,7 @@
       'assets/bot-avatar.png';
     var line =
       escapeHtml(t('now.playing_prefix')) +
-      ' <strong class="text-white">' +
+      ' <strong class="text-theme-strong">' +
       escapeHtml(np.title) +
       '</strong>' +
       (np.artist
@@ -225,7 +225,7 @@
         var cmd = String(c.command || '');
         if (cmd.length > 48) cmd = cmd.slice(0, 45) + '…';
         return (
-          '<li class="border-b border-white/5 py-2 font-mono text-sm text-white/90 last:border-0">' +
+          '<li class="border-b border-white/5 py-2 font-mono text-sm text-theme-strong/90 last:border-0">' +
           escapeHtml(cmd) +
           '</li>'
         );
@@ -251,7 +251,7 @@
           '<span class="text-xs font-semibold text-discord-blurple">' +
           escapeHtml(t('now.deal_new')) +
           '</span> ' +
-          '<span class="text-white">\'' +
+          '<span class="text-theme-strong">\'' +
           escapeHtml(d.title) +
           '\'</span>' +
           sub +
@@ -281,7 +281,7 @@
           '<span class="text-discord-muted">' +
           (i + 1) +
           '. </span>' +
-          '<span class="text-white font-medium">' +
+          '<span class="text-theme-strong font-medium">' +
           escapeHtml(row.title) +
           '</span>' +
           '<span class="text-discord-muted"> — ' +
@@ -310,7 +310,7 @@
         }
         return (
           '<li class="border-b border-white/5 py-2.5 last:border-0">' +
-          '<p class="text-sm text-white">' +
+          '<p class="text-sm text-theme-strong">' +
           escapeHtml(m.text) +
           '</p>' +
           (when
@@ -387,7 +387,7 @@
             return (
               '<tr class="border-t border-white/5"><td class="px-4 py-3 text-discord-muted">' +
               (i + 1) +
-              '</td><td class="px-4 py-3 text-white">' +
+              '</td><td class="px-4 py-3 text-theme-strong">' +
               escapeHtml(row.title) +
               '</td><td class="px-4 py-3 text-right font-medium">' +
               escapeHtml(String(row.plays ?? 0)) +
@@ -409,7 +409,7 @@
             return (
               '<tr class="border-t border-white/5"><td class="px-4 py-3 text-discord-muted">' +
               (i + 1) +
-              '</td><td class="px-4 py-3 text-white">' +
+              '</td><td class="px-4 py-3 text-theme-strong">' +
               escapeHtml(row.name) +
               '</td><td class="px-4 py-3 text-right font-medium">' +
               escapeHtml(String(row.plays ?? 0)) +

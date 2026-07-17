@@ -3,48 +3,34 @@
  *
  * Behaviour
  * ─────────
- * • Preference order: localStorage ("light"|"dark") → prefers-color-scheme
- * • Applies `dark` class on <body> (mirrored on <html> for FOUC + CSS)
- * • Persists explicit choice in localStorage under key "dzbanek_theme"
- * • Follows OS scheme changes only while the user has no stored preference
+ * • Preference: localStorage → prefers-color-scheme → dark (brand default)
+ * • Applies data-theme + .dark / .light on <html> and <body>
+ * • Persists explicit "light" | "dark" under localStorage key dzbanek_theme
+ * • Follows OS scheme only when no stored preference
  *
- * Integration (existing header)
- * ─────────────────────────────
- * 1. FOUC boot in <head> (before site.css):
- *      <script src="js/theme-boot.js"></script>
+ * Header integration
+ * ──────────────────
+ *   <button type="button" data-theme-toggle class="theme-toggle"
+ *           aria-label="Toggle color theme"></button>
  *
- * 2. Full controller near other scripts:
- *      <script src="js/theme.js"></script>
- *
- * 3. Toggle control in the header actions row:
- *
- *      <button
- *        type="button"
- *        data-theme-toggle
- *        class="theme-toggle"
- *        aria-label="Toggle color theme"
- *      ></button>
- *
- *    theme.js injects sun/moon icons, aria-label / aria-pressed, and click handling.
- *    Multiple [data-theme-toggle] buttons are supported.
+ *   <script src="js/theme-boot.js"></script>  <!-- in <head>, before CSS -->
+ *   <script src="js/theme.js"></script>
  */
 (function (global) {
   var STORAGE_KEY = 'dzbanek_theme';
   var DARK = 'dark';
   var LIGHT = 'light';
 
-  /** Safe localStorage read */
   function readStored() {
     try {
       var v = localStorage.getItem(STORAGE_KEY);
       if (v === DARK || v === LIGHT) return v;
     } catch (e) {
-      /* private mode / blocked storage */
+      /* private mode */
     }
     return null;
   }
 
-  /** Safe localStorage write (null = clear → follow system again) */
   function writeStored(value) {
     try {
       if (value == null) localStorage.removeItem(STORAGE_KEY);
@@ -54,19 +40,16 @@
     }
   }
 
-  /** System preference via prefers-color-scheme */
   function systemPrefersDark() {
     try {
-      return global.matchMedia && global.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (!global.matchMedia) return true;
+      return global.matchMedia('(prefers-color-scheme: dark)').matches;
     } catch (e) {
-      return true; // brand-safe fallback for this Discord-themed site
+      return true;
     }
   }
 
-  /**
-   * Resolve effective theme.
-   * @returns {'dark'|'light'}
-   */
+  /** @returns {'dark'|'light'} */
   function resolveTheme() {
     var stored = readStored();
     if (stored) return stored;
@@ -74,31 +57,32 @@
   }
 
   /**
-   * Apply theme classes to body (+ html mirror for FOUC / selectors).
+   * Apply theme to html + body (class, data-theme, color-scheme).
    * @param {'dark'|'light'} theme
-   * @param {{ persist?: boolean }} [opts]
+   * @param {{ persist?: boolean, source?: string }} [opts]
    */
   function applyTheme(theme, opts) {
     opts = opts || {};
+    theme = theme === LIGHT ? LIGHT : DARK;
     var isDark = theme === DARK;
-    var body = document.body;
     var root = document.documentElement;
+    var body = document.body;
 
-    if (body) {
-      body.classList.toggle(DARK, isDark);
-      body.setAttribute('data-theme', theme);
+    function paint(el) {
+      if (!el) return;
+      el.classList.toggle(DARK, isDark);
+      el.classList.toggle(LIGHT, !isDark);
+      el.setAttribute('data-theme', theme);
     }
-    // Mirror on <html> so FOUC boot + CSS work before body exists
-    if (root) {
-      root.classList.toggle(DARK, isDark);
-      root.setAttribute('data-theme', theme);
-      root.style.colorScheme = isDark ? 'dark' : 'light';
-    }
+
+    paint(root);
+    paint(body);
+    root.style.colorScheme = theme;
 
     if (opts.persist) writeStored(theme);
 
     syncToggleButtons();
-    dispatchChange(theme, opts.persist ? 'user' : 'system');
+    dispatchChange(theme, opts.source || (opts.persist ? 'user' : 'system'));
   }
 
   function dispatchChange(theme, source) {
@@ -113,24 +97,21 @@
     }
   }
 
-  /** Toggle between light and dark; always persists explicit choice */
   function toggleTheme() {
     var next = resolveTheme() === DARK ? LIGHT : DARK;
-    applyTheme(next, { persist: true });
+    applyTheme(next, { persist: true, source: 'toggle' });
     return next;
   }
 
-  /** Set explicit theme and persist */
   function setTheme(theme) {
     theme = theme === LIGHT ? LIGHT : DARK;
-    applyTheme(theme, { persist: true });
+    applyTheme(theme, { persist: true, source: 'set' });
     return theme;
   }
 
-  /** Clear stored preference and re-apply system preference */
   function clearPreference() {
     writeStored(null);
-    applyTheme(resolveTheme(), { persist: false });
+    applyTheme(resolveTheme(), { persist: false, source: 'clear' });
   }
 
   // ── Toggle UI ──────────────────────────────────────────────────────────
@@ -155,10 +136,7 @@
   }
 
   function labelFor(theme) {
-    // Button announces the action: “switch to light” when currently dark
-    if (theme === DARK) {
-      return t('theme.to_light', 'Switch to light mode');
-    }
+    if (theme === DARK) return t('theme.to_light', 'Switch to light mode');
     return t('theme.to_dark', 'Switch to dark mode');
   }
 
@@ -194,17 +172,14 @@
       e.preventDefault();
       toggleTheme();
     });
-
-    // Space / Enter already activate <button>; no extra key handler needed.
   }
 
-  /** Watch OS preference when user has not chosen explicitly */
   function bindSystemListener() {
     try {
       var mq = global.matchMedia('(prefers-color-scheme: dark)');
       var handler = function () {
-        if (readStored()) return; // respect explicit choice
-        applyTheme(resolveTheme(), { persist: false });
+        if (readStored()) return;
+        applyTheme(resolveTheme(), { persist: false, source: 'media' });
       };
       if (typeof mq.addEventListener === 'function') {
         mq.addEventListener('change', handler);
@@ -217,16 +192,14 @@
   }
 
   function init() {
-    applyTheme(resolveTheme(), { persist: false });
+    applyTheme(resolveTheme(), { persist: false, source: 'init' });
     bindToggles();
     bindSystemListener();
-    // Re-sync labels after i18n applies
     document.addEventListener('dzbanek:lang', function () {
       syncToggleButtons();
     });
   }
 
-  // Public API
   var api = {
     STORAGE_KEY: STORAGE_KEY,
     resolve: resolveTheme,
@@ -246,15 +219,9 @@
 
   global.DzbanekTheme = api;
 
-  // Auto-init when DOM is ready (body must exist for class toggle)
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
-  }
-
-  // If FOUC boot already set html.dark, re-apply to body as soon as possible
-  if (document.body) {
-    applyTheme(resolveTheme(), { persist: false });
   }
 })(typeof window !== 'undefined' ? window : globalThis);
