@@ -8,14 +8,14 @@
   /** English fallbacks so UI never shows raw keys if locale files are stale/cached. */
   var T_FALLBACK = {
     'now.deals_live': 'Live',
-    'now.deals_watching': 'Watching',
+    'now.deals_watching': 'Idle',
     'now.deals_watch_steam': 'Steam digests',
     'now.deals_watch_steam_sub':
-      'Pulse is live — posting when sales clear the review filter.',
+      'No sales in the feed yet — digests appear when review-qualified deals show up.',
     'now.deals_watch_epic': 'Epic free games',
-    'now.deals_watch_epic_sub': 'Watching for the next free drop.',
+    'now.deals_watch_epic_sub': 'No free game listed right now. Pulse updates on each Epic poll.',
     'now.deal_new': 'New:',
-    'now.empty_deals': 'No recent deals yet.',
+    'now.empty_deals': 'No deals in the public feed yet. The bot refreshes this after each Steam / Epic poll.',
     'now.empty_commands': 'No recent commands yet.',
     'now.empty_milestones': 'No milestones yet — keep playing!',
     'now.empty_tracks': 'No rankings yet — the bot will fill top tracks when available.',
@@ -304,10 +304,13 @@
     if (!cardEl) return;
     cardEl.classList.toggle('is-live', !!hasDeals);
     cardEl.classList.toggle('is-watching', !hasDeals);
+    cardEl.classList.toggle('is-idle', !hasDeals);
     var label = cardEl.querySelector('[data-now="deals-status"]');
     if (label) {
       label.textContent = hasDeals ? t('now.deals_live') : t('now.deals_watching');
     }
+    var radar = cardEl.querySelector('.deals-radar');
+    if (radar) radar.hidden = !hasDeals;
   }
 
   function renderDeals(el, deals, cardEl) {
@@ -316,22 +319,28 @@
     setDealsPulseState(cardEl, list.length > 0);
 
     if (!list.length) {
-      // Always show an alive pipeline pulse — never a dead empty card
+      // Honest idle state — do not claim the pipeline is "watching live sales"
       el.innerHTML =
-        '<li class="deals-watch-row">' +
-        '<span class="deals-pulse-dot" aria-hidden="true"></span>' +
+        '<li class="deals-empty-row">' +
+        '<p class="text-sm text-theme-strong">' +
+        escapeHtml(t('now.empty_deals')) +
+        '</p>' +
+        '<ul class="mt-3 space-y-2">' +
+        '<li class="deals-watch-row deals-watch-row--idle">' +
+        '<span class="deals-idle-dot" aria-hidden="true"></span>' +
         '<div><p class="text-sm text-theme-strong">' +
         escapeHtml(t('now.deals_watch_steam')) +
         '</p><p class="mt-0.5 text-xs text-discord-muted">' +
         escapeHtml(t('now.deals_watch_steam_sub')) +
         '</p></div></li>' +
-        '<li class="deals-watch-row">' +
-        '<span class="deals-pulse-dot deals-pulse-dot--epic" aria-hidden="true"></span>' +
+        '<li class="deals-watch-row deals-watch-row--idle">' +
+        '<span class="deals-idle-dot deals-idle-dot--epic" aria-hidden="true"></span>' +
         '<div><p class="text-sm text-theme-strong">' +
         escapeHtml(t('now.deals_watch_epic')) +
         '</p><p class="mt-0.5 text-xs text-discord-muted">' +
         escapeHtml(t('now.deals_watch_epic_sub')) +
-        '</p></div></li>';
+        '</p></div></li>' +
+        '</ul></li>';
       return;
     }
 
@@ -340,7 +349,7 @@
         var badge =
           d.source === 'epic' ? 'Epic' : d.source === 'steam' ? 'Steam' : 'Deal';
         var sub = d.subtitle
-          ? ' <span class="text-discord-muted">' + escapeHtml(d.subtitle) + '</span>'
+          ? '<p class="mt-0.5 text-xs text-discord-muted">' + escapeHtml(d.subtitle) + '</p>'
           : '';
         return (
           '<li class="deals-item border-b border-white/5 py-2.5 text-sm last:border-0" style="--di:' +
@@ -350,16 +359,15 @@
           (d.source === 'epic' ? ' deals-pulse-dot--epic' : '') +
           '" aria-hidden="true"></span>' +
           '<div class="min-w-0">' +
-          '<span class="text-xs font-semibold text-discord-blurple">' +
-          escapeHtml(t('now.deal_new')) +
-          '</span> ' +
-          '<span class="text-theme-strong">\'' +
-          escapeHtml(d.title) +
-          '\'</span>' +
-          sub +
-          ' <span class="text-[10px] uppercase text-discord-muted">(' +
+          '<div class="flex flex-wrap items-center gap-1.5">' +
+          '<span class="text-[10px] font-bold uppercase tracking-wide text-discord-blurple">' +
           escapeHtml(badge) +
-          ')</span></div></li>'
+          '</span>' +
+          '<span class="text-theme-strong font-medium">' +
+          escapeHtml(d.title) +
+          '</span></div>' +
+          sub +
+          '</div></li>'
         );
       })
       .join('');

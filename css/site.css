@@ -495,8 +495,10 @@ input:focus-visible {
     radial-gradient(ellipse 60% 50% at 100% 0%, rgba(35, 165, 89, 0.1), transparent 55%),
     var(--now-card-bg, #1e1f22);
 }
-.now-card-deals.is-watching {
-  animation: deals-watch-breathe 3.2s ease-in-out infinite;
+.now-card-deals.is-watching,
+.now-card-deals.is-idle {
+  border-color: rgba(148, 163, 184, 0.2);
+  animation: none;
 }
 .now-card-deals.is-live {
   border-color: rgba(35, 165, 89, 0.4);
@@ -520,6 +522,12 @@ input:focus-visible {
   text-transform: uppercase;
   color: #23a559;
 }
+.now-card-deals.is-idle .now-deals-badge,
+.now-card-deals.is-watching .now-deals-badge {
+  background: rgba(148, 163, 184, 0.1);
+  border-color: rgba(148, 163, 184, 0.28);
+  color: #94a3b8;
+}
 .now-deals-badge .dot {
   width: 0.45rem;
   height: 0.45rem;
@@ -527,6 +535,30 @@ input:focus-visible {
   background: #23a559;
   box-shadow: 0 0 8px #23a559;
   animation: deals-dot-pulse 1.4s ease-in-out infinite;
+}
+.now-card-deals.is-idle .now-deals-badge .dot,
+.now-card-deals.is-watching .now-deals-badge .dot {
+  background: #94a3b8;
+  box-shadow: none;
+  animation: none;
+}
+.deals-idle-dot {
+  flex-shrink: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.35rem;
+  border-radius: 999px;
+  background: #64748b;
+  opacity: 0.75;
+}
+.deals-idle-dot--epic {
+  background: #64748b;
+}
+.deals-watch-row--idle {
+  opacity: 0.9;
+}
+.deals-empty-row {
+  list-style: none;
 }
 .deals-list {
   list-style: none;
