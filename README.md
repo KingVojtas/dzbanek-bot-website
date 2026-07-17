@@ -22,6 +22,8 @@ Dark Discord-inspired UI: HTML + Tailwind CDN + Inter + vanilla JS. Live data co
 | `js/config.js` | `API_BASE`, invite URL, `SUPPORT_URL` |
 | `js/i18n.js` + `js/locales/` | EN / CS language toggle |
 | `js/site.js` | Nav, toast, clipboard helpers |
+| `js/theme-boot.js` | FOUC-safe theme class in `<head>` |
+| `js/theme.js` | Light/dark toggle (`body.dark`, `localStorage`, `prefers-color-scheme`) |
 | `js/permissions-calc.js` | Invite bitfield calculator |
 | `js/command-playground.js` | Slash command mock embed playground |
 | `js/public-feed.js` | Live wall + leaderboards rendering |

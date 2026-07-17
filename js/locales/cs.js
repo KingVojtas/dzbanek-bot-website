@@ -13,6 +13,11 @@
       en: 'EN',
       cs: 'CZ',
     },
+    theme: {
+      label: 'Barevný motiv',
+      to_light: 'Přepnout na světlý režim',
+      to_dark: 'Přepnout na tmavý režim',
+    },
     nav: {
       home: 'Domů',
       features: 'Funkce',

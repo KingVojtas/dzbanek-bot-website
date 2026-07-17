@@ -38,8 +38,8 @@
       rel="stylesheet"
     />
     <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
+    <script src="js/theme-boot.js"></script>
     <link rel="stylesheet" href="css/site.css" />
-
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -47,23 +47,23 @@
           extend: {
             colors: {
               discord: {
-                bg: '#0D0E12',
-                darker: '#111214',
-                card: '#1E1F22',
-                elevated: '#2B2D31',
-                blurple: '#5865F2',
-                'blurple-hover': '#4752C4',
-                muted: '#B5BAC1',
-                green: '#23A559',
-                embed: '#2B2D31',
+                bg: 'rgb(var(--discord-bg) / <alpha-value>)',
+                darker: 'rgb(var(--discord-darker) / <alpha-value>)',
+                card: 'rgb(var(--discord-card) / <alpha-value>)',
+                elevated: 'rgb(var(--discord-elevated) / <alpha-value>)',
+                blurple: 'rgb(var(--discord-blurple) / <alpha-value>)',
+                'blurple-hover': 'rgb(var(--discord-blurple-hover) / <alpha-value>)',
+                muted: 'rgb(var(--discord-muted) / <alpha-value>)',
+                green: 'rgb(var(--discord-green) / <alpha-value>)',
+                embed: 'rgb(var(--discord-embed) / <alpha-value>)',
               },
             },
             fontFamily: {
               sans: ['Inter', 'system-ui', 'sans-serif'],
             },
             boxShadow: {
-              glow: '0 0 60px -12px rgba(88, 101, 242, 0.45)',
-              card: '0 8px 32px -8px rgba(0, 0, 0, 0.5)',
+              glow: 'var(--shadow-glow)',
+              card: 'var(--shadow-card)',
             },
           },
         },
@@ -79,23 +79,11 @@
       }
       .hero-glow {
         background:
-          radial-gradient(ellipse 80% 50% at 50% -20%, rgba(88, 101, 242, 0.35), transparent),
-          radial-gradient(ellipse 50% 40% at 100% 30%, rgba(88, 101, 242, 0.1), transparent),
+          radial-gradient(ellipse 80% 50% at 50% -20%, var(--hero-glow-1), transparent),
+          radial-gradient(ellipse 50% 40% at 100% 30%, var(--hero-glow-2), transparent),
           radial-gradient(ellipse 40% 30% at 0% 60%, rgba(88, 101, 242, 0.08), transparent);
       }
-      ::-webkit-scrollbar {
-        width: 10px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #0d0e12;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #2b2d31;
-        border-radius: 999px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #5865f2;
-      }
+      /* Scrollbars + focus use shared tokens from css/site.css */
       a:focus-visible,
       button:focus-visible {
         outline: 2px solid #5865f2;
@@ -104,7 +92,7 @@
 
       /* Nav active link */
       .nav-link.is-active {
-        color: #fff;
+        color: rgb(var(--color-fg-strong));
       }
       .nav-link.is-active::after {
         content: '';
@@ -245,6 +233,14 @@
         </div>
 
         <div class="ml-auto flex items-center gap-2">
+          <!-- Theme toggle: dark class on body; preference in localStorage (see js/theme.js) -->
+          <button
+            type="button"
+            data-theme-toggle
+            class="theme-toggle"
+            aria-label="Toggle color theme"
+            data-i18n-aria="theme.label"
+          ></button>
           <a
             href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands"
             target="_blank"
@@ -1305,6 +1301,7 @@
     <script src="js/i18n.js"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
+    <script src="js/theme.js"></script>
     <script src="js/stats-api.js"></script>
     <script src="js/public-feed.js"></script>
     <script src="js/vendor/qrcode.min.js"></script>

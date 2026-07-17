@@ -13,6 +13,11 @@
       en: 'EN',
       cs: 'CZ',
     },
+    theme: {
+      label: 'Color theme',
+      to_light: 'Switch to light mode',
+      to_dark: 'Switch to dark mode',
+    },
     nav: {
       home: 'Home',
       features: 'Features',

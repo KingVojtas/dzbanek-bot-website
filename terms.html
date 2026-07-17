@@ -19,16 +19,17 @@
           extend: {
             colors: {
               discord: {
-                bg: '#0D0E12', darker: '#111214', card: '#1E1F22', elevated: '#2B2D31',
-                blurple: '#5865F2', muted: '#B5BAC1',
+                bg: 'rgb(var(--discord-bg) / <alpha-value>)', darker: 'rgb(var(--discord-darker) / <alpha-value>)', card: 'rgb(var(--discord-card) / <alpha-value>)', elevated: 'rgb(var(--discord-elevated) / <alpha-value>)',
+                blurple: 'rgb(var(--discord-blurple) / <alpha-value>)', muted: 'rgb(var(--discord-muted) / <alpha-value>)',
               },
             },
             fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-            boxShadow: { glow: '0 0 60px -12px rgba(88, 101, 242, 0.45)' },
+            boxShadow: { glow: 'var(--shadow-glow)' },
           },
         },
       };
     </script>
+    <script src="js/theme-boot.js"></script>
     <link rel="stylesheet" href="css/site.css" />
   </head>
   <body class="bg-discord-bg text-white antialiased font-sans">
@@ -38,7 +39,10 @@
           <img src="assets/bot-avatar.png" alt="" class="h-9 w-9 rounded-2xl object-cover ring-2 ring-discord-blurple/40" />
           <span class="text-lg font-bold">dzbanek-bot</span>
         </a>
-        <a href="index.html" class="text-sm font-medium text-discord-blurple hover:underline">← Home</a>
+        <div class="flex items-center gap-3">
+          <button type="button" data-theme-toggle class="theme-toggle" aria-label="Toggle color theme"></button>
+          <a href="index.html" class="text-sm font-medium text-discord-blurple hover:underline">← Home</a>
+        </div>
       </nav>
     </header>
 
@@ -122,5 +126,6 @@
     <script src="js/config.js"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
+    <script src="js/theme.js"></script>
   </body>
 </html>

@@ -30,25 +30,26 @@
           extend: {
             colors: {
               discord: {
-                bg: '#0D0E12',
-                darker: '#111214',
-                card: '#1E1F22',
-                elevated: '#2B2D31',
-                blurple: '#5865F2',
-                'blurple-hover': '#4752C4',
-                muted: '#B5BAC1',
-                green: '#23A559',
+                bg: 'rgb(var(--discord-bg) / <alpha-value>)',
+                darker: 'rgb(var(--discord-darker) / <alpha-value>)',
+                card: 'rgb(var(--discord-card) / <alpha-value>)',
+                elevated: 'rgb(var(--discord-elevated) / <alpha-value>)',
+                blurple: 'rgb(var(--discord-blurple) / <alpha-value>)',
+                'blurple-hover': 'rgb(var(--discord-blurple-hover) / <alpha-value>)',
+                muted: 'rgb(var(--discord-muted) / <alpha-value>)',
+                green: 'rgb(var(--discord-green) / <alpha-value>)',
               },
             },
             fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
             boxShadow: {
-              glow: '0 0 60px -12px rgba(88, 101, 242, 0.45)',
-              card: '0 8px 32px -8px rgba(0, 0, 0, 0.5)',
+              glow: 'var(--shadow-glow)',
+              card: 'var(--shadow-card)',
             },
           },
         },
       };
     </script>
+    <script src="js/theme-boot.js"></script>
     <link rel="stylesheet" href="css/site.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   </head>
@@ -76,9 +77,12 @@
             >Add to Server</a
           >
         </div>
-        <button id="menu-btn" type="button" class="rounded-lg p-2 text-discord-muted lg:hidden" data-i18n-aria="nav.menu" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
+        <div class="flex items-center gap-1">
+          <button type="button" data-theme-toggle class="theme-toggle" aria-label="Toggle color theme" data-i18n-aria="theme.label"></button>
+          <button id="menu-btn" type="button" class="rounded-lg p-2 text-discord-muted lg:hidden" data-i18n-aria="nav.menu" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
       </nav>
       <div id="mobile-menu" class="hidden border-t border-white/5 bg-discord-darker lg:hidden">
         <div class="flex flex-col gap-1 px-4 py-3">
@@ -216,6 +220,7 @@
     <script src="js/i18n.js"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
+    <script src="js/theme.js"></script>
     <script src="js/stats-api.js"></script>
     <script src="js/stats-card.js"></script>
     <script>
