@@ -315,6 +315,7 @@ html[data-theme='light'] .cmd-chip.is-active {
 html[data-theme='light'] .cmd-section {
   background:
     radial-gradient(ellipse 70% 40% at 50% 0%, rgba(88, 101, 242, 0.08), transparent 60%),
+    radial-gradient(ellipse 40% 30% at 100% 40%, rgba(235, 69, 158, 0.04), transparent 55%),
     #eef0f6 !important;
 }
 html[data-theme='light'] .cmd-search-input {
@@ -323,11 +324,42 @@ html[data-theme='light'] .cmd-search-input {
   color: #0f1014 !important;
   box-shadow: 0 8px 24px -16px rgba(15, 16, 20, 0.2) !important;
 }
-html[data-theme='light'] .cmd-card,
-html[data-theme='light'] .cmd-playground,
-html[data-theme='light'] .cmd-auto {
+html[data-theme='light'] .cmd-search-clear {
+  background: rgba(15, 16, 20, 0.06) !important;
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .cmd-stat-pill {
   background: #ffffff !important;
   border-color: rgba(15, 16, 20, 0.1) !important;
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .cmd-kbd {
+  background: #ffffff !important;
+  border-color: rgba(15, 16, 20, 0.12) !important;
+  color: #4752c4 !important;
+}
+html[data-theme='light'] .cmd-card,
+html[data-theme='light'] .cmd-playground,
+html[data-theme='light'] .cmd-auto,
+html[data-theme='light'] .cmd-essentials {
+  background: #ffffff !important;
+  border-color: rgba(15, 16, 20, 0.1) !important;
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .cmd-ess-card {
+  background: #f4f5f8 !important;
+  border-color: rgba(15, 16, 20, 0.08) !important;
+}
+html[data-theme='light'] .cmd-ess-card:hover,
+html[data-theme='light'] .cmd-ess-card.is-active {
+  background: rgba(88, 101, 242, 0.08) !important;
+}
+html[data-theme='light'] .cmd-ess-name {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .cmd-ess-desc,
+html[data-theme='light'] .cmd-essentials-title,
+html[data-theme='light'] .cmd-catalog-title {
   color: #0f1014 !important;
 }
 html[data-theme='light'] .cmd-name {
@@ -337,12 +369,23 @@ html[data-theme='light'] .cmd-name {
 html[data-theme='light'] .cmd-desc,
 html[data-theme='light'] .cmd-playground-lead,
 html[data-theme='light'] .cmd-card-note,
-html[data-theme='light'] .cmd-auto-item {
+html[data-theme='light'] .cmd-auto-item,
+html[data-theme='light'] .cmd-auto-sub,
+html[data-theme='light'] .cmd-catalog-lead,
+html[data-theme='light'] .cmd-params {
   color: #4b5260 !important;
 }
 html[data-theme='light'] .cmd-playground-title,
 html[data-theme='light'] .cmd-auto-title {
   color: #0f1014 !important;
+}
+html[data-theme='light'] .cmd-usage {
+  background: #f4f5f8 !important;
+  border-color: rgba(15, 16, 20, 0.1) !important;
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .cmd-copy-active {
+  color: #4752c4 !important;
 }
 html[data-theme='light'] .cmd-empty {
   background: rgba(255, 255, 255, 0.7) !important;

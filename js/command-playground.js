@@ -1,5 +1,6 @@
 /**
  * Command playground: select a slash command → Discord-style mock embed preview.
+ * Category tabs filter chips + catalog; essentials / rows update the preview.
  */
 (function () {
   const DEMOS = {
@@ -10,6 +11,9 @@
       fields: ['Duration · 3:21', 'Requested by · you', 'Source · YouTube'],
       accent: '#5865F2',
       line: '▶️ Now playing',
+      usage: '/play query: lofi beats',
+      opts: [{ name: 'query', value: 'lofi beats' }],
+      progress: 0.38,
     },
     '/queue': {
       category: 'music',
@@ -18,6 +22,7 @@
       fields: ['Loop · off', 'Total · 14:02'],
       accent: '#5865F2',
       line: '📋 Music queue',
+      usage: '/queue',
     },
     '/playing': {
       category: 'music',
@@ -26,6 +31,8 @@
       fields: ['Progress · 1:42 / 4:03'],
       accent: '#5865F2',
       line: '🎧 Currently playing',
+      usage: '/playing',
+      progress: 0.42,
     },
     '/skip': {
       category: 'music',
@@ -34,6 +41,7 @@
       fields: ['Next · Blinding Lights'],
       accent: '#5865F2',
       line: '⏭️ Skip',
+      usage: '/skip',
     },
     '/stop': {
       category: 'music',
@@ -42,6 +50,7 @@
       fields: [],
       accent: '#ED4245',
       line: '⏹️ Stopped',
+      usage: '/stop',
     },
     '/pause': {
       category: 'music',
@@ -50,6 +59,7 @@
       fields: [],
       accent: '#FEE75C',
       line: '⏸️ Paused',
+      usage: '/pause',
     },
     '/resume': {
       category: 'music',
@@ -58,6 +68,7 @@
       fields: [],
       accent: '#23A559',
       line: '▶️ Resumed',
+      usage: '/resume',
     },
     '/shuffle': {
       category: 'music',
@@ -66,6 +77,7 @@
       fields: [],
       accent: '#5865F2',
       line: '🔀 Shuffle',
+      usage: '/shuffle',
     },
     '/loop': {
       category: 'music',
@@ -74,6 +86,8 @@
       fields: ['Modes · off · track · queue'],
       accent: '#5865F2',
       line: '🔁 Loop',
+      usage: '/loop mode: track',
+      opts: [{ name: 'mode', value: 'track' }],
     },
     '/remove': {
       category: 'music',
@@ -82,6 +96,8 @@
       fields: ['Remaining · 3 tracks'],
       accent: '#5865F2',
       line: '🗑️ Remove',
+      usage: '/remove position: 4',
+      opts: [{ name: 'position', value: '4' }],
     },
     '/lyrics': {
       category: 'music',
@@ -90,6 +106,7 @@
       fields: ['Source · Genius'],
       accent: '#EB459E',
       line: '🎤 Lyrics',
+      usage: '/lyrics',
     },
     '/game': {
       category: 'music',
@@ -98,6 +115,8 @@
       fields: ['Tracks · 12'],
       accent: '#5865F2',
       line: '🎮 Game OST',
+      usage: '/game name: Hades',
+      opts: [{ name: 'name', value: 'Hades' }],
     },
     '/playlist': {
       category: 'music',
@@ -106,30 +125,36 @@
       fields: ['Tracks · 25'],
       accent: '#5865F2',
       line: '📂 Playlist',
+      usage: '/playlist',
     },
     '/wishlist-add': {
       category: 'deals',
       title: 'Wishlist',
       body: 'Added Hades II to your Steam wishlist alerts.',
       fields: ['Store · Steam', 'You’ll get deal digests when it drops.'],
-      accent: '#1B2838',
+      accent: '#66C0F4',
       line: '⭐ Wishlist add',
+      usage: '/wishlist-add game: Hades II',
+      opts: [{ name: 'game', value: 'Hades II' }],
     },
     '/wishlist-list': {
       category: 'deals',
       title: 'Your wishlist',
       body: '1. Hades II\n2. Baldur’s Gate 3\n3. Celeste',
       fields: ['Tracked · 3 games'],
-      accent: '#1B2838',
+      accent: '#66C0F4',
       line: '📋 Wishlist',
+      usage: '/wishlist-list',
     },
     '/wishlist-remove': {
       category: 'deals',
       title: 'Wishlist',
       body: 'Removed Celeste from wishlist alerts.',
       fields: [],
-      accent: '#1B2838',
+      accent: '#66C0F4',
       line: '🗑️ Wishlist remove',
+      usage: '/wishlist-remove name: Celeste',
+      opts: [{ name: 'name', value: 'Celeste' }],
     },
     '/stats': {
       category: 'stats',
@@ -138,6 +163,7 @@
       fields: ['Skips · 12', 'Top track · Lofi beats'],
       accent: '#23A559',
       line: '📊 Stats',
+      usage: '/stats',
     },
     '/top': {
       category: 'stats',
@@ -146,6 +172,8 @@
       fields: ['Period · 7 days'],
       accent: '#23A559',
       line: '🏆 Top plays',
+      usage: '/top metric: plays',
+      opts: [{ name: 'metric', value: 'plays' }],
     },
     '/rank': {
       category: 'leveling',
@@ -154,6 +182,8 @@
       fields: ['Cooldown · 60s between awards'],
       accent: '#5865F2',
       line: '🏅 Rank',
+      usage: '/rank',
+      progress: 0.71,
     },
     '/leaderboard': {
       category: 'leveling',
@@ -162,6 +192,7 @@
       fields: ['Your rank · #2'],
       accent: '#FEE75C',
       line: '🏆 Top 10 by XP',
+      usage: '/leaderboard',
     },
     '/setup status': {
       category: 'setup',
@@ -170,6 +201,7 @@
       fields: ['Manage Server required to change'],
       accent: '#5865F2',
       line: '⚙️ Setup status',
+      usage: '/setup status',
     },
     '/setup news': {
       category: 'setup',
@@ -178,14 +210,18 @@
       fields: ['News feed · enabled'],
       accent: '#5865F2',
       line: '⚙️ Setup news',
+      usage: '/setup news channel: #announcements',
+      opts: [{ name: 'channel', value: '#announcements' }],
     },
     '/setup steam': {
       category: 'setup',
       title: 'Steam channel set',
       body: 'Daily Steam digests will post to #deals.',
       fields: ['Steam digest · enabled'],
-      accent: '#1B2838',
+      accent: '#66C0F4',
       line: '⚙️ Setup steam',
+      usage: '/setup steam channel: #deals',
+      opts: [{ name: 'channel', value: '#deals' }],
     },
     '/setup epic': {
       category: 'setup',
@@ -194,6 +230,8 @@
       fields: ['Epic · enabled'],
       accent: '#0078F2',
       line: '⚙️ Setup epic',
+      usage: '/setup epic channel: #free-games',
+      opts: [{ name: 'channel', value: '#free-games' }],
     },
     '/setup disable': {
       category: 'setup',
@@ -202,8 +240,22 @@
       fields: [],
       accent: '#ED4245',
       line: '⚙️ Setup disable',
+      usage: '/setup disable what: all',
+      opts: [{ name: 'what', value: 'all' }],
     },
   };
+
+  function t(key, fallback) {
+    try {
+      if (window.DZBANEK_I18N && typeof window.DZBANEK_I18N.t === 'function') {
+        const v = window.DZBANEK_I18N.t(key);
+        if (v && v !== key) return v;
+      }
+    } catch (_) {
+      /* ignore */
+    }
+    return fallback;
+  }
 
   function fallbackDemo(cmd) {
     return {
@@ -213,50 +265,12 @@
       fields: [],
       accent: '#5865F2',
       line: cmd,
+      usage: cmd,
     };
   }
 
   function timeLabel() {
     return new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-  }
-
-  function renderEmbed(demo, cmd) {
-    const d = demo || fallbackDemo(cmd);
-    const fieldsHtml = (d.fields || [])
-      .map(function (f) {
-        return '<p class="mt-1 text-xs text-[#B5BAC1]">' + escapeHtml(f) + '</p>';
-      })
-      .join('');
-    const bodyHtml = escapeHtml(d.body || '').replace(/\n/g, '<br />');
-    return (
-      '<div class="flex items-start gap-3">' +
-      '<img src="assets/bot-avatar.png" alt="" class="h-10 w-10 shrink-0 rounded-full object-cover" />' +
-      '<div class="min-w-0 flex-1">' +
-      '<div class="flex flex-wrap items-center gap-1.5">' +
-      '<span class="text-sm font-semibold text-white">dzbanek-bot</span>' +
-      '<span class="rounded bg-discord-blurple px-1 py-px text-[10px] font-bold uppercase leading-none text-white">Bot</span>' +
-      '<span class="text-xs text-[#949BA4]">Today at ' +
-      escapeHtml(timeLabel()) +
-      '</span>' +
-      '</div>' +
-      '<p class="mt-1 text-sm text-[#DBDEE1]">' +
-      escapeHtml(d.line || cmd) +
-      '</p>' +
-      '<div class="mt-2 flex overflow-hidden rounded border-l-4 bg-[#2B2D31]" style="border-left-color:' +
-      escapeAttr(d.accent || '#5865F2') +
-      '">' +
-      '<div class="flex-1 p-3">' +
-      '<p class="text-xs font-semibold" style="color:' +
-      escapeAttr(d.accent || '#5865F2') +
-      '">' +
-      escapeHtml(d.title || 'Result') +
-      '</p>' +
-      '<p class="mt-1 text-sm font-semibold text-white">' +
-      bodyHtml +
-      '</p>' +
-      fieldsHtml +
-      '</div></div></div></div>'
-    );
   }
 
   function escapeHtml(s) {
@@ -271,6 +285,91 @@
     return escapeHtml(s).replace(/'/g, '&#39;');
   }
 
+  function renderOpts(opts) {
+    if (!opts || !opts.length) return '';
+    return opts
+      .map(function (o) {
+        return (
+          '<span class="cmd-slash-opt">' +
+          escapeHtml(o.name) +
+          ': <em>' +
+          escapeHtml(o.value) +
+          '</em></span>'
+        );
+      })
+      .join('');
+  }
+
+  function renderEmbed(demo, cmd) {
+    const d = demo || fallbackDemo(cmd);
+    const fieldsHtml = (d.fields || [])
+      .map(function (f) {
+        return '<p class="cmd-embed-field">' + escapeHtml(f) + '</p>';
+      })
+      .join('');
+    const bodyHtml = escapeHtml(d.body || '').replace(/\n/g, '<br />');
+    const progress =
+      typeof d.progress === 'number'
+        ? '<div class="cmd-progress" aria-hidden="true"><span style="width:' +
+          Math.round(Math.max(0, Math.min(1, d.progress)) * 100) +
+          '%"></span></div>'
+        : '';
+    const usedLabel = t('commands.used', 'used');
+    const youLabel = t('commands.you', 'You');
+
+    return (
+      '<div class="cmd-slash-msg">' +
+      '<span class="cmd-user-avatar" aria-hidden="true">YOU</span>' +
+      '<div class="min-w-0 flex-1">' +
+      '<div class="flex flex-wrap items-center gap-1.5">' +
+      '<span class="cmd-discord-name">' +
+      escapeHtml(youLabel) +
+      '</span>' +
+      '<span class="text-xs text-[#949BA4]">Today at ' +
+      escapeHtml(timeLabel()) +
+      '</span>' +
+      '</div>' +
+      '<p class="mt-0.5 text-xs text-[#949BA4]">' +
+      escapeHtml(usedLabel) +
+      '</p>' +
+      '<div class="cmd-slash-pill">' +
+      '<code>' +
+      escapeHtml(cmd) +
+      '</code>' +
+      renderOpts(d.opts) +
+      '</div>' +
+      '</div></div>' +
+      '<div class="cmd-bot-msg">' +
+      '<img src="assets/bot-avatar.png" alt="" class="cmd-discord-avatar" width="40" height="40" />' +
+      '<div class="min-w-0 flex-1">' +
+      '<div class="flex flex-wrap items-center gap-1.5">' +
+      '<span class="cmd-discord-name">dzbanek-bot</span>' +
+      '<span class="cmd-discord-bot">BOT</span>' +
+      '<span class="text-xs text-[#949BA4]">Today at ' +
+      escapeHtml(timeLabel()) +
+      '</span>' +
+      '</div>' +
+      '<p class="mt-1 text-sm text-[#DBDEE1]">' +
+      escapeHtml(d.line || cmd) +
+      '</p>' +
+      '<div class="cmd-embed" style="border-left-color:' +
+      escapeAttr(d.accent || '#5865F2') +
+      '">' +
+      '<div class="cmd-embed-inner">' +
+      '<p class="cmd-embed-title" style="color:' +
+      escapeAttr(d.accent || '#5865F2') +
+      '">' +
+      escapeHtml(d.title || 'Result') +
+      '</p>' +
+      '<p class="cmd-embed-body">' +
+      bodyHtml +
+      '</p>' +
+      progress +
+      fieldsHtml +
+      '</div></div></div></div>'
+    );
+  }
+
   function init() {
     const root = document.getElementById('cmd-playground');
     if (!root) return;
@@ -278,7 +377,9 @@
     const preview = document.getElementById('cmd-playground-preview');
     const label = document.getElementById('cmd-playground-label');
     const chipsHost = document.getElementById('cmd-playground-chips');
-    const tabs = root.querySelectorAll('[data-playground-cat]');
+    const usageEl = document.getElementById('cmd-playground-usage');
+    const copyActiveBtn = document.getElementById('cmd-copy-active');
+    const catTabs = document.querySelectorAll('[data-cmd-cat]');
     let activeCat = 'all';
     let activeCmd = '/play';
 
@@ -298,6 +399,13 @@
     function renderChips() {
       if (!chipsHost) return;
       const list = filteredCmds();
+      if (!list.length) {
+        chipsHost.innerHTML =
+          '<p class="text-sm text-discord-muted m-0">' +
+          escapeHtml(t('commands.empty', 'No commands match your search.')) +
+          '</p>';
+        return;
+      }
       chipsHost.innerHTML = list
         .map(function (cmd) {
           return (
@@ -318,6 +426,48 @@
       });
     }
 
+    function refreshPreview() {
+      const demo = DEMOS[activeCmd] || fallbackDemo(activeCmd);
+      if (preview) {
+        preview.innerHTML = renderEmbed(demo, activeCmd);
+      }
+      if (label) label.textContent = activeCmd;
+      if (usageEl) {
+        if (demo.usage) {
+          usageEl.hidden = false;
+          usageEl.innerHTML =
+            '<strong>' +
+            escapeHtml(t('commands.example', 'Example')) +
+            '</strong> ' +
+            escapeHtml(demo.usage);
+        } else {
+          usageEl.hidden = true;
+          usageEl.textContent = '';
+        }
+      }
+    }
+
+    function setCategory(cat, opts) {
+      opts = opts || {};
+      activeCat = cat || 'all';
+      catTabs.forEach(function (tab) {
+        const on = (tab.getAttribute('data-cmd-cat') || '') === activeCat;
+        tab.classList.toggle('is-active', on);
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      renderChips();
+      if (typeof window.__dzbanekApplyCmdFilter === 'function') {
+        window.__dzbanekApplyCmdFilter();
+      }
+      if (opts.ensureActiveVisible) {
+        const demo = DEMOS[activeCmd];
+        if (activeCat !== 'all' && demo && demo.category !== activeCat) {
+          const first = filteredCmds()[0];
+          if (first) selectCmd(first, false);
+        }
+      }
+    }
+
     function selectCmd(cmd, copy) {
       if (!cmd) return;
       activeCmd = cmd;
@@ -325,31 +475,51 @@
       if (preview) {
         preview.innerHTML = renderEmbed(demo, cmd);
         preview.classList.remove('playground-flash');
-        // force reflow for animation restart
         void preview.offsetWidth;
         preview.classList.add('playground-flash');
       }
       if (label) label.textContent = cmd;
+      if (usageEl) {
+        if (demo.usage) {
+          usageEl.hidden = false;
+          usageEl.innerHTML =
+            '<strong>' +
+            escapeHtml(t('commands.example', 'Example')) +
+            '</strong> ' +
+            escapeHtml(demo.usage);
+        } else {
+          usageEl.hidden = true;
+          usageEl.textContent = '';
+        }
+      }
       renderChips();
       document.querySelectorAll('.cmd-row[data-cmd]').forEach(function (row) {
         row.classList.toggle('is-playground-active', row.getAttribute('data-cmd') === cmd);
       });
+      document.querySelectorAll('[data-cmd-pick]').forEach(function (btn) {
+        btn.classList.toggle('is-active', btn.getAttribute('data-cmd-pick') === cmd);
+      });
       if (copy && window.copyText) window.copyText(cmd);
     }
 
-    tabs.forEach(function (tab) {
+    catTabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
-        activeCat = tab.getAttribute('data-playground-cat') || 'all';
-        tabs.forEach(function (t) {
-          const on = t === tab;
-          t.classList.toggle('is-active', on);
-          t.setAttribute('aria-selected', on ? 'true' : 'false');
-        });
-        renderChips();
+        setCategory(tab.getAttribute('data-cmd-cat') || 'all', { ensureActiveVisible: true });
       });
     });
 
-    // Hook existing command rows (after their copy handlers)
+    document.querySelectorAll('[data-cmd-pick]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const cmd = btn.getAttribute('data-cmd-pick');
+        const demo = DEMOS[cmd];
+        if (demo && activeCat !== 'all' && demo.category !== activeCat) {
+          setCategory(demo.category, { ensureActiveVisible: false });
+        }
+        selectCmd(cmd, true);
+        root.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
+
     document.querySelectorAll('.cmd-row[data-cmd]').forEach(function (row) {
       row.addEventListener('click', function () {
         selectCmd(row.getAttribute('data-cmd'), false);
@@ -361,8 +531,63 @@
       });
     });
 
+    if (copyActiveBtn) {
+      copyActiveBtn.addEventListener('click', function () {
+        if (window.copyText) window.copyText(activeCmd);
+        const labelCopied = t('commands.copied', 'Copied');
+        const labelCopy = t('commands.copy_short', 'Copy');
+        copyActiveBtn.textContent = labelCopied;
+        copyActiveBtn.classList.add('is-copied');
+        window.setTimeout(function () {
+          copyActiveBtn.textContent = labelCopy;
+          copyActiveBtn.classList.remove('is-copied');
+        }, 900);
+      });
+    }
+
+    // Public API for search filter + deep-links
+    window.DzbanekCmdPlayground = {
+      select: function (cmd, copy) {
+        selectCmd(cmd, !!copy);
+      },
+      setCategory: setCategory,
+      getCategory: function () {
+        return activeCat;
+      },
+      getActive: function () {
+        return activeCmd;
+      },
+      demos: DEMOS,
+    };
+
+    document.addEventListener('dzbanek:lang', function () {
+      refreshPreview();
+      if (copyActiveBtn && !copyActiveBtn.classList.contains('is-copied')) {
+        copyActiveBtn.textContent = t('commands.copy_short', 'Copy');
+      }
+    });
+
     renderChips();
     selectCmd(activeCmd, false);
+
+    // Deep-link: #commands=/play or ?cmd=/rank
+    try {
+      const params = new URLSearchParams(window.location.search);
+      let deep = params.get('cmd');
+      if (!deep && window.location.hash.indexOf('commands=') === 1) {
+        deep = decodeURIComponent(window.location.hash.slice('commands='.length + 1));
+      } else if (!deep && window.location.hash.indexOf('#cmd=') === 0) {
+        deep = decodeURIComponent(window.location.hash.slice(5));
+      }
+      if (deep) {
+        if (!deep.startsWith('/')) deep = '/' + deep;
+        if (DEMOS[deep] || document.querySelector('.cmd-row[data-cmd="' + deep.replace(/"/g, '') + '"]')) {
+          selectCmd(deep, false);
+        }
+      }
+    } catch (_) {
+      /* ignore */
+    }
   }
 
   if (document.readyState === 'loading') {
