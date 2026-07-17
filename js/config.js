@@ -21,6 +21,22 @@
    */
   var PRODUCTION_API_BASE = 'https://dzbanek-bot.up.railway.app';
 
+  /** Old Railway hostnames that 404 — never use for OAuth/API. */
+  var DEAD_API_HOSTS = [
+    'bot-production-c393.up.railway.app',
+  ];
+
+  function isDeadApiBase(url) {
+    try {
+      var h = new URL(String(url || '')).hostname.toLowerCase();
+      return DEAD_API_HOSTS.some(function (d) {
+        return h === d || h.endsWith('.' + d);
+      });
+    } catch (e) {
+      return false;
+    }
+  }
+
   function isLocalHost(hostname) {
     return (
       !hostname ||
@@ -67,24 +83,32 @@
       var stored = localStorage.getItem('dzbanek_api_base');
       if (stored) {
         var cleaned = String(stored).replace(/\/$/, '');
-        // HTTPS public pages cannot call http://127.0.0.1 (mixed content + wrong machine)
-        try {
-          if (
-            typeof location !== 'undefined' &&
-            location.protocol === 'https:' &&
-            !isLocalHost(location.hostname) &&
-            isHttpLocalApi(cleaned)
-          ) {
-            try {
-              localStorage.removeItem('dzbanek_api_base');
-            } catch (e2) {
-              /* ignore */
+        // Drop dead Railway hosts (old OAuth 404) and localhost overrides on HTTPS public pages
+        if (isDeadApiBase(cleaned)) {
+          try {
+            localStorage.removeItem('dzbanek_api_base');
+          } catch (e0) {
+            /* ignore */
+          }
+        } else {
+          try {
+            if (
+              typeof location !== 'undefined' &&
+              location.protocol === 'https:' &&
+              !isLocalHost(location.hostname) &&
+              isHttpLocalApi(cleaned)
+            ) {
+              try {
+                localStorage.removeItem('dzbanek_api_base');
+              } catch (e2) {
+                /* ignore */
+              }
+            } else {
+              return cleaned;
             }
-          } else {
+          } catch (e) {
             return cleaned;
           }
-        } catch (e) {
-          return cleaned;
         }
       }
     } catch (e) {
@@ -92,7 +116,8 @@
     }
 
     if (PRODUCTION_API_BASE) {
-      return String(PRODUCTION_API_BASE).replace(/\/$/, '');
+      var prod = String(PRODUCTION_API_BASE).replace(/\/$/, '');
+      if (!isDeadApiBase(prod)) return prod;
     }
 
     try {
@@ -137,6 +162,8 @@
   window.DZBANEK = {
     PUBLIC_SITE: PUBLIC_SITE,
     PRODUCTION_API_BASE: PRODUCTION_API_BASE,
+    /** Canonical OAuth callback the Discord app must allow */
+    OAUTH_CALLBACK_URL: PRODUCTION_API_BASE.replace(/\/$/, '') + '/api/auth/callback',
     /** Relative path to committed stats snapshot (works on GitHub Pages). */
     STATS_SNAPSHOT: 'data/stats.json',
     API_BASE: detectApiBase(),
@@ -155,6 +182,7 @@
     SITE_URL: detectSiteUrl(),
     OG_IMAGE:
       'https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/bot-avatar.png',
+    isDeadApiBase: isDeadApiBase,
     refreshApiBase: function () {
       window.DZBANEK.API_BASE = detectApiBase();
       window.DZBANEK.IS_STATIC_HOSTING = detectStaticHosting();

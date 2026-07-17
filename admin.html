@@ -591,29 +591,37 @@
       </div>
     </footer>
 
-    <script src="js/config.js?v=20260716b"></script>
-    <script src="js/seo.js?v=20260716b"></script>
-    <script src="js/site.js?v=20260716b"></script>
-    <script src="js/theme.js?v=20260718a"></script>
+    <script src="js/config.js?v=20260718c"></script>
+    <script src="js/seo.js?v=20260718c"></script>
+    <script src="js/site.js?v=20260718c"></script>
+    <script src="js/theme.js?v=20260718c"></script>
     <script>
       const SESSION_KEY = 'dzbanek_admin_session';
       /** Hard fallback if config.js is cached empty on GitHub Pages */
       const FALLBACK_PUBLIC_API = 'https://dzbanek-bot.up.railway.app';
 
+      function isDeadApiHost(url) {
+        if (window.DZBANEK?.isDeadApiBase) return window.DZBANEK.isDeadApiBase(url);
+        return /bot-production-c393/i.test(String(url || ''));
+      }
+
       function apiBase() {
         if (window.DZBANEK?.refreshApiBase) {
           const b = String(window.DZBANEK.refreshApiBase() || '').replace(/\/$/, '');
-          if (b) return b;
+          if (b && !isDeadApiHost(b)) return b;
         }
         const base = window.DZBANEK?.API_BASE || window.DZBANEK?.PRODUCTION_API_BASE || '';
-        if (base) return String(base).replace(/\/$/, '');
+        if (base) {
+          const cleaned = String(base).replace(/\/$/, '');
+          if (!isDeadApiHost(cleaned)) return cleaned;
+        }
         try {
           if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
             if (String(location.port) === '3848') return location.origin;
             return 'http://127.0.0.1:3848';
           }
-          // Same host as the bot API (Railway)
-          if (/\.up\.railway\.app$/i.test(location.hostname)) {
+          // Same host as the bot API (Railway) — skip known-dead hosts
+          if (/\.up\.railway\.app$/i.test(location.hostname) && !isDeadApiHost(location.origin)) {
             return location.origin;
           }
           // Public static site — use production API (never empty)
@@ -684,15 +692,20 @@
       }
 
       function setLoginHref() {
-        // Directory that contains admin.html (supports GitHub project pages: /repo-name/)
-        let returnBase = location.origin;
+        // Full page URL so the bot returns to admin.html (not a bare directory)
+        let returnPage = location.origin + '/admin.html';
         try {
-          returnBase = new URL('.', location.href).href.replace(/\/$/, '');
+          returnPage = location.href.split('#')[0].split('?')[0];
+          if (!/admin\.html$/i.test(returnPage)) {
+            const dir = new URL('.', location.href).href.replace(/\/$/, '');
+            returnPage = dir + '/admin.html';
+          }
         } catch {
-          returnBase = location.origin;
+          /* keep default */
         }
+        const base = apiBase().replace(/\/$/, '') || FALLBACK_PUBLIC_API;
         $('login-btn').href =
-          apiBase() + '/api/auth/login?return=' + encodeURIComponent(returnBase);
+          base + '/api/auth/login?return=' + encodeURIComponent(returnPage);
         updateOAuthHints();
       }
       setLoginHref();
@@ -1404,16 +1417,29 @@
         }
       });
 
-      // Login: preflight so a JSON 503 (missing DISCORD_CLIENT_SECRET) is readable
+      // Login: preflight so a JSON 503 / bad redirect_uri is readable before Discord
       $('login-btn').addEventListener('click', async (e) => {
         e.preventDefault();
+        // Scrub stale dead API base from localStorage
+        try {
+          const stored = localStorage.getItem('dzbanek_api_base');
+          if (stored && /bot-production-c393/i.test(stored)) {
+            localStorage.removeItem('dzbanek_api_base');
+            if (window.DZBANEK?.refreshApiBase) window.DZBANEK.refreshApiBase();
+          }
+        } catch {
+          /* ignore */
+        }
         setLoginHref();
         const url = $('login-btn').href;
+        const expectedCb =
+          (window.DZBANEK && window.DZBANEK.OAUTH_CALLBACK_URL) ||
+          FALLBACK_PUBLIC_API + '/api/auth/callback';
         try {
           const res = await fetch(url, {
             method: 'GET',
             redirect: 'manual',
-            credentials: 'include',
+            credentials: 'omit',
           });
           if (res.status === 503) {
             const err = await res.json().catch(() => ({}));
@@ -1423,6 +1449,36 @@
             );
             $('oauth-setup-help')?.classList.remove('hidden');
             return;
+          }
+          // opaqueredirect / 0 status in some browsers — try Location header when exposed
+          const loc = res.headers.get('Location') || res.headers.get('location') || '';
+          if (loc && /bot-production-c393/i.test(loc)) {
+            showLogin(
+              'Bot still points OAuth at a dead Railway host. Set OAUTH_REDIRECT_URI=' +
+                expectedCb +
+                ' on Railway and redeploy.',
+            );
+            $('oauth-setup-help')?.classList.remove('hidden');
+            return;
+          }
+          if (loc && loc.includes('redirect_uri=')) {
+            try {
+              const u = new URL(loc);
+              const ru = u.searchParams.get('redirect_uri') || '';
+              if (ru && ru !== expectedCb) {
+                showLogin(
+                  'OAuth redirect_uri is ' +
+                    ru +
+                    ' but should be ' +
+                    expectedCb +
+                    '. Update Railway OAUTH_REDIRECT_URI and Discord Developer Portal → Redirects.',
+                );
+                $('oauth-setup-help')?.classList.remove('hidden');
+                return;
+              }
+            } catch {
+              /* continue to Discord */
+            }
           }
         } catch {
           /* navigation still attempted below */

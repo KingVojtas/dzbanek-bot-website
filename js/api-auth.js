@@ -5,21 +5,39 @@
 (function (global) {
   var SESSION_KEY = 'dzbanek_admin_session';
   var FALLBACK_PUBLIC_API = 'https://dzbanek-bot.up.railway.app';
+  var DEAD_HOSTS = ['bot-production-c393.up.railway.app'];
+
+  function isDead(url) {
+    try {
+      if (global.DZBANEK && typeof global.DZBANEK.isDeadApiBase === 'function') {
+        return global.DZBANEK.isDeadApiBase(url);
+      }
+      var h = new URL(String(url || '')).hostname.toLowerCase();
+      return DEAD_HOSTS.indexOf(h) !== -1;
+    } catch (e) {
+      return false;
+    }
+  }
 
   function apiBase() {
     if (global.DZBANEK && typeof global.DZBANEK.refreshApiBase === 'function') {
       var b = String(global.DZBANEK.refreshApiBase() || '').replace(/\/$/, '');
-      if (b) return b;
+      if (b && !isDead(b)) return b;
     }
     var base =
       (global.DZBANEK && (global.DZBANEK.API_BASE || global.DZBANEK.PRODUCTION_API_BASE)) || '';
-    if (base) return String(base).replace(/\/$/, '');
+    if (base) {
+      base = String(base).replace(/\/$/, '');
+      if (!isDead(base)) return base;
+    }
     try {
       if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
         if (String(location.port) === '3848') return location.origin;
         return 'http://127.0.0.1:3848';
       }
-      if (/\.up\.railway\.app$/i.test(location.hostname)) return location.origin;
+      if (/\.up\.railway\.app$/i.test(location.hostname) && !isDead(location.origin)) {
+        return location.origin;
+      }
       return FALLBACK_PUBLIC_API;
     } catch (e) {
       return FALLBACK_PUBLIC_API;
