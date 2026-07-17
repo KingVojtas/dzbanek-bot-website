@@ -312,6 +312,47 @@ html[data-theme='light'] .faq-item[open] summary {
 html[data-theme='light'] .cmd-chip.is-active {
   color: #0f1014 !important;
 }
+html[data-theme='light'] .cmd-section {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(88, 101, 242, 0.08), transparent 60%),
+    #eef0f6 !important;
+}
+html[data-theme='light'] .cmd-search-input {
+  background: #ffffff !important;
+  border-color: rgba(15, 16, 20, 0.12) !important;
+  color: #0f1014 !important;
+  box-shadow: 0 8px 24px -16px rgba(15, 16, 20, 0.2) !important;
+}
+html[data-theme='light'] .cmd-card,
+html[data-theme='light'] .cmd-playground,
+html[data-theme='light'] .cmd-auto {
+  background: #ffffff !important;
+  border-color: rgba(15, 16, 20, 0.1) !important;
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .cmd-name {
+  color: #0f1014 !important;
+  background: rgba(88, 101, 242, 0.1) !important;
+}
+html[data-theme='light'] .cmd-desc,
+html[data-theme='light'] .cmd-playground-lead,
+html[data-theme='light'] .cmd-card-note,
+html[data-theme='light'] .cmd-auto-item {
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .cmd-playground-title,
+html[data-theme='light'] .cmd-auto-title {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .cmd-empty {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(15, 16, 20, 0.12) !important;
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .cmd-discord-chrome {
+  /* keep Discord product chrome dark */
+  color: #dbdee1;
+}
 
 /* Forms */
 html[data-theme='light'] input,

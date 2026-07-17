@@ -285,12 +285,7 @@
     const allCmds = Object.keys(DEMOS);
 
     function chipClass(cmd) {
-      return (
-        'cmd-chip rounded-full border px-3 py-1.5 text-xs font-semibold transition ' +
-        (cmd === activeCmd
-          ? 'is-active border-discord-blurple/55 bg-discord-blurple/20 text-white'
-          : 'border-white/10 bg-discord-elevated/50 text-discord-muted hover:border-discord-blurple/40 hover:text-white')
-      );
+      return 'cmd-chip' + (cmd === activeCmd ? ' is-active' : '');
     }
 
     function filteredCmds() {

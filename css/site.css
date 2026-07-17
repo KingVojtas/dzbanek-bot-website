@@ -969,12 +969,329 @@ header.sticky {
 .btn-shine:hover::after {
   transform: translateX(120%);
 }
+/* —— Slash commands section —— */
+.cmd-section {
+  position: relative;
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(88, 101, 242, 0.12), transparent 60%),
+    rgb(var(--discord-darker) / 0.55);
+}
+.cmd-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(88, 101, 242, 0.28);
+  background: rgba(88, 101, 242, 0.1);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  color: #a5b0f5;
+}
+.cmd-kicker > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 0.35rem;
+  background: rgba(88, 101, 242, 0.25);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8rem;
+  color: #fff;
+}
+.cmd-search-wrap {
+  position: relative;
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cmd-search-icon {
+  position: absolute;
+  left: 0.95rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgb(var(--discord-muted));
+  pointer-events: none;
+  opacity: 0.75;
+}
+.cmd-search-input {
+  width: 100%;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--now-card-bg, #1e1f22);
+  padding: 0.85rem 5.5rem 0.85rem 2.65rem;
+  font-size: 0.9rem;
+  color: var(--hex-fg-strong, #fff);
+  box-shadow: 0 8px 28px -16px rgba(0, 0, 0, 0.55);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.cmd-search-input::placeholder {
+  color: rgb(var(--discord-muted) / 0.7);
+}
+.cmd-search-input:focus {
+  outline: none;
+  border-color: rgba(88, 101, 242, 0.55);
+  box-shadow:
+    0 0 0 3px rgba(88, 101, 242, 0.15),
+    0 8px 28px -16px rgba(0, 0, 0, 0.55);
+}
+.cmd-filter-count {
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: rgba(88, 101, 242, 0.15);
+  border: 1px solid rgba(88, 101, 242, 0.3);
+  color: #a5b0f5;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
+}
+.cmd-empty {
+  text-align: center;
+  font-size: 0.95rem;
+  color: rgb(var(--discord-muted));
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  background: rgba(30, 31, 34, 0.4);
+}
+
+/* Playground panel */
+.cmd-playground {
+  display: grid;
+  gap: 1.25rem;
+  border-radius: 1.15rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background:
+    linear-gradient(145deg, rgba(88, 101, 242, 0.08), transparent 45%),
+    var(--now-card-bg, #1e1f22);
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem;
+}
+@media (min-width: 1024px) {
+  .cmd-playground {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+}
+.cmd-playground-kicker {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #7289da;
+}
+.cmd-playground-title {
+  margin: 0.25rem 0 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--hex-fg-strong, #fff);
+}
+.cmd-playground-lead {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgb(var(--discord-muted));
+}
+.cmd-cat-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.cmd-chip-scroll {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  max-height: 12.5rem;
+  overflow-y: auto;
+  padding-right: 0.15rem;
+}
+.cmd-active-line {
+  margin: 0;
+  font-size: 0.8rem;
+  color: rgb(var(--discord-muted));
+}
+.cmd-active-code {
+  display: inline-block;
+  margin-left: 0.25rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: 0.4rem;
+  background: rgba(88, 101, 242, 0.15);
+  border: 1px solid rgba(88, 101, 242, 0.28);
+  color: #a5b0f5;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+.cmd-discord-chrome {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #313338;
+  padding: 0.85rem;
+  text-align: left;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.cmd-discord-chrome-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.cmd-discord-avatar {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  object-fit: cover;
+}
+.cmd-discord-name {
+  font-size: 0.9rem;
+  font-weight: 650;
+  color: #f2f3f5;
+}
+.cmd-discord-bot {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #5865f2;
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.3rem;
+  line-height: 1.2;
+}
+
+/* Catalog cards */
+.cmd-catalog {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .cmd-catalog {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1280px) {
+  .cmd-catalog {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.cmd-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--now-card-bg, #1e1f22);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.cmd-card:hover {
+  border-color: rgba(88, 101, 242, 0.28);
+  transform: translateY(-2px);
+  box-shadow:
+    var(--shadow-card),
+    0 12px 32px -18px rgba(88, 101, 242, 0.35);
+}
+.cmd-card.is-filtered-out {
+  display: none;
+}
+.cmd-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(90deg, rgba(88, 101, 242, 0.1), transparent 70%);
+}
+.cmd-card--music .cmd-card-head {
+  background: linear-gradient(90deg, rgba(88, 101, 242, 0.14), transparent 70%);
+}
+.cmd-card--deals .cmd-card-head {
+  background: linear-gradient(90deg, rgba(35, 165, 89, 0.14), transparent 70%);
+}
+.cmd-card--levels .cmd-card-head {
+  background: linear-gradient(90deg, rgba(250, 204, 21, 0.12), transparent 70%);
+}
+.cmd-card--stats .cmd-card-head {
+  background: linear-gradient(90deg, rgba(235, 69, 158, 0.12), transparent 70%);
+}
+.cmd-card--setup .cmd-card-head {
+  background: linear-gradient(90deg, rgba(148, 163, 184, 0.14), transparent 70%);
+}
+.cmd-card-icon {
+  font-size: 1.05rem;
+  line-height: 1;
+  width: 1.85rem;
+  height: 1.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.cmd-card-title {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #a5b0f5;
+}
+.cmd-card-count {
+  flex-shrink: 0;
+  min-width: 1.5rem;
+  text-align: center;
+  border-radius: 999px;
+  padding: 0.12rem 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 750;
+  color: #a5b0f5;
+  background: rgba(88, 101, 242, 0.12);
+  border: 1px solid rgba(88, 101, 242, 0.25);
+}
+.cmd-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+  flex: 1;
+}
 .cmd-row {
-  transition: background-color 0.15s ease;
+  display: grid;
+  grid-template-columns: minmax(6.5rem, auto) 1fr auto;
+  align-items: center;
+  gap: 0.55rem 0.75rem;
+  padding: 0.7rem 1rem;
   cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 .cmd-row:hover {
   background-color: rgba(88, 101, 242, 0.08);
+}
+.cmd-row:focus-visible {
+  outline: 2px solid #5865f2;
+  outline-offset: -2px;
 }
 .cmd-row.hidden-by-filter {
   display: none;
@@ -983,6 +1300,158 @@ header.sticky {
   background-color: rgba(88, 101, 242, 0.12);
   box-shadow: inset 3px 0 0 #5865f2;
 }
+.cmd-row.is-copied {
+  background-color: rgba(35, 165, 89, 0.12);
+  box-shadow: inset 3px 0 0 #23a559;
+}
+.cmd-row.is-copied .cmd-copy {
+  color: #23a559;
+  opacity: 1;
+}
+.cmd-name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: #fff;
+  background: rgba(88, 101, 242, 0.12);
+  border: 1px solid rgba(88, 101, 242, 0.22);
+  border-radius: 0.4rem;
+  padding: 0.18rem 0.45rem;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+.cmd-desc {
+  font-size: 0.84rem;
+  line-height: 1.35;
+  color: rgb(var(--discord-muted));
+  min-width: 0;
+}
+.cmd-copy {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #a5b0f5;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.cmd-row:hover .cmd-copy,
+.cmd-row:focus-visible .cmd-copy,
+.cmd-row.is-playground-active .cmd-copy {
+  opacity: 0.9;
+}
+@media (max-width: 420px) {
+  .cmd-row {
+    grid-template-columns: 1fr auto;
+  }
+  .cmd-name {
+    grid-column: 1 / 2;
+  }
+  .cmd-desc {
+    grid-column: 1 / 2;
+  }
+  .cmd-copy {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    opacity: 0.65;
+  }
+}
+.cmd-card-note {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: rgb(var(--discord-muted));
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* Auto pipelines */
+.cmd-auto {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background:
+    radial-gradient(ellipse 50% 80% at 0% 50%, rgba(88, 101, 242, 0.08), transparent 60%),
+    var(--now-card-bg, #1e1f22);
+  box-shadow: var(--shadow-card);
+  padding: 1.15rem 1.25rem;
+}
+.cmd-auto-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+.cmd-auto-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.18rem 0.55rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #23a559;
+  background: rgba(35, 165, 89, 0.12);
+  border: 1px solid rgba(35, 165, 89, 0.3);
+}
+.cmd-auto-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 650;
+  color: var(--hex-fg-strong, #fff);
+}
+.cmd-auto-grid {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+@media (min-width: 640px) {
+  .cmd-auto-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.cmd-auto-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: rgb(var(--discord-muted));
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.65rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.cmd-auto-check {
+  flex-shrink: 0;
+  color: #5865f2;
+  font-weight: 800;
+  margin-top: 0.05rem;
+}
+
+.cmd-chip {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(43, 45, 49, 0.55);
+  color: rgb(var(--discord-muted));
+  padding: 0.38rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 650;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.12s ease;
+}
+.cmd-chip:hover {
+  border-color: rgba(88, 101, 242, 0.4);
+  color: #fff;
+  transform: translateY(-1px);
+}
 .cmd-chip.is-active {
   border-color: rgba(88, 101, 242, 0.55);
   background: rgba(88, 101, 242, 0.2);
@@ -990,6 +1459,14 @@ header.sticky {
 }
 .playground-flash {
   animation: mock-in 0.35s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cmd-card:hover {
+    transform: none;
+  }
+  .cmd-chip:hover {
+    transform: none;
+  }
 }
 .faq-item[open] summary {
   color: var(--faq-open-color, #fff);
