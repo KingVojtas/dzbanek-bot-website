@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bot list kit — dzbanek-bot</title>
+    <meta
+      name="description"
+      content="Copy-ready descriptions, tags, and links for listing dzbanek-bot on Discord bot lists."
+    />
+    <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              discord: {
+                bg: 'rgb(var(--discord-bg) / <alpha-value>)',
+                darker: 'rgb(var(--discord-darker) / <alpha-value>)',
+                card: 'rgb(var(--discord-card) / <alpha-value>)',
+                elevated: 'rgb(var(--discord-elevated) / <alpha-value>)',
+                blurple: 'rgb(var(--discord-blurple) / <alpha-value>)',
+                'blurple-hover': 'rgb(var(--discord-blurple-hover) / <alpha-value>)',
+                muted: 'rgb(var(--discord-muted) / <alpha-value>)',
+                green: 'rgb(var(--discord-green) / <alpha-value>)',
+              },
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            boxShadow: { glow: 'var(--shadow-glow)', card: 'var(--shadow-card)' },
+          },
+        },
+      };
+    </script>
+    <script src="js/theme-boot.js?v=20260719a"></script>
+    <link rel="stylesheet" href="css/site.css?v=20260719a" />
+  </head>
+  <body class="bg-discord-bg text-white antialiased">
+    <header class="sticky top-0 z-50 border-b border-white/5 bg-discord-bg/80 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/bot-avatar.png" alt="" class="h-9 w-9 rounded-2xl object-cover ring-2 ring-discord-blurple/40" />
+          <span class="text-lg font-bold">dzbanek-bot</span>
+        </a>
+        <div class="hidden items-center gap-4 sm:flex">
+          <a href="index.html" class="text-sm text-discord-muted hover:text-white" data-i18n="nav.home">Home</a>
+          <a href="index.html#start" class="text-sm text-discord-muted hover:text-white" data-i18n="nav.start">Setup</a>
+          <a href="support.html" class="text-sm text-discord-muted hover:text-white" data-i18n="nav.support">Support</a>
+          <button type="button" data-theme-toggle class="theme-toggle" aria-label="Theme" data-i18n-aria="theme.label">
+            <svg class="theme-toggle-icon theme-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            <svg class="theme-toggle-icon theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z"/></svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
+      <p class="text-sm font-medium text-discord-blurple" data-i18n="press.kicker">Bot lists &amp; press</p>
+      <h1 class="mt-1 text-3xl font-bold tracking-tight sm:text-4xl" data-i18n="press.title">Bot list kit</h1>
+      <p class="mt-3 text-discord-muted" data-i18n="press.lead">
+        Copy-ready blurbs, tags, and links for top.gg, discords.com, and friends.
+      </p>
+
+      <article class="mt-10 rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card">
+        <div class="flex items-center justify-between gap-3">
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="press.short_label">Short description</h2>
+          <button type="button" class="rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-discord-muted hover:border-discord-blurple/40 hover:text-white" data-copy-target="press-short" data-i18n="press.copy">Copy</button>
+        </div>
+        <p id="press-short" class="mt-3 text-sm leading-relaxed text-white/90" data-i18n="press.short">
+          Multipurpose Discord bot: music (YouTube/Spotify/SoundCloud), Steam &amp; Epic deals, RSS news, XP leveling, and welcomes. Free &amp; open source.
+        </p>
+      </article>
+
+      <article class="mt-4 rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card">
+        <div class="flex items-center justify-between gap-3">
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="press.long_label">Long description</h2>
+          <button type="button" class="rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-discord-muted hover:border-discord-blurple/40 hover:text-white" data-copy-target="press-long" data-i18n="press.copy">Copy</button>
+        </div>
+        <p id="press-long" class="mt-3 text-sm leading-relaxed text-white/90" data-i18n="press.long">
+          dzbanek-bot is a free open-source multipurpose Discord bot for gaming communities…
+        </p>
+      </article>
+
+      <article class="mt-4 rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card">
+        <div class="flex items-center justify-between gap-3">
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="press.tags_label">Suggested tags</h2>
+          <button type="button" class="rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-discord-muted hover:border-discord-blurple/40 hover:text-white" data-copy-target="press-tags" data-i18n="press.copy">Copy</button>
+        </div>
+        <p id="press-tags" class="mt-3 font-mono text-sm text-white/90" data-i18n="press.tags">
+          music, steam, epic, deals, news, leveling, welcome, multipurpose, open-source
+        </p>
+      </article>
+
+      <article class="mt-4 rounded-2xl border border-white/5 bg-discord-card p-6 shadow-card">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="press.links_label">Links</h2>
+        <ul class="mt-3 space-y-2 text-sm">
+          <li><span class="text-discord-muted">Website · </span><a id="press-site" class="text-discord-blurple hover:underline" href="https://dzbanek-bot.vojtas.io/">dzbanek-bot.vojtas.io</a></li>
+          <li><span class="text-discord-muted">Invite · </span><a id="press-invite" class="text-discord-blurple hover:underline" href="#">Discord OAuth</a></li>
+          <li><span class="text-discord-muted">Support · </span><a class="text-discord-blurple hover:underline" href="support.html">support.html</a></li>
+          <li><span class="text-discord-muted">Setup · </span><a class="text-discord-blurple hover:underline" href="index.html#start">Setup wizard</a></li>
+          <li><span class="text-discord-muted">GitHub · </span><a class="text-discord-blurple hover:underline" href="https://github.com/KingVojtas/dzbanek-bot">KingVojtas/dzbanek-bot</a></li>
+        </ul>
+      </article>
+    </main>
+
+    <footer class="border-t border-white/5 py-10">
+      <div class="mx-auto max-w-3xl px-4 text-center text-sm text-discord-muted">
+        © <span id="year"></span> dzbanek-bot · <a href="index.html" class="hover:text-white">Home</a>
+      </div>
+    </footer>
+
+    <script src="js/config.js?v=20260719a"></script>
+    <script src="js/locales/en.js?v=20260719a"></script>
+    <script src="js/locales/cs.js?v=20260719a"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/site.js"></script>
+    <script src="js/theme.js?v=20260719a"></script>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+      var invite = (window.DZBANEK && window.DZBANEK.INVITE_URL) || '#';
+      var site = (window.DZBANEK && window.DZBANEK.SITE_URL) || 'https://dzbanek-bot.vojtas.io';
+      var inv = document.getElementById('press-invite');
+      if (inv) inv.href = invite;
+      var st = document.getElementById('press-site');
+      if (st) {
+        st.href = site;
+        st.textContent = site.replace(/^https?:\/\//, '');
+      }
+      document.querySelectorAll('[data-copy-target]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id = btn.getAttribute('data-copy-target');
+          var el = document.getElementById(id);
+          var text = el ? el.textContent.trim() : '';
+          if (window.copyText) window.copyText(text);
+          else if (navigator.clipboard) navigator.clipboard.writeText(text);
+          if (window.showToast) window.showToast('Copied');
+        });
+      });
+    </script>
+  </body>
+</html>

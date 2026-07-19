@@ -42,8 +42,8 @@
       rel="stylesheet"
     />
     <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
-    <script src="js/theme-boot.js?v=20260718n"></script>
-    <link rel="stylesheet" href="css/site.css?v=20260718n" />
+    <script src="js/theme-boot.js?v=20260719a"></script>
+    <link rel="stylesheet" href="css/site.css?v=20260719a" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -224,6 +224,7 @@
         <div class="hidden min-w-0 flex-1 items-center justify-center gap-0.5 sm:flex">
           <a href="#home" data-nav class="nav-link relative whitespace-nowrap rounded-md px-2.5 py-1 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.home">Home</a>
           <a href="#features" data-nav class="nav-link relative whitespace-nowrap rounded-md px-2.5 py-1 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.features">Features</a>
+          <a href="#start" data-nav class="nav-link relative whitespace-nowrap rounded-md px-2.5 py-1 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.start">Setup</a>
           <a href="#commands" data-nav class="nav-link relative whitespace-nowrap rounded-md px-2.5 py-1 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.commands">Commands</a>
           <a href="stats.html" class="whitespace-nowrap rounded-md px-2.5 py-1 text-sm font-medium text-discord-muted transition hover:text-white" data-i18n="nav.stats">Stats</a>
         </div>
@@ -269,7 +270,9 @@
           <a href="#demo" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="demo.title">Screenshots &amp; demo</a>
           <a href="#features" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.features">Features</a>
           <a href="#commands" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.commands">Commands</a>
+          <a href="#start" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.start">Setup</a>
           <a href="check.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.check">Server check</a>
+          <a href="press.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.press">Bot list kit</a>
           <a href="support.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.support">Support</a>
           <a href="stats.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.stats">Stats</a>
           <a href="leaderboards.html" class="rounded-lg px-3 py-2 text-sm font-medium text-discord-muted hover:bg-discord-elevated hover:text-white" data-i18n="nav.leaderboards">Leaderboards</a>
@@ -543,6 +546,46 @@
               </div>
               <p class="mt-2 text-center text-xs text-discord-muted" data-i18n="hero.mock_caption">See it in Discord — mock of real Components V2 messages</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live activity ticker + social proof -->
+      <div id="activity-ticker" class="activity-ticker" hidden>
+        <div class="mx-auto flex max-w-6xl items-center gap-3 px-4 sm:px-6 lg:px-8">
+          <span class="ticker-badge" data-ticker-live>Live</span>
+          <div class="ticker-viewport">
+            <div class="ticker-track" data-ticker-track></div>
+          </div>
+        </div>
+      </div>
+      <section id="social-proof" class="social-proof border-t border-white/5" hidden>
+        <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+          <div class="social-proof-grid">
+            <div class="social-proof-stat">
+              <p class="social-proof-n" data-proof="servers">—</p>
+              <p class="social-proof-l" data-i18n="proof.servers">Servers</p>
+            </div>
+            <div class="social-proof-stat">
+              <p class="social-proof-n" data-proof="plays">—</p>
+              <p class="social-proof-l" data-i18n="proof.plays">Tracks played</p>
+            </div>
+            <div class="social-proof-stat">
+              <p class="social-proof-n" data-proof="deals">—</p>
+              <p class="social-proof-l" data-i18n="proof.deals">Live deals</p>
+            </div>
+            <div class="social-proof-stat social-proof-stat--wide">
+              <p class="social-proof-top-label" data-i18n="proof.top">Top track</p>
+              <p class="social-proof-top" data-proof="top">—</p>
+            </div>
+          </div>
+          <p class="mt-4 text-center text-sm text-discord-muted" data-i18n="proof.tagline">
+            Music + Steam &amp; Epic deals for gaming servers — free and open source.
+          </p>
+          <div class="mt-4 flex flex-wrap justify-center gap-3">
+            <a href="leaderboards.html" class="text-sm font-medium text-discord-blurple hover:underline" data-i18n="proof.boards">Open leaderboards →</a>
+            <a href="check.html" class="text-sm font-medium text-discord-blurple hover:underline" data-i18n="proof.check">Check my servers →</a>
+            <a href="#start" class="text-sm font-medium text-discord-blurple hover:underline" data-i18n="proof.start">Setup wizard →</a>
           </div>
         </div>
       </section>
@@ -1175,7 +1218,8 @@
                 <span data-now="deals-status">Idle</span>
               </span>
               <h3 class="pr-24 text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.deals">Deals Pulse</h3>
-              <ul class="mt-4 deals-list" data-now="deals"></ul>
+              <p class="mt-1 text-[11px] text-discord-muted" data-now="deals-meta" hidden></p>
+              <ul class="mt-3 deals-list" data-now="deals"></ul>
               <div class="deals-radar" aria-hidden="true">
                 <span class="deals-radar-ring"></span>
                 <span class="deals-radar-ring"></span>
@@ -1195,6 +1239,77 @@
               <h3 class="text-xs font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="now.activity">Recently Used</h3>
               <ul class="mt-4 space-y-0" data-now="commands"></ul>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SETUP WIZARD ========== -->
+      <section id="start" class="wizard-section border-t border-white/5 py-20 sm:py-24">
+        <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div class="reveal mx-auto max-w-2xl text-center">
+            <p class="text-sm font-medium text-discord-blurple" data-i18n="wizard.kicker">Get started</p>
+            <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl" data-i18n="wizard.title">Setup wizard</h2>
+            <p class="mt-3 text-discord-muted" data-i18n="wizard.lead">
+              Three steps from invite to a fully working server — no guessing.
+            </p>
+          </div>
+
+          <div id="setup-wizard" class="wizard reveal mt-10">
+            <ol class="wizard-dots" aria-label="Setup steps">
+              <li class="wizard-dot is-active" data-wizard-dot><span data-i18n="wizard.step1_short">Invite</span></li>
+              <li class="wizard-dot" data-wizard-dot><span data-i18n="wizard.step2_short">Modules</span></li>
+              <li class="wizard-dot" data-wizard-dot><span data-i18n="wizard.step3_short">Checklist</span></li>
+            </ol>
+
+            <!-- Step 1 -->
+            <div data-wizard-step="1" class="wizard-panel">
+              <h3 class="wizard-panel-title" data-i18n="wizard.step1_title">1. Invite the bot</h3>
+              <p class="wizard-panel-body" data-i18n="wizard.step1_body">
+                Add dzbanek-bot to your server with the recommended permissions. You can refine packs later on the permissions page.
+              </p>
+              <div class="mt-6 flex flex-wrap gap-3">
+                <a
+                  id="wizard-invite-btn"
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-shine rounded-full bg-discord-blurple px-6 py-3 text-sm font-semibold shadow-glow"
+                  data-i18n="wizard.cta_invite"
+                  data-invite-confetti
+                  >Add to Server</a
+                >
+                <a href="permissions.html" class="rounded-full border border-white/10 px-5 py-3 text-sm font-semibold text-discord-muted hover:border-discord-blurple/40 hover:text-white" data-i18n="wizard.cta_perms">Permissions calculator</a>
+              </div>
+              <div class="mt-8 flex justify-end">
+                <button type="button" class="wizard-nav-btn" data-wizard-next data-i18n="wizard.next">Continue →</button>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div data-wizard-step="2" class="wizard-panel" hidden>
+              <h3 class="wizard-panel-title" data-i18n="wizard.step2_title">2. Pick what you want</h3>
+              <p class="wizard-panel-body" data-i18n="wizard.step2_body">
+                Toggle modules — the checklist adapts. Music works with zero setup; digests need a channel.
+              </p>
+              <div id="wizard-modules" class="wizard-mods mt-5"></div>
+              <div class="mt-8 flex justify-between gap-3">
+                <button type="button" class="wizard-nav-btn wizard-nav-btn--ghost" data-wizard-back data-i18n="wizard.back">← Back</button>
+                <button type="button" class="wizard-nav-btn" data-wizard-next data-i18n="wizard.next">Continue →</button>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div data-wizard-step="3" class="wizard-panel" hidden>
+              <h3 class="wizard-panel-title" data-i18n="wizard.step3_title">3. Finish the checklist</h3>
+              <p class="wizard-panel-body" data-i18n="wizard.step3_body">
+                Run these in Discord or the Admin dashboard, then verify with Server check.
+              </p>
+              <ol id="wizard-checklist" class="wizard-checklist mt-5"></ol>
+              <div class="mt-8 flex flex-wrap justify-between gap-3">
+                <button type="button" class="wizard-nav-btn wizard-nav-btn--ghost" data-wizard-back data-i18n="wizard.back">← Back</button>
+                <a href="check.html" class="wizard-nav-btn" data-i18n="wizard.cta_check">Open server check →</a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1433,19 +1548,20 @@
     </footer>
 
     <!-- ========== SCRIPTS ========== -->
-    <script src="js/config.js?v=20260718h"></script>
-    <script src="js/locales/en.js?v=20260718n"></script>
-    <script src="js/locales/cs.js?v=20260718n"></script>
-    <script src="js/i18n.js?v=20260718h"></script>
+    <script src="js/config.js?v=20260719a"></script>
+    <script src="js/locales/en.js?v=20260719a"></script>
+    <script src="js/locales/cs.js?v=20260719a"></script>
+    <script src="js/i18n.js?v=20260719a"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
-    <script src="js/theme.js?v=20260718n"></script>
-    <script src="js/stats-api.js?v=20260718n"></script>
-    <script src="js/public-feed.js?v=20260718n"></script>
+    <script src="js/theme.js?v=20260719a"></script>
+    <script src="js/stats-api.js?v=20260719a"></script>
+    <script src="js/public-feed.js?v=20260719a"></script>
     <script src="js/vendor/qrcode.min.js"></script>
     <script src="js/share-kit.js"></script>
-    <script src="js/command-playground.js?v=20260718m"></script>
+    <script src="js/command-playground.js?v=20260719a"></script>
     <script src="js/product-teaser.js?v=20260718d"></script>
+    <script src="js/setup-wizard.js?v=20260719a"></script>
     <script>
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const S = window.DzbanekStats;

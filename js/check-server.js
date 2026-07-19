@@ -35,6 +35,157 @@
     );
   }
 
+  function pipelineFlags(settings) {
+    return {
+      music: !settings || settings.musicEnabled !== false,
+      news: !!(settings && settings.newsEnabled && settings.newsChannelId),
+      steam: !!(settings && settings.steamEnabled && settings.steamChannelId),
+      epic: !!(settings && settings.epicEnabled && settings.epicChannelId),
+      levels: !!(settings && settings.levelingEnabled),
+      welcome: !!(settings && settings.welcomeEnabled && settings.welcomeChannelId),
+    };
+  }
+
+  /** 0–100 setup score from pipeline flags (music always available). */
+  function setupScore(flags) {
+    var checks = [
+      { on: flags.music, w: 20 },
+      { on: flags.steam, w: 20 },
+      { on: flags.epic, w: 15 },
+      { on: flags.news, w: 15 },
+      { on: flags.levels, w: 15 },
+      { on: flags.welcome, w: 15 },
+    ];
+    var total = 0;
+    var got = 0;
+    checks.forEach(function (c) {
+      total += c.w;
+      if (c.on) got += c.w;
+    });
+    return Math.round((got / total) * 100);
+  }
+
+  function scoreClass(score) {
+    if (score >= 80) return 'is-great';
+    if (score >= 50) return 'is-ok';
+    return 'is-low';
+  }
+
+  function scorecardHtml(settings) {
+    if (!settings) {
+      return (
+        '<div class="check-score is-loading" data-scorecard>' +
+        '<p class="text-xs text-discord-muted">' +
+        escapeHtml(t('check.loading_settings', 'Loading settings…')) +
+        '</p></div>'
+      );
+    }
+    var flags = pipelineFlags(settings);
+    var score = setupScore(flags);
+    var fixes = [];
+    if (!flags.steam) {
+      fixes.push({
+        label: t('check.fix_steam', 'Set Steam channel'),
+        href: 'admin.html',
+        copy: '/setup steam',
+      });
+    }
+    if (!flags.epic) {
+      fixes.push({
+        label: t('check.fix_epic', 'Set Epic channel'),
+        href: 'admin.html',
+        copy: '/setup epic',
+      });
+    }
+    if (!flags.news) {
+      fixes.push({
+        label: t('check.fix_news', 'Set news channel'),
+        href: 'admin.html',
+        copy: '/setup news',
+      });
+    }
+    if (!flags.levels) {
+      fixes.push({
+        label: t('check.fix_levels', 'Enable leveling'),
+        href: 'admin.html',
+      });
+    }
+    if (!flags.welcome) {
+      fixes.push({
+        label: t('check.fix_welcome', 'Enable welcome'),
+        href: 'admin.html',
+      });
+    }
+    var fixHtml = '';
+    if (fixes.length) {
+      fixHtml =
+        '<ul class="check-fix-list">' +
+        fixes
+          .slice(0, 4)
+          .map(function (f) {
+            var actions =
+              '<a href="' +
+              escapeHtml(f.href) +
+              '" class="check-fix-link">' +
+              escapeHtml(t('check.fix_open', 'Fix')) +
+              '</a>';
+            if (f.copy) {
+              actions +=
+                ' <button type="button" class="check-fix-copy" data-copy="' +
+                escapeHtml(f.copy) +
+                '">' +
+                escapeHtml(f.copy) +
+                '</button>';
+            }
+            return (
+              '<li class="check-fix-item"><span>' +
+              escapeHtml(f.label) +
+              '</span> ' +
+              actions +
+              '</li>'
+            );
+          })
+          .join('') +
+        '</ul>';
+    } else {
+      fixHtml =
+        '<p class="mt-2 text-xs text-discord-green">' +
+        escapeHtml(t('check.score_full', 'Fully set up — nice work.')) +
+        '</p>';
+    }
+    return (
+      '<div class="check-score ' +
+      scoreClass(score) +
+      '" data-scorecard data-score="' +
+      score +
+      '">' +
+      '<div class="check-score-row">' +
+      '<div class="check-score-ring" style="--score:' +
+      score +
+      '" aria-hidden="true">' +
+      '<span class="check-score-n">' +
+      score +
+      '</span></div>' +
+      '<div class="min-w-0 flex-1">' +
+      '<p class="check-score-label">' +
+      escapeHtml(t('check.score_label', 'Setup score')) +
+      '</p>' +
+      '<p class="check-score-hint">' +
+      escapeHtml(
+        t('check.score_hint', { n: score }) ||
+          score +
+            '/100 — music, deals, news, levels & welcome',
+      ) +
+      '</p>' +
+      '<div class="check-score-bar" aria-hidden="true"><span style="width:' +
+      score +
+      '%"></span></div>' +
+      '</div></div>' +
+      fixHtml +
+      '</div>'
+    );
+  }
+
   function pipelineRow(settings) {
     if (!settings) {
       return (
@@ -43,22 +194,32 @@
         '</p>'
       );
     }
+    var flags = pipelineFlags(settings);
     return (
+      scorecardHtml(settings) +
       '<div class="mt-3 flex flex-wrap gap-1.5">' +
-      chip(t('check.pipe_music', 'Music'), settings.musicEnabled !== false) +
-      chip(t('check.pipe_news', 'News'), !!settings.newsEnabled && !!settings.newsChannelId) +
-      chip(t('check.pipe_steam', 'Steam'), !!settings.steamEnabled && !!settings.steamChannelId) +
-      chip(t('check.pipe_epic', 'Epic'), !!settings.epicEnabled && !!settings.epicChannelId) +
-      chip(
-        t('check.pipe_levels', 'Leveling'),
-        !!settings.levelingEnabled,
-      ) +
-      chip(
-        t('check.pipe_welcome', 'Welcome'),
-        !!settings.welcomeEnabled && !!settings.welcomeChannelId,
-      ) +
+      chip(t('check.pipe_music', 'Music'), flags.music) +
+      chip(t('check.pipe_news', 'News'), flags.news) +
+      chip(t('check.pipe_steam', 'Steam'), flags.steam) +
+      chip(t('check.pipe_epic', 'Epic'), flags.epic) +
+      chip(t('check.pipe_levels', 'Leveling'), flags.levels) +
+      chip(t('check.pipe_welcome', 'Welcome'), flags.welcome) +
       '</div>'
     );
+  }
+
+  function bindFixCopies(root) {
+    if (!root) return;
+    root.querySelectorAll('[data-copy]').forEach(function (btn) {
+      if (btn._boundCopy) return;
+      btn._boundCopy = true;
+      btn.addEventListener('click', function () {
+        var cmd = btn.getAttribute('data-copy') || '';
+        if (window.copyText) window.copyText(cmd);
+        else if (navigator.clipboard) navigator.clipboard.writeText(cmd);
+        if (window.showToast) window.showToast(t('commands.copied', 'Copied'));
+      });
+    });
   }
 
   function escapeHtml(s) {
@@ -143,7 +304,10 @@
       guilds.map(async function (g) {
         var settings = await loadSettingsFor(g.id);
         var card = list.querySelector('[data-guild-id="' + g.id + '"] [data-pipelines]');
-        if (card) card.innerHTML = pipelineRow(settings);
+        if (card) {
+          card.innerHTML = pipelineRow(settings);
+          bindFixCopies(card);
+        }
       }),
     );
   }

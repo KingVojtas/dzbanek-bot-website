@@ -331,6 +331,7 @@
             setStatus(true, 'online · live from bot');
           }
           window.DzbanekStatsCard?.setStats(data);
+          if (data.public) window.DzbanekStatsCard?.setPublic?.(data.public);
         } catch (err) {
           console.error(err);
           const base = S.apiBase();

@@ -31,6 +31,16 @@
     'now.queue_n': 'Queue · {{n}}',
     'now.source_live': 'Live from bot API',
     'now.source_snapshot': 'From stats snapshot',
+    'now.just_now': 'just now',
+    'now.sec_ago': '{{n}}s ago',
+    'now.min_ago': '{{n}}m ago',
+    'now.hr_ago': '{{n}}h ago',
+    'now.updated_ago': 'Updated {{when}}',
+    'now.deals_count': '{{n}} deals',
+    'ticker.playing': 'Playing · {{title}}',
+    'ticker.empty': 'Waiting for activity — invite the bot and run /play',
+    'ticker.live': 'Live',
+    'ticker.snapshot': 'Snapshot',
   };
 
   function t(key, vars) {
@@ -357,8 +367,13 @@
       return;
     }
 
+    var rawArt = np.albumArtUrl || '';
+    // Skip known placeholder art (SoundCloud fb placeholder, empty)
+    if (/fb_placeholder|placeholder\.(png|jpg)|default_avatar/i.test(rawArt)) {
+      rawArt = '';
+    }
     var art =
-      np.albumArtUrl ||
+      rawArt ||
       (global.DZBANEK && global.DZBANEK.OG_IMAGE) ||
       'assets/bot-avatar.png';
     var title = String(np.title || '').trim();
@@ -495,7 +510,25 @@
       .join('');
   }
 
-  function setDealsPulseState(cardEl, hasDeals) {
+  function relativeTime(iso) {
+    if (!iso) return null;
+    var ms = Date.parse(iso);
+    if (!Number.isFinite(ms)) return null;
+    var sec = Math.round((Date.now() - ms) / 1000);
+    if (sec < 10) return t('now.just_now');
+    if (sec < 60) return t('now.sec_ago', { n: sec });
+    var min = Math.floor(sec / 60);
+    if (min < 60) return t('now.min_ago', { n: min });
+    var hr = Math.floor(min / 60);
+    if (hr < 48) return t('now.hr_ago', { n: hr });
+    try {
+      return new Date(ms).toLocaleString();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setDealsPulseState(cardEl, hasDeals, count, updatedIso) {
     if (!cardEl) return;
     cardEl.classList.toggle('is-live', !!hasDeals);
     cardEl.classList.toggle('is-watching', !hasDeals);
@@ -506,12 +539,21 @@
     }
     var radar = cardEl.querySelector('.deals-radar');
     if (radar) radar.hidden = !hasDeals;
+    var meta = cardEl.querySelector('[data-now="deals-meta"]');
+    if (meta) {
+      var parts = [];
+      if (hasDeals && count > 0) parts.push(t('now.deals_count', { n: count }));
+      var rel = relativeTime(updatedIso);
+      if (rel) parts.push(t('now.updated_ago', { when: rel }));
+      meta.textContent = parts.join(' · ');
+      meta.hidden = !parts.length;
+    }
   }
 
-  function renderDeals(el, deals, cardEl) {
+  function renderDeals(el, deals, cardEl, updatedIso) {
     if (!el) return;
     var list = Array.isArray(deals) ? deals : [];
-    setDealsPulseState(cardEl, list.length > 0);
+    setDealsPulseState(cardEl, list.length > 0, list.length, updatedIso);
 
     if (!list.length) {
       // Honest idle state — do not claim the pipeline is "watching live sales"
@@ -679,7 +721,12 @@
     var dealsCard =
       root.querySelector('#now-deals-card') ||
       root.querySelector('[data-now-card="deals"]');
-    renderDeals(root.querySelector('[data-now="deals"]'), deals, dealsCard);
+    renderDeals(
+      root.querySelector('[data-now="deals"]'),
+      deals,
+      dealsCard,
+      stats.generatedAt || (pub.nowPlaying && pub.nowPlaying.at),
+    );
     renderTracks(root.querySelector('[data-now="tracks"]'), pub.topTracks);
 
     var milestones = collectMilestones(stats, pub);
@@ -696,14 +743,112 @@
       if (pack && pack.source === 'live') parts.push(t('now.source_live'));
       else if (pack && pack.source === 'snapshot') parts.push(t('now.source_snapshot'));
       if (stats.generatedAt) {
-        try {
-          parts.push(t('now.updated', { when: new Date(stats.generatedAt).toLocaleString() }));
-        } catch (e) {
-          /* ignore */
+        var rel = relativeTime(stats.generatedAt);
+        if (rel) parts.push(t('now.updated_ago', { when: rel }));
+        else {
+          try {
+            parts.push(t('now.updated', { when: new Date(stats.generatedAt).toLocaleString() }));
+          } catch (e) {
+            /* ignore */
+          }
         }
       }
       noteEl.textContent = parts.join(' · ');
     }
+
+    renderActivityTicker(document.getElementById('activity-ticker'), pack);
+    renderSocialProof(document.getElementById('social-proof'), pack);
+  }
+
+  function renderActivityTicker(el, pack) {
+    if (!el) return;
+    var pub = (pack && pack.public) || {};
+    var stats = (pack && pack.stats) || {};
+    var events = [];
+    if (pub.nowPlaying && pub.nowPlaying.title) {
+      events.push({
+        kind: 'play',
+        icon: '▶️',
+        text: t('ticker.playing', { title: pub.nowPlaying.title }),
+      });
+    }
+    (pub.recentDeals || []).slice(0, 3).forEach(function (d) {
+      events.push({
+        kind: d.source === 'epic' ? 'epic' : 'steam',
+        icon: d.source === 'epic' ? '🆓' : '🔥',
+        text:
+          (d.source === 'epic' ? 'Epic · ' : 'Steam · ') +
+          String(d.title || '') +
+          (d.subtitle ? ' · ' + d.subtitle : ''),
+      });
+    });
+    (pub.recentCommands || []).slice(0, 3).forEach(function (c) {
+      events.push({
+        kind: 'cmd',
+        icon: '⌨️',
+        text: String(c.command || ''),
+      });
+    });
+    (pub.milestones || []).slice(-2).forEach(function (m) {
+      events.push({
+        kind: 'ms',
+        icon: '🏆',
+        text: String(m.text || ''),
+      });
+    });
+    if (!events.length) {
+      events.push({
+        kind: 'idle',
+        icon: '✨',
+        text: t('ticker.empty'),
+      });
+    }
+    var track = el.querySelector('[data-ticker-track]');
+    if (!track) return;
+    var html = events
+      .concat(events)
+      .map(function (ev) {
+        return (
+          '<span class="ticker-item ticker-item--' +
+          escapeHtml(ev.kind) +
+          '"><span class="ticker-icon" aria-hidden="true">' +
+          escapeHtml(ev.icon) +
+          '</span><span class="ticker-text">' +
+          escapeHtml(ev.text) +
+          '</span></span>'
+        );
+      })
+      .join('');
+    track.innerHTML = html;
+    el.hidden = false;
+    var live = el.querySelector('[data-ticker-live]');
+    if (live) {
+      live.textContent =
+        pack && pack.source === 'live'
+          ? t('ticker.live')
+          : t('ticker.snapshot');
+    }
+  }
+
+  function renderSocialProof(el, pack) {
+    if (!el) return;
+    var stats = (pack && pack.stats) || {};
+    var pub = (pack && pack.public) || {};
+    var set = function (sel, val) {
+      var n = el.querySelector(sel);
+      if (n) n.textContent = val != null && val !== '' ? String(val) : '—';
+    };
+    set('[data-proof="servers"]', fmtNum(stats.servers));
+    set('[data-proof="plays"]', fmtNum(stats.totalPlays));
+    set(
+      '[data-proof="deals"]',
+      pub.recentDeals && pub.recentDeals.length
+        ? String(pub.recentDeals.length)
+        : '—',
+    );
+    var track = pub.topTracks && pub.topTracks[0];
+    set('[data-proof="top"]', track ? track.title : '—');
+    el.hidden = false;
   }
 
   function renderLeaderboards(root, pack) {

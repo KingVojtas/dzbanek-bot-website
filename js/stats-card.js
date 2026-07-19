@@ -6,6 +6,7 @@
   const H = 630;
 
   let lastStats = null;
+  let lastExtra = null; // { topTrack, dealTitle, dealSub }
   let avatarImg = null;
   let avatarReady = false;
 
@@ -25,8 +26,9 @@
     });
   }
 
-  function setStats(stats) {
+  function setStats(stats, extra) {
     lastStats = stats;
+    if (extra && typeof extra === 'object') lastExtra = extra;
     const downloadBtn = document.getElementById('stats-share-download');
     const copyBtn = document.getElementById('stats-share-copy');
     const enabled = Boolean(stats);
@@ -40,6 +42,17 @@
       copyBtn.classList.toggle('opacity-50', !enabled);
       copyBtn.classList.toggle('cursor-not-allowed', !enabled);
     }
+  }
+
+  function setPublic(pub) {
+    if (!pub || typeof pub !== 'object') return;
+    const track = pub.topTracks && pub.topTracks[0];
+    const deal = pub.recentDeals && pub.recentDeals[0];
+    lastExtra = {
+      topTrack: track ? track.title : null,
+      dealTitle: deal ? deal.title : null,
+      dealSub: deal ? deal.subtitle || deal.source : null,
+    };
   }
 
   function fmt(n) {
@@ -177,6 +190,42 @@
       ctx.fillText(val, x + 24, cardY + 110);
     }
 
+    // Extra vibe row: top track + deal
+    const extra = lastExtra || {};
+    const vibeY = cardY + cardH + 28;
+    if (extra.topTrack || extra.dealTitle) {
+      ctx.fillStyle = '#2B2D31';
+      roundRect(ctx, 88, vibeY, W - 176, 96, 16);
+      ctx.fill();
+      ctx.fillStyle = '#A5B0F5';
+      ctx.font = '600 14px Inter, system-ui, sans-serif';
+      let lineX = 112;
+      if (extra.topTrack) {
+        ctx.fillText('TOP TRACK', lineX, vibeY + 32);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '700 22px Inter, system-ui, sans-serif';
+        let tt = String(extra.topTrack);
+        while (ctx.measureText(tt).width > 480 && tt.length > 8) tt = tt.slice(0, -2) + '…';
+        ctx.fillText(tt, lineX, vibeY + 64);
+        lineX = 640;
+      }
+      if (extra.dealTitle) {
+        ctx.fillStyle = '#A5B0F5';
+        ctx.font = '600 14px Inter, system-ui, sans-serif';
+        ctx.fillText('DEAL PULSE', lineX, vibeY + 32);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '700 20px Inter, system-ui, sans-serif';
+        let dt = String(extra.dealTitle);
+        while (ctx.measureText(dt).width > 420 && dt.length > 8) dt = dt.slice(0, -2) + '…';
+        ctx.fillText(dt, lineX, vibeY + 64);
+        if (extra.dealSub) {
+          ctx.fillStyle = '#B5BAC1';
+          ctx.font = '500 14px Inter, system-ui, sans-serif';
+          ctx.fillText(String(extra.dealSub).slice(0, 48), lineX, vibeY + 86);
+        }
+      }
+    }
+
     // Footer
     ctx.fillStyle = '#B5BAC1';
     ctx.font = '400 16px Inter, system-ui, sans-serif';
@@ -261,6 +310,7 @@
 
   global.DzbanekStatsCard = {
     setStats: setStats,
+    setPublic: setPublic,
     download: download,
     copyImage: copyImage,
   };
