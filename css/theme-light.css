@@ -698,6 +698,29 @@ html[data-theme='light'] .wizard-mod {
   border-color: rgba(15, 16, 20, 0.08) !important;
 }
 
+html[data-theme='light'] .site-footer {
+  background:
+    radial-gradient(ellipse 50% 80% at 50% 100%, rgba(88, 101, 242, 0.06), transparent 60%),
+    #f5f6fa !important;
+}
+html[data-theme='light'] .site-footer-col a {
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .site-footer-col a:hover {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .site-footer-col h3 {
+  color: #4752c4 !important;
+}
+html[data-theme='light'] .back-to-top {
+  background: #ffffff !important;
+  border-color: rgba(15, 16, 20, 0.12) !important;
+  color: #4752c4 !important;
+}
+html[data-theme='light'] .site-toast {
+  color: #ffffff !important;
+}
+
 /* Soft blurple chips / badges on light */
 html[data-theme='light'] .border-discord-blurple\/30,
 html[data-theme='light'] [class*='border-discord-blurple'] {

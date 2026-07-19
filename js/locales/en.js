@@ -312,6 +312,10 @@
     },
     footer: {
       opensource: 'Open source on',
+      tagline: 'Music, Steam & Epic deals, news, levels & welcomes — free and open source.',
+      col_product: 'Product',
+      col_tools: 'Tools',
+      col_more: 'More',
       terms: 'Terms of Service',
       privacy: 'Privacy Policy',
       contact: 'Contact / GitHub',

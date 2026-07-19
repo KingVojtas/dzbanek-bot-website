@@ -413,6 +413,10 @@
     },
     footer: {
       opensource: 'Open source na',
+      tagline: 'Hudba, Steam a Epic slevy, novinky, levely a welcome — zdarma a open source.',
+      col_product: 'Produkt',
+      col_tools: 'Nástroje',
+      col_more: 'Více',
       terms: 'Podmínky služby',
       privacy: 'Zásady ochrany osobních údajů',
       contact: 'Kontakt / GitHub',
