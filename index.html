@@ -42,8 +42,8 @@
       rel="stylesheet"
     />
     <link rel="icon" href="assets/bot-avatar.png" type="image/png" />
-    <script src="js/theme-boot.js?v=20260719a"></script>
-    <link rel="stylesheet" href="css/site.css?v=20260719a" />
+    <script src="js/theme-boot.js?v=20260720a"></script>
+    <link rel="stylesheet" href="css/site.css?v=20260720a" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -365,18 +365,18 @@
                 <span data-i18n="hero.invite">Invite Bot</span>
               </a>
               <a
+                href="#start"
+                class="inline-flex items-center gap-2 rounded-full border border-discord-blurple/40 bg-discord-blurple/10 px-6 py-3 text-sm font-semibold text-white transition hover:border-discord-blurple/70 hover:bg-discord-blurple/20"
+                data-i18n="hero.setup"
+              >
+                Setup wizard
+              </a>
+              <a
                 href="check.html"
-                class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-discord-elevated/60 px-6 py-3 text-sm font-semibold text-white transition hover:border-discord-blurple/50 hover:bg-discord-elevated"
+                class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-discord-elevated/60 px-5 py-3 text-sm font-semibold text-white transition hover:border-discord-blurple/50 hover:bg-discord-elevated"
                 data-i18n="nav.check"
               >
                 Server check
-              </a>
-              <a
-                href="support.html"
-                class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-discord-elevated/40 px-5 py-3 text-sm font-semibold text-discord-muted transition hover:border-amber-400/40 hover:text-amber-100"
-                data-i18n="nav.support"
-              >
-                Support
               </a>
               <a
                 href="https://github.com/KingVojtas/dzbanek-bot"
@@ -394,6 +394,10 @@
                 <span data-i18n="hero.github">GitHub</span>
               </a>
             </div>
+            <p class="hero-live-line reveal reveal-delay-3 mt-6" id="hero-live-line" aria-live="polite">
+              <span class="hero-live-dot" aria-hidden="true"></span>
+              <span data-hero-live="text" data-i18n="hero.live_loading">Connecting to live stats…</span>
+            </p>
           </div>
 
           <!-- Avatar + Discord mock embed -->
@@ -551,15 +555,17 @@
       </section>
 
       <!-- Live activity ticker + social proof -->
-      <div id="activity-ticker" class="activity-ticker" hidden>
+      <div id="activity-ticker" class="activity-ticker">
         <div class="mx-auto flex max-w-6xl items-center gap-3 px-4 sm:px-6 lg:px-8">
           <span class="ticker-badge" data-ticker-live>Live</span>
           <div class="ticker-viewport">
-            <div class="ticker-track" data-ticker-track></div>
+            <div class="ticker-track" data-ticker-track>
+              <span class="ticker-item ticker-item--idle"><span class="ticker-icon" aria-hidden="true">✨</span><span class="ticker-text" data-i18n="ticker.empty">Waiting for activity — invite the bot and run /play</span></span>
+            </div>
           </div>
         </div>
       </div>
-      <section id="social-proof" class="social-proof border-t border-white/5" hidden>
+      <section id="social-proof" class="social-proof border-t border-white/5">
         <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
           <div class="social-proof-grid">
             <div class="social-proof-stat">
@@ -1123,9 +1129,16 @@
                   <span data-i18n="commands.active">Active:</span>
                   <code id="cmd-playground-label" class="cmd-active-code">/play</code>
                 </p>
-                <button type="button" id="cmd-copy-active" class="cmd-copy-active" data-i18n="commands.copy_short">Copy</button>
+                <div class="cmd-copy-stack">
+                  <button type="button" id="cmd-copy-active" class="cmd-copy-active" data-i18n="commands.copy_short">Copy</button>
+                  <button type="button" id="cmd-copy-example" class="cmd-copy-example" data-i18n="commands.copy_example">Copy example</button>
+                </div>
               </div>
               <p id="cmd-playground-usage" class="cmd-usage" hidden></p>
+              <div id="cmd-trending" class="cmd-trending mt-4" hidden>
+                <p class="cmd-trending-label" data-i18n="commands.trending">Recently used on the bot</p>
+                <div id="cmd-trending-chips" class="cmd-trending-chips" role="list"></div>
+              </div>
             </div>
             <div class="cmd-playground-preview-col">
               <div class="cmd-discord-chrome discord-mock" aria-live="polite">
@@ -1547,21 +1560,35 @@
       </div>
     </footer>
 
+    <!-- Mobile sticky invite CTA -->
+    <div id="mobile-sticky-cta" class="mobile-sticky-cta" hidden>
+      <a
+        href="https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173376&scope=bot%20applications.commands"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-shine mobile-sticky-invite"
+        data-i18n="hero.invite"
+        data-invite-confetti
+        >Invite Bot</a
+      >
+      <a href="#start" class="mobile-sticky-setup" data-i18n="hero.setup">Setup</a>
+    </div>
+
     <!-- ========== SCRIPTS ========== -->
-    <script src="js/config.js?v=20260719a"></script>
-    <script src="js/locales/en.js?v=20260719a"></script>
-    <script src="js/locales/cs.js?v=20260719a"></script>
-    <script src="js/i18n.js?v=20260719a"></script>
+    <script src="js/config.js?v=20260720a"></script>
+    <script src="js/locales/en.js?v=20260720a"></script>
+    <script src="js/locales/cs.js?v=20260720a"></script>
+    <script src="js/i18n.js?v=20260720a"></script>
     <script src="js/seo.js"></script>
     <script src="js/site.js"></script>
-    <script src="js/theme.js?v=20260719a"></script>
-    <script src="js/stats-api.js?v=20260719a"></script>
-    <script src="js/public-feed.js?v=20260719a"></script>
+    <script src="js/theme.js?v=20260720b"></script>
+    <script src="js/stats-api.js?v=20260720a"></script>
+    <script src="js/public-feed.js?v=20260720a"></script>
     <script src="js/vendor/qrcode.min.js"></script>
     <script src="js/share-kit.js"></script>
-    <script src="js/command-playground.js?v=20260719a"></script>
+    <script src="js/command-playground.js?v=20260720a"></script>
     <script src="js/product-teaser.js?v=20260718d"></script>
-    <script src="js/setup-wizard.js?v=20260719a"></script>
+    <script src="js/setup-wizard.js?v=20260720a"></script>
     <script>
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const S = window.DzbanekStats;
@@ -1826,6 +1853,26 @@
       document.addEventListener('dzbanek:lang', loadNow);
       loadNow();
       setInterval(loadNow, 15_000);
+
+      // Mobile sticky CTA — show after scrolling past hero
+      (function stickyCta() {
+        const bar = document.getElementById('mobile-sticky-cta');
+        const hero = document.getElementById('home');
+        if (!bar || !hero) return;
+        const mq = window.matchMedia('(max-width: 639px)');
+        function update() {
+          if (!mq.matches) {
+            bar.hidden = true;
+            return;
+          }
+          const past = window.scrollY > hero.offsetHeight * 0.55;
+          bar.hidden = !past;
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        mq.addEventListener?.('change', update);
+        update();
+      })();
     </script>
   </body>
 </html>

@@ -660,6 +660,44 @@ html[data-theme='light'] .product-teaser-tab.is-active {
   background: rgba(88, 101, 242, 0.25) !important;
 }
 
+html[data-theme='light'] .hero-live-line {
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .hero-live-line.is-ready {
+  color: #181a20 !important;
+}
+html[data-theme='light'] .mobile-sticky-cta {
+  background: rgba(245, 246, 250, 0.96) !important;
+  border-top-color: rgba(15, 16, 20, 0.1) !important;
+}
+html[data-theme='light'] .mobile-sticky-setup {
+  color: #4752c4 !important;
+}
+html[data-theme='light'] .activity-ticker {
+  background: #eef0f6 !important;
+  border-bottom-color: rgba(15, 16, 20, 0.08) !important;
+}
+html[data-theme='light'] .ticker-item {
+  color: #4b5260 !important;
+}
+html[data-theme='light'] .social-proof-n,
+html[data-theme='light'] .social-proof-top {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .wizard {
+  background: #ffffff !important;
+  border-color: rgba(15, 16, 20, 0.1) !important;
+}
+html[data-theme='light'] .wizard-panel-title,
+html[data-theme='light'] .wizard-check-title,
+html[data-theme='light'] .wizard-mod-label {
+  color: #0f1014 !important;
+}
+html[data-theme='light'] .wizard-mod {
+  background: #f4f5f8 !important;
+  border-color: rgba(15, 16, 20, 0.08) !important;
+}
+
 /* Soft blurple chips / badges on light */
 html[data-theme='light'] .border-discord-blurple\/30,
 html[data-theme='light'] [class*='border-discord-blurple'] {

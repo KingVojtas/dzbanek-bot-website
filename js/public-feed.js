@@ -758,12 +758,12 @@
 
     renderActivityTicker(document.getElementById('activity-ticker'), pack);
     renderSocialProof(document.getElementById('social-proof'), pack);
+    renderHeroLive(pack);
   }
 
   function renderActivityTicker(el, pack) {
     if (!el) return;
     var pub = (pack && pack.public) || {};
-    var stats = (pack && pack.stats) || {};
     var events = [];
     if (pub.nowPlaying && pub.nowPlaying.title) {
       events.push({
@@ -772,7 +772,7 @@
         text: t('ticker.playing', { title: pub.nowPlaying.title }),
       });
     }
-    (pub.recentDeals || []).slice(0, 3).forEach(function (d) {
+    (pub.recentDeals || []).slice(0, 4).forEach(function (d) {
       events.push({
         kind: d.source === 'epic' ? 'epic' : 'steam',
         icon: d.source === 'epic' ? '🆓' : '🔥',
@@ -782,7 +782,7 @@
           (d.subtitle ? ' · ' + d.subtitle : ''),
       });
     });
-    (pub.recentCommands || []).slice(0, 3).forEach(function (c) {
+    (pub.recentCommands || []).slice(0, 4).forEach(function (c) {
       events.push({
         kind: 'cmd',
         icon: '⌨️',
@@ -824,31 +824,87 @@
     var live = el.querySelector('[data-ticker-live]');
     if (live) {
       live.textContent =
-        pack && pack.source === 'live'
-          ? t('ticker.live')
-          : t('ticker.snapshot');
+        pack && pack.source === 'live' ? t('ticker.live') : t('ticker.snapshot');
+      live.classList.toggle('is-snapshot', !(pack && pack.source === 'live'));
     }
+
+    // Feed playground trending chips
+    try {
+      if (global.DzbanekCmdPlayground && global.DzbanekCmdPlayground.setTrending) {
+        global.DzbanekCmdPlayground.setTrending(pub.recentCommands || []);
+      }
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function animateCount(el, target) {
+    if (!el) return;
+    if (target == null || !Number.isFinite(Number(target))) {
+      el.textContent = '—';
+      return;
+    }
+    var end = Number(target);
+    var reduce = false;
+    try {
+      reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) {
+      /* ignore */
+    }
+    if (reduce || end > 100000) {
+      el.textContent = fmtNum(end);
+      return;
+    }
+    var start = 0;
+    var dur = 700;
+    var t0 = null;
+    function frame(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmtNum(Math.round(start + (end - start) * eased));
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
   }
 
   function renderSocialProof(el, pack) {
     if (!el) return;
     var stats = (pack && pack.stats) || {};
     var pub = (pack && pack.public) || {};
-    var set = function (sel, val) {
-      var n = el.querySelector(sel);
-      if (n) n.textContent = val != null && val !== '' ? String(val) : '—';
-    };
-    set('[data-proof="servers"]', fmtNum(stats.servers));
-    set('[data-proof="plays"]', fmtNum(stats.totalPlays));
-    set(
-      '[data-proof="deals"]',
-      pub.recentDeals && pub.recentDeals.length
-        ? String(pub.recentDeals.length)
-        : '—',
+    animateCount(el.querySelector('[data-proof="servers"]'), stats.servers);
+    animateCount(el.querySelector('[data-proof="plays"]'), stats.totalPlays);
+    animateCount(
+      el.querySelector('[data-proof="deals"]'),
+      pub.recentDeals && pub.recentDeals.length ? pub.recentDeals.length : null,
     );
     var track = pub.topTracks && pub.topTracks[0];
-    set('[data-proof="top"]', track ? track.title : '—');
+    var topEl = el.querySelector('[data-proof="top"]');
+    if (topEl) topEl.textContent = track ? track.title : '—';
     el.hidden = false;
+  }
+
+  function renderHeroLive(pack) {
+    var line = document.getElementById('hero-live-line');
+    var textEl = line && line.querySelector('[data-hero-live="text"]');
+    if (!textEl) return;
+    var stats = (pack && pack.stats) || {};
+    var pub = (pack && pack.public) || {};
+    var parts = [];
+    if (stats.servers != null) parts.push(t('hero.live_servers', { n: fmtNum(stats.servers) }));
+    if (stats.totalPlays != null) parts.push(t('hero.live_plays', { n: fmtNum(stats.totalPlays) }));
+    if (pub.recentDeals && pub.recentDeals.length) {
+      parts.push(t('hero.live_deals', { n: String(pub.recentDeals.length) }));
+    }
+    if (pub.nowPlaying && pub.nowPlaying.title) {
+      parts.push(t('hero.live_np', { title: pub.nowPlaying.title }));
+    }
+    if (!parts.length) {
+      textEl.textContent = t('hero.live_loading');
+      return;
+    }
+    textEl.textContent = parts.join(' · ');
+    if (line) line.classList.add('is-ready');
   }
 
   function renderLeaderboards(root, pack) {

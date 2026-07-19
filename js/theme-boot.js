@@ -45,13 +45,13 @@
       for (var i = scripts.length - 1; i >= 0; i--) {
         var src = scripts[i].src || '';
         if (src.indexOf('theme-boot') !== -1) {
-          return src.replace(/js\/theme-boot\.js.*$/i, 'css/theme-light.css?v=20260719a');
+          return src.replace(/js\/theme-boot\.js.*$/i, 'css/theme-light.css?v=20260720a');
         }
       }
     } catch (e2) {
       /* ignore */
     }
-    return 'css/theme-light.css?v=20260719a';
+    return 'css/theme-light.css?v=20260720a';
   }
 
   if (theme === 'light') {
