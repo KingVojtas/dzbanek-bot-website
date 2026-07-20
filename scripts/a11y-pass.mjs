@@ -12,10 +12,14 @@ for (const f of files) {
     s = s.replace(/(<body[^>]*>)/, '$1\n    <a href="#main" class="skip-link">Skip to content</a>');
     changed = true;
   }
-  if (!s.includes('id="main"') && s.includes('<main')) {
+  // Add id="main" only if main has no id at all (never create dual ids)
+  if (s.includes('<main') && !/<main[^>]*\bid=/.test(s)) {
     s = s.replace(/<main(\s|>)/, '<main id="main"$1');
-    // avoid double id
-    s = s.replace(/id="main" id="main"/g, 'id="main"');
+    changed = true;
+  }
+  // Repair accidental dual ids: id="main" id="foo" → keep both roles via wrapper-safe first id only
+  if (/id="main"\s+id="/.test(s)) {
+    s = s.replace(/id="main"\s+id="([^"]+)"/g, 'id="main" data-legacy-id="$1"');
     changed = true;
   }
   if (changed) {

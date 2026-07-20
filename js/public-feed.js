@@ -914,13 +914,20 @@
     var S = global.DzbanekStats;
     function setText(sel, val) {
       var el = root.querySelector(sel);
-      if (el) el.textContent = val;
+      if (el) el.textContent = val != null && val !== '' ? val : '—';
     }
-    if (S) {
-      setText('[data-board="total-plays"]', S.formatNum(stats.totalPlays));
-      setText('[data-board="wishlist"]', S.formatNum(stats.totalWishlistAdds));
-      setText('[data-board="servers"]', S.formatNum(stats.servers));
-    }
+    setText(
+      '[data-board="total-plays"]',
+      S ? S.formatNum(stats.totalPlays) : fmtNum(stats.totalPlays),
+    );
+    setText(
+      '[data-board="wishlist"]',
+      S ? S.formatNum(stats.totalWishlistAdds) : fmtNum(stats.totalWishlistAdds),
+    );
+    setText(
+      '[data-board="servers"]',
+      S ? S.formatNum(stats.servers) : fmtNum(stats.servers),
+    );
     var tracksBody = root.querySelector('[data-board="tracks-body"]');
     var serversBody = root.querySelector('[data-board="servers-body"]');
     if (tracksBody) {
@@ -938,7 +945,7 @@
               '</td><td class="px-4 py-3 text-theme-strong">' +
               escapeHtml(row.title) +
               '</td><td class="px-4 py-3 text-right font-medium">' +
-              escapeHtml(String(row.plays ?? 0)) +
+              escapeHtml(fmtNum(row.plays ?? 0)) +
               '</td></tr>'
             );
           })
@@ -960,11 +967,28 @@
               '</td><td class="px-4 py-3 text-theme-strong">' +
               escapeHtml(row.name) +
               '</td><td class="px-4 py-3 text-right font-medium">' +
-              escapeHtml(String(row.plays ?? 0)) +
+              escapeHtml(fmtNum(row.plays ?? 0)) +
               '</td></tr>'
             );
           })
           .join('');
+      }
+    }
+    var status = root.querySelector('#boards-status') || document.getElementById('boards-status');
+    if (status) {
+      if (pack && pack.source === 'error') {
+        status.textContent = t('boards.error');
+        status.className = 'mt-2 text-xs text-red-300';
+      } else {
+        var parts = [];
+        if (pack && pack.source === 'live') parts.push(t('now.source_live'));
+        else if (pack && pack.source === 'snapshot') parts.push(t('now.source_snapshot'));
+        if (stats.generatedAt) {
+          var rel = relativeTime(stats.generatedAt);
+          if (rel) parts.push(t('now.updated_ago', { when: rel }));
+        }
+        status.textContent = parts.join(' · ') || t('boards.ready');
+        status.className = 'mt-2 text-xs text-discord-muted';
       }
     }
   }
@@ -972,13 +996,17 @@
   async function loadAndRender(opts) {
     opts = opts || {};
     var S = global.DzbanekStats;
-    if (!S) return null;
+    if (!S) {
+      console.error('[public-feed] DzbanekStats missing — load js/stats-api.js first');
+      return null;
+    }
     try {
       var pack = await S.fetchPublicActivity();
       if (opts.nowRoot) renderNowWall(opts.nowRoot, pack);
       if (opts.boardsRoot) renderLeaderboards(opts.boardsRoot, pack);
       return pack;
     } catch (e) {
+      console.error('[public-feed] load failed', e);
       if (opts.nowRoot) {
         renderNowWall(opts.nowRoot, { stats: {}, public: {}, source: 'error' });
       }

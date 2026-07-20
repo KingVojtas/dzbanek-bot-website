@@ -65,63 +65,66 @@
       </div>
     </header>
 
-    <main id="main" id="boards-root" class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-      <p class="text-sm font-medium text-discord-blurple" data-i18n="boards.kicker">Public rankings</p>
-      <h1 class="mt-1 text-3xl font-bold tracking-tight sm:text-4xl" data-i18n="boards.title">Leaderboards</h1>
-      <p class="mt-2 max-w-2xl text-sm text-discord-muted" data-i18n="boards.lead">
-        Aggregate top tracks and servers from public stats. No personal user data.
-      </p>
+    <main id="main" class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <div id="boards-root">
+        <p class="text-sm font-medium text-discord-blurple" data-i18n="boards.kicker">Public rankings</p>
+        <h1 class="mt-1 text-3xl font-bold tracking-tight sm:text-4xl" data-i18n="boards.title">Leaderboards</h1>
+        <p class="mt-2 max-w-2xl text-sm text-discord-muted" data-i18n="boards.lead">
+          Aggregate top tracks and servers from public stats. No personal user data.
+        </p>
+        <p id="boards-status" class="mt-2 text-xs text-discord-muted" data-i18n="boards.loading">Loading public stats…</p>
 
-      <dl class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card p-5 text-center shadow-card">
-          <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="boards.total_plays">Total plays</dt>
-          <dd data-board="total-plays" class="mt-2 text-3xl font-extrabold">—</dd>
-        </div>
-        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 text-center shadow-card">
-          <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="boards.wishlist">Wishlist adds</dt>
-          <dd data-board="wishlist" class="mt-2 text-3xl font-extrabold">—</dd>
-        </div>
-        <div class="rounded-2xl border border-white/5 bg-discord-card p-5 text-center shadow-card">
-          <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="boards.guilds">Servers</dt>
-          <dd data-board="servers" class="mt-2 text-3xl font-extrabold">—</dd>
-        </div>
-      </dl>
+        <dl class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div class="rounded-2xl border border-discord-blurple/20 bg-discord-card p-5 text-center shadow-card">
+            <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="boards.total_plays">Total plays</dt>
+            <dd data-board="total-plays" class="mt-2 text-3xl font-extrabold">—</dd>
+          </div>
+          <div class="rounded-2xl border border-white/5 bg-discord-card p-5 text-center shadow-card">
+            <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="boards.wishlist">Wishlist adds</dt>
+            <dd data-board="wishlist" class="mt-2 text-3xl font-extrabold">—</dd>
+          </div>
+          <div class="rounded-2xl border border-white/5 bg-discord-card p-5 text-center shadow-card">
+            <dt class="text-xs uppercase tracking-wider text-discord-muted" data-i18n="boards.guilds">Servers</dt>
+            <dd data-board="servers" class="mt-2 text-3xl font-extrabold">—</dd>
+          </div>
+        </dl>
 
-      <div class="mt-10 grid gap-6 lg:grid-cols-2">
-        <section class="overflow-hidden rounded-2xl border border-white/5 bg-discord-card shadow-card">
-          <div class="border-b border-white/5 bg-discord-elevated/40 px-5 py-3">
-            <h2 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="boards.tracks">Top tracks</h2>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm">
-              <thead>
-                <tr class="text-left text-xs uppercase tracking-wider text-discord-muted">
-                  <th class="px-4 py-3">#</th>
-                  <th class="px-4 py-3" data-i18n="boards.name">Name</th>
-                  <th class="px-4 py-3 text-right" data-i18n="boards.plays">Plays</th>
-                </tr>
-              </thead>
-              <tbody data-board="tracks-body"></tbody>
-            </table>
-          </div>
-        </section>
-        <section class="overflow-hidden rounded-2xl border border-white/5 bg-discord-card shadow-card">
-          <div class="border-b border-white/5 bg-discord-elevated/40 px-5 py-3">
-            <h2 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="boards.servers">Top servers</h2>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm">
-              <thead>
-                <tr class="text-left text-xs uppercase tracking-wider text-discord-muted">
-                  <th class="px-4 py-3">#</th>
-                  <th class="px-4 py-3" data-i18n="boards.name">Name</th>
-                  <th class="px-4 py-3 text-right" data-i18n="boards.plays">Plays</th>
-                </tr>
-              </thead>
-              <tbody data-board="servers-body"></tbody>
-            </table>
-          </div>
-        </section>
+        <div class="mt-10 grid gap-6 lg:grid-cols-2">
+          <section class="overflow-hidden rounded-2xl border border-white/5 bg-discord-card shadow-card">
+            <div class="border-b border-white/5 bg-discord-elevated/40 px-5 py-3">
+              <h2 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="boards.tracks">Top tracks</h2>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="text-left text-xs uppercase tracking-wider text-discord-muted">
+                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3" data-i18n="boards.name">Name</th>
+                    <th class="px-4 py-3 text-right" data-i18n="boards.plays">Plays</th>
+                  </tr>
+                </thead>
+                <tbody data-board="tracks-body"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="overflow-hidden rounded-2xl border border-white/5 bg-discord-card shadow-card">
+            <div class="border-b border-white/5 bg-discord-elevated/40 px-5 py-3">
+              <h2 class="text-sm font-semibold uppercase tracking-wider text-discord-blurple" data-i18n="boards.servers">Top servers</h2>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="text-left text-xs uppercase tracking-wider text-discord-muted">
+                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3" data-i18n="boards.name">Name</th>
+                    <th class="px-4 py-3 text-right" data-i18n="boards.plays">Plays</th>
+                  </tr>
+                </thead>
+                <tbody data-board="servers-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
       </div>
     </main>
 
@@ -150,13 +153,30 @@
     <script src="js/seo.js"></script>
     <script src="js/site.js?v=20260720c"></script>
     <script src="js/theme.js?v=20260720c"></script>
-    <script src="js/stats-api.js"></script>
-    <script src="js/public-feed.js"></script>
+    <script src="js/stats-api.js?v=20260720d"></script>
+    <script src="js/public-feed.js?v=20260720d"></script>
     <script src="js/share-kit.js"></script>
     <script>
       const root = document.getElementById('boards-root');
+      const statusEl = document.getElementById('boards-status');
       async function load() {
-        await window.DzbanekPublicFeed.loadAndRender({ boardsRoot: root });
+        if (!root) {
+          console.error('[leaderboards] #boards-root missing');
+          return;
+        }
+        if (!window.DzbanekPublicFeed || !window.DzbanekStats) {
+          if (statusEl) statusEl.textContent = 'Scripts failed to load — hard-refresh the page.';
+          return;
+        }
+        try {
+          await window.DzbanekPublicFeed.loadAndRender({ boardsRoot: root });
+        } catch (e) {
+          console.error(e);
+          if (statusEl) {
+            statusEl.textContent = 'Could not load leaderboards. Try again in a moment.';
+            statusEl.className = 'mt-2 text-xs text-red-300';
+          }
+        }
       }
       document.addEventListener('dzbanek:lang', load);
       load();
