@@ -422,6 +422,9 @@
       total_plays: 'Total plays',
       wishlist: 'Wishlist adds',
       guilds: 'Servers',
+      loading: 'Loading public stats…',
+      ready: 'Leaderboards ready',
+      error: 'Could not load rankings — check the stats API or try again.',
     },
     statsPage: {
       kicker: 'Live dashboard',

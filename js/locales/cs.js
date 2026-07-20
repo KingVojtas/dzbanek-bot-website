@@ -523,6 +523,9 @@
       total_plays: 'Celkem přehrání',
       wishlist: 'Wishlist addy',
       guilds: 'Servery',
+      loading: 'Načítám veřejné stats…',
+      ready: 'Žebříčky připraveny',
+      error: 'Žebříčky se nepodařilo načíst — zkontrolujte stats API.',
     },
     statsPage: {
       kicker: 'Živý dashboard',
