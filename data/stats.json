@@ -1,87 +1,134 @@
 {
   "servers": 2,
-  "approxUsers": 26,
-  "totalPlays": 13,
-  "totalSkips": 0,
-  "totalWishlistAdds": 0,
-  "uniqueUsersTracked": 1,
-  "uptimeSec": null,
-  "generatedAt": "2026-07-16T22:06:57.994Z",
+  "approxUsers": 28,
+  "totalPlays": 96,
+  "totalSkips": 3,
+  "totalWishlistAdds": 3,
+  "uniqueUsersTracked": 2,
+  "uptimeSec": 115,
+  "generatedAt": "2026-08-24T01:03:45.960Z",
   "history": [
+    {
+      "date": "2026-07-15",
+      "servers": 1,
+      "approxUsers": 12,
+      "totalPlays": 95,
+      "uniqueUsersTracked": 2
+    },
     {
       "date": "2026-07-16",
       "servers": 1,
       "approxUsers": 12,
-      "totalPlays": 0,
-      "uniqueUsersTracked": 0
+      "totalPlays": 95,
+      "uniqueUsersTracked": 2
+    },
+    {
+      "date": "2026-08-24",
+      "servers": 2,
+      "approxUsers": 28,
+      "totalPlays": 96,
+      "uniqueUsersTracked": 2
     }
   ],
   "public": {
     "topTracks": [
       {
-        "title": "Viktor Sheen - Lavazza",
+        "title": "Já už vidím",
+        "plays": 7
+      },
+      {
+        "title": "Dostihy a sázky",
         "plays": 6
       },
       {
-        "title": "Obézní Radosti",
-        "plays": 4
+        "title": "Nemáš zač",
+        "plays": 5
       },
       {
-        "title": "Viktor Sheen",
-        "plays": 1
+        "title": "Strach",
+        "plays": 2
       },
       {
-        "title": "Vice City (feat. Hugo Toxxx)",
-        "plays": 1
+        "title": "Spaceship",
+        "plays": 2
       },
       {
-        "title": "Helldivers 2 Main Theme - \"A Cup Of Liber-Tea\"",
+        "title": "Green Paradise",
+        "plays": 2
+      },
+      {
+        "title": "Gambit",
+        "plays": 2
+      },
+      {
+        "title": "EARTH - Napořád (Official Video)",
+        "plays": 2
+      },
+      {
+        "title": "Checkpoint",
+        "plays": 2
+      },
+      {
+        "title": "sayso - american baddie",
         "plays": 1
       }
     ],
-    "nowPlaying": {
-      "title": "Vice City (feat. Hugo Toxxx)",
-      "artist": "Viktor Sheen",
-      "albumArtUrl": "https://i.ytimg.com/vi/AICZcDAfpws/hq720.jpg?sqp=-oaymwEfCNAFEJQDSFXyq4qpAxEIARUAAIhCGAFwAcABBrgCGaLzl_8DDgj2mOiNBhjg6gQg4KgB&rs=AOn4CLAeb5XbhT_RGAwik9WCzk-IcUAnOw&usqp=CBk"
-    },
-    "recentCommands": [
+    "nowPlaying": null,
+    "recentCommands": [],
+    "recentDeals": [
       {
-        "command": "/play viktor sheen vice city",
-        "at": "2026-07-16T22:05:00.301Z"
+        "source": "steam",
+        "title": "Zombie Army 4: Dead War",
+        "subtitle": "-95% · €2.44"
       },
       {
-        "command": "/queue",
-        "at": "2026-07-16T22:04:30.846Z"
+        "source": "steam",
+        "title": "Zombie Army Trilogy",
+        "subtitle": "-90% · €4.19"
       },
       {
-        "command": "/queue",
-        "at": "2026-07-16T22:02:18.884Z"
+        "source": "steam",
+        "title": "Darkest Dungeon®",
+        "subtitle": "-85% · €3.44"
+      },
+      {
+        "source": "steam",
+        "title": "Escape Academy",
+        "subtitle": "-85% · €2.51"
+      },
+      {
+        "source": "steam",
+        "title": "Metro Exodus",
+        "subtitle": "-85% · €4.49"
+      },
+      {
+        "source": "steam",
+        "title": "Two Point Campus",
+        "subtitle": "-85% · €4.49"
+      },
+      {
+        "source": "epic",
+        "title": "Cardpocalypse Standard Edition",
+        "subtitle": "Free now on Epic Games Store"
       }
     ],
-    "recentDeals": [],
     "milestones": [
       {
         "id": "plays-10",
         "text": "Dzbanek-bot reached 10 total tracks played!",
-        "at": "2026-07-16T22:06:57.993Z"
+        "at": "2026-08-24T01:03:45.951Z"
       },
       {
         "id": "servers-2",
         "text": "Dzbanek-bot is on 2+ Discord servers!",
-        "at": "2026-07-16T22:06:57.993Z"
+        "at": "2026-08-24T01:03:45.951Z"
       }
     ],
     "topServers": [
       {
         "name": "dzbanek team",
-        "plays": 12
-      },
-      {
-        "name": "Pekelní Potápěči",
-        "plays": 1
+        "plays": 96
       }
     ]
-  },
-  "source": "snapshot",
-  "note": "Public snapshot for static hosting. Refresh with: node scripts/export-stats.mjs"
+  }
 }
