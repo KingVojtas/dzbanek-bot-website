@@ -11,6 +11,8 @@ on:
 
 permissions:
   contents: write
+  # Needed to dispatch the Pages deploy (see the publish step).
+  actions: write
 
 concurrency:
   group: refresh-stats
@@ -43,6 +45,7 @@ jobs:
           echo "ok=true" >> "$GITHUB_OUTPUT"
 
       - name: Commit if changed
+        id: commit
         if: steps.fetch.outputs.ok == 'true'
         run: |
           # generatedAt and uptimeSec move on every call. Compare with those
@@ -52,6 +55,7 @@ jobs:
           if cmp -s /tmp/old.json /tmp/new.json; then
             echo "Only timestamps moved; skipping commit."
             git checkout -- data/stats.json
+            echo "committed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
@@ -59,3 +63,13 @@ jobs:
           git add data/stats.json
           git commit -m "NOISSUE Refresh public stats snapshot"
           git push
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+
+      # A push authenticated with GITHUB_TOKEN does not trigger other workflows,
+      # so the Pages deploy has to be asked for explicitly or the refreshed
+      # snapshot stays committed but unpublished.
+      - name: Publish via Pages
+        if: steps.commit.outputs.committed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
