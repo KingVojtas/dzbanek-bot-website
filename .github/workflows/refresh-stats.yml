@@ -1,0 +1,61 @@
+# Keeps data/stats.json fresh so the site still shows recent numbers when the bot
+# API is unreachable. The site prefers the live API and only falls back to this
+# snapshot, which is why it sat frozen at 2026-07-16 while the API was down.
+name: Refresh stats snapshot
+
+on:
+  schedule:
+    # Every 6 hours. The snapshot is a fallback, not a live feed.
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-stats
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch live stats
+        id: fetch
+        env:
+          API_BASE: https://macmini-bot.tail63f4a.ts.net
+        run: |
+          # A down bot must leave the previous snapshot untouched rather than
+          # overwrite it with an error page.
+          if ! curl -fsS --max-time 30 "$API_BASE/api/stats" -o /tmp/stats.json; then
+            echo "API unreachable; keeping the existing snapshot."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! jq -e '.servers != null and .generatedAt != null' /tmp/stats.json > /dev/null; then
+            echo "Response is not a valid stats payload; keeping the existing snapshot."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          jq --indent 2 . /tmp/stats.json > data/stats.json
+          echo "ok=true" >> "$GITHUB_OUTPUT"
+
+      - name: Commit if changed
+        if: steps.fetch.outputs.ok == 'true'
+        run: |
+          # generatedAt and uptimeSec move on every call. Compare with those
+          # stripped so the repo only gets a commit when a real number changed.
+          git show HEAD:data/stats.json | jq -S 'del(.generatedAt, .uptimeSec)' > /tmp/old.json
+          jq -S 'del(.generatedAt, .uptimeSec)' data/stats.json > /tmp/new.json
+          if cmp -s /tmp/old.json /tmp/new.json; then
+            echo "Only timestamps moved; skipping commit."
+            git checkout -- data/stats.json
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/stats.json
+          git commit -m "NOISSUE Refresh public stats snapshot"
+          git push
