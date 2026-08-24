@@ -4,8 +4,8 @@
  */
 (function (global) {
   var SESSION_KEY = 'dzbanek_admin_session';
-  var FALLBACK_PUBLIC_API = 'https://dzbanek-bot.up.railway.app';
-  var DEAD_HOSTS = ['bot-production-c393.up.railway.app'];
+  var FALLBACK_PUBLIC_API = 'https://macmini-bot.tail63f4a.ts.net';
+  var DEAD_HOSTS = ['bot-production-c393.up.railway.app', 'dzbanek-bot.up.railway.app'];
 
   function isDead(url) {
     try {

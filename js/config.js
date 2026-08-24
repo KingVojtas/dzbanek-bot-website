@@ -16,14 +16,15 @@
 
   /**
    * Public bot API (HTTPS) for GitHub Pages / custom domain.
-   * Railway always-on deploy — admin + live stats without local npm start.
-   * Prefer same-origin admin on Railway: https://dzbanek-bot.up.railway.app/admin.html
+   * Always-on self-hosted bot, published over HTTPS by a Tailscale Funnel.
+   * Prefer same-origin admin: https://macmini-bot.tail63f4a.ts.net/admin.html
    */
-  var PRODUCTION_API_BASE = 'https://dzbanek-bot.up.railway.app';
+  var PRODUCTION_API_BASE = 'https://macmini-bot.tail63f4a.ts.net';
 
-  /** Old Railway hostnames that 404 — never use for OAuth/API. */
+  /** Retired hostnames that 404 - never use for OAuth/API. */
   var DEAD_API_HOSTS = [
     'bot-production-c393.up.railway.app',
+    'dzbanek-bot.up.railway.app',
   ];
 
   function isDeadApiBase(url) {
