@@ -1,12 +1,12 @@
 {
   "servers": 2,
   "approxUsers": 28,
-  "totalPlays": 101,
+  "totalPlays": 100,
   "totalSkips": 3,
   "totalWishlistAdds": 3,
   "uniqueUsersTracked": 2,
-  "uptimeSec": 92653,
-  "generatedAt": "2026-08-25T18:59:32.525Z",
+  "uptimeSec": 117933,
+  "generatedAt": "2026-08-26T02:00:52.336Z",
   "history": [
     {
       "date": "2026-07-15",
@@ -28,6 +28,13 @@
       "approxUsers": 28,
       "totalPlays": 96,
       "uniqueUsersTracked": 2
+    },
+    {
+      "date": "2026-08-25",
+      "servers": 2,
+      "approxUsers": 28,
+      "totalPlays": 100,
+      "uniqueUsersTracked": 2
     }
   ],
   "public": {
@@ -45,11 +52,15 @@
         "plays": 5
       },
       {
-        "title": "Strach",
+        "title": "Spaceship",
+        "plays": 3
+      },
+      {
+        "title": "Survivor - Eye Of The Tiger (Official HD Video)",
         "plays": 2
       },
       {
-        "title": "Spaceship",
+        "title": "Strach",
         "plays": 2
       },
       {
@@ -67,14 +78,30 @@
       {
         "title": "Checkpoint",
         "plays": 2
-      },
-      {
-        "title": "sayso - american baddie",
-        "plays": 1
       }
     ],
     "nowPlaying": null,
     "recentCommands": [
+      {
+        "command": "/play",
+        "at": "2026-08-25T19:14:12.916Z"
+      },
+      {
+        "command": "/play",
+        "at": "2026-08-25T19:13:08.909Z"
+      },
+      {
+        "command": "/play",
+        "at": "2026-08-25T19:12:36.609Z"
+      },
+      {
+        "command": "/play",
+        "at": "2026-08-25T19:09:38.710Z"
+      },
+      {
+        "command": "/play",
+        "at": "2026-08-25T19:09:04.678Z"
+      },
       {
         "command": "/play",
         "at": "2026-08-25T18:30:47.137Z"
@@ -107,8 +134,8 @@
       },
       {
         "source": "steam",
-        "title": "Darkest Dungeon®",
-        "subtitle": "-85% · €3.44"
+        "title": "Car Mechanic Simulator 2021",
+        "subtitle": "-87% · €3.18"
       },
       {
         "source": "steam",
@@ -125,27 +152,27 @@
       {
         "id": "plays-10",
         "text": "Dzbanek-bot reached 10 total tracks played!",
-        "at": "2026-08-25T18:59:32.523Z"
+        "at": "2026-08-26T02:00:52.334Z"
       },
       {
         "id": "plays-100",
         "text": "Dzbanek-bot reached 100 total tracks played!",
-        "at": "2026-08-25T18:59:32.523Z"
+        "at": "2026-08-26T02:00:52.334Z"
       },
       {
         "id": "servers-2",
         "text": "Dzbanek-bot is on 2+ Discord servers!",
-        "at": "2026-08-25T18:59:32.523Z"
+        "at": "2026-08-26T02:00:52.334Z"
       }
     ],
     "topServers": [
       {
         "name": "Server #1",
-        "plays": 97
+        "plays": 98
       },
       {
         "name": "Server #2",
-        "plays": 4
+        "plays": 2
       }
     ]
   }
