@@ -1,12 +1,12 @@
 {
   "servers": 2,
-  "approxUsers": 27,
+  "approxUsers": 28,
   "totalPlays": 101,
   "totalSkips": 3,
   "totalWishlistAdds": 3,
   "uniqueUsersTracked": 3,
-  "uptimeSec": 842665,
-  "generatedAt": "2026-09-03T11:19:44.694Z",
+  "uptimeSec": 861210,
+  "generatedAt": "2026-09-03T16:28:49.360Z",
   "history": [
     {
       "date": "2026-07-15",
@@ -207,12 +207,7 @@
       },
       {
         "source": "epic",
-        "title": "Breathedge",
-        "subtitle": "Free now on Epic Games Store"
-      },
-      {
-        "source": "epic",
-        "title": "Rival Stars Horse Racing : Desktop Edition",
+        "title": "Alone With You",
         "subtitle": "Free now on Epic Games Store"
       }
     ],
@@ -220,17 +215,17 @@
       {
         "id": "plays-10",
         "text": "Dzbanek-bot reached 10 total tracks played!",
-        "at": "2026-09-03T11:19:44.693Z"
+        "at": "2026-09-03T16:28:49.358Z"
       },
       {
         "id": "plays-100",
         "text": "Dzbanek-bot reached 100 total tracks played!",
-        "at": "2026-09-03T11:19:44.693Z"
+        "at": "2026-09-03T16:28:49.358Z"
       },
       {
         "id": "servers-2",
         "text": "Dzbanek-bot is on 2+ Discord servers!",
-        "at": "2026-09-03T11:19:44.693Z"
+        "at": "2026-09-03T16:28:49.358Z"
       }
     ],
     "topServers": [
