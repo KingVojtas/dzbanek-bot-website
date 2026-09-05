@@ -5,8 +5,8 @@
   "totalSkips": 3,
   "totalWishlistAdds": 3,
   "uniqueUsersTracked": 3,
-  "uptimeSec": 1029721,
-  "generatedAt": "2026-09-05T15:17:19.855Z",
+  "uptimeSec": 1048216,
+  "generatedAt": "2026-09-05T20:25:35.001Z",
   "history": [
     {
       "date": "2026-07-15",
@@ -195,11 +195,6 @@
     ],
     "recentDeals": [
       {
-        "source": "epic",
-        "title": "Alone With You",
-        "subtitle": "Free now on Epic Games Store"
-      },
-      {
         "source": "steam",
         "title": "A Plague Tale: Innocence",
         "subtitle": "-90% · €3.99"
@@ -228,23 +223,28 @@
         "source": "steam",
         "title": "Sniper Ghost Warrior Contracts 2",
         "subtitle": "-90% · €3.99"
+      },
+      {
+        "source": "epic",
+        "title": "Alone With You",
+        "subtitle": "Free now on Epic Games Store"
       }
     ],
     "milestones": [
       {
         "id": "plays-10",
         "text": "Dzbanek-bot reached 10 total tracks played!",
-        "at": "2026-09-05T15:17:19.854Z"
+        "at": "2026-09-05T20:25:34.999Z"
       },
       {
         "id": "plays-100",
         "text": "Dzbanek-bot reached 100 total tracks played!",
-        "at": "2026-09-05T15:17:19.854Z"
+        "at": "2026-09-05T20:25:34.999Z"
       },
       {
         "id": "servers-2",
         "text": "Dzbanek-bot is on 2+ Discord servers!",
-        "at": "2026-09-05T15:17:19.854Z"
+        "at": "2026-09-05T20:25:34.999Z"
       }
     ],
     "topServers": [
