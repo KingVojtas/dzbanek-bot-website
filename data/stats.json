@@ -5,8 +5,8 @@
   "totalSkips": 3,
   "totalWishlistAdds": 3,
   "uniqueUsersTracked": 3,
-  "uptimeSec": 1274921,
-  "generatedAt": "2026-09-08T11:24:00.008Z",
+  "uptimeSec": 1293940,
+  "generatedAt": "2026-09-08T16:40:59.595Z",
   "history": [
     {
       "date": "2026-07-15",
@@ -232,6 +232,11 @@
       },
       {
         "source": "steam",
+        "title": "Parkasaurus",
+        "subtitle": "-90% · €2.09"
+      },
+      {
+        "source": "steam",
         "title": "Sid Meier’s Civilization® VI",
         "subtitle": "-90% · €5.99"
       },
@@ -239,11 +244,6 @@
         "source": "steam",
         "title": "Transport Fever 2",
         "subtitle": "-90% · €3.99"
-      },
-      {
-        "source": "steam",
-        "title": "Marvel's Midnight Suns",
-        "subtitle": "-85% · €8.99"
       },
       {
         "source": "epic",
@@ -255,17 +255,17 @@
       {
         "id": "plays-10",
         "text": "Dzbanek-bot reached 10 total tracks played!",
-        "at": "2026-09-08T11:24:00.007Z"
+        "at": "2026-09-08T16:40:59.593Z"
       },
       {
         "id": "plays-100",
         "text": "Dzbanek-bot reached 100 total tracks played!",
-        "at": "2026-09-08T11:24:00.007Z"
+        "at": "2026-09-08T16:40:59.593Z"
       },
       {
         "id": "servers-2",
         "text": "Dzbanek-bot is on 2+ Discord servers!",
-        "at": "2026-09-08T11:24:00.007Z"
+        "at": "2026-09-08T16:40:59.593Z"
       }
     ],
     "topServers": [
