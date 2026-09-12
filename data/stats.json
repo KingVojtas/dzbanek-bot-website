@@ -5,8 +5,8 @@
   "totalSkips": 3,
   "totalWishlistAdds": 3,
   "uniqueUsersTracked": 3,
-  "uptimeSec": 1635557,
-  "generatedAt": "2026-09-12T15:34:36.591Z",
+  "uptimeSec": 1653629,
+  "generatedAt": "2026-09-12T20:35:48.805Z",
   "history": [
     {
       "date": "2026-07-15",
@@ -248,16 +248,6 @@
     ],
     "recentDeals": [
       {
-        "source": "epic",
-        "title": "Luftrausers",
-        "subtitle": "Free now on Epic Games Store"
-      },
-      {
-        "source": "epic",
-        "title": "Astral Ascent",
-        "subtitle": "Free now on Epic Games Store"
-      },
-      {
         "source": "steam",
         "title": "Borderlands 3",
         "subtitle": "-90% · €5.99"
@@ -286,23 +276,33 @@
         "source": "steam",
         "title": "Mortal Kombat 11",
         "subtitle": "-90% · €4.99"
+      },
+      {
+        "source": "epic",
+        "title": "Luftrausers",
+        "subtitle": "Free now on Epic Games Store"
+      },
+      {
+        "source": "epic",
+        "title": "Astral Ascent",
+        "subtitle": "Free now on Epic Games Store"
       }
     ],
     "milestones": [
       {
         "id": "plays-10",
         "text": "Dzbanek-bot reached 10 total tracks played!",
-        "at": "2026-09-12T15:34:36.590Z"
+        "at": "2026-09-12T20:35:48.803Z"
       },
       {
         "id": "plays-100",
         "text": "Dzbanek-bot reached 100 total tracks played!",
-        "at": "2026-09-12T15:34:36.590Z"
+        "at": "2026-09-12T20:35:48.803Z"
       },
       {
         "id": "servers-2",
         "text": "Dzbanek-bot is on 2+ Discord servers!",
-        "at": "2026-09-12T15:34:36.590Z"
+        "at": "2026-09-12T20:35:48.803Z"
       }
     ],
     "topServers": [
