@@ -5,8 +5,8 @@
   "totalSkips": 3,
   "totalWishlistAdds": 3,
   "uniqueUsersTracked": 3,
-  "uptimeSec": 1831021,
-  "generatedAt": "2026-09-14T21:52:20.283Z",
+  "uptimeSec": 1856588,
+  "generatedAt": "2026-09-15T04:58:27.647Z",
   "history": [
     {
       "date": "2026-07-15",
@@ -168,6 +168,13 @@
       "approxUsers": 28,
       "totalPlays": 102,
       "uniqueUsersTracked": 3
+    },
+    {
+      "date": "2026-09-14",
+      "servers": 2,
+      "approxUsers": 29,
+      "totalPlays": 102,
+      "uniqueUsersTracked": 3
     }
   ],
   "public": {
@@ -278,13 +285,18 @@
       },
       {
         "source": "steam",
-        "title": "HITMAN World of Assassination",
-        "subtitle": "-90% · €2.99"
+        "title": "House Flipper",
+        "subtitle": "-90% · €2.45"
       },
       {
         "source": "steam",
-        "title": "House Flipper",
-        "subtitle": "-90% · €2.45"
+        "title": "Parkasaurus",
+        "subtitle": "-90% · €2.09"
+      },
+      {
+        "source": "steam",
+        "title": "Sniper Elite 4",
+        "subtitle": "-90% · €5.99"
       },
       {
         "source": "epic",
@@ -301,17 +313,17 @@
       {
         "id": "plays-10",
         "text": "Dzbanek-bot reached 10 total tracks played!",
-        "at": "2026-09-14T21:52:20.282Z"
+        "at": "2026-09-15T04:58:27.646Z"
       },
       {
         "id": "plays-100",
         "text": "Dzbanek-bot reached 100 total tracks played!",
-        "at": "2026-09-14T21:52:20.282Z"
+        "at": "2026-09-15T04:58:27.646Z"
       },
       {
         "id": "servers-2",
         "text": "Dzbanek-bot is on 2+ Discord servers!",
-        "at": "2026-09-14T21:52:20.282Z"
+        "at": "2026-09-15T04:58:27.646Z"
       }
     ],
     "topServers": [
