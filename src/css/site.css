@@ -298,10 +298,10 @@ kbd {
   border: 1px solid var(--line);
   border-radius: 999px;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
-  transition: background 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
   view-transition-name: site-header;
 }
 
+/* No transition: fading a blurred shadow repaints the header on every frame of the first scroll. */
 .site-header.is-scrolled {
   background: color-mix(in srgb, var(--ink) 96%, transparent);
   border-color: var(--line-strong);
@@ -1491,24 +1491,12 @@ button.dc-btn[aria-pressed="true"]:hover {
   top: calc((100cqh - var(--scene-w) * 0.5625) * var(--focus-y));
   width: var(--scene-w);
   aspect-ratio: 16 / 9;
-  transform-origin: 70% 55%;
 }
 
-/* The slow zoom and the breathing lights only run on desktops with a mouse. */
-@media (hover: hover) and (pointer: fine) and (min-width: 1000px) {
-  .hero-scene {
-    animation: ken 32s ease-in-out infinite alternate;
-  }
-
-  .hero-lights i {
-    animation: breathe 7s ease-in-out infinite alternate;
-  }
-
-  .hero-lights i:nth-child(2) {
-    animation-delay: -3.5s;
-    animation-duration: 8.5s;
-  }
-}
+/*
+ * The photo, lights and shade stay still, so the browser paints them once.
+ * Only the small steam wisps move, and only their corner of the screen redraws.
+ */
 
 .hero-photo {
   width: 100%;
@@ -1570,25 +1558,6 @@ button.dc-btn[aria-pressed="true"]:hover {
 .steam i:nth-child(4) {
   left: 30%;
   animation-delay: 5.6s;
-}
-
-.hero-torch {
-  position: absolute;
-  left: -420px;
-  top: -420px;
-  z-index: 1;
-  width: 840px;
-  height: 840px;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(255, 190, 120, 0.12), transparent);
-  opacity: 0;
-  transition: opacity 0.6s var(--ease);
-  pointer-events: none;
-  will-change: transform;
-}
-
-.hero-stage:hover .hero-torch {
-  opacity: 1;
 }
 
 .hero-shade {
@@ -3899,8 +3868,7 @@ html.js [data-reveal-group].is-in > * {
     transform: none;
   }
 
-  .btn-clay::after,
-  .hero-torch {
+  .btn-clay::after {
     display: none;
   }
 }
@@ -3951,30 +3919,6 @@ html.js [data-reveal-group].is-in > * {
   to {
     opacity: 1;
     translate: 0 0;
-  }
-}
-
-@keyframes ken {
-  from {
-    scale: 1;
-  }
-  to {
-    scale: 1.07;
-  }
-}
-
-@keyframes breathe {
-  0% {
-    opacity: 0.55;
-  }
-  45% {
-    opacity: 0.9;
-  }
-  52% {
-    opacity: 0.78;
-  }
-  100% {
-    opacity: 1;
   }
 }
 

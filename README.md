@@ -57,7 +57,7 @@ src/js/config.js       invite URL and GitHub URL
 src/js/i18n.js         EN / CS, ?lang=, localStorage dzbanek_lang
 src/js/theme-boot.js   theme before first paint, adds html.js
 src/js/theme.js        localStorage dzbanek_theme
-src/js/site.js         year, menu, nav pill, hero light, copy buttons, command filter
+src/js/site.js         year, menu, nav pill, copy buttons, command filter
 src/js/reveal.js       scroll reveals ([data-reveal], [data-reveal-group])
 src/js/clock.js        Europe/Prague clock and the next scheduled event
 src/js/discord-demo.js the #kitchen demo on commands.html

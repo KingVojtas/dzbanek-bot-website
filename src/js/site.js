@@ -1,5 +1,5 @@
 /**
- * Year, mobile nav, current page, nav pill, hero light, invite links, copy-to-clipboard.
+ * Year, mobile nav, current page, nav pill, invite links, copy-to-clipboard.
  */
 (function () {
   const year = document.getElementById('year');
@@ -11,9 +11,6 @@
       link.setAttribute('href', invite);
     });
   }
-
-  const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* ---- mobile menu ---- */
 
@@ -89,31 +86,20 @@
   /* ---- header on scroll ---- */
 
   const header = document.querySelector('.site-header');
-  if (header) {
+  // A 12px strip at the top of the page: once it leaves the screen, the page has scrolled.
+  // An observer instead of a scroll listener, so scrolling runs no script at all.
+  if (header && 'IntersectionObserver' in window) {
+    const top = document.createElement('div');
+    top.setAttribute('aria-hidden', 'true');
+    top.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:12px;pointer-events:none;';
+    document.body.prepend(top);
+    new IntersectionObserver(([entry]) => {
+      header.classList.toggle('is-scrolled', !entry.isIntersecting);
+    }).observe(top);
+  } else if (header) {
     const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 12);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-  }
-
-  /* ---- hero: a warm light follows the pointer ---- */
-
-  // Moved with transform on its own layer, so the photo never repaints.
-  const stage = document.querySelector('.hero-stage');
-  const torch = stage?.querySelector('.hero-torch');
-  if (stage && torch && fine.matches && !calm.matches) {
-    let frame = 0;
-    let x = 0;
-    let y = 0;
-    stage.addEventListener('pointermove', (event) => {
-      const box = stage.getBoundingClientRect();
-      x = event.clientX - box.left;
-      y = event.clientY - box.top;
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        torch.style.transform = 'translate3d(' + Math.round(x) + 'px, ' + Math.round(y) + 'px, 0)';
-      });
-    });
   }
 
   /* ---- toast + copy ---- */
