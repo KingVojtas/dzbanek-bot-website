@@ -1,0 +1,130 @@
+<!-- title: Setup — Dzbanek -->
+<!-- description: Where Steam, Epic, welcomes, and the Kitchen Board post, which permissions the invite asks for, and the Server Members intent. -->
+<!-- page: setup -->
+
+<header class="page-hero">
+  <div class="wrap">
+    <p class="kicker" data-i18n="setup.kicker">The house rules</p>
+    <h1 data-i18n="setup.title">Tell it which shelf to use.</h1>
+    <p class="lead" data-i18n="setup.lead">Every /setup subcommand needs Manage Server. Music and radio need no channel setup — only a voice channel you are in.</p>
+  </div>
+</header>
+
+<section class="section flush-top" id="shelves">
+  <div class="wrap">
+    <div class="shelves" data-reveal-group>
+      <article class="shelf">
+        <span class="shelf-icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-tag" /></svg></span>
+        <code>/setup steam</code>
+        <p data-i18n="setup.steam">Where the 03:33 Steam digest is posted.</p>
+      </article>
+      <article class="shelf">
+        <span class="shelf-icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-gift" /></svg></span>
+        <code>/setup epic</code>
+        <p data-i18n="setup.epic">Where Epic free games are posted.</p>
+      </article>
+      <article class="shelf">
+        <span class="shelf-icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-door" /></svg></span>
+        <code>/setup welcome</code>
+        <p data-i18n="setup.welcome">Where join messages are posted.</p>
+      </article>
+      <article class="shelf">
+        <span class="shelf-icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-wave" /></svg></span>
+        <code>/setup goodbye</code>
+        <p data-i18n="setup.goodbye">Where leave messages are posted.</p>
+      </article>
+      <article class="shelf featured">
+        <span class="shelf-icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-board" /></svg></span>
+        <code>/setup kitchen</code>
+        <p data-i18n="setup.kitchen">Where the living Kitchen Board hangs. This one is not guessed from a channel name.</p>
+      </article>
+      <article class="shelf">
+        <span class="shelf-icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-radio" /></svg></span>
+        <code>/setup idle-radio</code>
+        <p data-i18n="setup.idle">On by default. When the music queue ends, fade into the last radio station instead of leaving. Pass off to leave after the idle timeout.</p>
+      </article>
+      <article class="shelf">
+        <span class="shelf-icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-list" /></svg></span>
+        <code>/setup status</code>
+        <p data-i18n="setup.status">Shows this server’s channels, Radio Night, and idle radio.</p>
+      </article>
+      <article class="shelf">
+        <span class="shelf-icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-power" /></svg></span>
+        <code>/setup disable</code>
+        <p data-i18n="setup.disable">Pause Steam, Epic, welcome, goodbye, the Kitchen Board, Radio Night, or idle radio.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="names">
+  <div class="wrap split top">
+    <div data-reveal>
+      <p class="kicker" data-i18n="setup.autoKicker">Skip a step</p>
+      <h2 data-i18n="setup.autoTitle">Names it will find on its own</h2>
+      <p class="lead" data-i18n="setup.autoLead">If you skip /setup for a feed, Dzbanek looks for a text channel whose name matches one of these.</p>
+      <p class="note" data-i18n="setup.autoKitchen">The Kitchen Board still needs /setup kitchen.</p>
+    </div>
+    <div class="channel-groups" data-reveal-group>
+      <div class="channel-group">
+        <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-tag" /></svg> Steam</h3>
+        <ul class="channels"><li>steam</li><li>deals</li><li>steam-deals</li><li>slevy</li><li>akce</li></ul>
+      </div>
+      <div class="channel-group">
+        <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-gift" /></svg> Epic</h3>
+        <ul class="channels"><li>epic</li><li>free-games</li><li>epic-games</li><li>freebies</li></ul>
+      </div>
+      <div class="channel-group">
+        <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-door" /></svg> <span data-i18n="setup.groupWelcome">Welcome</span></h3>
+        <ul class="channels"><li>welcome</li><li>arrivals</li><li>hello</li></ul>
+      </div>
+      <div class="channel-group">
+        <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-wave" /></svg> <span data-i18n="setup.groupGoodbye">Goodbye</span></h3>
+        <ul class="channels"><li>goodbye</li><li>farewell</li><li>leaves</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="permissions">
+  <div class="wrap split top">
+    <div data-reveal>
+      <p class="kicker" data-i18n="setup.permKicker">The invite</p>
+      <h2 data-i18n="setup.permTitle">What the invite asks for</h2>
+      <p class="lead" data-i18n="setup.permLead">Not Administrator. The invite bitfield is 3173440 — the permissions below, and nothing else.</p>
+      <p class="bitfield mono" aria-label="Bitfield 3173440">3173440</p>
+      <p class="note" data-i18n="setup.manage">Manage Messages is how Dzbanek deletes its own previous Now Playing card and the previous deal digest. It is not used to moderate people’s messages.</p>
+    </div>
+    <div class="perm-panel" data-reveal>
+      <div class="perm-group">
+        <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-speaker" /></svg> <span data-i18n="setup.permVoice">Music / radio</span></h3>
+        <ul class="perms"><li>Connect</li><li>Speak</li><li>View Channel</li></ul>
+      </div>
+      <div class="perm-group">
+        <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-tag" /></svg> <span data-i18n="setup.permDeals">Steam / Epic</span></h3>
+        <ul class="perms"><li>View Channel</li><li>Send Messages</li><li>Embed Links</li><li>Manage Messages</li><li>Add Reactions</li></ul>
+      </div>
+      <div class="perm-group">
+        <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-door" /></svg> <span data-i18n="setup.permGreet">Welcome / goodbye</span></h3>
+        <ul class="perms"><li>View Channel</li><li>Send Messages</li></ul>
+      </div>
+      <div class="perm-group off">
+        <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-shield" /></svg> <span data-i18n="setup.permNot">Not asked for</span></h3>
+        <ul class="perms"><li>Administrator</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="intent">
+  <div class="wrap">
+    <div class="intent" data-reveal>
+      <span class="intent-icon"><svg width="28" height="28" aria-hidden="true"><use href="#i-users" /></svg></span>
+      <div>
+        <h2 data-i18n="setup.intentTitle">Server Members intent</h2>
+        <p class="lead" data-i18n="setup.intentBody">Welcome and goodbye need the privileged Server Members intent turned on once for the bot application, in the Discord Developer Portal. People inviting the bot do not flip that switch. Someone self-hosting does.</p>
+        <p class="note"><a class="link-arrow" href="{{github}}" target="_blank" rel="noopener noreferrer"><span data-i18n="setup.host">Self-hosting, Spotify keys, and YouTube cookies are documented in the bot repository.</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-external" /></svg></a></p>
+      </div>
+    </div>
+  </div>
+</section>

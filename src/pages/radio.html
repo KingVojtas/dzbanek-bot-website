@@ -1,0 +1,183 @@
+<!-- title: Radio — Dzbanek -->
+<!-- description: Kiss, Rock Radio, and Radio Beat in your voice channel. Catch a song, or let Friday Radio Night pick the station. -->
+<!-- page: radio -->
+<!-- scripts: radio.js -->
+
+<div class="tuned" data-tuner style="--tuned: var(--beat)">
+  <header class="page-hero">
+    <div class="wrap">
+      <p class="kicker" data-i18n="radio.kicker">Czech air</p>
+      <h1 data-i18n="radio.title">Three stations, one card.</h1>
+      <p class="lead" data-i18n="radio.lead">/radio play joins your voice channel. The card wears the station’s color and edits itself when the song on air changes, about every 20 seconds. Radio does not wander off during a quiet stretch.</p>
+    </div>
+  </header>
+
+  <section class="section flush-top" aria-label="Stations" data-i18n-aria="tuner.stations">
+    <div class="wrap">
+      <div class="tuner" data-reveal>
+        <div class="tuner-window" aria-hidden="true">
+          <div class="tuner-scale">
+            <span class="tuner-label" style="--pos: 18%" data-for="kiss">KISS</span>
+            <span class="tuner-label" style="--pos: 50%" data-for="rock">ROCK</span>
+            <span class="tuner-label" style="--pos: 82%" data-for="beat">BEAT</span>
+            <span class="tuner-needle"></span>
+          </div>
+        </div>
+        <div class="tuner-controls">
+          <div class="tuner-presets" role="radiogroup" aria-label="Station" data-i18n-aria="tuner.label">
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-station="kiss" style="--accent: var(--kiss)"><span class="led" aria-hidden="true"></span>Kiss</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-station="rock" style="--accent: var(--rock)"><span class="led" aria-hidden="true"></span>Rock</button>
+            <button type="button" role="radio" aria-checked="true" tabindex="0" data-station="beat" style="--accent: var(--beat)"><span class="led" aria-hidden="true"></span>Beat</button>
+          </div>
+          <span class="example-tag" data-i18n="tuner.note">A dial, not a player. Sound comes from the bot.</span>
+        </div>
+      </div>
+
+      <div class="stations" data-reveal-group>
+        <article class="station" id="kiss" data-station-card="kiss" style="--accent: var(--kiss)">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="kicker">Kiss Radio</p>
+          <p class="slogan">...be happy!</p>
+          <p data-i18n="radio.kiss">Pop from Kiss. The card follows radia.cz, then the stream title.</p>
+          <a class="link-arrow" href="https://www.kiss.cz/" target="_blank" rel="noopener noreferrer">kiss.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
+        </article>
+        <article class="station" id="rock" data-station-card="rock" style="--accent: var(--rock)">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="kicker">Rock Radio</p>
+          <p class="slogan">Rock je slušná muzika</p>
+          <p data-i18n="radio.rock">Rock Radio. Same now-playing path: radia.cz, then the stream title.</p>
+          <a class="link-arrow" href="https://rockovyradio.cz/" target="_blank" rel="noopener noreferrer">rockovyradio.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
+        </article>
+        <article class="station" id="beat" data-station-card="beat" style="--accent: var(--beat)">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="kicker">Radio Beat</p>
+          <p class="slogan">První bigbít u nás</p>
+          <p data-i18n="radio.beat">Radio Beat. The card prefers Beat’s own “Právě v éteru”, then radia.cz, then the stream. During a show it may name the program.</p>
+          <a class="link-arrow" href="https://www.radiobeat.cz/" target="_blank" rel="noopener noreferrer">radiobeat.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="section" id="catch">
+  <div class="wrap split">
+    <div data-reveal>
+      <p class="kicker">Catch</p>
+      <h2 data-i18n="radio.catchTitle">Catch, then Play</h2>
+      <p class="lead" data-i18n="radio.catchBody">Catch stores the artist and title for you. The reply grows a Play button, which searches YouTube and queues the song. The Kitchen Board keeps the server’s latest catch.</p>
+    </div>
+    <ol class="flow" data-reveal aria-label="Catch, then Play" data-i18n-aria="radio.catchTitle">
+      <li class="flow-step">
+        <span class="flow-num" aria-hidden="true">1</span>
+        <div class="dc dc-mini">
+          <div class="dc-embed" style="--bar: var(--beat)">
+            <div class="dc-embed-main">
+              <p class="dc-embed-author"><span class="live-dot" aria-hidden="true"></span> Live · Radio Beat</p>
+              <p class="dc-embed-title">Example Artist — Example Song</p>
+            </div>
+          </div>
+          <div class="dc-row"><span class="dc-btn dc-btn-red">Stop</span><span class="dc-btn">Website</span><span class="dc-btn is-hot">Catch</span></div>
+        </div>
+      </li>
+      <li class="flow-step">
+        <span class="flow-num" aria-hidden="true">2</span>
+        <div class="dc dc-mini">
+          <p class="dc-ephemeral" data-i18n="radio.onlyYou">Only you can see this</p>
+          <p class="dc-text">🎣 Caught <strong>Example Artist — Example Song</strong></p>
+          <div class="dc-row"><span class="dc-btn is-hot">Play</span></div>
+        </div>
+      </li>
+      <li class="flow-step">
+        <span class="flow-num" aria-hidden="true">3</span>
+        <div class="dc dc-mini">
+          <div class="dc-embed" style="--bar: var(--clay)">
+            <div class="dc-embed-main">
+              <p class="dc-embed-author">Now Playing</p>
+              <p class="dc-embed-title">Example Artist — Example Song</p>
+              <div class="dc-progress"><div class="progress"><span></span></div></div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" id="night">
+  <div class="wrap night-split">
+    <div data-reveal>
+      <p class="kicker">Friday</p>
+      <h2 data-i18n="radio.nightTitle">Radio Night</h2>
+      <p class="lead" data-i18n="radio.nightBody">/radio night needs Manage Server. Pick a fallback station and a voice channel (or join one). /radio night-off takes it off the calendar.</p>
+      <p class="clock-chip solid"><svg width="16" height="16" aria-hidden="true"><use href="#i-clock" /></svg> <span data-i18n="radio.nextNight">Next Radio Night</span> <strong data-clock="night-in"></strong></p>
+      <ol class="timeline">
+        <li data-phase="vote">
+          <strong class="mono">12:00</strong>
+          <p data-i18n="radio.t1">The Kitchen Board puts out Kiss, Rock, and Beat vote buttons. One vote per person, and you can change your mind.</p>
+        </li>
+        <li data-phase="vote">
+          <strong data-i18n="radio.during">While it votes</strong>
+          <p data-i18n="radio.t3">While votes are open the board shows the tally. After 20:00 it goes back to being the stereo.</p>
+        </li>
+        <li data-phase="night">
+          <strong class="mono">20:00</strong>
+          <p data-i18n="radio.t2">The winner starts in the channel you picked. A tie uses the station you scheduled, then the last station that played, then Beat.</p>
+        </li>
+      </ol>
+    </div>
+
+    <div class="vote-stage" data-vote data-reveal>
+      <span class="example-tag" data-i18n="vote.note">Example vote. Your click stays in this tab.</span>
+      <div class="dc">
+        <div class="dc-msg">
+          <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+          <div class="dc-body">
+            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Friday at 12:00</span></p>
+            <div class="dc-embed" style="--bar: var(--glow)">
+              <div class="dc-embed-main">
+                <p class="dc-embed-author"><svg width="16" height="16" aria-hidden="true"><use href="#i-moon-radio" /></svg> Kitchen Board · Radio Night</p>
+                <p class="dc-embed-title">Tonight at 20:00. Pick the station.</p>
+                <ul class="tally" data-vote-tally>
+                  <li data-tally="kiss" style="--accent: var(--kiss); --share: 40%"><span class="tally-name">Kiss</span><span class="tally-bar"><span></span></span><span class="tally-count mono">2</span></li>
+                  <li data-tally="rock" style="--accent: var(--rock); --share: 20%"><span class="tally-name">Rock</span><span class="tally-bar"><span></span></span><span class="tally-count mono">1</span></li>
+                  <li data-tally="beat" style="--accent: var(--beat); --share: 40%"><span class="tally-name">Beat</span><span class="tally-bar"><span></span></span><span class="tally-count mono">2</span></li>
+                </ul>
+                <p class="dc-embed-footer">One vote each. You can change it.</p>
+              </div>
+            </div>
+            <div class="dc-row vote-buttons">
+              <button type="button" class="dc-btn" data-vote-for="kiss" aria-pressed="false">Kiss</button>
+              <button type="button" class="dc-btn" data-vote-for="rock" aria-pressed="false">Rock</button>
+              <button type="button" class="dc-btn" data-vote-for="beat" aria-pressed="false">Beat</button>
+            </div>
+          </div>
+        </div>
+        <div class="dc-msg vote-result" data-vote-result hidden>
+          <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+          <div class="dc-body">
+            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Friday at 20:00</span></p>
+            <p class="dc-text" data-vote-result-text aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+      <div class="vote-controls">
+        <div class="seg-wrap">
+          <span class="seg-label" id="sched-label" data-i18n="vote.scheduled">Scheduled station</span>
+          <div class="seg" role="radiogroup" aria-labelledby="sched-label">
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sched="kiss">Kiss</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sched="rock">Rock</button>
+            <button type="button" role="radio" aria-checked="true" tabindex="0" data-sched="beat">Beat</button>
+          </div>
+        </div>
+        <div class="vote-actions">
+          <button type="button" class="btn btn-clay btn-sm" data-vote-close data-i18n="vote.close">Close the vote at 20:00</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-vote-reset data-i18n="vote.reset">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="note callout" data-reveal><svg width="20" height="20" aria-hidden="true"><use href="#i-radio" /></svg> <span data-i18n="radio.note">Switching stations reuses the same voice connection and retires the previous card. /setup idle-radio, on by default, fades into the last station (or Beat) when a music queue goes quiet and people are still in the channel.</span></p>
+  </div>
+</section>

@@ -1,222 +1,101 @@
-# dzbanek-bot website
+# Dzbanek website
 
-Marketing site + live stats dashboard + admin UI for **[dzbanek-bot](https://github.com/KingVojtas/dzbanek-bot)**.
+Presentation site for **[Dzbanek-bot 2.0](https://github.com/KingVojtas/dzbanek-bot-2.0)**: a Discord kitchen that plays music, streams Czech radio, and posts Steam and Epic deals.
 
-Dark Discord-inspired UI: HTML + Tailwind CDN + Inter + vanilla JS. Live data comes from the bot’s HTTP API.
+The bot has no website API. This site does not show live stats, and it does not log anyone in.
 
-## Pages
+## Project overview
 
-| File | Description |
-|------|-------------|
-| `index.html` | Landing: hero, demo gallery, Dzbanek Now, share/QR kit, features, commands, stats, FAQ |
-| `check.html` | “Is the bot in my server?” — Discord OAuth guild + pipeline checker |
-| `support.html` | Tips (Buy Me a Coffee), free-forever note, community support |
-| `stats.html` | Live dashboard (KPIs + Chart.js growth chart) |
-| `leaderboards.html` | Public top tracks / top servers |
-| `status.html` | Website + stats API + bot readiness |
-| `permissions.html` | Why each Discord permission is requested |
-| `changelog.html` | Project milestones / what’s new |
-| `admin.html` | Discord OAuth admin: per-guild news / Steam / Epic channel settings |
-| `assets/demo/` | Hero poster + short teaser video |
-| `terms.html` / `privacy.html` | Legal (same dark theme) |
-| `assets/bot-avatar.png` | Logo / favicon / OG image asset |
-| `assets/dzbanek-labs-logo.png` | Made by Dzbanek Labs footer mark |
-| `css/site.css` | Shared motion + utility styles |
-| `js/config.js` | `API_BASE`, invite URL, `SUPPORT_URL` |
-| `js/i18n.js` + `js/locales/` | EN / CS language toggle |
-| `js/site.js` | Nav, toast, clipboard helpers |
-| `js/theme-boot.js` | FOUC-safe theme class in `<head>` |
-| `js/theme.js` | Light/dark toggle (`body.dark`, `localStorage`, `prefers-color-scheme`) |
-| `js/permissions-calc.js` | Invite bitfield calculator |
-| `js/command-playground.js` | Slash command mock embed playground |
-| `js/public-feed.js` | Live wall + leaderboards rendering |
-| `js/share-kit.js` | Support CTA, invite confetti, QR helpers |
-| `js/stats-card.js` | Canvas share card export |
+Four static pages and a 404, one stylesheet, vanilla JavaScript. No framework and no `npm install` for the site itself.
 
-## Preview locally
+| File | What it is |
+| --- | --- |
+| `index.html` | The kitchen: hero, music, radio, the Prague kitchen-hours dial, deals, the Kitchen Board, welcomes, FAQ, invite |
+| `commands.html` | A pretend `#kitchen` channel you can type `/` into, then `/play`, `/queue`, `/stop`, `/remove`, `/radio`, `/setup`, and the card buttons |
+| `radio.html` | A tuner for Kiss, Rock Radio, and Radio Beat, Catch → Play, and a Friday Radio Night vote you can click |
+| `setup.html` | Channel setup, auto-detected channel names, permissions, Server Members intent |
+| `404.html` | The empty shelf. GitHub Pages serves it for missing paths |
+
+Every card, the demo channel, and the vote are examples that run in the browser tab. The clock is the only live thing, and it is the browser's own Europe/Prague time.
+
+English is in the HTML. Czech is in `src/js/locales/cs.js`. The header switches language and light/dark. The night theme matches the kitchen photos copied from the bot (`assets/kitchen-hero.jpg`, `assets/kitchen-thumb.jpg`). `assets/avatar.jpg` (128 px) and `assets/kitchen-square.jpg` (640 px) are smaller copies of the thumb for avatars and cards. `assets/dzbanek.svg` is the favicon.
+
+`scripts/build.mjs` stitches `src/partials/` and `src/pages/` into `dist/`. That folder is what you open, and what GitHub Pages publishes.
+
+The invite uses application id `923262419923513445` and permission bitfield `3173440` (Connect, Speak, View Channel, Send Messages, Embed Links, Manage Messages, Add Reactions).
+
+## Local setup
+
+From this folder:
 
 ```bash
-# From this folder — serves on http://localhost:3000 by default
-npx --yes serve .
+node scripts/build.mjs
+npx serve dist
 ```
 
-Or open HTML files directly (API admin cookies need a real origin; prefer `serve`).
+Open the URL `serve` prints (usually `http://localhost:3000`).
 
-### With the bot API (live stats + admin)
+The bot is a separate project. Its README is the full setup. Short version, from `Dzbanek-bot 2.0` next to this folder:
 
-`js/config.js` **auto-detects** the API base:
-
-| Where you open the site | API base used |
-|-------------------------|----------------|
-| `localhost` / `127.0.0.1` | `http://127.0.0.1:3848` (local bot) |
-| Production domain / bot host | **Same origin** (bot serves the site or reverse-proxy `/api`) |
-| GitHub Pages + remote bot | Set `PRODUCTION_API_BASE` in `js/config.js` to your public API URL |
-
-**Public site (custom domain):**
-
-```
-https://dzbanek-bot.vojtas.io/
+```bash
+npm install
+npx prisma db push
+# .env with DISCORD_TOKEN
+npm run deploy
+npm run dev
 ```
 
-(GitHub Pages fallback: `https://kingvojtas.github.io/dzbanek-bot-website/`)
+This website does not start the bot.
 
-| Endpoint | Use |
-|----------|-----|
-| `GET /api/stats` | Servers, users, uptime (+ plays/history when available) |
-| `GET /api/health` | Online / ready |
-| `/api/auth/*` + `/api/admin/*` | Admin dashboard (Discord OAuth) |
-| static `/admin.html`, `/`, … | Marketing site (when bot serves files or GitHub Pages) |
+## Code breakdown
 
-**Production bot `.env` (not localhost):**
-
-```env
-PUBLIC_BASE_URL=https://dzbanek-bot.vojtas.io
-WEBSITE_ORIGIN=https://dzbanek-bot.vojtas.io,https://kingvojtas.github.io
-OAUTH_REDIRECT_URI=https://dzbanek-bot.vojtas.io/api/auth/callback
-DISCORD_CLIENT_SECRET=…
-SESSION_SECRET=long-random-string
+```
+src/partials/          head, header, footer, icons (inline SVG sprite)
+src/pages/             page content only
+src/css/site.css       wood, cream, and clay: tokens, chrome, Discord cards, pages, motion
+src/js/config.js       invite URL and GitHub URL
+src/js/i18n.js         EN / CS, ?lang=, localStorage dzbanek_lang
+src/js/theme-boot.js   theme before first paint, adds html.js
+src/js/theme.js        localStorage dzbanek_theme
+src/js/site.js         year, menu, nav pill, hero light, copy buttons, command filter
+src/js/reveal.js       scroll reveals ([data-reveal], [data-reveal-group])
+src/js/clock.js        Europe/Prague clock and the next scheduled event
+src/js/discord-demo.js the #kitchen demo on commands.html
+src/js/radio.js        tuner and Radio Night vote on radio.html
+scripts/build.mjs
+dist/             generated, not committed
 ```
 
-If only the **static** site is on `dzbanek-bot.vojtas.io` and the bot API is elsewhere, set `PRODUCTION_API_BASE` in `js/config.js` to that API origin and use that origin in `OAUTH_REDIRECT_URI` / Discord redirects instead.
-
-Add the OAuth callback URL under Discord Developer Portal → OAuth2 → Redirects.
-
-**Local development:**
-
-```env
-OAUTH_REDIRECT_URI=http://127.0.0.1:3848/api/auth/callback
-```
-
-Then open `http://127.0.0.1:3848/admin.html` (bot serves the site) or set `localStorage.dzbanek_api_base`.
-
-**Override API URL in the browser** (no rebuild):
+`config.js` is the single list of public links:
 
 ```js
-localStorage.setItem('dzbanek_api_base', 'https://bot.yourdomain.com');
-// then reload
+window.DZBANEK = {
+  INVITE_URL:
+    'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173440&scope=bot%20applications.commands',
+  GITHUB: 'https://github.com/KingVojtas/dzbanek-bot-2.0',
+};
 ```
 
-Default logic is in `js/config.js` → `window.DZBANEK.API_BASE`.
+Pages are HTML comments plus the unique markup. The build fills `{{invite}}` and `{{github}}` and wraps each page in the shared chrome. Script order on every page: `theme-boot.js` in `<head>`, then `config.js`, both locales, `i18n.js`, `site.js`, `theme.js`, `reveal.js`, `clock.js`. A page can load its own scripts after those with a comment:
 
-### Public stats (works without a public bot API)
-
-GitHub Pages / `dzbanek-bot.vojtas.io` cannot reach your PC. The site reads **`data/stats.json`** on those hosts.
-
-Refresh numbers for friends (bot running):
-
-```bash
-node scripts/export-stats.mjs
-git add data/stats.json
-git commit -m "Update public stats snapshot"
-git push
+```html
+<!-- scripts: discord-demo.js -->
 ```
 
-For **true live** stats later, host the bot on HTTPS and set `PRODUCTION_API_BASE` in `js/config.js`.
+Everything respects `prefers-reduced-motion`, and with JavaScript off the pages still read in English (the demos hide their controls).
 
-### Public `public` block (Dzbanek Now)
+## Deployment and hosting
 
-Optional object on `/api/stats` (or nested under `public`) for the landing live wall. **No user IDs / private guild IDs.**
+`.github/workflows/pages.yml` runs on a push to `main`:
 
-```json
-{
-  "public": {
-    "topTracks": [{ "title": "Track", "plays": 123, "durationSec": 214 }],
-    "nowPlaying": {
-      "title": "Song",
-      "artist": "Artist",
-      "albumArtUrl": "https://…"
-    },
-    "recentCommands": [{ "command": "/play never gonna", "at": "2026-07-16T12:00:00Z" }],
-    "recentDeals": [{ "source": "steam", "title": "Game", "subtitle": "−80% off" }],
-    "milestones": [{ "id": "plays-10000", "text": "…", "at": "…" }],
-    "topServers": [{ "name": "Opt-in name", "plays": 50 }]
-  }
-}
+```yaml
+- run: node scripts/build.mjs
+- uses: actions/upload-pages-artifact@v3
+  with:
+    path: dist
+- uses: actions/deploy-pages@v4
 ```
 
-Until the bot fills these fields, Now cards show honest idle/empty states (plus play-count milestone thresholds on the site).
+GitHub Pages has to be set to **GitHub Actions** for that workflow to be the source. The site lives in `KingVojtas/dzbanek-bot-website` and is served at `dzbanek-bot.vojtas.io`: the `CNAME` file in the root is copied into `dist` by the build, and the DNS `CNAME` points at `kingvojtas.github.io`.
 
-## Features
-
-### Trust & onboarding
-- Permissions table (no Administrator required; Manage Messages = bot’s own digest cleanup)
-- **Permissions calculator** — toggle Music / Digest cleanup packs → live bitfield + custom invite URL
-- FAQ (search history, language, permissions, music sources, invite vs self-host)
-- **EN / CZ language toggle** (GB + Czech SVG flags, corner) · `localStorage` / `?lang=`
-
-### Commands UX
-- Live filter search on the landing commands section
-- Click a command row → copies e.g. `/play` to the clipboard (toast confirmation)
-- **Command playground** — category chips + mock Discord embed preview for each slash command
-
-### Live stats
-- Landing mini KPIs: servers, approx. users, total plays, uptime
-- `stats.html`: full KPIs + Chart.js line chart from daily snapshots
-- **Shareable stats card** — download or copy a 1200×630 PNG of current KPIs
-- Offline-friendly messaging when the API is down
-
-### Admin dashboard
-1. Open `admin.html` → **Login with Discord**
-2. Bot redirects through Discord OAuth (`identify` + `guilds`)
-3. Pick a guild you manage where the bot is present
-4. Toggle news / Steam / Epic and set channel IDs → Save
-
-**Discord Developer Portal setup**
-- OAuth2 redirect: `http://127.0.0.1:3848/api/auth/callback` (or your production API URL)
-- Client secret → bot `.env` as `DISCORD_CLIENT_SECRET`
-
-**CORS / cookies:** the admin UI uses `credentials: 'include'`. The bot must list this site’s origin in `WEBSITE_ORIGIN` (or allow localhost ports in dev). For production, prefer reverse-proxying `/api` on the same site origin so cookies are first-party.
-
-If admin shows “Could not reach the admin API” while stats used to work: an old stats-only process may still own `:3848`. Fully stop and restart the bot so the Website API (stats + admin) is listening.
-
-## SEO / Open Graph
-
-Pages ship with **absolute** `og:image` / `twitter:image` pointing at:
-
-```
-https://raw.githubusercontent.com/KingVojtas/dzbanek-bot-website/main/assets/og-card.png
-```
-
-(1200×630 share card for Discord / Twitter large previews. Avatar-only fallback remains at `assets/bot-avatar.png`.)
-
-`js/config.js` sets `SITE_URL` (`https://dzbanek-bot.vojtas.io`) and `OG_IMAGE`. `js/seo.js` rewrites `og:url` when the site is served.
-
-### Custom domain (GitHub Pages)
-
-1. Repo **Settings → Pages → Custom domain**: `dzbanek-bot.vojtas.io` (or rely on the `CNAME` file in this repo).
-2. DNS at your domain host (for `vojtas.io`):
-   - **Type:** `CNAME`
-   - **Name / host:** `dzbanek-bot`
-   - **Value / target:** `kingvojtas.github.io`
-3. Wait for DNS + GitHub HTTPS certificate (can take minutes to hours).
-4. Open **https://dzbanek-bot.vojtas.io/**
-
-Fallback without custom domain:
-
-```
-https://kingvojtas.github.io/dzbanek-bot-website/
-```
-
-Test link previews with [opengraph.xyz](https://www.opengraph.xyz) or by pasting the URL into Discord.
-
-## Customize
-
-| What | Where |
-|------|--------|
-| Invite link | `js/config.js` → `INVITE_URL` (also hardcoded CTAs use client id `923262419923513445`) |
-| Support server | `js/config.js` → `SUPPORT_URL` (empty = “coming soon” toast) |
-| Buy me a coffee | `js/config.js` → `COFFEE_URL` (also linked in page footers) |
-| Language (EN/CS) | Header toggle · `?lang=cs` · `localStorage.dzbanek_lang` · strings in `js/locales/` |
-| Public live wall / boards | Optional `public` on `/api/stats` (see below) |
-| Bot avatar | Replace `assets/bot-avatar.png` |
-| API base | `js/config.js` or `localStorage.dzbanek_api_base` |
-
-## Stack
-
-- HTML5, Tailwind CSS (CDN), Inter (Google Fonts)
-- Chart.js 4 (stats page only)
-- Bot API: Website API on port **3848** (`/api/stats`, health, admin OAuth)
-
-## Related repo
-
-Bot source + API: https://github.com/KingVojtas/dzbanek-bot
+Publishing these files does not host the bot. Dzbanek-bot 2.0 stays a Node process on a home PC or a VPS, with FFmpeg and Deno available, as its own README describes.
