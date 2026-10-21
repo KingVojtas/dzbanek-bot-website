@@ -97,16 +97,21 @@
 
   /* ---- hero: a warm light follows the pointer ---- */
 
+  // Moved with transform on its own layer, so the photo never repaints.
   const stage = document.querySelector('.hero-stage');
-  if (stage && fine.matches && !calm.matches) {
+  const torch = stage?.querySelector('.hero-torch');
+  if (stage && torch && fine.matches && !calm.matches) {
     let frame = 0;
+    let x = 0;
+    let y = 0;
     stage.addEventListener('pointermove', (event) => {
+      const box = stage.getBoundingClientRect();
+      x = event.clientX - box.left;
+      y = event.clientY - box.top;
       if (frame) return;
       frame = requestAnimationFrame(() => {
         frame = 0;
-        const box = stage.getBoundingClientRect();
-        stage.style.setProperty('--mx', Math.round(event.clientX - box.left) + 'px');
-        stage.style.setProperty('--my', Math.round(event.clientY - box.top) + 'px');
+        torch.style.transform = 'translate3d(' + Math.round(x) + 'px, ' + Math.round(y) + 'px, 0)';
       });
     });
   }

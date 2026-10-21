@@ -65,6 +65,7 @@
   --sans: "Outfit", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
   --header-space: 4.3rem;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .4 0 0 0 0 .3 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --wrap: 76rem;
   color-scheme: dark;
   interpolate-size: allow-keywords;
@@ -136,6 +137,7 @@ body {
   min-height: 100vh;
   overflow-x: clip;
   background:
+    var(--grain),
     radial-gradient(1200px 640px at 12% -12%, rgba(224, 138, 69, 0.17), transparent 60%),
     radial-gradient(900px 520px at 96% 4%, rgba(255, 196, 119, 0.07), transparent 55%),
     var(--ink);
@@ -148,24 +150,10 @@ body {
 
 html.theme-light body {
   background:
+    var(--grain),
     radial-gradient(1200px 640px at 12% -12%, rgba(224, 138, 69, 0.14), transparent 60%),
     radial-gradient(900px 520px at 96% 4%, rgba(255, 196, 119, 0.16), transparent 55%),
     var(--ink);
-}
-
-/* film grain over everything */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  opacity: 0.06;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .4 0 0 0 0 .3 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-html.theme-light body::before {
-  opacity: 0.04;
 }
 
 img,
@@ -306,9 +294,7 @@ kbd {
   min-height: 3.6rem;
   margin: 0.7rem auto 0;
   padding: 0.35rem 0.4rem 0.35rem 0.5rem;
-  background: color-mix(in srgb, var(--ink) 70%, transparent);
-  -webkit-backdrop-filter: blur(18px) saturate(1.4);
-  backdrop-filter: blur(18px) saturate(1.4);
+  background: color-mix(in srgb, var(--ink) 90%, transparent);
   border: 1px solid var(--line);
   border-radius: 999px;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
@@ -317,7 +303,7 @@ kbd {
 }
 
 .site-header.is-scrolled {
-  background: color-mix(in srgb, var(--ink) 88%, transparent);
+  background: color-mix(in srgb, var(--ink) 96%, transparent);
   border-color: var(--line-strong);
   box-shadow: 0 16px 40px -14px rgba(0, 0, 0, 0.55);
 }
@@ -742,6 +728,13 @@ html:not(.theme-light) .icon-moon {
   padding: clamp(4rem, 9vw, 7rem) 0;
 }
 
+/* reveal.js marks blocks that are off-screen; their loops wait until you scroll back. */
+.is-away *,
+.is-away *::before,
+.is-away *::after {
+  animation-play-state: paused !important;
+}
+
 .section.flush-top {
   padding-top: 0.5rem;
 }
@@ -958,10 +951,8 @@ html:not(.theme-light) .icon-moon {
   gap: 0.4rem;
   padding: 0.4rem 0.95rem;
   border-radius: 999px;
-  background: rgba(20, 13, 9, 0.55);
+  background: rgba(20, 13, 9, 0.72);
   border: 1px solid rgba(246, 240, 230, 0.18);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
   color: rgba(246, 240, 230, 0.88);
   font-size: 0.85rem;
 }
@@ -992,7 +983,7 @@ html:not(.theme-light) .icon-moon {
   border-radius: 50%;
   background: #7dcea0;
   color: #7dcea0;
-  animation: ping 2.4s ease-out infinite;
+  --ping: 2.4s;
 }
 
 .clock-sep {
@@ -1033,8 +1024,7 @@ html:not(.js) .dial-center {
   inset: 8% -6% -4%;
   z-index: -1;
   border-radius: 50%;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--clay) 28%, transparent), transparent);
-  filter: blur(30px);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--clay) 24%, transparent), transparent);
 }
 
 .dc-msg {
@@ -1440,7 +1430,24 @@ button.dc-btn[aria-pressed="true"]:hover {
   border-radius: 50%;
   background: #f04747;
   color: #f04747;
-  animation: ping 1.8s ease-out infinite;
+  --ping: 1.8s;
+}
+
+/* a ring that grows and fades: transform + opacity only */
+.clock-dot,
+.live-dot {
+  position: relative;
+  flex: none;
+}
+
+.clock-dot::after,
+.live-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: currentColor;
+  animation: ping var(--ping, 2s) ease-out infinite;
 }
 
 /* skeleton lines */
@@ -1449,9 +1456,7 @@ button.dc-btn[aria-pressed="true"]:hover {
   width: var(--w, 70%);
   height: 0.62rem;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--dc-sk) 0%, var(--dc-sk-2) 50%, var(--dc-sk) 100%);
-  background-size: 200% 100%;
-  animation: shimmer 2.6s linear infinite;
+  background: linear-gradient(90deg, var(--dc-sk-2), var(--dc-sk));
 }
 
 .dc-embed-desc .sk {
@@ -1486,8 +1491,23 @@ button.dc-btn[aria-pressed="true"]:hover {
   top: calc((100cqh - var(--scene-w) * 0.5625) * var(--focus-y));
   width: var(--scene-w);
   aspect-ratio: 16 / 9;
-  animation: ken 32s ease-in-out infinite alternate;
   transform-origin: 70% 55%;
+}
+
+/* The slow zoom and the breathing lights only run on desktops with a mouse. */
+@media (hover: hover) and (pointer: fine) and (min-width: 1000px) {
+  .hero-scene {
+    animation: ken 32s ease-in-out infinite alternate;
+  }
+
+  .hero-lights i {
+    animation: breathe 7s ease-in-out infinite alternate;
+  }
+
+  .hero-lights i:nth-child(2) {
+    animation-delay: -3.5s;
+    animation-duration: 8.5s;
+  }
 }
 
 .hero-photo {
@@ -1501,9 +1521,8 @@ button.dc-btn[aria-pressed="true"]:hover {
   top: 9%;
   width: 34%;
   height: 36%;
-  background: radial-gradient(ellipse 50% 42% at 50% 22%, rgba(255, 200, 130, 0.55), transparent 72%);
-  mix-blend-mode: screen;
-  animation: breathe 7s ease-in-out infinite alternate;
+  background: radial-gradient(ellipse 50% 42% at 50% 22%, rgba(255, 200, 130, 0.3), transparent 72%);
+  opacity: 0.8;
   pointer-events: none;
 }
 
@@ -1513,8 +1532,6 @@ button.dc-btn[aria-pressed="true"]:hover {
 
 .hero-lights i:nth-child(2) {
   left: 54%;
-  animation-delay: -3.5s;
-  animation-duration: 8.5s;
 }
 
 .steam {
@@ -1524,7 +1541,6 @@ button.dc-btn[aria-pressed="true"]:hover {
   width: 14%;
   height: 37%;
   pointer-events: none;
-  filter: blur(9px);
 }
 
 .steam i {
@@ -1534,38 +1550,41 @@ button.dc-btn[aria-pressed="true"]:hover {
   width: 34%;
   height: 46%;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(255, 244, 232, 0.42), transparent 68%);
+  background: radial-gradient(closest-side, rgba(255, 244, 232, 0.3), rgba(255, 244, 232, 0.1) 55%, transparent);
   opacity: 0;
   animation: steam 7.5s ease-out infinite;
 }
 
 .steam i:nth-child(2) {
   left: 22%;
-  --dx: -18%;
+  animation-name: steam-left;
   animation-delay: 1.9s;
 }
 
 .steam i:nth-child(3) {
   left: 48%;
-  --dx: 22%;
+  animation-name: steam-right;
   animation-delay: 3.8s;
 }
 
 .steam i:nth-child(4) {
   left: 30%;
-  --dx: 8%;
   animation-delay: 5.6s;
 }
 
 .hero-torch {
   position: absolute;
-  inset: 0;
+  left: -420px;
+  top: -420px;
   z-index: 1;
-  background: radial-gradient(420px circle at var(--mx, 70%) var(--my, 45%), rgba(255, 190, 120, 0.16), transparent 62%);
-  mix-blend-mode: screen;
+  width: 840px;
+  height: 840px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 190, 120, 0.12), transparent);
   opacity: 0;
   transition: opacity 0.6s var(--ease);
   pointer-events: none;
+  will-change: transform;
 }
 
 .hero-stage:hover .hero-torch {
@@ -1594,23 +1613,23 @@ button.dc-btn[aria-pressed="true"]:hover {
 }
 
 .hero-copy > * {
-  animation: rise-in 1s var(--ease) both;
+  animation: rise-in 0.7s var(--ease) both;
 }
 
 .hero-copy > :nth-child(2) {
-  animation-delay: 0.1s;
+  animation-delay: 0.05s;
 }
 
 .hero-copy > :nth-child(3) {
-  animation-delay: 0.2s;
+  animation-delay: 0.1s;
 }
 
 .hero-copy > :nth-child(4) {
-  animation-delay: 0.3s;
+  animation-delay: 0.15s;
 }
 
 .hero-copy > :nth-child(5) {
-  animation-delay: 0.4s;
+  animation-delay: 0.2s;
 }
 
 .hero-copy .clock-chip {
@@ -1652,11 +1671,9 @@ button.dc-btn[aria-pressed="true"]:hover {
 }
 
 .hero .btn-ghost {
-  background: rgba(20, 14, 10, 0.45);
+  background: rgba(20, 14, 10, 0.62);
   border-color: rgba(246, 240, 230, 0.32);
   color: #f6f0e6;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
 }
 
 .hero-scroll {
@@ -1866,9 +1883,11 @@ button.dc-btn[aria-pressed="true"]:hover {
 
 .eq i {
   width: 4px;
-  height: 30%;
+  height: 100%;
   border-radius: 2px;
   background: var(--accent, var(--clay));
+  transform: scaleY(0.3);
+  transform-origin: bottom;
   animation: eq 1.1s ease-in-out infinite alternate;
 }
 
@@ -2174,10 +2193,9 @@ html.theme-light .chip-vp {
   margin-top: 0.7rem;
   border-radius: 0.4rem;
   background:
-    linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.07) 50%, transparent 70%) 0 0 / 250% 100%,
+    radial-gradient(80% 120% at 20% 0%, rgba(255, 255, 255, 0.08), transparent 60%),
     linear-gradient(135deg, #2f2f33, #141416);
   color: rgba(255, 255, 255, 0.4);
-  animation: sheen 5s linear infinite;
 }
 
 /* board */
@@ -2363,15 +2381,14 @@ html:not(.js) .steps::before,
   width: 34%;
   height: 52%;
   z-index: 1;
-  filter: blur(7px);
 }
 
 .steam.small i {
-  background: radial-gradient(ellipse at center, rgba(255, 244, 232, 0.5), transparent 68%);
+  background: radial-gradient(closest-side, rgba(255, 244, 232, 0.4), rgba(255, 244, 232, 0.12) 55%, transparent);
 }
 
 html.theme-light .steam.small i {
-  background: radial-gradient(ellipse at center, rgba(120, 90, 60, 0.28), transparent 68%);
+  background: radial-gradient(closest-side, rgba(120, 90, 60, 0.24), rgba(120, 90, 60, 0.08) 55%, transparent);
 }
 
 .cta h2 {
@@ -2394,7 +2411,7 @@ html.theme-light .steam.small i {
 }
 
 .page-hero .wrap > * {
-  animation: rise-in 0.9s var(--ease) both;
+  animation: rise-in 0.6s var(--ease) both;
 }
 
 .page-hero .wrap > :nth-child(2) {
@@ -2427,7 +2444,7 @@ html.theme-light .steam.small i {
   box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0, 0, 0, 0.15);
   font-size: 0.95rem;
   line-height: 1.45;
-  animation: rise-in 1s var(--ease) 0.2s both;
+  animation: rise-in 0.6s var(--ease) 0.1s both;
 }
 
 .dc-titlebar {
@@ -3096,15 +3113,22 @@ html.js .station:not(.is-tuned) .eq i {
   background: var(--ink);
 }
 
-.flow-step .dc {
+.flow-step .dc::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--clay) 70%, transparent), 0 20px 50px -20px color-mix(in srgb, var(--clay) 60%, transparent);
+  opacity: 0;
+  pointer-events: none;
   animation: flow-glow 9s ease-in-out infinite;
 }
 
-.flow-step:nth-child(2) .dc {
+.flow-step:nth-child(2) .dc::after {
   animation-delay: 3s;
 }
 
-.flow-step:nth-child(3) .dc {
+.flow-step:nth-child(3) .dc::after {
   animation-delay: 6s;
 }
 
@@ -3156,8 +3180,8 @@ html.js .station:not(.is-tuned) .eq i {
 
 .timeline li.is-now::before {
   background: var(--clay);
-  color: var(--clay);
-  animation: ping 2s ease-out infinite;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--clay) 30%, transparent);
+  animation: glow 2s ease-in-out infinite;
 }
 
 .timeline li.is-now::after {
@@ -3559,12 +3583,12 @@ html:not(.js) .vote-controls {
 
 html.js [data-reveal],
 html.js [data-reveal-group] > * {
-  --d: calc(var(--i, 0) * 90ms);
+  --d: calc(var(--i, 0) * 60ms);
   opacity: 0;
-  translate: 0 28px;
+  translate: 0 18px;
   transition:
-    opacity 0.9s var(--ease) var(--d),
-    translate 0.9s var(--ease) var(--d),
+    opacity 0.55s var(--ease) var(--d),
+    translate 0.55s var(--ease) var(--d),
     transform 0.5s var(--spring),
     border-color 0.45s var(--ease),
     box-shadow 0.45s var(--ease);
@@ -3615,9 +3639,7 @@ html.js [data-reveal-group].is-in > * {
     overflow: auto;
     border-radius: 1.4rem;
     border: 1px solid var(--line);
-    background: color-mix(in srgb, var(--ink-2) 94%, transparent);
-    -webkit-backdrop-filter: blur(18px);
-    backdrop-filter: blur(18px);
+    background: var(--ink-2);
     box-shadow: var(--shadow-lg);
     transform-origin: top center;
     animation: menu-in 0.4s var(--spring) both;
@@ -3916,7 +3938,7 @@ html.js [data-reveal-group].is-in > * {
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 0.35s;
+  animation-duration: 0.22s;
 }
 
 /* ---------- keyframes ---------- */
@@ -3956,19 +3978,46 @@ html.js [data-reveal-group].is-in > * {
   }
 }
 
+/* Steam keyframes use plain transform (no CSS variables) so the GPU can run them. */
 @keyframes steam {
   0% {
     opacity: 0;
-    translate: 0 0;
-    scale: 0.6 0.8;
+    transform: translate(0, 0) scale(0.6, 0.8);
   }
   20% {
     opacity: 0.85;
   }
   100% {
     opacity: 0;
-    translate: var(--dx, 0) -130%;
-    scale: 1.6 1.9;
+    transform: translate(4%, -130%) scale(1.6, 1.9);
+  }
+}
+
+@keyframes steam-left {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6, 0.8);
+  }
+  20% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-18%, -130%) scale(1.6, 1.9);
+  }
+}
+
+@keyframes steam-right {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6, 0.8);
+  }
+  20% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(22%, -130%) scale(1.6, 1.9);
   }
 }
 
@@ -4009,37 +4058,27 @@ html.js [data-reveal-group].is-in > * {
 
 @keyframes eq {
   from {
-    height: 18%;
+    transform: scaleY(0.18);
   }
   to {
-    height: 100%;
-  }
-}
-
-@keyframes shimmer {
-  from {
-    background-position: 100% 0;
-  }
-  to {
-    background-position: -100% 0;
-  }
-}
-
-@keyframes sheen {
-  from {
-    background-position: 150% 0, 0 0;
-  }
-  to {
-    background-position: -100% 0, 0 0;
+    transform: scaleY(1);
   }
 }
 
 @keyframes ping {
-  0% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 55%, transparent);
+  from {
+    opacity: 0.6;
+    transform: scale(1);
   }
-  100% {
-    box-shadow: 0 0 0 10px transparent;
+  to {
+    opacity: 0;
+    transform: scale(3);
+  }
+}
+
+@keyframes glow {
+  50% {
+    opacity: 0.45;
   }
 }
 
@@ -4103,10 +4142,10 @@ html.js [data-reveal-group].is-in > * {
 @keyframes flow-glow {
   0%,
   28% {
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--clay) 70%, transparent), 0 20px 50px -20px color-mix(in srgb, var(--clay) 60%, transparent);
+    opacity: 1;
   }
   36%,
   100% {
-    box-shadow: var(--shadow);
+    opacity: 0;
   }
 }
