@@ -1,15 +1,20 @@
-<!-- title: Page not found — Dzbanek -->
-<!-- description: This page does not exist. -->
+<!-- title: Empty shelf — Dzbanek -->
+<!-- description: This page is not in the kitchen. -->
 <!-- page: notFound -->
 
-<header class="page-head lost">
-  <div class="wrap">
-    <p class="mono muted">404</p>
-    <h1 data-i18n="lost.title">Page not found</h1>
-    <p class="lead" data-i18n="lost.body">There’s nothing at this address.</p>
-    <p class="actions">
-      <a class="btn" href="index.html" data-i18n="lost.home">Go to the home page</a>
-      <a class="btn btn-quiet" href="commands.html" data-i18n="lost.commands">See the commands</a>
-    </p>
+<section class="lost">
+  <div class="lost-mug" aria-hidden="true">
+    <div class="steam small"><i></i><i></i><i></i></div>
+    <picture>
+      <source type="image/webp" srcset="assets/kitchen-square.webp" />
+      <img src="assets/kitchen-square.jpg" alt="" width="640" height="640" decoding="async" />
+    </picture>
   </div>
-</header>
+  <p class="kicker">404</p>
+  <h1 data-i18n="lost.title">This shelf is empty.</h1>
+  <p class="lead" data-i18n="lost.body">Whatever was here got eaten. The cookies are back in the kitchen.</p>
+  <div class="hero-actions center">
+    <a class="btn btn-clay" href="index.html" data-i18n="lost.home">Back to the kitchen</a>
+    <a class="btn btn-ghost" href="commands.html" data-i18n="lost.commands">See the commands</a>
+  </div>
+</section>

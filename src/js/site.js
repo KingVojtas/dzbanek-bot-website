@@ -1,5 +1,5 @@
 /**
- * Year, mobile nav, current page, copy-to-clipboard.
+ * Year, mobile nav, current page, nav pill, copy-to-clipboard.
  */
 (function () {
   const year = document.getElementById('year');
@@ -34,7 +34,7 @@
     if (event.matches) setMenu(false);
   });
 
-  /* ---- current page ---- */
+  /* ---- current page + sliding pill ---- */
 
   // Pages also answer without .html (/commands), so compare bare names.
   const bare = (name) => name.toLowerCase().replace(/\.html$/, '') || 'index';
@@ -44,6 +44,39 @@
       el.setAttribute('aria-current', 'page');
     }
   });
+
+  const deskNav = document.querySelector('.desk-nav');
+  const pill = deskNav?.querySelector('.nav-pill');
+
+  function movePill(link) {
+    if (!pill) return;
+    if (!link) {
+      pill.classList.remove('is-ready');
+      return;
+    }
+    pill.style.left = link.offsetLeft + 'px';
+    pill.style.width = link.offsetWidth + 'px';
+    pill.classList.add('is-ready');
+  }
+
+  function homePill() {
+    movePill(deskNav?.querySelector('a[aria-current="page"]'));
+  }
+
+  if (deskNav && pill) {
+    deskNav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('pointerenter', () => movePill(link));
+      link.addEventListener('focus', () => movePill(link));
+    });
+    deskNav.addEventListener('pointerleave', homePill);
+    deskNav.addEventListener('focusout', (event) => {
+      if (!deskNav.contains(event.relatedTarget)) homePill();
+    });
+    window.addEventListener('resize', homePill);
+    window.addEventListener('dzbanek:lang', () => requestAnimationFrame(homePill));
+    document.fonts?.ready.then(homePill);
+    homePill();
+  }
 
   /* ---- header on scroll ---- */
 

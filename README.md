@@ -10,17 +10,17 @@ Four static pages and a 404, one stylesheet, vanilla JavaScript. No framework an
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The video, then music, radio, the Prague-time schedule, deals, the Kitchen Board, welcome messages, getting started, FAQ |
+| `index.html` | The kitchen: the hero ad, music, radio, the Prague kitchen-hours dial, deals, the Kitchen Board, welcomes, FAQ, invite |
 | `commands.html` | A pretend `#kitchen` channel you can type `/` into, then `/play`, `/queue`, `/stop`, `/remove`, `/radio`, `/setup`, and the card buttons |
-| `radio.html` | Kiss, Rock Radio, and Radio Beat, Catch and Play, and a Friday Radio Night vote you can click |
+| `radio.html` | A tuner for Kiss, Rock Radio, and Radio Beat, Catch → Play, and a Friday Radio Night vote you can click |
 | `setup.html` | Channel setup, auto-detected channel names, permissions, Server Members intent |
 | `404.html` | The empty shelf. GitHub Pages serves it for missing paths |
 
 Every card, the demo channel, and the vote are examples that run in the browser tab. The clock is the only live thing, and it is the browser's own Europe/Prague time.
 
-English is in the HTML. Czech is in `src/js/locales/cs.js`. The header switches language and light/dark. The page uses Discord's own greys (white in light mode), so the example cards look like real Discord messages, with one accent: the cobalt painted on the pitcher. Text is in the system font. The kitchen photos come from the bot (`assets/kitchen-hero.jpg`, `assets/kitchen-thumb.jpg`). `assets/avatar.jpg` (128 px) and `assets/kitchen-square.jpg` (640 px) are smaller copies of the thumb for avatars and cards. The thumb itself is only their source, so the build leaves it out of `dist/`. The `.webp` files next to the JPGs are what browsers load first, and the JPGs are the fallback. `assets/fonts/` holds the self-hosted JetBrains Mono for commands (latin and latin-ext, which has the Czech letters). `assets/dzbanek.svg` is the favicon.
+English is in the HTML. Czech is in `src/js/locales/cs.js`. The header switches language and light/dark. The night theme matches the kitchen photos copied from the bot (`assets/kitchen-hero.jpg`, `assets/kitchen-thumb.jpg`). `assets/avatar.jpg` (128 px) and `assets/kitchen-square.jpg` (640 px) are smaller copies of the thumb for avatars and cards. The thumb itself is only their source, so the build leaves it out of `dist/`. The `.webp` files next to the JPGs are what browsers load first, and the JPGs are the fallback. `assets/fonts/` holds the self-hosted Fraunces, Outfit, and JetBrains Mono (latin and latin-ext, which has the Czech letters). `assets/dzbanek.svg` is the favicon.
 
-The home hero plays the 52-second Dzbanek ad (`src/js/film.js`). Its first frame is `kitchen-hero.jpg`, so the photo seems to start moving. On the first visit of a browser session it starts muted, since browsers only allow sound after a click; "Turn on sound" restarts it with the voice-over and captions. It skips the autoplay for `prefers-reduced-motion` and data saver, and the play button on the photo plays it with sound. `assets/ad/` holds a 1080p and a 720p H.264 encode (phones get the 720p) and EN / CS captions. `og:video` on the home page points at the 720p file, so a pasted link plays the ad in Discord. The encodes come from the ad's silent master plus the finished mix's audio:
+The home hero plays the 52-second Dzbanek ad (`src/js/film.js`). Its first frame is `kitchen-hero.jpg`, so the photo seems to start moving. On the first visit of a browser session it starts muted, since browsers only allow sound after a click; "Turn on sound" restarts it with the voice-over and captions. It skips the autoplay for `prefers-reduced-motion` and data saver, and the round sticker plays it with sound. `assets/ad/` holds a 1080p and a 720p H.264 encode (phones get the 720p) and EN / CS captions. `og:video` on the home page points at the 720p file, so a pasted link plays the ad in Discord. The encodes come from the ad's silent master plus the finished mix's audio:
 
 ```bash
 ffmpeg -i video-silent.mp4 -i dzbanek-ad.mp4 -map 0:v:0 -map 1:a:0 \
@@ -61,16 +61,16 @@ This website does not start the bot.
 ```
 src/partials/          head, header, footer, icons (inline SVG sprite)
 src/pages/             page content only
-src/css/site.css       tokens, header, layout, the video, Discord cards, pages, footer
+src/css/site.css       wood, cream, and clay: fonts, tokens, chrome, Discord cards, pages, motion
 src/js/i18n.js         EN / CS, ?lang=, localStorage dzbanek_lang
 src/js/theme-boot.js   theme before first paint, adds html.js
 src/js/theme.js        localStorage dzbanek_theme
 src/js/site.js         year, menu, nav pill, copy buttons, command filter
-src/js/reveal.js       pauses looping animations in blocks that are off-screen
+src/js/reveal.js       scroll reveals ([data-reveal], [data-reveal-group])
 src/js/clock.js        Europe/Prague clock and the next scheduled event
 src/js/discord-demo.js the #kitchen demo on commands.html
-src/js/radio.js        station picker and Radio Night vote on radio.html
-src/js/film.js         the video on index.html: autoplay, sound, chapters, captions
+src/js/radio.js        tuner and Radio Night vote on radio.html
+src/js/film.js         the hero ad on index.html: autoplay, sound, chapters, captions, glow
 scripts/build.mjs
 dist/             generated, not committed
 ```

@@ -3,8 +3,8 @@
  *
  * On the first visit of a session it starts muted, because browsers only allow
  * sound after a click. "Turn on sound" restarts it with the voice-over. When it
- * ends, or is closed, the frame goes back to the kitchen photo, and the play
- * button starts it again with sound.
+ * ends, or is skipped, the stage settles back into the kitchen photo, and the
+ * sticker plays it again with sound.
  *
  * The ad's first frame is the hero photo, so the photo seems to start moving.
  * States on .hero[data-film]: idle, starting, playing, paused, done.
@@ -28,18 +28,21 @@
   ];
 
   const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const glow = hero.querySelector('.film-glow');
+  const paint = glow && glow.getContext('2d');
   const caption = hero.querySelector('[data-film-caption]');
   const now = hero.querySelector('[data-film-now]');
   const soundButton = hero.querySelector('[data-film-sound]');
   const soundLabel = hero.querySelector('[data-film-sound-label]');
-  const playButton = hero.querySelector('[data-film-play]');
-  const playLabel = hero.querySelector('[data-film-label]');
+  const sticker = hero.querySelector('[data-film-play]');
+  const ring = hero.querySelector('[data-film-ring]');
   const t = (key, fallback) => (window.t && window.t(key)) || fallback;
 
   let seenBefore = false;
   let captionsOn = false;
   let awayPaused = false;
   let looping = false;
+  let lastGlow = 0;
   let resetTimer;
 
   const state = () => hero.dataset.film;
@@ -82,14 +85,19 @@
     if (now.textContent !== name) now.textContent = name;
   }
 
-  /* ---------- the frame loop: chapter progress ---------- */
+  /* ---------- the frame loop: progress and the ambient glow ---------- */
 
-  function frame() {
+  function frame(time) {
     if (video.paused || video.ended) {
       looping = false;
       return;
     }
     progress(video.currentTime);
+    // About eight glow updates a second is plenty for light that soft.
+    if (paint && !calm && time - lastGlow > 120) {
+      paint.drawImage(video, 0, 0, glow.width, glow.height);
+      lastGlow = time;
+    }
     next();
   }
 
@@ -119,10 +127,10 @@
   function labels() {
     hero.dataset.sound = video.muted ? 'off' : 'on';
     soundLabel.textContent = video.muted ? t('film.sound', 'Turn on sound') : t('film.mute', 'Sound off');
-    playLabel.textContent = seenBefore ? t('film.again', 'Watch again') : t('film.watch', 'Watch with sound');
-    playButton.setAttribute(
+    ring.textContent = seenBefore ? t('film.again', 'Watch again · with sound ·') : t('film.watch', 'Watch the ad · with sound ·');
+    sticker.setAttribute(
       'aria-label',
-      seenBefore ? t('film.againAria', 'Play the video again with sound') : t('film.watchAria', 'Play the video with sound')
+      seenBefore ? t('film.againAria', 'Watch the ad again with sound') : t('film.watchAria', 'Watch the ad with sound')
     );
     segments.forEach((segment) => {
       const name = t('film.ch.' + segment.id, segment.id);
@@ -158,7 +166,7 @@
     awayPaused = false;
     video.pause();
     labels();
-    if (hadFocus) playButton.focus({ preventScroll: true });
+    if (hadFocus) sticker.focus({ preventScroll: true });
     // Rewind once the film has faded back into the photo.
     resetTimer = setTimeout(() => {
       if (state() !== 'done') return;
@@ -194,7 +202,7 @@
   });
 
   hero.querySelector('[data-film-skip]').addEventListener('click', finish);
-  playButton.addEventListener('click', () => start(true));
+  sticker.addEventListener('click', () => start(true));
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && (state() === 'playing' || state() === 'paused')) finish();
@@ -238,7 +246,7 @@
       /* ignore */
     }
     start(false);
-    // Autoplay is a muted preview, so the button still offers it with sound afterwards.
+    // Autoplay is a preview, so the sticker still says "Watch the ad" until it has been chosen.
     seenBefore = false;
     labels();
   }
