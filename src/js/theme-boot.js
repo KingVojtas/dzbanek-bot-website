@@ -13,7 +13,7 @@
     if (light) document.documentElement.classList.add('theme-light');
     // The browser bar follows the chosen theme, not only the system one.
     var metas = document.querySelectorAll('meta[name="theme-color"]');
-    for (var i = 0; i < metas.length; i += 1) metas[i].setAttribute('content', light ? '#f6f1e8' : '#120c08');
+    for (var i = 0; i < metas.length; i += 1) metas[i].setAttribute('content', light ? '#ffffff' : '#1e1f22');
   } catch (e) {
     /* keep the night theme */
   }

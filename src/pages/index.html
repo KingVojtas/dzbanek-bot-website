@@ -1,143 +1,120 @@
-<!-- title: Dzbanek — the kitchen stays open -->
-<!-- description: Dzbanek is a Discord bot for music, Czech live radio, Steam deals, and Epic free games. One kitchen card keeps the server posted. -->
+<!-- title: Dzbanek — Discord bot for music, Czech radio, and game deals -->
+<!-- description: Dzbanek is a free Discord bot. It plays music from YouTube and Spotify, streams Czech radio, and posts Steam deals and Epic free games. -->
 <!-- page: home -->
 <!-- scripts: film.js -->
 
 <section class="hero" data-hero>
-  <canvas class="film-glow" width="32" height="18" aria-hidden="true"></canvas>
-  <div class="hero-stage">
-    <div class="hero-scene">
-      <picture>
-        <source type="image/webp" srcset="assets/kitchen-hero.webp" />
-        <img
-          class="hero-photo"
-          src="assets/kitchen-hero.jpg"
-          alt="A ceramic pitcher, chocolate chip cookies, and a steaming mug on a wooden kitchen counter at night."
-          data-i18n-alt="hero.alt"
-          width="1280"
-          height="720"
-          decoding="async"
-          fetchpriority="high"
-        />
-      </picture>
-      <div class="hero-lights" aria-hidden="true"><i></i><i></i></div>
-      <div class="steam" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    </div>
-    <div class="hero-shade" aria-hidden="true"></div>
-    <video class="hero-film" muted playsinline preload="none" poster="assets/kitchen-hero.webp" aria-label="The Dzbanek ad" data-i18n-aria="film.label" data-film>
-      <source src="assets/ad/dzbanek-ad-720.mp4" type="video/mp4" media="(max-width: 900px)" />
-      <source src="assets/ad/dzbanek-ad-1080.mp4" type="video/mp4" />
-      <track kind="captions" srclang="en" label="English" src="assets/ad/captions-en.vtt" />
-      <track kind="captions" srclang="cs" label="Čeština" src="assets/ad/captions-cs.vtt" />
-    </video>
-    <div class="hero-copy">
-      <p class="clock-chip" data-clock-chip>
-        <span class="clock-dot" aria-hidden="true"></span>
-        <span data-i18n="clock.open">Open</span>
-        <span class="clock-sep" aria-hidden="true">·</span>
-        <span><span class="mono" data-clock="time">--:--</span> <span data-i18n="clock.inPrague">in Prague</span></span>
-        <span class="clock-next"><span class="clock-sep" aria-hidden="true">·</span> <span data-i18n="clock.next">Next:</span> <strong data-clock="next-name"></strong> <span data-clock="next-in"></span></span>
+  <div class="wrap">
+    <div class="intro">
+      <h1>Dzbanek</h1>
+      <p class="lead" data-i18n="hero.lead">A Discord bot that plays music, streams Czech radio, and posts Steam deals and Epic free games. It’s free and has six slash commands.</p>
+      <p class="actions">
+        <a class="btn" href="{{invite}}" target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Discord</a>
+        <a class="btn btn-quiet" href="commands.html" data-i18n="hero.secondary">See the commands</a>
       </p>
-      <p class="kicker" data-i18n="hero.kicker">Discord bot · 2.0</p>
-      <h1 class="hero-title" data-i18n="hero.title">The kitchen stays open.</h1>
-      <p class="lead" data-i18n="hero.lead">Music, Czech radio, Steam deals, and a cookie for anyone who walks in.</p>
-      <div class="hero-actions">
-        <a class="btn btn-clay btn-lg" href="{{invite}}" data-invite target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Server</a>
-        <a class="btn btn-ghost btn-lg" href="commands.html#demo"><span data-i18n="hero.secondary">Try the commands</span> <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
-      </div>
     </div>
-    <button type="button" class="film-sticker" data-film-play aria-label="Watch the ad with sound">
-      <svg class="film-ring" viewBox="0 0 100 100" aria-hidden="true">
-        <defs><path id="film-ring-path" d="M50 50m-39 0a39 39 0 1 1 78 0a39 39 0 1 1 -78 0" /></defs>
-        <text><textPath href="#film-ring-path" textLength="243" lengthAdjust="spacing" data-film-ring>Watch the ad · with sound ·</textPath></text>
-      </svg>
-      <span class="film-play" aria-hidden="true"><svg width="26" height="26"><use href="#i-play" /></svg></span>
-    </button>
-    <a class="hero-scroll" href="#menu" data-i18n-aria="hero.scroll" aria-label="Scroll to the menu"><span></span></a>
-  </div>
-  <div class="film-bar" data-film-bar>
-    <p class="film-line" aria-hidden="true"><span class="film-now" data-film-now></span><span class="film-caption" data-film-caption></span></p>
-    <div class="film-chapters" role="group" aria-label="Chapters" data-i18n-aria="film.chapters" data-film-chapters></div>
-    <div class="film-tools">
-      <button type="button" class="film-tool" data-film-sound>
-        <svg class="icon-unmuted" width="18" height="18" aria-hidden="true"><use href="#i-speaker" /></svg>
-        <svg class="icon-muted" width="18" height="18" aria-hidden="true"><use href="#i-mute" /></svg>
-        <span data-film-sound-label>Turn on sound</span>
+
+    <div class="hero-stage">
+      <div class="hero-scene">
+        <picture>
+          <source type="image/webp" srcset="assets/kitchen-hero.webp" />
+          <img
+            class="hero-photo"
+            src="assets/kitchen-hero.jpg"
+            alt="A ceramic pitcher, chocolate chip cookies, and a steaming mug on a wooden kitchen counter at night."
+            data-i18n-alt="hero.alt"
+            width="1280"
+            height="720"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </picture>
+        <div class="steam" aria-hidden="true"><i></i><i></i><i></i></div>
+      </div>
+      <video class="hero-film" muted playsinline preload="none" poster="assets/kitchen-hero.webp" aria-label="Dzbanek video" data-i18n-aria="film.label" data-film>
+        <source src="assets/ad/dzbanek-ad-720.mp4" type="video/mp4" media="(max-width: 900px)" />
+        <source src="assets/ad/dzbanek-ad-1080.mp4" type="video/mp4" />
+        <track kind="captions" srclang="en" label="English" src="assets/ad/captions-en.vtt" />
+        <track kind="captions" srclang="cs" label="Čeština" src="assets/ad/captions-cs.vtt" />
+      </video>
+      <button type="button" class="film-start" data-film-play aria-label="Play the video with sound">
+        <svg width="18" height="18" aria-hidden="true"><use href="#i-play" /></svg>
+        <span data-film-label>Watch with sound</span>
+        <span class="film-length">0:52</span>
       </button>
-      <a class="btn btn-clay btn-sm" href="{{invite}}" data-invite target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Server</a>
-      <button type="button" class="film-tool film-skip" data-film-skip aria-label="Skip the ad" data-i18n-aria="film.skipAria">
-        <span data-i18n="film.skip">Skip</span>
-        <svg width="16" height="16" aria-hidden="true"><use href="#i-close" /></svg>
-      </button>
+    </div>
+
+    <div class="film-bar" data-film-bar>
+      <p class="film-line" aria-hidden="true"><span class="film-now" data-film-now></span><span class="film-caption" data-film-caption></span></p>
+      <div class="film-chapters" role="group" aria-label="Chapters" data-i18n-aria="film.chapters" data-film-chapters></div>
+      <div class="film-tools">
+        <button type="button" class="film-tool" data-film-sound>
+          <svg class="icon-unmuted" width="16" height="16" aria-hidden="true"><use href="#i-speaker" /></svg>
+          <svg class="icon-muted" width="16" height="16" aria-hidden="true"><use href="#i-mute" /></svg>
+          <span data-film-sound-label>Turn on sound</span>
+        </button>
+        <button type="button" class="film-tool" data-film-skip aria-label="Stop the video" data-i18n-aria="film.skipAria">
+          <svg width="16" height="16" aria-hidden="true"><use href="#i-close" /></svg>
+          <span data-i18n="film.skip">Close</span>
+        </button>
+      </div>
     </div>
   </div>
 </section>
 
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>/play</span><b>✦</b><span>Kiss</span><b>✦</b><span>Rock Radio</span><b>✦</b><span>Radio Beat</span><b>✦</b><span>Steam · 03:33</span><b>✦</b><span>Epic · 12:00 &amp; 17:00</span><b>✦</b><span><span data-i18n="clock.ev.night">Radio Night</span> · <span data-i18n="footer.fri20">Fri 20:00</span></span><b>✦</b><span data-i18n="clock.ev.postcard">Sunday postcard</span><b>✦</b><span>🍪</span><b>✦</b>
-    <span>/play</span><b>✦</b><span>Kiss</span><b>✦</b><span>Rock Radio</span><b>✦</b><span>Radio Beat</span><b>✦</b><span>Steam · 03:33</span><b>✦</b><span>Epic · 12:00 &amp; 17:00</span><b>✦</b><span><span data-i18n="clock.ev.night">Radio Night</span> · <span data-i18n="footer.fri20">Fri 20:00</span></span><b>✦</b><span data-i18n="clock.ev.postcard">Sunday postcard</span><b>✦</b><span>🍪</span><b>✦</b>
-  </div>
-</div>
-
-<section class="section" id="menu" aria-labelledby="menu-title">
+<section class="section" id="about">
   <div class="wrap">
-    <div class="section-head center" data-reveal>
-      <p class="kicker" data-i18n="facts.kicker">On the menu</p>
-      <h2 id="menu-title" data-i18n="facts.title">Four things to know before you sit down.</h2>
-    </div>
-    <div class="menu-cards" data-reveal-group>
-      <article class="menu-card">
-        <span class="menu-icon"><svg width="26" height="26" aria-hidden="true"><use href="#i-speaker" /></svg></span>
-        <h3 data-i18n="facts.voiceTitle">One speaker</h3>
-        <p data-i18n="facts.voiceBody">Music and radio share a single voice channel. Starting one takes the speaker from the other.</p>
-      </article>
-      <article class="menu-card">
-        <span class="menu-icon"><svg width="26" height="26" aria-hidden="true"><use href="#i-clock" /></svg></span>
-        <h3 data-i18n="facts.clockTitle">Prague clock</h3>
-        <p data-i18n="facts.clockBody">Deals, Radio Night, and the Sunday postcard follow Europe/Prague.</p>
-      </article>
-      <article class="menu-card">
-        <span class="menu-icon"><svg width="26" height="26" aria-hidden="true"><use href="#i-slash" /></svg></span>
-        <h3 data-i18n="facts.cmdTitle">Six commands</h3>
-        <p data-i18n="facts.cmdBody">/play, /queue, /stop, /remove, /radio, and /setup. The rest are buttons on the card.</p>
-      </article>
-      <article class="menu-card">
-        <span class="menu-icon"><svg width="26" height="26" aria-hidden="true"><use href="#i-cookie" /></svg></span>
-        <h3 data-i18n="facts.freeTitle">Free</h3>
-        <p data-i18n="facts.freeBody">No premium tier. Invite it and the kitchen is yours.</p>
-      </article>
-    </div>
+    <h2 data-i18n="facts.title">Good to know</h2>
+    <dl class="facts">
+      <div>
+        <dt data-i18n="facts.voiceTitle">One voice connection</dt>
+        <dd data-i18n="facts.voiceBody">Music and radio share the bot’s voice connection in a server. Starting one stops the other.</dd>
+      </div>
+      <div>
+        <dt data-i18n="facts.clockTitle">Prague time</dt>
+        <dd data-i18n="facts.clockBody">Deals, Radio Night, and the Sunday postcard run on Europe/Prague time.</dd>
+      </div>
+      <div>
+        <dt data-i18n="facts.cmdTitle">Six slash commands</dt>
+        <dd data-i18n="facts.cmdBody">/play, /queue, /stop, /remove, /radio, and /setup. Everything else is a button on the cards.</dd>
+      </div>
+      <div>
+        <dt data-i18n="facts.freeTitle">Free</dt>
+        <dd data-i18n="facts.freeBody">No premium tier and nothing locked.</dd>
+      </div>
+    </dl>
   </div>
 </section>
 
 <section class="section" id="music">
   <div class="wrap split">
-    <div data-reveal>
-      <p class="kicker" data-i18n="music.kicker">Music</p>
-      <h2 data-i18n="music.title">A queue, not a cluttered chat.</h2>
-      <p class="lead" data-i18n="music.body">Drop a YouTube link or a search. Spotify tracks, albums, and playlists work too — Spotify is the recipe card, the audio comes from YouTube. Now Playing shows the art, a progress bar, and the transport buttons. When the next song starts, the old card is cleared.</p>
-      <ul class="ticks">
-        <li data-i18n="music.b1">Pause, skip, shuffle, and loop live on the card</li>
-        <li data-i18n="music.b2">The queue holds 100 tracks. /remove drops one by position</li>
-        <li data-i18n="music.b3">After 120 quiet seconds, the last radio station fades in if people are still there</li>
+    <div class="prose">
+      <h2 data-i18n="music.title">Music</h2>
+      <p data-i18n="music.body">/play takes a YouTube link, a Spotify track, album, or playlist, or just a search. Spotify links are matched to the same song on YouTube, which is where the audio comes from.</p>
+      <p data-i18n="music.body2">The Now Playing card shows the cover, a progress bar, and the controls. When the next song starts, the previous card is deleted, so the channel doesn’t fill up with old cards.</p>
+      <ul>
+        <li data-i18n="music.b1">Pause, skip, shuffle, and loop are buttons on the card.</li>
+        <li data-i18n="music.b2">The queue holds up to 100 tracks. /remove takes one out by its position.</li>
+        <li data-i18n="music.b3">If the queue runs out while people are still in the channel, the last radio station starts after 120 seconds.</li>
       </ul>
     </div>
-    <div class="dc-stage" data-reveal>
-      <span class="example-tag" data-i18n="player.note">Example card. Not a live player.</span>
+    <figure class="example">
       <div class="dc">
         <div class="dc-msg">
           <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
           <div class="dc-body">
             <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><time class="dc-time" data-clock="stamp">Today at 21:14</time></p>
-            <div class="dc-embed" style="--bar: var(--clay)">
+            <div class="dc-embed" style="--bar: #e38b4a">
               <div class="dc-embed-main">
-                <p class="dc-embed-author"><svg width="16" height="16" aria-hidden="true"><use href="#i-speaker" /></svg> <span data-i18n="player.state">Now Playing</span></p>
-                <p class="dc-embed-title" data-i18n="player.title">A song from the queue</p>
-                <p class="dc-embed-desc"><span data-i18n="player.requested">Requested by</span> <span class="dc-mention">@you</span> · <span data-i18n="player.source">YouTube</span></p>
+                <p class="dc-embed-author">Now Playing</p>
+                <p class="dc-embed-title">Midnight Crumbs</p>
+                <p class="dc-embed-desc">The Late Bakers · requested by <span class="dc-mention">@you</span></p>
                 <div class="dc-progress"><span class="mono">1:42</span><div class="progress"><span></span></div><span class="mono">3:20</span></div>
               </div>
-              <div class="dc-embed-thumb vinyl" aria-hidden="true"><span></span></div>
+              <picture>
+                <source type="image/webp" srcset="assets/kitchen-square-160.webp" />
+                <img class="dc-embed-thumb" src="assets/kitchen-square.jpg" alt="" width="80" height="80" loading="lazy" decoding="async" />
+              </picture>
             </div>
             <div class="dc-row">
               <span class="dc-btn">Pause</span>
@@ -149,180 +126,134 @@
           </div>
         </div>
       </div>
-    </div>
+      <figcaption data-i18n="example">Example</figcaption>
+    </figure>
   </div>
 </section>
 
-<section class="section radio-teaser" id="radio">
-  <div class="wrap">
-    <div class="section-head" data-reveal>
-      <p class="kicker" data-i18n="radioHome.kicker">Live radio</p>
-      <h2 data-i18n="radioHome.title">Kiss, Rock, or Beat.</h2>
-      <p class="lead" data-i18n="radioHome.body">/radio play joins your voice channel and streams a Czech station. The same message updates when the song changes. Catch saves the artist and title. Play finds that song on YouTube and queues it the way /play does.</p>
+<section class="section" id="radio">
+  <div class="wrap split">
+    <div class="prose">
+      <h2 data-i18n="radioHome.title">Radio</h2>
+      <p data-i18n="radioHome.body">/radio play joins your voice channel and streams one of three Czech stations. The card shows the song that’s on air and updates when it changes. Catch saves that song for you, and Play queues it from YouTube.</p>
+      <p><a href="radio.html" data-i18n="radioHome.more">More about radio and Radio Night</a></p>
     </div>
-    <div class="station-tiles" data-reveal-group>
-      <a class="station-tile" href="radio.html#kiss" style="--accent: var(--kiss)">
-        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-        <span class="station-name">Kiss</span>
-        <span class="slogan">...be happy!</span>
-        <svg class="tile-arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow-right" /></svg>
-      </a>
-      <a class="station-tile" href="radio.html#rock" style="--accent: var(--rock)">
-        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-        <span class="station-name">Rock Radio</span>
-        <span class="slogan">Rock je slušná muzika</span>
-        <svg class="tile-arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow-right" /></svg>
-      </a>
-      <a class="station-tile" href="radio.html#beat" style="--accent: var(--beat)">
-        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-        <span class="station-name">Radio Beat</span>
-        <span class="slogan">První bigbít u nás</span>
-        <svg class="tile-arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow-right" /></svg>
-      </a>
-    </div>
-    <p class="note" data-reveal><a class="link-arrow" href="radio.html"><span data-i18n="radioHome.more">Stations and Radio Night</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
+    <ul class="station-list">
+      <li style="--accent: var(--kiss)"><a href="radio.html#kiss"><strong>Kiss</strong><span>...be happy!</span></a></li>
+      <li style="--accent: var(--rock)"><a href="radio.html#rock"><strong>Rock Radio</strong><span>Rock je slušná muzika</span></a></li>
+      <li style="--accent: var(--beat)"><a href="radio.html#beat"><strong>Radio Beat</strong><span>První bigbít u nás</span></a></li>
+    </ul>
   </div>
 </section>
 
-<section class="section" id="hours">
-  <div class="wrap hours-split">
-    <div data-reveal>
-      <p class="kicker" data-i18n="hours.kicker">Kitchen hours</p>
-      <h2 data-i18n="hours.title">The kitchen keeps Prague time.</h2>
-      <p class="lead" data-i18n="hours.body">Everything that runs on a clock runs on Europe/Prague. The needle is the time in Prague right now.</p>
-      <ul class="legend">
-        <li style="--dot: var(--ev-steam)"><strong class="mono">03:33</strong><span data-i18n="hours.steam">Steam daily deals, every day</span></li>
-        <li style="--dot: var(--ev-epic)"><strong class="mono">12:00 · 17:00</strong><span data-i18n="hours.epic">Epic free games check, every day</span></li>
-        <li style="--dot: var(--ev-postcard)" class="is-weekly"><strong class="mono">18:00</strong><span data-i18n="hours.postcard">Sunday postcard of caught songs</span></li>
-        <li style="--dot: var(--ev-night)" class="is-weekly"><strong class="mono">20:00</strong><span data-i18n="hours.night">Friday Radio Night, when scheduled. The vote opens at 12:00</span></li>
-      </ul>
-    </div>
-    <div class="dial-wrap" data-reveal>
-      <div class="dial">
-        <svg viewBox="0 0 240 240" role="img" aria-labelledby="dial-label">
-          <title id="dial-label" data-i18n="hours.dialLabel">A 24-hour clock with the bot’s scheduled times</title>
-          <defs>
-            <radialGradient id="dial-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0" stop-color="var(--glow)" stop-opacity="0.22" />
-              <stop offset="1" stop-color="var(--glow)" stop-opacity="0" />
-            </radialGradient>
-          </defs>
-          <circle cx="120" cy="120" r="118" fill="url(#dial-glow)" />
-          <circle class="dial-face" cx="120" cy="120" r="104" />
-          <path class="dial-night" d="M120 120 L29.93 68 A104 104 0 0 1 224 120 Z" />
-          <circle class="dial-ticks" cx="120" cy="120" r="96" pathLength="240" />
-          <circle class="dial-ticks major" cx="120" cy="120" r="96" pathLength="240" />
-          <text class="dial-hour" x="120" y="52">00</text>
-          <text class="dial-hour" x="190" y="124">06</text>
-          <text class="dial-hour" x="120" y="196">12</text>
-          <text class="dial-hour" x="50" y="124">18</text>
-          <g class="dial-mark" style="--dot: var(--ev-steam)" transform="rotate(53.25 120 120)"><circle cx="120" cy="24" r="7" /></g>
-          <g class="dial-mark" style="--dot: var(--ev-epic)" transform="rotate(180 120 120)"><circle cx="120" cy="24" r="7" /></g>
-          <g class="dial-mark" style="--dot: var(--ev-epic)" transform="rotate(255 120 120)"><circle cx="120" cy="24" r="7" /></g>
-          <g class="dial-mark weekly" style="--dot: var(--ev-postcard)" transform="rotate(270 120 120)"><circle cx="120" cy="24" r="6" /></g>
-          <g class="dial-mark weekly" style="--dot: var(--ev-night)" transform="rotate(300 120 120)"><circle cx="120" cy="24" r="6" /></g>
-          <g class="dial-needle" data-clock-needle>
-            <line x1="120" y1="120" x2="120" y2="30" />
-            <circle cx="120" cy="30" r="3.5" />
-          </g>
-          <circle class="dial-hub" cx="120" cy="120" r="5" />
-        </svg>
-        <div class="dial-center">
-          <span class="dial-time mono" data-clock="time">--:--</span>
-          <span class="dial-sub" data-i18n="clock.prague">Prague</span>
-        </div>
-      </div>
-      <p class="dial-next">
-        <span data-i18n="clock.next">Next:</span> <strong data-clock="next-name">—</strong>
-        <span class="dial-next-in" data-clock="next-in"></span>
+<section class="section" id="schedule">
+  <div class="wrap split">
+    <div class="prose">
+      <h2 data-i18n="schedule.title">Schedule</h2>
+      <p data-i18n="schedule.body">Scheduled posts run on Prague time, whatever your server’s time zone.</p>
+      <p class="now-line">
+        <span data-i18n="clock.prague">Prague time</span> <strong class="mono" data-clock="time">--:--</strong><br />
+        <span data-i18n="clock.next">Next:</span> <strong data-clock="next-name"></strong> <span data-clock="next-in"></span>
       </p>
     </div>
+    <table class="table">
+      <thead>
+        <tr><th data-i18n="schedule.when">When</th><th data-i18n="schedule.what">What</th></tr>
+      </thead>
+      <tbody>
+        <tr data-clock-event="steam"><td data-i18n="when.daily0333">Daily 03:33</td><td data-i18n="schedule.steam">Steam daily deals</td></tr>
+        <tr data-clock-event="epic"><td data-i18n="when.daily1217">Daily 12:00 and 17:00</td><td data-i18n="schedule.epic">Epic free games check</td></tr>
+        <tr data-clock-event="vote"><td data-i18n="when.fri12">Friday 12:00</td><td data-i18n="schedule.vote">Radio Night vote opens, if a Radio Night is scheduled</td></tr>
+        <tr data-clock-event="night"><td data-i18n="when.fri20">Friday 20:00</td><td data-i18n="schedule.night">Radio Night starts</td></tr>
+        <tr data-clock-event="postcard"><td data-i18n="when.sun18">Sunday 18:00</td><td data-i18n="schedule.postcard">Sunday postcard with the week’s caught songs</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
 <section class="section" id="deals">
   <div class="wrap">
-    <div class="section-head" data-reveal>
-      <p class="kicker" data-i18n="deals.kicker">The cupboards</p>
-      <h2 data-i18n="deals.title">Steam at 03:33. Epic at noon and five.</h2>
-    </div>
-    <div class="duo" data-reveal-group>
-      <article class="deal">
-        <header class="deal-head">
-          <span class="deal-icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-tag" /></svg></span>
-          <div>
-            <h3 data-i18n="deals.steamTitle">Steam daily deals</h3>
-            <p data-i18n="deals.steamBody">Ten games, once a day. Very Positive titles sit at the top, deepest discount first. If that list is short, current Steam specials fill the empty seats. Prices are in euros.</p>
-          </div>
-        </header>
-        <div class="dc dc-mini">
-          <div class="dc-embed" style="--bar: #66c0f4">
-            <div class="dc-embed-main">
-              <p class="dc-embed-author">Steam · 03:33</p>
-              <ol class="digest">
-                <li><span class="sk" style="--w: 72%"></span><span class="chip-vp">Very Positive</span><span class="disc">−90%</span></li>
-                <li><span class="sk" style="--w: 58%"></span><span class="chip-vp">Very Positive</span><span class="disc">−85%</span></li>
-                <li><span class="sk" style="--w: 80%"></span><span class="chip-vp">Very Positive</span><span class="disc">−75%</span></li>
-                <li><span class="sk" style="--w: 50%"></span><span class="chip-sp">Special</span><span class="disc">−60%</span></li>
-                <li><span class="sk" style="--w: 64%"></span><span class="chip-sp">Special</span><span class="disc">−50%</span></li>
-              </ol>
-              <p class="dc-embed-footer"><span data-i18n="deals.more">+ 5 more · prices in €</span></p>
+    <h2 data-i18n="deals.title">Steam and Epic</h2>
+    <div class="cols">
+      <div class="prose">
+        <h3 data-i18n="deals.steamTitle">Steam daily deals</h3>
+        <p data-i18n="deals.steamBody">Every day at 03:33, ten games on sale. Games rated Very Positive come first, sorted by discount. If there aren’t ten of them, other current Steam specials fill the list. Prices are in euros.</p>
+        <figure class="example">
+          <div class="dc">
+            <div class="dc-msg">
+              <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+              <div class="dc-body">
+                <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Today at 03:33</span></p>
+                <div class="dc-embed" style="--bar: #66c0f4">
+                  <div class="dc-embed-main">
+                    <p class="dc-embed-author">Steam daily deals</p>
+                    <ol class="digest">
+                      <li><span>Hollow Lantern</span><span class="chip-vp">Very Positive</span><span class="disc">−80%</span><span class="price">€3.99</span></li>
+                      <li><span>Star Forge Tactics</span><span class="chip-vp">Very Positive</span><span class="disc">−75%</span><span class="price">€4.99</span></li>
+                      <li><span>Ember &amp; Ash</span><span class="chip-vp">Very Positive</span><span class="disc">−70%</span><span class="price">€5.99</span></li>
+                      <li><span>Quiet Harbor</span><span class="chip-sp">Special</span><span class="disc">−67%</span><span class="price">€6.59</span></li>
+                      <li><span>Neon Ledger</span><span class="chip-sp">Special</span><span class="disc">−60%</span><span class="price">€7.99</span></li>
+                    </ol>
+                    <p class="dc-embed-footer">+ 5 more · prices in €</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </article>
-      <article class="deal">
-        <header class="deal-head">
-          <span class="deal-icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-gift" /></svg></span>
-          <div>
-            <h3 data-i18n="deals.epicTitle">Epic free games</h3>
-            <p data-i18n="deals.epicBody">Checked at 12:00 and 17:00, when the weekly free lineup usually changes. Each server hears about a lineup once. A repeat stays in the pot.</p>
-          </div>
-        </header>
-        <div class="dc dc-mini">
-          <div class="dc-embed" style="--bar: var(--cream-soft)">
-            <div class="dc-embed-main">
-              <p class="dc-embed-author">Epic Games Store</p>
-              <p class="dc-embed-title">Free now</p>
-              <div class="epic-cover" aria-hidden="true"><svg width="40" height="40"><use href="#i-gift" /></svg></div>
-              <p class="dc-embed-desc"><span class="sk" style="--w: 90%"></span><span class="sk" style="--w: 64%"></span></p>
+          <figcaption data-i18n="example">Example</figcaption>
+        </figure>
+      </div>
+      <div class="prose">
+        <h3 data-i18n="deals.epicTitle">Epic free games</h3>
+        <p data-i18n="deals.epicBody">Checked at 12:00 and 17:00, around when Epic changes its weekly free games. Each server gets each lineup once.</p>
+        <figure class="example">
+          <div class="dc">
+            <div class="dc-msg">
+              <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+              <div class="dc-body">
+                <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Today at 17:00</span></p>
+                <div class="dc-embed" style="--bar: #b5bac1">
+                  <div class="dc-embed-main">
+                    <p class="dc-embed-author">Epic Games Store · free now</p>
+                    <p class="dc-embed-title">Starbound Atlas</p>
+                    <p class="dc-embed-desc">Free until Thursday 17:00. Usually €19.99.</p>
+                    <p class="dc-embed-footer">Claim it on the Epic Games Store</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </article>
+          <figcaption data-i18n="example">Example</figcaption>
+        </figure>
+      </div>
     </div>
-    <p class="note center" data-i18n="deals.example">Example cards. Real digests name real games.</p>
   </div>
 </section>
 
 <section class="section" id="kitchen">
-  <div class="wrap split reverse">
-    <div data-reveal>
-      <p class="kicker" data-i18n="board.kicker">Kitchen Board</p>
-      <h2 data-i18n="board.title">One card that stays.</h2>
-      <p class="lead" data-i18n="board.body">/setup kitchen hangs a single message and keeps editing it: what’s on the speaker, who’s in voice, the top Steam deal, the Epic free game, how many people joined today, and Radio Night when it’s on the calendar.</p>
-      <ul class="ticks">
-        <li data-i18n="board.sunday">Sunday at 18:00 the channel gets one postcard of the songs people caught, and Friday’s vote tally when anyone voted. The living board stays the live stereo.</li>
-        <li data-i18n="board.presence">Discord presence follows the loudest server: radio, then music, then the Steam headline, then a quiet kitchen.</li>
-      </ul>
+  <div class="wrap split">
+    <div class="prose">
+      <h2 data-i18n="board.title">Kitchen Board</h2>
+      <p data-i18n="board.body">/setup kitchen posts one message and keeps editing it instead of posting new ones. It shows what’s playing, who’s in voice, the top Steam deal, the current Epic free game, how many people joined today, and Radio Night when one is scheduled.</p>
+      <p data-i18n="board.sunday">On Sundays at 18:00 the channel also gets a postcard with the songs people caught that week, plus Friday’s vote results if there was a vote.</p>
+      <p data-i18n="board.presence">The bot’s Discord status shows what’s happening in its busiest server: radio first, then music, then the top Steam deal.</p>
     </div>
-    <div class="dc-stage" data-reveal>
-      <span class="example-tag" data-i18n="board.example">Example · not a live feed</span>
+    <figure class="example">
       <div class="dc">
         <div class="dc-msg">
           <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
           <div class="dc-body">
-            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time"><span data-i18n="board.edited">(edited)</span></span></p>
-            <div class="dc-embed board" style="--bar: var(--beat)">
+            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">(edited)</span></p>
+            <div class="dc-embed" style="--bar: var(--beat)">
               <div class="dc-embed-main">
-                <p class="dc-embed-author"><span class="live-dot" aria-hidden="true"></span> <span data-i18n="board.live">Live · Radio Beat</span></p>
-                <p class="dc-embed-title" data-i18n="board.track">První bigbít u nás</p>
+                <p class="dc-embed-author"><span class="live-dot" aria-hidden="true"></span> Live · Radio Beat</p>
+                <p class="dc-embed-title">Thunder in the Pantry — The Rolling Pins</p>
                 <dl class="dc-fields">
-                  <div><dt data-i18n="board.listenersLabel">In voice</dt><dd data-i18n="board.listeners">3</dd></div>
-                  <div><dt data-i18n="board.joinsLabel">Joined today</dt><dd data-i18n="board.joins">2</dd></div>
-                  <div><dt data-i18n="board.steamLabel">Steam</dt><dd data-i18n="board.steam">Top Very Positive sale</dd></div>
-                  <div><dt data-i18n="board.epicLabel">Epic</dt><dd data-i18n="board.epic">Free this week</dd></div>
-                  <div class="wide"><dt data-i18n="board.nightLabel">Radio Night</dt><dd><span data-i18n="board.night">Friday 20:00</span> <span class="dc-muted" data-clock="night-in"></span></dd></div>
+                  <div><dt>In voice</dt><dd>3</dd></div>
+                  <div><dt>Joined today</dt><dd>2</dd></div>
+                  <div><dt>Steam</dt><dd>Hollow Lantern −80%</dd></div>
+                  <div><dt>Epic</dt><dd>Starbound Atlas, free</dd></div>
+                  <div class="wide"><dt>Radio Night</dt><dd>Friday 20:00 <span class="dc-muted" data-clock="night-in"></span></dd></div>
                 </dl>
               </div>
               <picture>
@@ -333,110 +264,99 @@
           </div>
         </div>
       </div>
-    </div>
+      <figcaption data-i18n="example">Example</figcaption>
+    </figure>
   </div>
 </section>
 
 <section class="section" id="welcome">
   <div class="wrap split">
-    <div data-reveal>
-      <p class="kicker" data-i18n="welcome.kicker">The door</p>
-      <h2 data-i18n="welcome.title">A cookie on the way in, and one kept warm on the way out.</h2>
-      <p class="lead" data-i18n="welcome.body">Welcome and goodbye are plain messages, turned on per server. The bot’s own lines stay in English:</p>
+    <div class="prose">
+      <h2 data-i18n="welcome.title">Welcome and goodbye messages</h2>
+      <p data-i18n="welcome.body">Optional, and turned on per server. The messages are in English and look like this:</p>
     </div>
-    <div class="dc door" data-reveal>
-      <p class="dc-divider"><span data-i18n="welcome.joinLabel">When someone joins</span></p>
-      <div class="dc-msg">
-        <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
-        <div class="dc-body">
-          <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><time class="dc-time" data-clock="stamp">Today at 21:14</time></p>
-          <p class="dc-text">🍪 Hey <span class="dc-mention">@user</span>! Welcome to the dark side, we have cookies. I’m Dzbanek — grab one, say hi, and don’t mind the crumbs. 😈</p>
-          <p class="dc-reactions"><span>🍪 <b>4</b></span><span>👋 <b>2</b></span></p>
+    <figure class="example">
+      <div class="dc">
+        <p class="dc-divider"><span data-i18n="welcome.joinLabel">When someone joins</span></p>
+        <div class="dc-msg">
+          <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+          <div class="dc-body">
+            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><time class="dc-time" data-clock="stamp">Today at 21:14</time></p>
+            <p class="dc-text">🍪 Hey <span class="dc-mention">@Mara</span>! Welcome to the dark side, we have cookies. I’m Dzbanek — grab one, say hi, and don’t mind the crumbs. 😈</p>
+            <p class="dc-reactions"><span>🍪 <b>4</b></span><span>👋 <b>2</b></span></p>
+          </div>
+        </div>
+        <p class="dc-divider"><span data-i18n="welcome.leaveLabel">When someone leaves</span></p>
+        <div class="dc-msg">
+          <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+          <div class="dc-body">
+            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><time class="dc-time" data-clock="stamp">Today at 21:14</time></p>
+            <p class="dc-text">👋 Mara just left the kitchen. Hasta la vista, baby! 🕶️🍪 We’ll keep a cookie warm in case they come back.</p>
+          </div>
         </div>
       </div>
-      <p class="dc-divider"><span data-i18n="welcome.leaveLabel">When someone leaves</span></p>
-      <div class="dc-msg">
-        <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
-        <div class="dc-body">
-          <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><time class="dc-time" data-clock="stamp">Today at 21:14</time></p>
-          <p class="dc-text">👋 name just left the kitchen. Hasta la vista, baby! 🕶️🍪 We’ll keep a cookie warm in case they come back.</p>
-        </div>
-      </div>
-    </div>
+      <figcaption data-i18n="example">Example</figcaption>
+    </figure>
   </div>
 </section>
 
 <section class="section" id="start">
   <div class="wrap">
-    <div class="section-head center" data-reveal>
-      <p class="kicker" data-i18n="steps.kicker">For a server</p>
-      <h2 data-i18n="steps.title">Three steps, then it’s just /play.</h2>
-    </div>
-    <ol class="steps" data-reveal-group>
-      <li class="step">
-        <span class="step-num" aria-hidden="true">1</span>
-        <h3 data-i18n="steps.s1t">Invite</h3>
-        <p data-i18n="steps.s1b">Add Dzbanek and accept the permissions on the invite screen. Music works as soon as you are in a voice channel.</p>
+    <h2 data-i18n="steps.title">Getting started</h2>
+    <ol class="steps">
+      <li>
+        <h3 data-i18n="steps.s1t">Add the bot</h3>
+        <p data-i18n="steps.s1b">Use the invite link and accept the permissions. Music works right away in any voice channel you’re in.</p>
       </li>
-      <li class="step">
-        <span class="step-num" aria-hidden="true">2</span>
-        <h3 data-i18n="steps.s2t">Point it at channels</h3>
-        <p data-i18n="steps.s2b">Admins run /setup for Steam, Epic, welcomes, goodbyes, and the Kitchen Board. Familiar channel names work if you skip a few.</p>
+      <li>
+        <h3 data-i18n="steps.s2t">Pick channels</h3>
+        <p data-i18n="steps.s2b">Optional. Admins run /setup to choose where deals, welcome messages, and the Kitchen Board go. Channels with common names are found automatically.</p>
       </li>
-      <li class="step">
-        <span class="step-num" aria-hidden="true">3</span>
-        <h3 data-i18n="steps.s3t">Put something on</h3>
-        <p data-i18n="steps.s3b">Join voice and run /play, or /radio play and pick Kiss, Rock, or Beat.</p>
+      <li>
+        <h3 data-i18n="steps.s3t">Play something</h3>
+        <p data-i18n="steps.s3b">Join a voice channel and run /play, or /radio play for Kiss, Rock Radio, or Radio Beat.</p>
       </li>
     </ol>
   </div>
 </section>
 
 <section class="section" id="faq">
-  <div class="wrap faq-split">
-    <div class="section-head" data-reveal>
-      <p class="kicker" data-i18n="faq.kicker">Questions at the table</p>
-      <h2 data-i18n="faq.title">Before you ask.</h2>
-    </div>
-    <div class="faq" data-reveal-group>
+  <div class="wrap narrow">
+    <h2 data-i18n="faq.title">FAQ</h2>
+    <div class="faq">
       <details>
-        <summary><span data-i18n="faq.q1">Is it really free?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-        <p data-i18n="faq.a1">Yes. There is no premium tier and no locked commands. Invite it and the kitchen is yours.</p>
+        <summary data-i18n="faq.q1">Is it free?</summary>
+        <p data-i18n="faq.a1">Yes. There’s no premium tier and nothing is locked.</p>
       </details>
       <details>
-        <summary><span data-i18n="faq.q2">Does it need Administrator?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-        <p data-i18n="faq.a2">No. The invite asks for Connect, Speak, View Channel, Send Messages, Embed Links, Manage Messages, and Add Reactions — nothing else. Manage Messages only clears the bot’s own old cards.</p>
+        <summary data-i18n="faq.q2">Does it need Administrator?</summary>
+        <p data-i18n="faq.a2">No. It asks for Connect, Speak, View Channel, Send Messages, Embed Links, Manage Messages, and Add Reactions. Manage Messages is only used to delete its own old cards.</p>
       </details>
       <details>
-        <summary><span data-i18n="faq.q3">Why can’t music and radio play at once?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-        <p data-i18n="faq.a3">A bot gets one voice connection per server. Music and radio share it, so starting one hands the speaker over from the other.</p>
+        <summary data-i18n="faq.q3">Why can’t music and radio play at the same time?</summary>
+        <p data-i18n="faq.a3">A bot gets one voice connection per server, so music and radio share it.</p>
       </details>
       <details>
-        <summary><span data-i18n="faq.q4">Does this website show live stats?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-        <p data-i18n="faq.a4">No. The bot has no website API, so every card here is an example. The clock is real: it is your browser telling Prague time.</p>
+        <summary data-i18n="faq.q4">Does this site show live data?</summary>
+        <p data-i18n="faq.a4">No. The bot has no public API, so the cards on this site are examples. The clock is real: it’s your browser showing Prague time.</p>
       </details>
       <details>
-        <summary><span data-i18n="faq.q5">Can I host it myself?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-        <p><span data-i18n="faq.a5">Yes. It is a Node process with FFmpeg and Deno, on a home PC or a VPS. The repository has the full setup.</span> <a href="{{github}}" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+        <summary data-i18n="faq.q5">Can I host it myself?</summary>
+        <p><span data-i18n="faq.a5">Yes. It’s a Node.js app that needs FFmpeg and Deno, and it runs on a home PC or a VPS. Setup instructions are in the repository.</span> <a href="{{github}}" target="_blank" rel="noopener noreferrer">GitHub</a></p>
       </details>
     </div>
   </div>
 </section>
 
-<section class="cta" data-reveal>
-  <div class="cta-photo" aria-hidden="true">
-    <picture>
-      <source type="image/webp" srcset="assets/kitchen-square.webp" />
-      <img src="assets/kitchen-square.jpg" alt="" width="640" height="640" loading="lazy" decoding="async" />
-    </picture>
-    <div class="steam small"><i></i><i></i><i></i></div>
-  </div>
-  <div class="cta-copy">
-    <h2 data-i18n="cta.title">Put the kettle on.</h2>
-    <p class="lead" data-i18n="cta.body">The public bot uses the invite. The source, and how to self-host, is on GitHub.</p>
-    <div class="hero-actions">
-      <a class="btn btn-clay btn-lg" href="{{invite}}" data-invite target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Server</a>
-      <a class="btn btn-ghost btn-lg" href="{{github}}" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" aria-hidden="true"><use href="#i-github" /></svg> GitHub</a>
+<section class="section" id="add">
+  <div class="wrap cta">
+    <div>
+      <h2 data-i18n="cta.title">Add Dzbanek to your server</h2>
+      <p data-i18n="cta.body">The invite link adds the public bot. The source code is on GitHub.</p>
     </div>
+    <p class="actions">
+      <a class="btn" href="{{invite}}" target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Discord</a>
+      <a class="btn btn-quiet" href="{{github}}" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" aria-hidden="true"><use href="#i-github" /></svg> GitHub</a>
+    </p>
   </div>
 </section>
