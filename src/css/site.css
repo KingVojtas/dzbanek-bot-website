@@ -1543,11 +1543,15 @@ button.dc-btn[aria-pressed="true"]:hover {
 
 .hero {
   position: relative;
+  isolation: isolate;
   margin-top: calc(-1 * var(--header-space));
   padding: 0.6rem 0.6rem 0;
 }
 
 .hero-stage {
+  /* Where the photo is anchored. The film uses the same point, so its first frame lands on the photo. */
+  --focus-x: 0.5;
+  --focus-y: 0.55;
   position: relative;
   height: clamp(560px, 94svh, 960px);
   border-radius: 1.75rem;
@@ -1560,8 +1564,6 @@ button.dc-btn[aria-pressed="true"]:hover {
 
 .hero-scene {
   --scene-w: max(100cqw, 177.78cqh);
-  --focus-x: 0.5;
-  --focus-y: 0.55;
   position: absolute;
   left: calc((100cqw - var(--scene-w)) * var(--focus-x));
   top: calc((100cqh - var(--scene-w) * 0.5625) * var(--focus-y));
@@ -1742,6 +1744,335 @@ button.dc-btn[aria-pressed="true"]:hover {
   border-radius: 4px;
   background: #f6f0e6;
   animation: scroll-dot 2s var(--ease) infinite;
+}
+
+/*
+ * The film: the Dzbanek ad in the hero (film.js sets data-film on .hero).
+ * Without scripts none of this shows, and the photo hero stays as it is.
+ * States: idle, starting, playing, paused, done.
+ */
+
+.hero-film,
+.film-glow,
+.film-bar,
+.film-sticker {
+  display: none;
+}
+
+.hero[data-film] .hero-film,
+.hero[data-film] .film-glow {
+  display: block;
+}
+
+.hero[data-film="playing"] .film-bar,
+.hero[data-film="paused"] .film-bar {
+  display: flex;
+}
+
+.hero[data-film="idle"] .film-sticker,
+.hero[data-film="done"] .film-sticker {
+  display: block;
+}
+
+.hero-film {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: calc(var(--focus-x) * 100%) calc(var(--focus-y) * 100%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+}
+
+/* A 32×18 copy of the current frame, stretched: the browser's smoothing turns it into soft light. */
+.film-glow {
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 8%;
+  width: 100%;
+  height: 100%;
+  border-radius: 3rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s var(--ease);
+}
+
+.hero-stage {
+  transition:
+    height 0.9s var(--ease),
+    box-shadow 0.9s var(--ease);
+}
+
+.hero-shade,
+.hero-scene,
+.hero-scroll {
+  transition: opacity 0.7s var(--ease);
+}
+
+.hero-copy {
+  transition:
+    opacity 0.5s var(--ease),
+    translate 0.7s var(--ease);
+}
+
+.hero[data-film="playing"] .hero-stage,
+.hero[data-film="paused"] .hero-stage {
+  /* 16:9, so the ad's titles on the left and cards on the right are not cut off,
+     and short enough that the deck under it stays on screen. */
+  height: min(calc(100svh - 8.5rem), calc((100vw - 1.2rem) * 0.5625));
+  box-shadow: none;
+}
+
+.hero[data-film="playing"] .hero-film,
+.hero[data-film="paused"] .hero-film {
+  opacity: 1;
+}
+
+.hero[data-film="playing"] .film-glow,
+.hero[data-film="paused"] .film-glow {
+  opacity: 0.7;
+}
+
+.hero[data-film="playing"] .hero-shade,
+.hero[data-film="paused"] .hero-shade,
+.hero[data-film="playing"] .hero-scroll,
+.hero[data-film="paused"] .hero-scroll {
+  opacity: 0;
+}
+
+.hero[data-film="playing"] .hero-copy,
+.hero[data-film="paused"] .hero-copy {
+  opacity: 0;
+  translate: 0 1.5rem;
+  pointer-events: none;
+}
+
+/* The title stays for screen readers; the links and the clock leave the tab order. */
+.hero[data-film="playing"] .hero-actions,
+.hero[data-film="paused"] .hero-actions,
+.hero[data-film="playing"] .clock-chip,
+.hero[data-film="paused"] .clock-chip,
+.hero[data-film="playing"] .hero-scroll,
+.hero[data-film="paused"] .hero-scroll {
+  visibility: hidden;
+  transition:
+    opacity 0.5s var(--ease),
+    visibility 0s linear 0.5s;
+}
+
+/* The deck sits under the film, so nothing covers the ad's own titles and cards. */
+.film-bar {
+  position: relative;
+  z-index: 4;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1.1rem;
+  margin-top: 0.6rem;
+  padding: 0.7rem 0.7rem 0.6rem 1.2rem;
+  border: 1px solid rgba(246, 240, 230, 0.14);
+  border-radius: 1.25rem;
+  background: rgba(14, 9, 6, 0.86);
+  color: #f6f0e6;
+  animation: rise-in 0.6s var(--ease) 0.2s both;
+}
+
+/* Just the chapter name beside the bar; with a caption it takes a row of its own. */
+.film-line {
+  display: flex;
+  flex: none;
+  align-items: baseline;
+  gap: 1rem;
+  min-height: 1.6rem;
+  margin: 0;
+}
+
+.film-now {
+  flex: none;
+  font: 600 0.72rem/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffc477;
+}
+
+.film-caption {
+  color: #fff8f1;
+  font: 500 clamp(0.98rem, 1.3vw, 1.15rem) / 1.4 var(--sans);
+}
+
+.film-caption:not(.is-on) {
+  display: none;
+}
+
+.film-bar:has(.film-caption.is-on) .film-line {
+  flex-basis: 100%;
+}
+
+.film-chapters {
+  display: flex;
+  flex: 1 1 18rem;
+  gap: 5px;
+  min-width: 12rem;
+}
+
+.film-chapter {
+  position: relative;
+  flex: 1 1 0;
+  height: 1.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.film-chapter::before,
+.film-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: 4px;
+  transition:
+    height 0.2s,
+    margin 0.2s;
+}
+
+.film-chapter::before {
+  content: "";
+  background: rgba(246, 240, 230, 0.22);
+}
+
+.film-fill {
+  background: linear-gradient(90deg, var(--clay), #ffc477);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.film-chapter:hover::before,
+.film-chapter:focus-visible::before,
+.film-chapter:hover .film-fill,
+.film-chapter:focus-visible .film-fill {
+  height: 8px;
+  margin-top: -4px;
+}
+
+.film-chapter:hover::before,
+.film-chapter:focus-visible::before {
+  background: rgba(246, 240, 230, 0.36);
+}
+
+.film-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.film-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.4rem;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid rgba(246, 240, 230, 0.28);
+  border-radius: 999px;
+  background: rgba(20, 14, 10, 0.55);
+  color: #f6f0e6;
+  font: 600 0.92rem/1.2 var(--sans);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.film-tool:hover {
+  border-color: rgba(246, 240, 230, 0.6);
+  background: rgba(40, 28, 19, 0.8);
+}
+
+/* Muted, the sound button calls out: the voice-over is one tap away. */
+.hero[data-sound="off"] [data-film-sound] {
+  border-color: var(--clay);
+  animation: sound-call 2.6s var(--ease) infinite;
+}
+
+.hero[data-sound="off"] [data-film-sound] .icon-muted,
+.hero[data-sound="on"] [data-film-sound] .icon-unmuted {
+  display: none;
+}
+
+/* The sticker: a play button ringed by slowly turning text. */
+.film-sticker {
+  position: absolute;
+  z-index: 4;
+  right: clamp(1.25rem, 4vw, 3.5rem);
+  bottom: clamp(5.5rem, 16cqh, 9rem);
+  width: clamp(7.25rem, 10vw, 9rem);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(18, 12, 8, 0.82) 60%, rgba(18, 12, 8, 0.4) 71%, transparent 72%);
+  color: #f6f0e6;
+  cursor: pointer;
+  animation: rise-in 0.8s var(--ease) 0.3s both;
+}
+
+.film-sticker::before,
+.film-sticker::after {
+  content: "";
+  position: absolute;
+  inset: 30%;
+  border: 1.5px solid rgba(255, 196, 119, 0.55);
+  border-radius: 50%;
+  animation: ping 3s var(--ease) infinite;
+  pointer-events: none;
+}
+
+.film-sticker::after {
+  animation-delay: 1.5s;
+}
+
+.film-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: spin 24s linear infinite;
+}
+
+.film-ring text {
+  fill: currentColor;
+  font: 600 8.2px var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.film-play {
+  position: absolute;
+  inset: 29%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #f0a160, var(--clay-deep));
+  color: #1a0f08;
+  box-shadow: 0 12px 30px -10px rgba(224, 138, 69, 0.8);
+  transition: transform 0.35s var(--ease);
+}
+
+.film-play svg {
+  translate: 2px 0;
+}
+
+.film-sticker:hover .film-play,
+.film-sticker:focus-visible .film-play {
+  transform: scale(1.1);
 }
 
 .ticker {
@@ -3770,8 +4101,66 @@ html.js [data-reveal-group].is-in > * {
     border-radius: 1.4rem;
   }
 
-  .hero-scene {
+  .hero-stage {
     --focus-x: 0.74;
+  }
+
+  /* Phones: 16:9 is short in portrait, so the stage keeps its height and the film sits in it whole. */
+  .hero-film {
+    object-fit: contain;
+  }
+
+  .hero[data-film="playing"] .hero-stage,
+  .hero[data-film="paused"] .hero-stage {
+    height: clamp(540px, 88svh, 760px);
+  }
+
+  .hero[data-film="playing"] .hero-scene,
+  .hero[data-film="paused"] .hero-scene {
+    opacity: 0.32;
+  }
+
+  .film-glow {
+    top: 4%;
+  }
+
+  /* Here the film leaves room above and below it, so the deck can sit inside the stage. */
+  .film-bar {
+    position: absolute;
+    left: 1.35rem;
+    right: 1.35rem;
+    bottom: 0.75rem;
+    margin: 0;
+  }
+
+  .film-line {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .film-chapters {
+    flex-basis: 100%;
+  }
+
+  .film-tools {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* The sticky invite under the page already offers this on phones. */
+  .film-tools .btn {
+    display: none;
+  }
+
+  .film-skip span {
+    display: none;
+  }
+
+  .film-sticker {
+    top: calc(var(--header-space) + 0.75rem);
+    right: 1rem;
+    bottom: auto;
+    width: 6.5rem;
   }
 
   .hero-shade {
@@ -4067,6 +4456,17 @@ html.js [data-reveal-group].is-in > * {
   }
   to {
     transform: scaleX(1);
+  }
+}
+
+@keyframes sound-call {
+  0%,
+  60%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(224, 138, 69, 0);
+  }
+  20% {
+    box-shadow: 0 0 0 6px rgba(224, 138, 69, 0.35);
   }
 }
 

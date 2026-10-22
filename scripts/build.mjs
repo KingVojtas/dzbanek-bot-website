@@ -16,6 +16,8 @@ const invite =
   'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173440&scope=bot%20applications.commands';
 const github = 'https://github.com/KingVojtas/dzbanek-bot-2.0';
 const ogImage = new URL('assets/kitchen-hero.jpg', SITE_URL).href;
+// The home page carries the ad, so a pasted link can play it in Discord.
+const ogVideo = new URL('assets/ad/dzbanek-ad-720.mp4', SITE_URL).href;
 // Kept in the repo as the source for avatar.jpg and kitchen-square.jpg. No page uses it.
 const SOURCE_ONLY = new Set(['kitchen-thumb.jpg']);
 
@@ -24,7 +26,7 @@ function fill(template, map) {
 }
 
 function field(raw, name) {
-  const match = raw.match(new RegExp(`<!--\s*${name}:\s*([\s\S]*?)\s*-->`));
+  const match = raw.match(new RegExp(`<!--\\s*${name}:\\s*([\\s\\S]*?)\\s*-->`));
   return match ? match[1].trim() : '';
 }
 
@@ -61,6 +63,16 @@ for (const file of pages) {
   const canonical = missing
     ? ''
     : `<link rel="canonical" href="${url}" />\n  <meta property="og:url" content="${url}" />`;
+  const video =
+    file === 'index.html'
+      ? [
+          `<meta property="og:video" content="${ogVideo}" />`,
+          `<meta property="og:video:secure_url" content="${ogVideo}" />`,
+          '<meta property="og:video:type" content="video/mp4" />',
+          '<meta property="og:video:width" content="1280" />',
+          '<meta property="og:video:height" content="720" />',
+        ].join('\n  ')
+      : '';
   // <!-- scripts: clock.js radio.js --> loads page-only scripts after the shared ones.
   const scripts = field(raw, 'scripts')
     .split(/\s+/)
@@ -70,7 +82,7 @@ for (const file of pages) {
   const content = raw.replace(/<!--\s*(title|description|page|scripts):[\s\S]*?-->\s*/g, '').trim();
   const html = `<!DOCTYPE html>
 <html lang="en">
-${fill(head, { ...shared, title, description, canonical })}
+${fill(head, { ...shared, title, description, canonical, video })}
 <body data-page="${page}">
 ${icons.trim()}
 ${fill(header, shared)}

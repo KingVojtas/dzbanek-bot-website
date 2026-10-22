@@ -1,8 +1,10 @@
 <!-- title: Dzbanek — the kitchen stays open -->
 <!-- description: Dzbanek is a Discord bot for music, Czech live radio, Steam deals, and Epic free games. One kitchen card keeps the server posted. -->
 <!-- page: home -->
+<!-- scripts: film.js -->
 
 <section class="hero" data-hero>
+  <canvas class="film-glow" width="32" height="18" aria-hidden="true"></canvas>
   <div class="hero-stage">
     <div class="hero-scene">
       <picture>
@@ -22,6 +24,12 @@
       <div class="steam" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     </div>
     <div class="hero-shade" aria-hidden="true"></div>
+    <video class="hero-film" muted playsinline preload="none" poster="assets/kitchen-hero.webp" aria-label="The Dzbanek ad" data-i18n-aria="film.label" data-film>
+      <source src="assets/ad/dzbanek-ad-720.mp4" type="video/mp4" media="(max-width: 900px)" />
+      <source src="assets/ad/dzbanek-ad-1080.mp4" type="video/mp4" />
+      <track kind="captions" srclang="en" label="English" src="assets/ad/captions-en.vtt" />
+      <track kind="captions" srclang="cs" label="Čeština" src="assets/ad/captions-cs.vtt" />
+    </video>
     <div class="hero-copy">
       <p class="clock-chip" data-clock-chip>
         <span class="clock-dot" aria-hidden="true"></span>
@@ -38,7 +46,30 @@
         <a class="btn btn-ghost btn-lg" href="commands.html#demo"><span data-i18n="hero.secondary">Try the commands</span> <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
       </div>
     </div>
+    <button type="button" class="film-sticker" data-film-play aria-label="Watch the ad with sound">
+      <svg class="film-ring" viewBox="0 0 100 100" aria-hidden="true">
+        <defs><path id="film-ring-path" d="M50 50m-39 0a39 39 0 1 1 78 0a39 39 0 1 1 -78 0" /></defs>
+        <text><textPath href="#film-ring-path" textLength="243" lengthAdjust="spacing" data-film-ring>Watch the ad · with sound ·</textPath></text>
+      </svg>
+      <span class="film-play" aria-hidden="true"><svg width="26" height="26"><use href="#i-play" /></svg></span>
+    </button>
     <a class="hero-scroll" href="#menu" data-i18n-aria="hero.scroll" aria-label="Scroll to the menu"><span></span></a>
+  </div>
+  <div class="film-bar" data-film-bar>
+    <p class="film-line" aria-hidden="true"><span class="film-now" data-film-now></span><span class="film-caption" data-film-caption></span></p>
+    <div class="film-chapters" role="group" aria-label="Chapters" data-i18n-aria="film.chapters" data-film-chapters></div>
+    <div class="film-tools">
+      <button type="button" class="film-tool" data-film-sound>
+        <svg class="icon-unmuted" width="18" height="18" aria-hidden="true"><use href="#i-speaker" /></svg>
+        <svg class="icon-muted" width="18" height="18" aria-hidden="true"><use href="#i-mute" /></svg>
+        <span data-film-sound-label>Turn on sound</span>
+      </button>
+      <a class="btn btn-clay btn-sm" href="{{invite}}" data-invite target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Server</a>
+      <button type="button" class="film-tool film-skip" data-film-skip aria-label="Skip the ad" data-i18n-aria="film.skipAria">
+        <span data-i18n="film.skip">Skip</span>
+        <svg width="16" height="16" aria-hidden="true"><use href="#i-close" /></svg>
+      </button>
+    </div>
   </div>
 </section>
 
