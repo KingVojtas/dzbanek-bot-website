@@ -19,6 +19,9 @@
 
   function setLight(light) {
     root.classList.toggle('theme-light', light);
+    document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+      meta.setAttribute('content', light ? '#f6f1e8' : '#120c08');
+    });
     try {
       localStorage.setItem('dzbanek_theme', light ? 'light' : 'dark');
     } catch (e) {

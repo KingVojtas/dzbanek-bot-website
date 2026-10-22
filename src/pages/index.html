@@ -5,16 +5,19 @@
 <section class="hero" data-hero>
   <div class="hero-stage">
     <div class="hero-scene">
-      <img
-        class="hero-photo"
-        src="assets/kitchen-hero.jpg"
-        alt="A ceramic pitcher, chocolate chip cookies, and a steaming mug on a wooden kitchen counter at night."
-        data-i18n-alt="hero.alt"
-        width="1280"
-        height="720"
-        decoding="async"
-        fetchpriority="high"
-      />
+      <picture>
+        <source type="image/webp" srcset="assets/kitchen-hero.webp" />
+        <img
+          class="hero-photo"
+          src="assets/kitchen-hero.jpg"
+          alt="A ceramic pitcher, chocolate chip cookies, and a steaming mug on a wooden kitchen counter at night."
+          data-i18n-alt="hero.alt"
+          width="1280"
+          height="720"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </picture>
       <div class="hero-lights" aria-hidden="true"><i></i><i></i></div>
       <div class="steam" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     </div>
@@ -41,8 +44,8 @@
 
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
-    <span>/play</span><b>✦</b><span>Kiss</span><b>✦</b><span>Rock Radio</span><b>✦</b><span>Radio Beat</span><b>✦</b><span>Steam · 03:33</span><b>✦</b><span>Epic · 12:00 &amp; 17:00</span><b>✦</b><span>Radio Night · Fri 20:00</span><b>✦</b><span>Sunday postcard</span><b>✦</b><span>🍪</span><b>✦</b>
-    <span>/play</span><b>✦</b><span>Kiss</span><b>✦</b><span>Rock Radio</span><b>✦</b><span>Radio Beat</span><b>✦</b><span>Steam · 03:33</span><b>✦</b><span>Epic · 12:00 &amp; 17:00</span><b>✦</b><span>Radio Night · Fri 20:00</span><b>✦</b><span>Sunday postcard</span><b>✦</b><span>🍪</span><b>✦</b>
+    <span>/play</span><b>✦</b><span>Kiss</span><b>✦</b><span>Rock Radio</span><b>✦</b><span>Radio Beat</span><b>✦</b><span>Steam · 03:33</span><b>✦</b><span>Epic · 12:00 &amp; 17:00</span><b>✦</b><span><span data-i18n="clock.ev.night">Radio Night</span> · <span data-i18n="footer.fri20">Fri 20:00</span></span><b>✦</b><span data-i18n="clock.ev.postcard">Sunday postcard</span><b>✦</b><span>🍪</span><b>✦</b>
+    <span>/play</span><b>✦</b><span>Kiss</span><b>✦</b><span>Rock Radio</span><b>✦</b><span>Radio Beat</span><b>✦</b><span>Steam · 03:33</span><b>✦</b><span>Epic · 12:00 &amp; 17:00</span><b>✦</b><span><span data-i18n="clock.ev.night">Radio Night</span> · <span data-i18n="footer.fri20">Fri 20:00</span></span><b>✦</b><span data-i18n="clock.ev.postcard">Sunday postcard</span><b>✦</b><span>🍪</span><b>✦</b>
   </div>
 </div>
 
@@ -291,7 +294,10 @@
                   <div class="wide"><dt data-i18n="board.nightLabel">Radio Night</dt><dd><span data-i18n="board.night">Friday 20:00</span> <span class="dc-muted" data-clock="night-in"></span></dd></div>
                 </dl>
               </div>
-              <img class="dc-embed-thumb" src="assets/kitchen-square.jpg" alt="Close-up of the ceramic pitcher and chocolate chip cookies." data-i18n-alt="board.alt" width="80" height="80" loading="lazy" decoding="async" />
+              <picture>
+                <source type="image/webp" srcset="assets/kitchen-square-160.webp" />
+                <img class="dc-embed-thumb" src="assets/kitchen-square.jpg" alt="Close-up of the ceramic pitcher and chocolate chip cookies." data-i18n-alt="board.alt" width="80" height="80" loading="lazy" decoding="async" />
+              </picture>
             </div>
           </div>
         </div>
@@ -388,7 +394,10 @@
 
 <section class="cta" data-reveal>
   <div class="cta-photo" aria-hidden="true">
-    <img src="assets/kitchen-square.jpg" alt="" width="640" height="640" loading="lazy" decoding="async" />
+    <picture>
+      <source type="image/webp" srcset="assets/kitchen-square.webp" />
+      <img src="assets/kitchen-square.jpg" alt="" width="640" height="640" loading="lazy" decoding="async" />
+    </picture>
     <div class="steam small"><i></i><i></i><i></i></div>
   </div>
   <div class="cta-copy">

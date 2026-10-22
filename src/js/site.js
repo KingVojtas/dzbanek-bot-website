@@ -1,16 +1,9 @@
 /**
- * Year, mobile nav, current page, nav pill, invite links, copy-to-clipboard.
+ * Year, mobile nav, current page, nav pill, copy-to-clipboard.
  */
 (function () {
   const year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
-
-  const invite = window.DZBANEK && window.DZBANEK.INVITE_URL;
-  if (invite) {
-    document.querySelectorAll('[data-invite]').forEach((link) => {
-      link.setAttribute('href', invite);
-    });
-  }
 
   /* ---- mobile menu ---- */
 
@@ -43,9 +36,11 @@
 
   /* ---- current page + sliding pill ---- */
 
-  const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  // Pages also answer without .html (/commands), so compare bare names.
+  const bare = (name) => name.toLowerCase().replace(/\.html$/, '') || 'index';
+  const path = bare(location.pathname.split('/').pop());
   document.querySelectorAll('[data-nav-page]').forEach((el) => {
-    if ((el.getAttribute('data-nav-page') || '').toLowerCase() === path) {
+    if (bare(el.getAttribute('data-nav-page') || '') === path) {
       el.setAttribute('aria-current', 'page');
     }
   });

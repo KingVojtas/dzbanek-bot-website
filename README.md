@@ -18,7 +18,7 @@ Four static pages and a 404, one stylesheet, vanilla JavaScript. No framework an
 
 Every card, the demo channel, and the vote are examples that run in the browser tab. The clock is the only live thing, and it is the browser's own Europe/Prague time.
 
-English is in the HTML. Czech is in `src/js/locales/cs.js`. The header switches language and light/dark. The night theme matches the kitchen photos copied from the bot (`assets/kitchen-hero.jpg`, `assets/kitchen-thumb.jpg`). `assets/avatar.jpg` (128 px) and `assets/kitchen-square.jpg` (640 px) are smaller copies of the thumb for avatars and cards. `assets/dzbanek.svg` is the favicon.
+English is in the HTML. Czech is in `src/js/locales/cs.js`. The header switches language and light/dark. The night theme matches the kitchen photos copied from the bot (`assets/kitchen-hero.jpg`, `assets/kitchen-thumb.jpg`). `assets/avatar.jpg` (128 px) and `assets/kitchen-square.jpg` (640 px) are smaller copies of the thumb for avatars and cards. The thumb itself is only their source, so the build leaves it out of `dist/`. The `.webp` files next to the JPGs are what browsers load first, and the JPGs are the fallback. `assets/fonts/` holds the self-hosted Fraunces, Outfit, and JetBrains Mono (latin and latin-ext, which has the Czech letters). `assets/dzbanek.svg` is the favicon.
 
 `scripts/build.mjs` stitches `src/partials/` and `src/pages/` into `dist/`. That folder is what you open, and what GitHub Pages publishes.
 
@@ -52,8 +52,7 @@ This website does not start the bot.
 ```
 src/partials/          head, header, footer, icons (inline SVG sprite)
 src/pages/             page content only
-src/css/site.css       wood, cream, and clay: tokens, chrome, Discord cards, pages, motion
-src/js/config.js       invite URL and GitHub URL
+src/css/site.css       wood, cream, and clay: fonts, tokens, chrome, Discord cards, pages, motion
 src/js/i18n.js         EN / CS, ?lang=, localStorage dzbanek_lang
 src/js/theme-boot.js   theme before first paint, adds html.js
 src/js/theme.js        localStorage dzbanek_theme
@@ -66,17 +65,9 @@ scripts/build.mjs
 dist/             generated, not committed
 ```
 
-`config.js` is the single list of public links:
+The top of `scripts/build.mjs` is the single list of public links: `SITE_URL` (where the site is served), the invite URL, and the GitHub URL. `SITE_URL` sets the canonical link, `og:url`, `og:image`, and the asset paths in `404.html`, which GitHub Pages serves at any missing path.
 
-```js
-window.DZBANEK = {
-  INVITE_URL:
-    'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173440&scope=bot%20applications.commands',
-  GITHUB: 'https://github.com/KingVojtas/dzbanek-bot-2.0',
-};
-```
-
-Pages are HTML comments plus the unique markup. The build fills `{{invite}}` and `{{github}}` and wraps each page in the shared chrome. Script order on every page: `theme-boot.js` in `<head>`, then `config.js`, both locales, `i18n.js`, `site.js`, `theme.js`, `reveal.js`, `clock.js`. A page can load its own scripts after those with a comment:
+Pages are HTML comments plus the unique markup. The build fills `{{invite}}` and `{{github}}` and wraps each page in the shared chrome. Script order on every page: `theme-boot.js` in `<head>`, then both locales, `i18n.js`, `site.js`, `theme.js`, `reveal.js`, `clock.js`. A page can load its own scripts after those with a comment:
 
 ```html
 <!-- scripts: discord-demo.js -->
@@ -96,6 +87,6 @@ Everything respects `prefers-reduced-motion`, and with JavaScript off the pages 
 - uses: actions/deploy-pages@v4
 ```
 
-GitHub Pages has to be set to **GitHub Actions** for that workflow to be the source. The site lives in `KingVojtas/dzbanek-bot-website` and is served at `dzbanek-bot.vojtas.io`: the `CNAME` file in the root is copied into `dist` by the build, and the DNS `CNAME` points at `kingvojtas.github.io`.
+GitHub Pages has to be set to **GitHub Actions** for that workflow to be the source. The site lives in `KingVojtas/dzbanek-bot-website` and is served at `https://kingvojtas.github.io/dzbanek-bot-website/`, the `SITE_URL` in `scripts/build.mjs`. For a custom domain later: add a `CNAME` file with the domain to the root (the build copies it into `dist`), point the DNS `CNAME` at `kingvojtas.github.io`, set the domain under Settings → Pages, and change `SITE_URL`.
 
 Publishing these files does not host the bot. Dzbanek-bot 2.0 stays a Node process on a home PC or a VPS, with FFmpeg and Deno available, as its own README describes.
