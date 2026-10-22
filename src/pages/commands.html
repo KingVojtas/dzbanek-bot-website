@@ -1,13 +1,13 @@
 <!-- title: Commands — Dzbanek -->
-<!-- description: Six slash commands: /play, /queue, /stop, /remove, /radio, and /setup. Pause, skip, shuffle, and loop are buttons. -->
+<!-- description: All six slash commands, plus what every button on the cards does. You can try them right on the page. -->
 <!-- page: commands -->
 <!-- scripts: discord-demo.js -->
 
 <header class="page-hero">
   <div class="wrap">
-    <p class="kicker" data-i18n="commands.kicker">The menu</p>
-    <h1 data-i18n="commands.title">Six slash commands.</h1>
-    <p class="lead" data-i18n="commands.lead">Type / in Discord. Pause, skip, shuffle, and loop are buttons on Now Playing, so they stay off this list.</p>
+    <p class="kicker" data-i18n="commands.kicker">Commands</p>
+    <h1 data-i18n="commands.title">Six commands. That’s all.</h1>
+    <p class="lead" data-i18n="commands.lead">Type / in Discord to see them. Pause, skip, shuffle, and loop are buttons on the Now Playing card, so you won’t find them here.</p>
   </div>
 </header>
 
@@ -17,7 +17,7 @@
       <div class="dc-titlebar">
         <svg width="20" height="20" aria-hidden="true"><use href="#i-hash" /></svg>
         <strong>kitchen</strong>
-        <span class="dc-topic" data-i18n="demo.topic">A pretend channel. Nothing here reaches Discord.</span>
+        <span class="dc-topic" data-i18n="demo.topic">A fake channel. Nothing here reaches Discord.</span>
       </div>
       <div class="dc-log" data-demo-log role="log" aria-live="polite" aria-label="Demo channel" data-i18n-aria="demo.logLabel" tabindex="0">
         <div class="dc-msg">
@@ -56,9 +56,9 @@
     </div>
 
     <aside class="demo-side" data-reveal>
-      <p class="kicker" data-i18n="demo.kicker">Try it here</p>
-      <h2 id="demo-title" data-i18n="demo.title">A kitchen you can poke.</h2>
-      <p class="lead" data-i18n="demo.lead">Type / and pick a command, or tap one below. The buttons on the cards work too. It all runs in this tab — no bot, no server.</p>
+      <p class="kicker" data-i18n="demo.kicker">Try it</p>
+      <h2 id="demo-title" data-i18n="demo.title">Play around with it here.</h2>
+      <p class="lead" data-i18n="demo.lead">This is a fake channel that runs in your browser. Type / and pick a command, or click one below. The buttons on the cards work too. Nothing gets sent to Discord.</p>
       <div class="demo-chips">
         <button type="button" class="chip" data-demo-run="/play">/play</button>
         <button type="button" class="chip" data-demo-run="/queue">/queue</button>
@@ -79,76 +79,76 @@
       <h2 data-i18n="commands.slash">Slash commands</h2>
       <label class="search">
         <svg width="18" height="18" aria-hidden="true"><use href="#i-search" /></svg>
-        <span class="sr-only" data-i18n="commands.filterLabel">Filter commands</span>
-        <input type="search" data-cmd-filter placeholder="Filter: radio, queue, setup…" data-i18n-placeholder="commands.filter" />
+        <span class="sr-only" data-i18n="commands.filterLabel">Search commands</span>
+        <input type="search" data-cmd-filter placeholder="Search: radio, queue, setup…" data-i18n-placeholder="commands.filter" />
       </label>
     </div>
     <div class="cmd-grid" data-reveal-group>
       <article class="cmd-card" id="play" data-cmd>
         <header><code class="cmd-name">/play</code><button type="button" class="copy" data-copy="/play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.play">Join your voice channel and play a YouTube or Spotify query. play_next puts it second.</p>
+        <p data-i18n="commands.play">Joins your voice channel and plays a YouTube or Spotify link, or whatever you search for. play_next puts it at the front of the queue.</p>
         <ul class="opts"><li><code>play_next</code></li></ul>
       </article>
       <article class="cmd-card" id="queue" data-cmd>
         <header><code class="cmd-name">/queue</code><button type="button" class="copy" data-copy="/queue"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.queue">Show the upcoming queue, page by page.</p>
+        <p data-i18n="commands.queue">Shows what’s coming up, one page at a time.</p>
         <ul class="opts"><li><code>◀ Prev</code></li><li><code>Next ▶</code></li></ul>
       </article>
       <article class="cmd-card" id="stop" data-cmd>
         <header><code class="cmd-name">/stop</code><button type="button" class="copy" data-copy="/stop"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.stop">Stop playback, clear the queue, delete the Now Playing card, and leave.</p>
+        <p data-i18n="commands.stop">Stops the music, clears the queue, deletes the Now Playing card, and leaves.</p>
       </article>
       <article class="cmd-card" id="remove" data-cmd>
         <header><code class="cmd-name">/remove</code><button type="button" class="copy" data-copy="/remove"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.remove">Drop one upcoming track. Position 1 is the next song.</p>
+        <p data-i18n="commands.remove">Removes one song from the queue. Position 1 is the next song.</p>
       </article>
       <article class="cmd-card" id="radio" data-cmd>
         <header><code class="cmd-name">/radio</code><button type="button" class="copy" data-copy="/radio play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.radio">play, stop, night, and night-off. Station choices are Kiss, Rock, and Beat.</p>
+        <p data-i18n="commands.radio">play, stop, night, and night-off. Pick Kiss, Rock, or Beat.</p>
         <ul class="opts"><li><code>play</code></li><li><code>stop</code></li><li><code>night</code></li><li><code>night-off</code></li></ul>
       </article>
       <article class="cmd-card" id="setup" data-cmd>
         <header><code class="cmd-name">/setup</code><button type="button" class="copy" data-copy="/setup status"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.setup">Per-server channels for deals, greetings, and the Kitchen Board. Needs Manage Server.</p>
+        <p data-i18n="commands.setup">Sets which channels get deals, welcome messages, and the Kitchen Board. Needs Manage Server.</p>
         <ul class="opts"><li><code>steam</code></li><li><code>epic</code></li><li><code>welcome</code></li><li><code>goodbye</code></li><li><code>kitchen</code></li><li><code>idle-radio</code></li><li><code>status</code></li><li><code>disable</code></li></ul>
         <a class="link-arrow" href="setup.html"><span data-i18n="nav.setup">Setup</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
       </article>
     </div>
-    <p class="empty-state" data-cmd-empty hidden data-i18n="commands.none">Nothing on the menu by that name.</p>
-    <p class="note callout" data-reveal><svg width="20" height="20" aria-hidden="true"><use href="#i-speaker" /></svg> <span data-i18n="commands.share">Music and radio share one voice slot per server. Starting one stops the other.</span></p>
+    <p class="empty-state" data-cmd-empty hidden data-i18n="commands.none">No command by that name.</p>
+    <p class="note callout" data-reveal><svg width="20" height="20" aria-hidden="true"><use href="#i-speaker" /></svg> <span data-i18n="commands.share">Music and radio share one voice connection per server, so starting one stops the other.</span></p>
   </div>
 </section>
 
 <section class="section" id="buttons">
   <div class="wrap">
     <div class="section-head" data-reveal>
-      <p class="kicker" data-i18n="commands.buttonsKicker">On the cards</p>
-      <h2 data-i18n="commands.buttons">Buttons on the cards</h2>
+      <p class="kicker" data-i18n="commands.buttonsKicker">Buttons</p>
+      <h2 data-i18n="commands.buttons">What the buttons do</h2>
     </div>
     <div class="btn-legend" data-reveal-group>
       <div class="btn-group">
         <h3 data-i18n="commands.groupMusic">Now Playing</h3>
         <dl>
-          <div><dt><span class="dc-btn">Pause</span></dt><dd data-i18n="buttons.pause">Pause, or Resume while playback is paused.</dd></div>
-          <div><dt><span class="dc-btn">Skip</span></dt><dd data-i18n="buttons.skip">Skip to the next track in the queue.</dd></div>
-          <div><dt><span class="dc-btn dc-btn-red">Stop</span></dt><dd data-i18n="buttons.stop">Stop and leave. On the radio card, you need to be in the bot’s voice channel.</dd></div>
-          <div><dt><span class="dc-btn">Loop</span></dt><dd data-i18n="buttons.loop">Cycles the label: Loop (off), Repeat (this track), Queue (the whole queue).</dd></div>
-          <div><dt><span class="dc-btn">Shuffle</span></dt><dd data-i18n="buttons.shuffle">Shuffle the upcoming queue.</dd></div>
+          <div><dt><span class="dc-btn">Pause</span></dt><dd data-i18n="buttons.pause">Pauses the song, or resumes it.</dd></div>
+          <div><dt><span class="dc-btn">Skip</span></dt><dd data-i18n="buttons.skip">Skips to the next song.</dd></div>
+          <div><dt><span class="dc-btn dc-btn-red">Stop</span></dt><dd data-i18n="buttons.stop">Stops and leaves. On the radio card, you need to be in the bot’s voice channel.</dd></div>
+          <div><dt><span class="dc-btn">Loop</span></dt><dd data-i18n="buttons.loop">Switches between Loop (off), Repeat (this song), and Queue (the whole queue).</dd></div>
+          <div><dt><span class="dc-btn">Shuffle</span></dt><dd data-i18n="buttons.shuffle">Shuffles what’s left in the queue.</dd></div>
         </dl>
       </div>
       <div class="btn-group">
         <h3 data-i18n="commands.groupRadio">Radio</h3>
         <dl>
-          <div><dt><span class="dc-btn">Website <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></span></dt><dd data-i18n="buttons.website">Opens the station’s site.</dd></div>
-          <div><dt><span class="dc-btn">Catch</span></dt><dd data-i18n="buttons.catch">Saves the artist and title for you. A show name is refused — a show is not a song.</dd></div>
-          <div><dt><span class="dc-btn">Play</span></dt><dd data-i18n="buttons.play">On a caught song. Finds it on YouTube and queues it like /play. On the Kitchen Board, only the person who caught it can press Play.</dd></div>
+          <div><dt><span class="dc-btn">Website <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></span></dt><dd data-i18n="buttons.website">Opens the station’s website.</dd></div>
+          <div><dt><span class="dc-btn">Catch</span></dt><dd data-i18n="buttons.catch">Saves the artist and title for you. Works on songs, not on talk shows.</dd></div>
+          <div><dt><span class="dc-btn">Play</span></dt><dd data-i18n="buttons.play">Shows up on a song you caught. Finds it on YouTube and queues it like /play. On the Kitchen Board, only the person who caught it can press it.</dd></div>
         </dl>
       </div>
       <div class="btn-group">
         <h3 data-i18n="commands.groupQueue">/queue</h3>
         <dl>
-          <div><dt><span class="dc-btn">◀ Prev</span></dt><dd data-i18n="buttons.prev">Previous page of /queue.</dd></div>
-          <div><dt><span class="dc-btn">Next ▶</span></dt><dd data-i18n="buttons.next">Next page of /queue.</dd></div>
+          <div><dt><span class="dc-btn">◀ Prev</span></dt><dd data-i18n="buttons.prev">Previous page of the queue.</dd></div>
+          <div><dt><span class="dc-btn">Next ▶</span></dt><dd data-i18n="buttons.next">Next page of the queue.</dd></div>
         </dl>
       </div>
     </div>

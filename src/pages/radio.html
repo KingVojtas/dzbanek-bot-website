@@ -1,14 +1,14 @@
 <!-- title: Radio — Dzbanek -->
-<!-- description: Kiss, Rock Radio, and Radio Beat in your voice channel. Catch a song, or let Friday Radio Night pick the station. -->
+<!-- description: Kiss, Rock Radio, and Radio Beat in your voice channel. Save songs you like with Catch, and vote on Friday’s Radio Night. -->
 <!-- page: radio -->
 <!-- scripts: radio.js -->
 
 <div class="tuned" data-tuner style="--tuned: var(--beat)">
   <header class="page-hero">
     <div class="wrap">
-      <p class="kicker" data-i18n="radio.kicker">Czech air</p>
-      <h1 data-i18n="radio.title">Three stations, one card.</h1>
-      <p class="lead" data-i18n="radio.lead">/radio play joins your voice channel. The card wears the station’s color and edits itself when the song on air changes, about every 20 seconds. Radio does not wander off during a quiet stretch.</p>
+      <p class="kicker" data-i18n="radio.kicker">Radio</p>
+      <h1 data-i18n="radio.title">Three Czech stations in your voice channel.</h1>
+      <p class="lead" data-i18n="radio.lead">/radio play joins your voice channel and starts streaming. The card takes on the station’s color and updates when the song changes (it checks about every 20 seconds). It won’t leave just because the chat has gone quiet.</p>
     </div>
   </header>
 
@@ -29,7 +29,7 @@
             <button type="button" role="radio" aria-checked="false" tabindex="-1" data-station="rock" style="--accent: var(--rock)"><span class="led" aria-hidden="true"></span>Rock</button>
             <button type="button" role="radio" aria-checked="true" tabindex="0" data-station="beat" style="--accent: var(--beat)"><span class="led" aria-hidden="true"></span>Beat</button>
           </div>
-          <span class="example-tag" data-i18n="tuner.note">A dial, not a player. Sound comes from the bot.</span>
+          <span class="example-tag" data-i18n="tuner.note">Just a dial. The actual sound comes from the bot.</span>
         </div>
       </div>
 
@@ -38,21 +38,21 @@
           <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
           <p class="kicker">Kiss Radio</p>
           <p class="slogan">...be happy!</p>
-          <p data-i18n="radio.kiss">Pop from Kiss. The card follows radia.cz, then the stream title.</p>
+          <p data-i18n="radio.kiss">Pop hits. Song info comes from radia.cz, or from the stream itself.</p>
           <a class="link-arrow" href="https://www.kiss.cz/" target="_blank" rel="noopener noreferrer">kiss.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
         </article>
         <article class="station" id="rock" data-station-card="rock" style="--accent: var(--rock)">
           <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
           <p class="kicker">Rock Radio</p>
           <p class="slogan">Rock je slušná muzika</p>
-          <p data-i18n="radio.rock">Rock Radio. Same now-playing path: radia.cz, then the stream title.</p>
+          <p data-i18n="radio.rock">Rock. Song info comes from radia.cz, or from the stream.</p>
           <a class="link-arrow" href="https://rockovyradio.cz/" target="_blank" rel="noopener noreferrer">rockovyradio.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
         </article>
         <article class="station" id="beat" data-station-card="beat" style="--accent: var(--beat)">
           <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
           <p class="kicker">Radio Beat</p>
           <p class="slogan">První bigbít u nás</p>
-          <p data-i18n="radio.beat">Radio Beat. The card prefers Beat’s own “Právě v éteru”, then radia.cz, then the stream. During a show it may name the program.</p>
+          <p data-i18n="radio.beat">Classic rock. Song info comes from Beat’s own “Právě v éteru” list first, then radia.cz, then the stream. During a show you might see the show’s name instead.</p>
           <a class="link-arrow" href="https://www.radiobeat.cz/" target="_blank" rel="noopener noreferrer">radiobeat.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
         </article>
       </div>
@@ -64,10 +64,10 @@
   <div class="wrap split">
     <div data-reveal>
       <p class="kicker">Catch</p>
-      <h2 data-i18n="radio.catchTitle">Catch, then Play</h2>
-      <p class="lead" data-i18n="radio.catchBody">Catch stores the artist and title for you. The reply grows a Play button, which searches YouTube and queues the song. The Kitchen Board keeps the server’s latest catch.</p>
+      <h2 data-i18n="radio.catchTitle">Catch a song, play it later</h2>
+      <p class="lead" data-i18n="radio.catchBody">Hear something you like? Catch saves the artist and title. The reply comes with a Play button that finds the song on YouTube and adds it to the queue. The Kitchen Board shows the server’s latest catch.</p>
     </div>
-    <ol class="flow" data-reveal aria-label="Catch, then Play" data-i18n-aria="radio.catchTitle">
+    <ol class="flow" data-reveal aria-label="Catch a song, play it later" data-i18n-aria="radio.catchTitle">
       <li class="flow-step">
         <span class="flow-num" aria-hidden="true">1</span>
         <div class="dc dc-mini">
@@ -109,26 +109,26 @@
     <div data-reveal>
       <p class="kicker">Friday</p>
       <h2 data-i18n="radio.nightTitle">Radio Night</h2>
-      <p class="lead" data-i18n="radio.nightBody">/radio night needs Manage Server. Pick a fallback station and a voice channel (or join one). /radio night-off takes it off the calendar.</p>
+      <p class="lead" data-i18n="radio.nightBody">/radio night sets up a Friday radio night (you need Manage Server). Pick a backup station and a voice channel, or just join one. /radio night-off cancels it.</p>
       <p class="clock-chip solid"><svg width="16" height="16" aria-hidden="true"><use href="#i-clock" /></svg> <span data-i18n="radio.nextNight">Next Radio Night</span> <strong data-clock="night-in"></strong></p>
       <ol class="timeline">
         <li data-phase="vote">
           <strong class="mono">12:00</strong>
-          <p data-i18n="radio.t1">The Kitchen Board puts out Kiss, Rock, and Beat vote buttons. One vote per person, and you can change your mind.</p>
+          <p data-i18n="radio.t1">The Kitchen Board shows Kiss, Rock, and Beat buttons. Everyone gets one vote and can change it.</p>
         </li>
         <li data-phase="vote">
-          <strong data-i18n="radio.during">While it votes</strong>
-          <p data-i18n="radio.t3">While votes are open the board shows the tally. After 20:00 it goes back to being the stereo.</p>
+          <strong data-i18n="radio.during">While voting</strong>
+          <p data-i18n="radio.t3">The board shows the votes as they come in. After 20:00 it goes back to normal.</p>
         </li>
         <li data-phase="night">
           <strong class="mono">20:00</strong>
-          <p data-i18n="radio.t2">The winner starts in the channel you picked. A tie uses the station you scheduled, then the last station that played, then Beat.</p>
+          <p data-i18n="radio.t2">The winner starts playing in the channel you picked. If it’s a tie, it plays the station you scheduled, then the last one that played, then Beat.</p>
         </li>
       </ol>
     </div>
 
     <div class="vote-stage" data-vote data-reveal>
-      <span class="example-tag" data-i18n="vote.note">Example vote. Your click stays in this tab.</span>
+      <span class="example-tag" data-i18n="vote.note">Example vote. Your clicks don’t go anywhere.</span>
       <div class="dc">
         <div class="dc-msg">
           <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
@@ -171,13 +171,13 @@
           </div>
         </div>
         <div class="vote-actions">
-          <button type="button" class="btn btn-clay btn-sm" data-vote-close data-i18n="vote.close">Close the vote at 20:00</button>
+          <button type="button" class="btn btn-clay btn-sm" data-vote-close data-i18n="vote.close">Close the vote (20:00)</button>
           <button type="button" class="btn btn-ghost btn-sm" data-vote-reset data-i18n="vote.reset">Reset</button>
         </div>
       </div>
     </div>
   </div>
   <div class="wrap">
-    <p class="note callout" data-reveal><svg width="20" height="20" aria-hidden="true"><use href="#i-radio" /></svg> <span data-i18n="radio.note">Switching stations reuses the same voice connection and retires the previous card. /setup idle-radio, on by default, fades into the last station (or Beat) when a music queue goes quiet and people are still in the channel.</span></p>
+    <p class="note callout" data-reveal><svg width="20" height="20" aria-hidden="true"><use href="#i-radio" /></svg> <span data-i18n="radio.note">Switching stations keeps the same voice connection and replaces the old card. With /setup idle-radio (on by default), when the music queue runs out and people are still in the channel, the last station starts playing.</span></p>
   </div>
 </section>

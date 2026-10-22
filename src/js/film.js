@@ -127,10 +127,10 @@
   function labels() {
     hero.dataset.sound = video.muted ? 'off' : 'on';
     soundLabel.textContent = video.muted ? t('film.sound', 'Turn on sound') : t('film.mute', 'Sound off');
-    ring.textContent = seenBefore ? t('film.again', 'Watch again · with sound ·') : t('film.watch', 'Watch the ad · with sound ·');
+    ring.textContent = seenBefore ? t('film.again', 'Watch again · with sound ·') : t('film.watch', 'Watch with sound · 52 s ·');
     sticker.setAttribute(
       'aria-label',
-      seenBefore ? t('film.againAria', 'Watch the ad again with sound') : t('film.watchAria', 'Watch the ad with sound')
+      seenBefore ? t('film.againAria', 'Watch the trailer again with sound') : t('film.watchAria', 'Watch the trailer with sound')
     );
     segments.forEach((segment) => {
       const name = t('film.ch.' + segment.id, segment.id);
@@ -246,7 +246,7 @@
       /* ignore */
     }
     start(false);
-    // Autoplay is a preview, so the sticker still says "Watch the ad" until it has been chosen.
+    // Autoplay is a preview, so the sticker still offers it with sound afterwards.
     seenBefore = false;
     labels();
   }
