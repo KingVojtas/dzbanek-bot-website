@@ -142,14 +142,13 @@
     },
     deals: {
       title: 'Cheap games every morning, free ones from Epic',
+      steamWhen: 'Every day at 03:33',
       steamTitle: 'Steam daily deals',
-      steamBody:
-        'Ten games at 03:33 every day. Very Positive games go first, biggest discount on top. If there aren’t enough of those, regular Steam specials fill the gaps. Prices are in euros.',
+      steamBody: 'Ten games on sale. Very Positive ones go first, biggest discount on top, and regular specials fill any gaps.',
+      epicWhen: 'Checked at 12:00 and 17:00',
       epicTitle: 'Epic free games',
-      epicBody:
-        'Checked at 12:00 and 17:00, which is when Epic usually swaps its free games. Your server only hears about each one once.',
-      more: '+ 5 more · prices in €',
-      example: 'Made-up games. The real posts list real ones.',
+      epicBody: 'Whatever Epic is giving away this week, plus what’s free next. Each game is posted once.',
+      example: 'Made-up games. The real post has ten, with the store art.',
     },
     board: {
       kicker: 'Kitchen Board',
@@ -157,8 +156,7 @@
       body: '/setup kitchen posts a single message and keeps editing it instead of posting new ones. It shows what’s playing, who’s in voice, the top Steam deal, the current Epic freebie, how many people joined today, and Radio Night if one’s coming up.',
       sunday:
         'Every Sunday at 18:00 you also get a postcard with the songs people caught that week, plus Friday’s vote results if anyone voted.',
-      presence:
-        'The bot’s Discord status shows what’s going on in its busiest server: radio first, then music, then the top Steam deal. When nothing’s on, it just says the kitchen is quiet.',
+      presence: 'The bot’s Discord status takes turns with three lines, each for twenty minutes: Purifying the source, Analyzing bacteria levels and Pouring fresh drops.',
       example: 'Example, not live',
       edited: '(edited)',
       live: 'Live · Radio Beat',
@@ -176,7 +174,10 @@
     },
     welcome: {
       title: 'Hi and bye',
-      body: 'Dzbanek can say hi when someone joins and bye when they leave. You turn it on per server. The messages are in English and look like this:',
+      body: 'When someone joins, Dzbanek greets them with a card, and when they leave, it says goodbye. Pick the channels with /setup welcome and /setup goodbye. The cards are in English and look like this:',
+      t1: 'It tags the person, so they get a ping.',
+      t2: 'It shows how many people are in the server now.',
+      t3: 'The welcome says when they joined Discord, the goodbye says when they first sat down.',
       joinLabel: 'When someone joins',
       leaveLabel: 'When someone leaves',
     },
@@ -278,7 +279,7 @@
     },
     demo: {
       title: 'Try it here',
-      lead: 'This is a fake channel that runs in your browser. Type / and pick a command, or click one below. The buttons on the cards work too. Nothing gets sent to Discord.',
+      lead: 'This is a fake server that runs in your browser. Type / in #kitchen and pick a command, or click one of these. The buttons on the cards work too. Nothing gets sent to Discord.',
       topic: 'A fake channel. Nothing here reaches Discord.',
       startTitle: 'Welcome to #kitchen!',
       startBody: 'This is the start of the #kitchen channel.',
@@ -294,6 +295,12 @@
       kbdSend: 'send',
       kbdClose: 'close',
       reset: 'Clear the channel',
+      textChannels: 'Text channels',
+      voiceChannels: 'Voice channels',
+      connected: 'Voice connected',
+      online: 'Online',
+      offline: 'Offline',
+      search: 'Search',
     },
     buttons: {
       pause: 'Pauses the song, or resumes it.',

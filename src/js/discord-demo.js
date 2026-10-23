@@ -894,6 +894,22 @@
     append(usedLine('/' + cmd.name));
   }
 
+  /* ---------- the server around the channel ---------- */
+
+  // Dzbanek sits in the Lounge while it plays something, with the green ring while sound comes out.
+  const voiceBot = document.querySelector('[data-demo-voice-bot]');
+  function voice() {
+    const busy = Boolean(state.track || state.radio || state.quiz);
+    voiceBot.hidden = !busy;
+    voiceBot.classList.toggle('is-speaking', busy && !(state.track && state.paused));
+  }
+  if (voiceBot) setInterval(voice, 500);
+
+  // The bot's real status: three lines, a new one every twenty minutes.
+  const LORE = ['Purifying the source', 'Analyzing bacteria levels', 'Pouring fresh drops'];
+  const status = document.querySelector('[data-demo-status]');
+  if (status) status.textContent = LORE[Math.floor(new Date().getMinutes() / 20)];
+
   /* ---------- the slash menu (combobox) ---------- */
 
   let items = [];

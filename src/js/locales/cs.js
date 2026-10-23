@@ -143,14 +143,13 @@
     },
     deals: {
       title: 'Každé ráno levné hry, z Epicu i zadarmo',
+      steamWhen: 'Každý den v 03:33',
       steamTitle: 'Denní slevy na Steamu',
-      steamBody:
-        'Každý den v 03:33 deset her. Nejdřív hry s hodnocením Very Positive, největší sleva nahoře. Když jich není dost, zbytek doplní běžné akce na Steamu. Ceny jsou v eurech.',
+      steamBody: 'Deset her ve slevě. Nejdřív ty s hodnocením Very Positive, největší sleva nahoře, a mezery doplní běžné akce.',
+      epicWhen: 'Kontrola ve 12:00 a v 17:00',
       epicTitle: 'Hry zdarma z Epicu',
-      epicBody:
-        'Kontroluje se ve 12:00 a v 17:00, kdy Epic většinou mění hry zdarma. O každé hře se tvůj server dozví jen jednou.',
-      more: '+ 5 dalších · ceny v €',
-      example: 'Vymyšlené hry. Ve skutečných příspěvcích jsou skutečné.',
+      epicBody: 'Co Epic tenhle týden rozdává a co bude zdarma příště. Každá hra přijde jen jednou.',
+      example: 'Vymyšlené hry. Skutečný příspěvek jich má deset, i s obrázky z obchodu.',
     },
     board: {
       kicker: 'Kitchen Board',
@@ -158,8 +157,7 @@
       body: '/setup kitchen pošle jedinou zprávu a místo posílání nových ji pak upravuje. Ukazuje, co hraje, kdo je ve voice, nejlepší slevu na Steamu, aktuální hru zdarma z Epicu, kolik lidí se dnes připojilo a Radio Night, když se nějaká blíží.',
       sunday:
         'Každou neděli v 18:00 přijde ještě pohlednice s písničkami, které lidi za týden ulovili, a s výsledkem pátečního hlasování, pokud někdo hlasoval.',
-      presence:
-        'Status bota na Discordu ukazuje, co se děje na jeho nejrušnějším serveru: nejdřív rádio, pak hudbu, pak nejlepší slevu na Steamu. Když se nic neděje, píše, že je v kuchyni klid.',
+      presence: 'Status bota na Discordu se střídá mezi třemi řádky, každý na dvacet minut: Purifying the source, Analyzing bacteria levels a Pouring fresh drops.',
       example: 'Ukázka, nic živého',
       edited: '(upraveno)',
       live: 'Živě · Radio Beat',
@@ -177,7 +175,10 @@
     },
     welcome: {
       title: 'Ahoj a čau',
-      body: 'Dzbanek umí pozdravit, když se někdo připojí, a rozloučit se, když odejde. Zapíná se pro každý server zvlášť. Zprávy jsou anglicky a vypadají takhle:',
+      body: 'Když se někdo připojí, Dzbanek pošle uvítací kartu, a když odejde, rozloučí se. Kanály vybereš přes /setup welcome a /setup goodbye. Karty jsou anglicky a vypadají takhle:',
+      t1: 'Člověka označí, takže dostane upozornění.',
+      t2: 'Ukáže, kolik lidí je teď na serveru.',
+      t3: 'Uvítání ukáže datum založení účtu na Discordu, rozloučení datum příchodu na server.',
       joinLabel: 'Když se někdo připojí',
       leaveLabel: 'Když někdo odejde',
     },
@@ -279,7 +280,7 @@
     },
     demo: {
       title: 'Vyzkoušej si to tady',
-      lead: 'Tohle je falešný kanál, který běží ve tvém prohlížeči. Napiš / a vyber příkaz, nebo klikni na některý dole. Tlačítka na kartách fungují taky. Nic se neposílá na Discord.',
+      lead: 'Tohle je falešný server, který běží ve tvém prohlížeči. Napiš / do #kitchen a vyber příkaz, nebo klikni na některý z těchhle. Tlačítka na kartách fungují taky. Nic se neposílá na Discord.',
       topic: 'Falešný kanál. Nic odsud nejde na Discord.',
       startTitle: 'Vítej v kanálu #kitchen!',
       startBody: 'Tohle je začátek kanálu #kitchen.',
@@ -295,6 +296,12 @@
       kbdSend: 'odeslat',
       kbdClose: 'zavřít',
       reset: 'Vyčistit kanál',
+      textChannels: 'Textové kanály',
+      voiceChannels: 'Hlasové kanály',
+      connected: 'Připojeno k hlasu',
+      online: 'Online',
+      offline: 'Offline',
+      search: 'Hledat',
     },
     buttons: {
       pause: 'Pozastaví písničku, nebo ji pustí dál.',

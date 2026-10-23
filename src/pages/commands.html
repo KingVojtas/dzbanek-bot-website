@@ -11,70 +11,127 @@
 </header>
 
 <section class="section flush-top" id="demo" aria-labelledby="demo-title">
-  <div class="wrap demo-layout">
-    <div class="dc-app" data-demo>
-      <div class="dc-titlebar">
-        <svg width="20" height="20" aria-hidden="true"><use href="#i-hash" /></svg>
-        <strong>kitchen</strong>
-        <span class="dc-topic" data-i18n="demo.topic">A fake channel. Nothing here reaches Discord.</span>
+  <div class="wrap">
+    <div class="demo-intro" data-reveal>
+      <div>
+        <h2 id="demo-title" class="h-small" data-i18n="demo.title">Try it here</h2>
+        <p class="lead" data-i18n="demo.lead">This is a fake server that runs in your browser. Type / in #kitchen and pick a command, or click one of these. The buttons on the cards work too. Nothing gets sent to Discord.</p>
       </div>
-      <div class="dc-log" data-demo-log role="log" aria-live="polite" aria-label="Demo channel" data-i18n-aria="demo.logLabel" tabindex="0">
-        <div class="dc-start">
-          <span class="dc-start-icon" aria-hidden="true">#</span>
-          <p class="dc-start-title" data-i18n="demo.startTitle">Welcome to #kitchen!</p>
-          <p class="dc-start-body" data-i18n="demo.startBody">This is the start of the #kitchen channel.</p>
+      <div class="demo-tools">
+        <div class="demo-chips">
+          <button type="button" class="chip" data-demo-run="/play">/play</button>
+          <button type="button" class="chip" data-demo-run="/queue">/queue</button>
+          <button type="button" class="chip" data-demo-run="/radio play">/radio play</button>
+          <button type="button" class="chip" data-demo-run="/remove 1">/remove</button>
+          <button type="button" class="chip" data-demo-run="/setup status">/setup status</button>
+          <button type="button" class="chip" data-demo-run="/quiz start">/quiz start</button>
+          <button type="button" class="chip" data-demo-run="/help">/help</button>
+          <button type="button" class="chip" data-demo-run="/stop">/stop</button>
         </div>
-        <div class="dc-msg">
-          <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" decoding="async" />
-          <div class="dc-body">
-            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><time class="dc-time" data-clock="stamp">Today at 21:14</time></p>
-            <p class="dc-text">🍪 Pull up a chair. Type <code>/</code> in the box below to see the menu, then pick something.</p>
-          </div>
-        </div>
+        <p class="kbd-hint"><kbd>/</kbd> <span data-i18n="demo.kbdOpen">opens the menu</span> · <kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="demo.kbdPick">pick</span> · <kbd>Enter</kbd> <span data-i18n="demo.kbdSend">send</span> · <kbd>Esc</kbd> <span data-i18n="demo.kbdClose">close</span> · <button type="button" class="link-btn" data-demo-reset data-i18n="demo.reset">Clear the channel</button></p>
       </div>
-      <p class="dc-typing" data-demo-typing hidden><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span> <strong>Dzbanek</strong> is thinking…</p>
-      <form class="dc-composer" data-demo-form autocomplete="off">
-        <div class="dc-suggest" data-demo-suggest hidden>
-          <p class="dc-suggest-head" data-demo-suggest-head></p>
-          <ul role="listbox" id="demo-list" aria-label="Commands" data-i18n-aria="demo.listLabel"></ul>
-        </div>
-        <div class="dc-input">
-          <svg class="dc-plus" width="22" height="22" aria-hidden="true"><use href="#i-plus" /></svg>
-          <input
-            id="demo-input"
-            type="text"
-            role="combobox"
-            aria-autocomplete="list"
-            aria-expanded="false"
-            aria-controls="demo-list"
-            aria-label="Message #kitchen"
-            data-i18n-aria="demo.inputLabel"
-            placeholder="Message #kitchen (type / for commands)"
-            data-i18n-placeholder="demo.placeholder"
-            spellcheck="false"
-            maxlength="80"
-          />
-          <button type="submit" class="dc-send" aria-label="Send" data-i18n-aria="demo.send"><svg width="20" height="20" aria-hidden="true"><use href="#i-send" /></svg></button>
-        </div>
-      </form>
     </div>
 
-    <aside class="demo-side" data-reveal>
-      <h2 id="demo-title" class="h-small" data-i18n="demo.title">Try it here</h2>
-      <p class="lead" data-i18n="demo.lead">This is a fake channel that runs in your browser. Type / and pick a command, or click one below. The buttons on the cards work too. Nothing gets sent to Discord.</p>
-      <div class="demo-chips">
-        <button type="button" class="chip" data-demo-run="/play">/play</button>
-        <button type="button" class="chip" data-demo-run="/queue">/queue</button>
-        <button type="button" class="chip" data-demo-run="/radio play">/radio play</button>
-        <button type="button" class="chip" data-demo-run="/remove 1">/remove</button>
-        <button type="button" class="chip" data-demo-run="/setup status">/setup status</button>
-        <button type="button" class="chip" data-demo-run="/quiz start">/quiz start</button>
-        <button type="button" class="chip" data-demo-run="/help">/help</button>
-        <button type="button" class="chip" data-demo-run="/stop">/stop</button>
+    <div class="dc-client">
+      <nav class="dc-rail" aria-hidden="true">
+        <span class="dc-guild dc-guild-home"><svg width="24" height="24"><use href="#i-chat" /></svg></span>
+        <span class="dc-rail-sep"></span>
+        <span class="dc-guild is-active">TK</span>
+        <span class="dc-guild" style="--hue: 210">GN</span>
+        <span class="dc-guild" style="--hue: 330">SB</span>
+        <span class="dc-guild dc-guild-add"><svg width="20" height="20"><use href="#i-plus" /></svg></span>
+      </nav>
+
+      <aside class="dc-side" aria-hidden="true">
+        <p class="dc-server">The Kitchen <svg width="16" height="16"><use href="#i-chevron" /></svg></p>
+        <div class="dc-channels">
+          <p class="dc-cat" data-i18n="demo.textChannels">Text channels</p>
+          <span class="dc-ch"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>welcome</span>
+          <span class="dc-ch is-active"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>kitchen</span>
+          <span class="dc-ch"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>steam-deals</span>
+          <span class="dc-ch"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>epic-free</span>
+          <span class="dc-ch"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>wishlist-radar</span>
+          <p class="dc-cat" data-i18n="demo.voiceChannels">Voice channels</p>
+          <span class="dc-ch"><svg width="18" height="18"><use href="#i-speaker" /></svg>Lounge</span>
+          <ul class="dc-voice">
+            <li><span class="dc-voice-av you">Y</span>you</li>
+            <li data-demo-voice-bot hidden><img class="dc-voice-av" src="assets/avatar.jpg" alt="" width="24" height="24" loading="lazy" decoding="async" />Dzbanek</li>
+          </ul>
+          <span class="dc-ch"><svg width="18" height="18"><use href="#i-speaker" /></svg>Radio Night</span>
+        </div>
+        <div class="dc-call">
+          <p><strong data-i18n="demo.connected">Voice connected</strong><small>Lounge / The Kitchen</small></p>
+        </div>
+        <div class="dc-me">
+          <span class="dc-face you">Y<i class="dc-dot"></i></span>
+          <span class="dc-me-name"><strong>you</strong><small data-i18n="demo.online">Online</small></span>
+          <span class="dc-me-tools"><svg width="18" height="18"><use href="#i-mic" /></svg><svg width="18" height="18"><use href="#i-headset" /></svg><svg width="18" height="18"><use href="#i-gear" /></svg></span>
+        </div>
+      </aside>
+
+      <div class="dc-app" data-demo>
+        <div class="dc-titlebar">
+          <svg width="22" height="22" aria-hidden="true"><use href="#i-hash" /></svg>
+          <strong>kitchen</strong>
+          <span class="dc-topic" data-i18n="demo.topic">A fake channel. Nothing here reaches Discord.</span>
+          <span class="dc-bar-tools" aria-hidden="true">
+            <svg width="20" height="20"><use href="#i-bell" /></svg>
+            <svg width="20" height="20"><use href="#i-pin" /></svg>
+            <svg width="20" height="20"><use href="#i-users" /></svg>
+            <span class="dc-search"><span data-i18n="demo.search">Search</span><svg width="14" height="14"><use href="#i-search" /></svg></span>
+          </span>
+        </div>
+        <div class="dc-log" data-demo-log role="log" aria-live="polite" aria-label="Demo channel" data-i18n-aria="demo.logLabel" tabindex="0">
+          <div class="dc-start">
+            <span class="dc-start-icon" aria-hidden="true">#</span>
+            <p class="dc-start-title" data-i18n="demo.startTitle">Welcome to #kitchen!</p>
+            <p class="dc-start-body" data-i18n="demo.startBody">This is the start of the #kitchen channel.</p>
+          </div>
+          <div class="dc-msg">
+            <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" decoding="async" />
+            <div class="dc-body">
+              <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><time class="dc-time" data-clock="stamp">Today at 21:14</time></p>
+              <p class="dc-text">🍪 Pull up a chair. Type <code>/</code> in the box below to see the menu, then pick something.</p>
+            </div>
+          </div>
+        </div>
+        <p class="dc-typing" data-demo-typing hidden><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span> <strong>Dzbanek</strong> is thinking…</p>
+        <form class="dc-composer" data-demo-form autocomplete="off">
+          <div class="dc-suggest" data-demo-suggest hidden>
+            <p class="dc-suggest-head" data-demo-suggest-head></p>
+            <ul role="listbox" id="demo-list" aria-label="Commands" data-i18n-aria="demo.listLabel"></ul>
+          </div>
+          <div class="dc-input">
+            <svg class="dc-plus" width="22" height="22" aria-hidden="true"><use href="#i-plus" /></svg>
+            <input
+              id="demo-input"
+              type="text"
+              role="combobox"
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-controls="demo-list"
+              aria-label="Message #kitchen"
+              data-i18n-aria="demo.inputLabel"
+              placeholder="Message #kitchen (type / for commands)"
+              data-i18n-placeholder="demo.placeholder"
+              spellcheck="false"
+              maxlength="80"
+            />
+            <button type="submit" class="dc-send" aria-label="Send" data-i18n-aria="demo.send"><svg width="20" height="20" aria-hidden="true"><use href="#i-send" /></svg></button>
+          </div>
+        </form>
       </div>
-      <p class="kbd-hint"><kbd>/</kbd> <span data-i18n="demo.kbdOpen">opens the menu</span> · <kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="demo.kbdPick">pick</span> · <kbd>Enter</kbd> <span data-i18n="demo.kbdSend">send</span> · <kbd>Esc</kbd> <span data-i18n="demo.kbdClose">close</span></p>
-      <button type="button" class="btn btn-ghost btn-sm" data-demo-reset data-i18n="demo.reset">Clear the channel</button>
-    </aside>
+
+      <aside class="dc-members" aria-hidden="true">
+        <p class="dc-cat"><span data-i18n="demo.online">Online</span> — 3</p>
+          <span class="dc-member"><span class="dc-face"><img src="assets/avatar.jpg" alt="" width="32" height="32" loading="lazy" decoding="async" /><i class="dc-dot"></i></span><span class="dc-member-text"><span class="dc-member-name"><span class="dc-name">Dzbanek</span><span class="dc-tag">APP</span></span><small data-demo-status>Pouring fresh drops</small></span></span>
+          <span class="dc-member"><span class="dc-face" style="--hue: 268">N<i class="dc-dot"></i></span><span class="dc-member-text"><span class="dc-member-name">Nova</span><small>🍪 baking</small></span></span>
+          <span class="dc-member"><span class="dc-face you">Y<i class="dc-dot"></i></span><span class="dc-member-text"><span class="dc-member-name">you</span></span></span>
+        <p class="dc-cat"><span data-i18n="demo.offline">Offline</span> — 2</p>
+          <span class="dc-member is-off"><span class="dc-face" style="--hue: 160">M</span><span class="dc-member-text"><span class="dc-member-name">Milo</span></span></span>
+          <span class="dc-member is-off"><span class="dc-face" style="--hue: 20">E</span><span class="dc-member-text"><span class="dc-member-name">Ema</span></span></span>
+      </aside>
+    </div>
   </div>
 </section>
 
