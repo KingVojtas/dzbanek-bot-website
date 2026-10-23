@@ -153,7 +153,7 @@
     });
   }
 
-  /* ---- home: the shelf radio tunes to whichever key you point at ---- */
+  /* ---- home: the shelf radio tunes to the key you point at, and plays the one you press ---- */
 
   const shelfRadio = document.querySelector('[data-kradio]');
   if (shelfRadio) {
@@ -162,6 +162,9 @@
     const keys = Array.from(shelfRadio.querySelectorAll('[data-key]'));
     const labels = Array.from(shelfRadio.querySelectorAll('[data-for]'));
     const slogan = shelfRadio.querySelector('[data-kradio-slogan]');
+    const hint = shelfRadio.closest('.shelf-radio').querySelector('[data-kradio-hint]');
+    const radio = window.dzbanekRadio;
+    let playing = null;
 
     const tune = (station) => {
       shelfRadio.style.setProperty('--tuned', 'var(--' + station + ')');
@@ -170,16 +173,43 @@
       keys.forEach((key) => {
         const on = key.dataset.key === station;
         key.classList.toggle('is-on', on);
-        if (on && slogan) slogan.textContent = key.dataset.slogan;
+        if (on && slogan && !playing) slogan.textContent = key.dataset.slogan;
       });
       labels.forEach((label) => label.classList.toggle('is-on', label.dataset.for === station));
     };
 
     // It stays on the last station you pointed at, the way a real dial would.
+    // While one plays, the dial stays on it.
     keys.forEach((key) => {
-      key.addEventListener('pointerenter', () => tune(key.dataset.key));
-      key.addEventListener('focus', () => tune(key.dataset.key));
+      key.addEventListener('pointerenter', () => playing || tune(key.dataset.key));
+      key.addEventListener('focus', () => playing || tune(key.dataset.key));
+      key.addEventListener('click', () => {
+        tune(key.dataset.key);
+        if (radio) radio.toggle(key.dataset.key);
+      });
     });
+
+    if (radio) {
+      const say = (key, fallback) => (window.t && window.t(key)) || fallback;
+      let last = { station: null, state: 'off', song: null };
+      const show = ({ station, state, song }) => {
+        last = { station, state, song };
+        playing = station;
+        shelfRadio.dataset.state = state;
+        keys.forEach((key) => key.setAttribute('aria-pressed', String(key.dataset.key === station)));
+        if (hint) hint.classList.toggle('is-live', state === 'on');
+        if (!slogan) return;
+        if (state === 'tuning') slogan.textContent = say('radioLive.tuning', 'Tuning in…');
+        else if (state === 'error') slogan.textContent = say('radioLive.error', 'The station isn’t answering');
+        else if (state === 'on') slogan.textContent = song ? song.artist + ' – ' + song.title : say('radioLive.onAir', 'On air');
+        else {
+          const tuned = keys.find((key) => key.classList.contains('is-on'));
+          if (tuned) slogan.textContent = tuned.dataset.slogan;
+        }
+      };
+      radio.onChange(show);
+      window.addEventListener('dzbanek:lang', () => show(last));
+    }
   }
 
   /* ---- toast + copy ---- */

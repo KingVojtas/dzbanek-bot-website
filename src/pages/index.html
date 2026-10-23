@@ -85,8 +85,8 @@
         <p data-i18n="facts.clockBody">Deals, Radio Night, and the Sunday postcard follow Czech time, wherever your server is.</p>
       </article>
       <article class="menu-card">
-        <h3 data-i18n="facts.cmdTitle">Six commands</h3>
-        <p data-i18n="facts.cmdBody">/play, /queue, /stop, /remove, /radio, and /setup. Everything else is a button.</p>
+        <h3 data-i18n="facts.cmdTitle">Lost? Type /help</h3>
+        <p data-i18n="facts.cmdBody">It lists every command. Pause, skip, and loop are also buttons right on the card.</p>
       </article>
       <article class="menu-card">
         <h3 data-i18n="facts.freeTitle">Actually free</h3>
@@ -146,7 +146,7 @@
       <p class="note"><a class="link-arrow" href="radio.html"><span data-i18n="radioHome.more">More about radio</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
     </div>
 
-    <!-- The old radio on the kitchen shelf. The keys are links; pointing at one tunes the dial to it. -->
+    <!-- The old radio on the kitchen shelf. Pointing at a key tunes the dial; pressing it plays that station live. -->
     <div class="shelf-radio" data-reveal>
       <div class="kradio" data-kradio style="--tuned: var(--beat); --needle: 82%; --knob: 70deg">
         <div class="kradio-grille" aria-hidden="true"><span class="kradio-badge">Dzbanek</span></div>
@@ -158,17 +158,18 @@
               <span class="kradio-label is-on" style="--pos: 82%" data-for="beat">BEAT</span>
               <span class="kradio-needle"></span>
             </div>
-            <p class="kradio-onair"><span class="kradio-lamp"></span><span data-kradio-slogan>První bigbít u nás</span></p>
+            <p class="kradio-onair"><span class="kradio-lamp"></span><span class="kradio-text" data-kradio-slogan>První bigbít u nás</span></p>
           </div>
           <div class="kradio-keys">
-            <a class="kradio-key" href="radio.html#kiss" data-key="kiss" aria-label="Kiss Radio" data-slogan="...be happy!" style="--accent: var(--kiss)">Kiss</a>
-            <a class="kradio-key" href="radio.html#rock" data-key="rock" aria-label="Rock Radio" data-slogan="Rock je slušná muzika" style="--accent: var(--rock)">Rock</a>
-            <a class="kradio-key is-on" href="radio.html#beat" data-key="beat" aria-label="Radio Beat" data-slogan="První bigbít u nás" style="--accent: var(--beat)">Beat</a>
+            <button type="button" class="kradio-key" data-key="kiss" aria-pressed="false" aria-label="Listen to Kiss Radio" data-i18n-aria="radioLive.kiss" data-slogan="...be happy!" style="--accent: var(--kiss)">Kiss</button>
+            <button type="button" class="kradio-key" data-key="rock" aria-pressed="false" aria-label="Listen to Rock Radio" data-i18n-aria="radioLive.rock" data-slogan="Rock je slušná muzika" style="--accent: var(--rock)">Rock</button>
+            <button type="button" class="kradio-key is-on" data-key="beat" aria-pressed="false" aria-label="Listen to Radio Beat" data-i18n-aria="radioLive.beat" data-slogan="První bigbít u nás" style="--accent: var(--beat)">Beat</button>
           </div>
           <div class="kradio-knobs" aria-hidden="true"><span class="kradio-knob"></span><span class="kradio-knob kradio-tune"></span></div>
         </div>
       </div>
       <div class="kradio-shelf" aria-hidden="true"></div>
+      <p class="kradio-hint" data-kradio-hint aria-live="polite"><span data-i18n="radioLive.hint">Press a key to listen live. Press it again to stop.</span></p>
     </div>
   </div>
 </section>
@@ -428,12 +429,38 @@
       </details>
       <details>
         <summary><span data-i18n="faq.q4">Is anything on this site live?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-        <p data-i18n="faq.a4">Just the clock. The bot doesn’t have a public API, so all the cards here are examples. The clock is your browser showing Prague time.</p>
+        <p data-i18n="faq.a4">The clock and the radio. The radio plays the real stations, and the song info comes from radia.cz, same as in the bot. The bot itself has no public API, so the Discord cards here are examples.</p>
       </details>
       <details>
         <summary><span data-i18n="faq.q5">Can I host it myself?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
         <p><span data-i18n="faq.a5">Sure. It’s a Node.js app that needs FFmpeg and Deno, and it runs fine on a home PC or a VPS. The repo has the full setup guide.</span> <a href="{{github}}" target="_blank" rel="noopener noreferrer">GitHub</a></p>
       </details>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="changelog">
+  <div class="wrap changelog-split">
+    <div data-reveal>
+      <h2 class="h-small" data-i18n="changelog.title">What’s cooking</h2>
+      <p class="lead" data-i18n="changelog.lead">The latest changes to the bot. Every change is on GitHub, too.</p>
+      <p class="note"><a class="link-arrow" href="{{github}}/commits/main" target="_blank" rel="noopener noreferrer"><span data-i18n="changelog.all">All changes on GitHub</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
+    </div>
+    <!-- An order slip from the kitchen printer. New entries go on top. -->
+    <div class="receipt-wrap" data-reveal>
+    <div class="receipt">
+      <p class="receipt-head">DZBANEK · <span data-i18n="changelog.slip">kitchen log</span></p>
+      <ol class="receipt-list">
+        <li><time datetime="2026-10-22">22. 10. 2026</time><span data-i18n="changelog.c1">Kitchen Quiz: /quiz start plays songs your kitchen has played before, and everyone in voice guesses the title.</span></li>
+        <li><time datetime="2026-10-22">22. 10. 2026</time><span data-i18n="changelog.c2">Wishlist Radar: link your Steam profile with /steam link and get pinged when a game on your wishlist goes on sale.</span></li>
+        <li><time datetime="2026-10-22">22. 10. 2026</time><span data-i18n="changelog.c3">Cleaner Steam deals: one line per game, a short description, and no games whose sale has already ended.</span></li>
+        <li><time datetime="2026-10-21">21. 10. 2026</time><span data-i18n="changelog.c4">/help, /volume, and a Previous button on the Now Playing card.</span></li>
+        <li><time datetime="2026-10-21">21. 10. 2026</time><span data-i18n="changelog.c5">Songs start sooner, and Spotify playlists start playing while the rest is still loading.</span></li>
+        <li><time datetime="2026-10-19">19. 10. 2026</time><span data-i18n="changelog.c6">Admins can open text and voice rooms with /textroom and /voiceroom.</span></li>
+        <li><time datetime="2026-10-17">17. 10. 2026</time><span data-i18n="changelog.c7">The radio picks up again after the bot restarts.</span></li>
+        <li><time datetime="2026-09-20">20. 9. 2026</time><span data-i18n="changelog.c8">Kiss, Rock Radio, and Radio Beat, live in your voice channel.</span></li>
+      </ol>
+    </div>
     </div>
   </div>
 </section>

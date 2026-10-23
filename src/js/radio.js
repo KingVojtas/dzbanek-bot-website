@@ -1,7 +1,7 @@
 /**
- * radio.html: the tuner dial and the Radio Night vote demo.
- * Neither plays sound or talks to the bot. Vote result lines stay in English,
- * the way the bot posts them.
+ * radio.html: the tuner dial, which plays the real stations (listen.js), what's on air
+ * on each station card, and the Radio Night vote demo. Nothing here talks to the bot.
+ * Vote result lines stay in English, the way the bot posts them.
  */
 (function () {
   const NAMES = { kiss: 'Kiss Radio', rock: 'Rock Radio', beat: 'Radio Beat' };
@@ -41,9 +41,19 @@
     const presets = Array.from(tuner.querySelectorAll('[data-station]'));
     const cards = Array.from(tuner.querySelectorAll('[data-station-card]'));
     const labels = Array.from(tuner.querySelectorAll('.tuner-label[data-for]'));
+    const listen = tuner.querySelector('[data-tuner-listen]');
+    const listenLabel = tuner.querySelector('[data-tuner-listen-label]');
+    const nowLine = tuner.querySelector('[data-tuner-now]');
+    const radio = window.dzbanekRadio;
+    const say = (key, fallback) => (window.t && window.t(key)) || fallback;
+    let tuned = 'beat';
+    let live = { station: null, state: 'off', song: null };
 
     function tune(key, remember) {
       if (!POSITION[key]) return;
+      tuned = key;
+      // Turning the dial while it plays changes the station.
+      if (radio && live.station && live.station !== key) radio.play(key);
       tuner.style.setProperty('--tuned', 'var(--' + key + ')');
       tuner.style.setProperty('--needle', POSITION[key]);
       check(presets, 'data-station', key);
@@ -70,6 +80,50 @@
 
     const fromHash = location.hash.slice(1);
     tune(POSITION[fromHash] ? fromHash : 'beat', false);
+
+    /* listening: the button plays the tuned station */
+
+    function showLive(info) {
+      live = info;
+      if (!listen) return;
+      const on = Boolean(info.station);
+      tuner.dataset.state = info.state;
+      listen.setAttribute('aria-pressed', String(on));
+      listenLabel.textContent = on ? say('tuner.stop', 'Stop') : say('tuner.listen', 'Listen live');
+      const name = info.station ? NAMES[info.station] : '';
+      if (info.state === 'tuning') nowLine.textContent = say('radioLive.tuning', 'Tuning in…');
+      else if (info.state === 'error') nowLine.textContent = say('radioLive.error', 'The station isn’t answering');
+      else if (info.state === 'on')
+        nowLine.textContent = info.song
+          ? say('tuner.nowOn', 'Now on {{station}}:').replace('{{station}}', name) + ' ' + info.song.artist + ' – ' + info.song.title
+          : say('radioLive.onAir', 'On air') + ' · ' + name;
+      else nowLine.textContent = say('tuner.note', 'The real station, live. It’s the same stream the bot plays in Discord.');
+    }
+
+    if (radio && listen) {
+      listen.addEventListener('click', () => (live.station ? radio.stop() : radio.play(tuned)));
+      radio.onChange(showLive);
+      window.addEventListener('dzbanek:lang', () => showLive(live));
+    }
+
+    /* what's on air on each card, refreshed while the page is open */
+
+    async function onAir() {
+      if (!radio || document.hidden) return;
+      await Promise.all(
+        cards.map(async (card) => {
+          const line = card.querySelector('[data-station-now]');
+          if (!line) return;
+          const song = await radio.nowPlaying(card.getAttribute('data-station-card'));
+          line.hidden = !song;
+          if (song) line.textContent = say('tuner.onAirNow', 'On air now:') + ' ' + song.artist + ' – ' + song.title;
+        })
+      );
+    }
+    onAir();
+    setInterval(onAir, 30000);
+    document.addEventListener('visibilitychange', onAir);
+    window.addEventListener('dzbanek:lang', onAir);
   }
 
   /* ---------- Radio Night vote ---------- */

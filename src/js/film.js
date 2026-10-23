@@ -150,6 +150,8 @@
 
   function start(withSound) {
     clearTimeout(resetTimer);
+    // The voice-over gets the room to itself: the radio stops.
+    if (withSound) document.dispatchEvent(new CustomEvent('dzbanek:film-sound'));
     seenBefore = true;
     captionsOn = withSound;
     video.muted = !withSound;
@@ -232,6 +234,14 @@
   }
 
   window.addEventListener('dzbanek:lang', labels);
+
+  // And the other way round: when the radio starts, the ad goes quiet.
+  document.addEventListener('dzbanek:radio', (event) => {
+    if (event.detail.state !== 'tuning' || video.muted) return;
+    video.muted = true;
+    captionsOn = false;
+    labels();
+  });
 
   /* ---------- the first visit of a session plays it, muted ---------- */
 

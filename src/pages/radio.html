@@ -28,7 +28,12 @@
             <button type="button" role="radio" aria-checked="false" tabindex="-1" data-station="rock" style="--accent: var(--rock)"><span class="led" aria-hidden="true"></span>Rock</button>
             <button type="button" role="radio" aria-checked="true" tabindex="0" data-station="beat" style="--accent: var(--beat)"><span class="led" aria-hidden="true"></span>Beat</button>
           </div>
-          <span class="example-tag" data-i18n="tuner.note">Just a dial. The actual sound comes from the bot.</span>
+          <button type="button" class="btn btn-clay btn-sm tuner-listen" data-tuner-listen aria-pressed="false">
+            <svg class="icon-play" width="16" height="16" aria-hidden="true"><use href="#i-play" /></svg>
+            <span class="tuner-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span data-tuner-listen-label>Listen live</span>
+          </button>
+          <p class="tuner-now" data-tuner-now aria-live="polite"><span data-i18n="tuner.note">The real station, live. It’s the same stream the bot plays in Discord.</span></p>
         </div>
       </div>
 
@@ -38,6 +43,7 @@
           <p class="station-name">Kiss Radio</p>
           <p class="slogan">...be happy!</p>
           <p data-i18n="radio.kiss">Pop hits. Song info comes from radia.cz, or from the stream itself.</p>
+          <p class="station-now" data-station-now hidden></p>
           <a class="link-arrow" href="https://www.kiss.cz/" target="_blank" rel="noopener noreferrer">kiss.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
         </article>
         <article class="station station-ticket" id="rock" data-station-card="rock" style="--accent: var(--rock)">
@@ -45,6 +51,7 @@
           <p class="station-name">Rock Radio</p>
           <p class="slogan">Rock je slušná muzika</p>
           <p data-i18n="radio.rock">Rock. Song info comes from radia.cz, or from the stream.</p>
+          <p class="station-now" data-station-now hidden></p>
           <a class="link-arrow" href="https://rockovyradio.cz/" target="_blank" rel="noopener noreferrer">rockovyradio.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
         </article>
         <article class="station station-tag" id="beat" data-station-card="beat" style="--accent: var(--beat)">
@@ -52,6 +59,7 @@
           <p class="station-name">Radio Beat</p>
           <p class="slogan">První bigbít u nás</p>
           <p data-i18n="radio.beat">Classic rock. Song info comes from Beat’s own “Právě v éteru” list first, then radia.cz, then the stream. During a show you might see the show’s name instead.</p>
+          <p class="station-now" data-station-now hidden></p>
           <a class="link-arrow" href="https://www.radiobeat.cz/" target="_blank" rel="noopener noreferrer">radiobeat.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
         </article>
       </div>
