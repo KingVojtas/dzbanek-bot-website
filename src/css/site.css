@@ -4156,7 +4156,18 @@ html.js [data-reveal-group].is-in > * {
 
   .hero[data-film="playing"] .hero-stage,
   .hero[data-film="paused"] .hero-stage {
-    height: auto;
+    min-height: 0;
+    height: min(clamp(540px, 88svh, 760px), calc(100svh - 6.5rem));
+  }
+
+  /* The copy is hidden while the film plays; out of the flow, it lets the stage
+     fit the screen again, so the deck stays clear of the sticky invite. */
+  .hero[data-film="playing"] .hero-copy,
+  .hero[data-film="paused"] .hero-copy {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 
   .hero[data-film="playing"] .hero-scene,
