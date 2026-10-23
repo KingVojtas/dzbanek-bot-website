@@ -258,6 +258,10 @@
         card.hidden = !match;
         if (match) shown += 1;
       });
+      // A menu section with nothing left in it goes too.
+      document.querySelectorAll('[data-cmd-group]').forEach((group) => {
+        group.hidden = !group.querySelector('[data-cmd]:not([hidden])');
+      });
       if (empty) empty.hidden = shown > 0;
     });
   }

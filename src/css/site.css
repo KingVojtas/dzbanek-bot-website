@@ -1335,6 +1335,35 @@ button.dc-btn:active {
   transform: translateY(1px);
 }
 
+/* The quiz shows the right answer in green after everyone locks in. */
+.dc-btn.dc-btn-green[disabled] {
+  opacity: 1;
+}
+
+.dc-help-group {
+  margin-top: 0.7rem;
+}
+
+.dc-help-title {
+  color: var(--dc-text);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.dc-help-cmds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.dc-help-cmds code {
+  padding: 0.05rem 0.35rem;
+  border-radius: 0.25rem;
+  background: var(--dc-code, rgba(0, 0, 0, 0.25));
+  font-size: 0.78rem;
+}
+
 .dc-btn-red,
 button.dc-btn-red:hover {
   background: var(--dc-red);
@@ -3142,6 +3171,82 @@ html.theme-light .receipt-wrap {
   font-size: 0.95rem;
 }
 
+/* straight from the server: instant photos taped up by the fridge */
+
+.snaps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: 2.25rem 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.snap {
+  --tilt: -1.5deg;
+  position: relative;
+  padding: 0.65rem 0.65rem 0;
+  background: #fbf8f1;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 18px 28px -18px rgba(0, 0, 0, 0.7);
+  rotate: var(--tilt);
+  transition: rotate 0.5s var(--spring), transform 0.5s var(--spring);
+}
+
+.snap:nth-child(2) {
+  --tilt: 1.2deg;
+  margin-top: 2.5rem;
+}
+
+.snap:nth-child(3) {
+  --tilt: -0.6deg;
+  margin-top: 1rem;
+}
+
+.snap:nth-child(4) {
+  --tilt: 1.8deg;
+  margin-top: 3rem;
+}
+
+/* A strip of tape across the top. */
+.snap::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: -0.7rem;
+  left: 50%;
+  width: 4.5rem;
+  height: 1.4rem;
+  margin-left: -2.25rem;
+  background: rgba(240, 228, 200, 0.6);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  rotate: -3deg;
+}
+
+.snap a {
+  display: block;
+}
+
+.snap img {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+}
+
+.snap-caption {
+  padding: 0.55rem 0.2rem 0.8rem;
+  color: #3d3026;
+  font: 700 1.3rem/1.1 var(--hand);
+  text-align: center;
+}
+
+@media (hover: hover) {
+  .snap:hover {
+    rotate: 0deg;
+    transform: translateY(-4px);
+  }
+}
+
 /* faq */
 
 .faq-split {
@@ -3626,10 +3731,8 @@ html:not(.js) .kbd-hint {
 .cmd-menu {
   --paper-ink: #2a1f16;
   --menu-accent: #9a4416;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
-  gap: 1.6rem 3.5rem;
+  columns: 2;
+  column-gap: 3.5rem;
   padding: clamp(1.6rem, 4vw, 3rem);
   border-radius: 0.25rem;
   background: #f4ecdd;
@@ -3640,10 +3743,30 @@ html:not(.js) .kbd-hint {
   rotate: -0.35deg;
 }
 
+.cmd-group {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2.2rem;
+}
+
+.cmd-group:last-child {
+  margin-bottom: 0;
+}
+
+.cmd-group-title {
+  break-after: avoid;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(42, 31, 22, 0.3);
+  color: var(--paper-ink);
+  font: 700 1.7rem/1 var(--hand);
+  letter-spacing: 0;
+}
+
 .cmd-item {
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
+  break-inside: avoid;
   margin: -0.5rem;
   padding: 0.5rem;
   border-radius: 0.3rem;
@@ -4655,6 +4778,10 @@ html.js [data-reveal-group].is-in > * {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .snaps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .duo {
     grid-template-columns: 1fr 1fr;
   }
@@ -4920,9 +5047,12 @@ html.js [data-reveal-group].is-in > * {
   .stations,
   .duo,
   .channel-groups,
-  .cmd-menu,
   .recipe-list {
     grid-template-columns: 1fr;
+  }
+
+  .cmd-menu {
+    columns: 1;
   }
 
   .cmd-menu,
@@ -5020,6 +5150,15 @@ html.js [data-reveal-group].is-in > * {
 
 /* Narrow phones: the speaker goes on top of the dial, like a portable set. */
 @media (max-width: 560px) {
+  .snaps {
+    grid-template-columns: minmax(0, 22rem);
+    justify-content: center;
+  }
+
+  .snap:nth-child(n) {
+    margin-top: 0;
+  }
+
   .receipt-list li {
     grid-template-columns: 1fr;
     gap: 0.15rem;

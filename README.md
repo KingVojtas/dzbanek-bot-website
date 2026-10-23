@@ -11,7 +11,7 @@ Four static pages and a 404, one stylesheet, vanilla JavaScript. No framework an
 | File | What it is |
 | --- | --- |
 | `index.html` | The kitchen: the hero ad, music, a shelf radio that plays the real stations, the Prague kitchen-hours dial, deals, the Kitchen Board, welcomes, setting it up, FAQ, the changelog, invite |
-| `commands.html` | A pretend `#kitchen` channel you can type `/` into, then `/play`, `/queue`, `/stop`, `/remove`, `/radio`, `/setup`, and the card buttons |
+| `commands.html` | A pretend `#kitchen` channel you can type `/` into (every command, a three-round Kitchen Quiz, and the card buttons), then the full command menu, grouped like the bot's `/help` |
 | `radio.html` | A tuner that plays Kiss, Rock Radio, and Radio Beat live, what each one has on air, Catch → Play, and a Friday Radio Night vote you can click |
 | `setup.html` | Channel setup, auto-detected channel names, permissions, Server Members intent |
 | `404.html` | The empty shelf. GitHub Pages serves it for missing paths |

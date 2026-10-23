@@ -24,7 +24,8 @@
     rock: { name: 'Rock Radio', short: 'Rock', color: '#c8102e', slogan: 'Rock je slušná muzika', url: 'https://rockovyradio.cz/' },
     beat: { name: 'Radio Beat', short: 'Beat', color: '#f5c400', slogan: 'První bigbít u nás', url: 'https://www.radiobeat.cz/' },
   };
-  const ON_AIR = ['Example Artist — Example Song', 'Someone Else — Another Song', 'A Local Band — On the Air'];
+  // Made up, like everything in this channel.
+  const ON_AIR = ['Iron Orchard - Highway Sermon', 'The Late Bakers - Midnight Crumbs', 'Paper Comets - Slow Steam'];
   const MIX = [
     'Kettle Song',
     'Crumbs on the Counter',
@@ -36,18 +37,32 @@
     'Wooden Spoon',
   ];
 
+  // The menu, in the order the bot's /help lists them.
   const COMMANDS = [
     { name: 'play', args: '[song or link]', desc: 'Play a YouTube or Spotify query', free: true },
     { name: 'queue', desc: 'Show the upcoming queue' },
-    { name: 'stop', desc: 'Stop, clear the queue, and leave' },
+    { name: 'nowplaying', desc: 'Bring the Now Playing card down here' },
+    { name: 'skip', desc: 'Skip to the next track' },
+    { name: 'pause', desc: 'Pause the music, or resume it' },
+    { name: 'volume', args: '[25–150]', desc: 'Set the volume for everyone in voice', free: true },
     { name: 'remove', args: '[position]', desc: 'Drop one upcoming track', free: true },
+    { name: 'stop', desc: 'Stop, clear the queue, and leave' },
     { name: 'radio play', args: '[station]', desc: 'Stream Kiss, Rock, or Beat', choices: ['kiss', 'rock', 'beat'] },
     { name: 'radio stop', desc: 'Turn the radio off' },
     { name: 'radio night', desc: 'Put Friday Radio Night on the calendar' },
     { name: 'radio night-off', desc: 'Take Radio Night off the calendar' },
+    { name: 'steam link', args: '[profile]', desc: 'Let Wishlist Radar watch your wishlist', free: true },
+    { name: 'steam wishlist', desc: 'Your wishlist with prices, sales first' },
+    { name: 'steam unlink', desc: 'Stop watching your wishlist' },
+    { name: 'quiz start', desc: 'Kitchen Quiz: name that tune' },
+    { name: 'quiz stop', desc: 'End the quiz and show the podium' },
     { name: 'setup status', desc: 'Show this server’s channels' },
     { name: 'setup kitchen', desc: 'Pick where the Kitchen Board hangs' },
+    { name: 'setup wishlist', desc: 'Pick where Wishlist Radar pings people' },
     { name: 'setup idle-radio', desc: 'Fade into radio when the queue ends' },
+    { name: 'textroom', args: '[name]', desc: 'Open a text room (admins)', free: true },
+    { name: 'voiceroom', args: '[name]', desc: 'Open a voice room (admins)', free: true },
+    { name: 'help', desc: 'Every command on one card' },
   ];
 
   const LOOP_LABELS = ['Loop', 'Repeat', 'Queue'];
@@ -65,6 +80,10 @@
       night: false,
       idle: true,
       thinking: 0,
+      volume: 100,
+      history: [], // songs already played, for Previous
+      linked: false, // Wishlist Radar
+      quiz: null, // { round, score, card, timer }
     };
   }
   state = fresh();
@@ -244,11 +263,9 @@
     });
     loopBtn.classList.toggle('is-on', state.loop > 0);
 
-    const pauseBtn = button(state.paused ? 'Resume' : 'Pause', () => {
-      state.paused = !state.paused;
-      pauseBtn.textContent = state.paused ? 'Resume' : 'Pause';
-      card.classList.toggle('paused', state.paused);
-    });
+    const pauseBtn = button(state.paused ? 'Resume' : 'Pause', () => togglePause());
+    pauseBtn.setAttribute('data-pause', '');
+    const volume = (step) => () => setVolume(state.volume + step);
 
     const card = botMessage(
       embed({
@@ -263,7 +280,7 @@
           h('div', { class: 'progress manual' }, h('span')),
           h('span', { class: 'mono', text: clock(track.length) })
         ),
-        footer: state.queue.length ? state.queue.length + ' up next' : 'Nothing up next',
+        footer: footerText(),
         thumb: h('div', { class: 'dc-embed-thumb vinyl', 'aria-hidden': 'true' }, h('span')),
       }),
       row(
@@ -272,6 +289,12 @@
         button('Stop', () => stopAll('⏹️ Stopped. The queue is cleared and I’ve left the channel.'), { red: true }),
         loopBtn,
         button('Shuffle', shuffle)
+      ),
+      row(
+        button('⏮️ Previous', previous, { disabled: !state.history.length }),
+        button('🔉', volume(-25), { disabled: state.volume <= 25 }),
+        button('🔊', volume(25), { disabled: state.volume >= 150 }),
+        button('📜 Queue', () => handlers.queue())
       )
     );
     card.classList.toggle('paused', state.paused);
@@ -288,9 +311,38 @@
     ticker = setInterval(tick, 250);
   }
 
+  function footerText() {
+    return (state.queue.length ? state.queue.length + ' up next' : 'Nothing up next') + ' · Volume ' + state.volume + '%';
+  }
+
   function refreshFooter() {
     const footer = state.card && state.card.querySelector('.dc-embed-footer');
-    if (footer) footer.textContent = state.queue.length ? state.queue.length + ' up next' : 'Nothing up next';
+    if (footer) footer.textContent = footerText();
+  }
+
+  function togglePause() {
+    if (!state.track) return false;
+    state.paused = !state.paused;
+    const pauseBtn = state.card && state.card.querySelector('[data-pause]');
+    if (pauseBtn) pauseBtn.textContent = state.paused ? 'Resume' : 'Pause';
+    if (state.card) state.card.classList.toggle('paused', state.paused);
+    return true;
+  }
+
+  function setVolume(percent) {
+    state.volume = Math.min(150, Math.max(25, Math.round(percent)));
+    if (state.card) {
+      const [down, up] = state.card.querySelectorAll('.dc-row:last-child .dc-btn:nth-child(2), .dc-row:last-child .dc-btn:nth-child(3)');
+      if (down) down.disabled = state.volume <= 25;
+      if (up) up.disabled = state.volume >= 150;
+    }
+    refreshFooter();
+  }
+
+  function previous() {
+    if (!state.history.length) return;
+    if (state.track) state.queue.unshift(state.track.title);
+    startTrack(state.history.pop());
   }
 
   function finish() {
@@ -299,6 +351,7 @@
       state.track.elapsed = 0;
       return;
     }
+    state.history.push(done);
     if (state.loop === 2) state.queue.push(done);
     if (state.queue.length) {
       startTrack(state.queue.shift());
@@ -324,6 +377,7 @@
       append(botMessage(...onlyYou('Nothing up next. Add something with ', h('code', { text: '/play' }), '.')));
       return;
     }
+    state.history.push(state.track.title);
     if (state.loop === 2) state.queue.push(state.track.title);
     startTrack(state.queue.shift());
   }
@@ -414,6 +468,82 @@
       run('/play ' + song);
     });
     append(botMessage(...onlyYou('🎣 Caught ', strong(song), '. Press Play to queue it.'), row(play)));
+  }
+
+  /* ---------- Kitchen Quiz ---------- */
+
+  // The real quiz plays a 15-second clip and gives everyone 20 seconds; here there's no sound,
+  // so the "clip" is the song title's mood, and three rounds are enough.
+  const QUIZ_ROUNDS = 3;
+  const QUIZ_HINTS = ['Soft piano, a kettle in the background…', 'Brushed drums, somebody humming…', 'Slow bass, rain on the window…'];
+  let quizTimer = 0;
+
+  function quizRound() {
+    const quiz = state.quiz;
+    quiz.round += 1;
+    const pool = MIX.slice().sort(() => Math.random() - 0.5).slice(0, 4);
+    const answer = Math.floor(Math.random() * 4);
+    const started = Date.now();
+    let done = false;
+    const buttons = pool.map((title, i) =>
+      button('ABCD'[i] + ' · ' + title, () => pick(i))
+    );
+    const result = h('p', { class: 'dc-embed-footer', text: '20 seconds to answer' });
+    function pick(choice) {
+      if (done || state.quiz !== quiz) return;
+      done = true;
+      clearTimeout(quizTimer);
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === answer) btn.classList.add('dc-btn-green');
+      });
+      if (choice === answer) {
+        // Same as the bot: 100 for a right answer, up to 50 more for speed.
+        const points = 100 + Math.round(50 * Math.max(0, 1 - (Date.now() - started) / 20000));
+        quiz.score += points;
+        result.textContent = '✅ Right! +' + points + ' points · ' + quiz.score + ' total';
+      } else {
+        result.textContent = (choice === null ? '⏱️ Time’s up.' : '❌ Not that one.') + ' It was ' + pool[answer] + '.';
+      }
+      later(() => {
+        if (state.quiz !== quiz) return;
+        if (quiz.round >= QUIZ_ROUNDS) quizEnd();
+        else quizRound();
+      }, 1800);
+    }
+    quiz.card = append(
+      botMessage(
+        embed({
+          bar: '#c4783a',
+          author: '🎧 Kitchen Quiz · Round ' + quiz.round + ' of ' + QUIZ_ROUNDS,
+          title: 'Which song is this?',
+          desc: h('em', { text: QUIZ_HINTS[(quiz.round - 1) % QUIZ_HINTS.length] }),
+          children: result,
+        }),
+        row(...buttons.slice(0, 2)),
+        row(...buttons.slice(2))
+      )
+    );
+    clearTimeout(quizTimer);
+    quizTimer = later(() => pick(null), 20000);
+  }
+
+  function quizEnd() {
+    const quiz = state.quiz;
+    if (!quiz) return;
+    clearTimeout(quizTimer);
+    state.quiz = null;
+    append(
+      botMessage(
+        embed({
+          bar: '#c4783a',
+          author: '🏆 Kitchen Quiz · Podium',
+          title: quiz.score ? '🥇 you · ' + quiz.score + ' points' : 'Nobody scored this time',
+          desc: 'In a real server everyone in voice plays at once. A right answer is worth 100 points, up to 50 more for speed, and a bonus every third one in a row.',
+        }),
+        row(button('Play again', () => run('/quiz start')))
+      )
+    );
   }
 
   /* ---------- commands ---------- */
@@ -548,6 +678,138 @@
       const was = state.night;
       state.night = false;
       reply(() => (was ? botMessage(text('🌙 Radio Night is off the calendar.')) : botMessage(...onlyYou('Radio Night wasn’t scheduled.'))));
+    },
+
+    nowplaying() {
+      reply(() => {
+        if (!state.track) return botMessage(...onlyYou('Nothing is playing.'));
+        retire(state.card);
+        state.card = append(nowPlaying());
+        return null;
+      });
+    },
+
+    skip() {
+      reply(() => {
+        if (!state.track) return botMessage(...onlyYou('Nothing is playing.'));
+        skip();
+        return null;
+      });
+    },
+
+    pause() {
+      reply(() => {
+        if (!togglePause()) return botMessage(...onlyYou('Nothing is playing.'));
+        return botMessage(text(state.paused ? '⏸️ Paused.' : '▶️ Playing again.'));
+      });
+    },
+
+    volume(rest) {
+      const n = parseInt(rest, 10);
+      reply(() => {
+        if (!n) return botMessage(...onlyYou('Give it a number from 25 to 150. 100 is normal.'));
+        setVolume(n);
+        return botMessage(text((state.volume < 100 ? '🔉' : '🔊') + ' Volume is ' + state.volume + '% for everyone in the channel.'));
+      });
+    },
+
+    'steam link'(rest) {
+      const profile = rest.slice(0, 40) || 'your Steam profile';
+      state.linked = true;
+      reply(() => botMessage(text('🎯 Linked ', strong(profile), '. Wishlist Radar will ping you when a game on your wishlist goes on sale.')));
+    },
+
+    'steam wishlist'() {
+      reply(() => {
+        if (!state.linked) return botMessage(...onlyYou('Link your Steam profile first with ', h('code', { text: '/steam link' }), '.'));
+        const games = [
+          ['Hollow Lantern', 'Sale', '−80%', '€3.99'],
+          ['Neon Ledger', 'Sale', '−60%', '€7.99'],
+          ['Quiet Harbor', '', '', '€19.99'],
+          ['Star Forge Tactics', '', '', '€24.99'],
+        ];
+        return botMessage(
+          embed({
+            bar: '#66c0f4',
+            author: '🎯 Your wishlist',
+            desc: '2 on sale right now',
+            children: h(
+              'ol',
+              { class: 'digest' },
+              games.map(([game, chip, disc, price]) =>
+                h('li', {}, h('span', { class: 'game', text: game }), h('span', { class: 'chip-vp', text: chip }), disc ? h('span', { class: 'disc', text: disc }) : h('span'), h('span', { class: 'price', text: price }))
+              )
+            ),
+            footer: 'Page 1 of 1 · sales first',
+          })
+        );
+      });
+    },
+
+    'steam unlink'() {
+      const was = state.linked;
+      state.linked = false;
+      reply(() => (was ? botMessage(text('🎯 Wishlist Radar stopped watching your wishlist.')) : botMessage(...onlyYou('No Steam profile is linked.'))));
+    },
+
+    'quiz start'() {
+      reply(() => {
+        if (state.quiz) return botMessage(...onlyYou('A quiz is already running. ', h('code', { text: '/quiz stop' }), ' ends it.'));
+        if (state.track || state.radio) {
+          stopMusic();
+          stopRadio();
+          append(botMessage(text('🎧 Music and radio step aside while the quiz runs.')));
+        }
+        state.quiz = { round: 0, score: 0, card: null, timer: 0 };
+        quizRound();
+        return null;
+      });
+    },
+
+    'quiz stop'() {
+      reply(() => {
+        if (!state.quiz) return botMessage(...onlyYou('There’s no quiz running.'));
+        quizEnd();
+        return null;
+      });
+    },
+
+    'setup wishlist'() {
+      reply(() => botMessage(text('🎯 Wishlist Radar now pings people in ', h('span', { class: 'dc-mention', text: '#wishlist' }), '.')));
+    },
+
+    textroom(rest) {
+      const name = (rest || 'snacks').toLowerCase().replace(/[^a-z0-9á-ž-]+/gi, '-').slice(0, 24);
+      reply(() => botMessage(text('🚪 Opened ', h('span', { class: 'dc-mention', text: '#🍪・' + name }), '. Rooms are for admins, and you are one here.')));
+    },
+
+    voiceroom(rest) {
+      const name = (rest || 'chill').slice(0, 24);
+      reply(() => botMessage(text('🚪 Opened ', h('span', { class: 'dc-mention', text: '🔊 🎧・' + name }), '. Rooms are for admins, and you are one here.')));
+    },
+
+    help() {
+      const groups = [
+        ['🎵 Music', ['/play', '/queue', '/nowplaying', '/skip', '/pause', '/volume', '/remove', '/stop']],
+        ['📻 Radio', ['/radio play', '/radio stop', '/radio night', '/radio night-off']],
+        ['🎯 Steam wishlist', ['/steam link', '/steam wishlist', '/steam unlink']],
+        ['🎧 Kitchen Quiz', ['/quiz start', '/quiz stop']],
+        ['🍪 Kitchen & setup · Manage Server', ['/setup steam', '/setup epic', '/setup welcome', '/setup goodbye', '/setup kitchen', '/setup wishlist', '/setup idle-radio', '/setup status', '/setup disable']],
+        ['🚪 Rooms · Admin', ['/textroom', '/voiceroom']],
+      ];
+      reply(() =>
+        botMessage(
+          embed({
+            bar: '#c4783a',
+            author: '🍪 What’s cooking',
+            desc: 'Dzbanek plays YouTube and Spotify, streams Czech radio live, posts Steam deals and Epic freebies, pings you when your Steam wishlist goes on sale, and keeps the Kitchen Board up to date.',
+            children: groups.map(([title, names]) =>
+              h('div', { class: 'dc-help-group' }, h('p', { class: 'dc-help-title', text: title }), h('p', { class: 'dc-help-cmds' }, names.map((name) => h('code', { text: name }))))
+            ),
+            footer: 'Pause, skip, previous, volume, loop and shuffle are buttons on the Now Playing card too.',
+          })
+        )
+      );
     },
 
     'setup status'() {
@@ -791,6 +1053,7 @@
     timers.clear();
     clearInterval(ticker);
     clearInterval(radioTimer);
+    clearTimeout(quizTimer);
     state = fresh();
     typing.hidden = true;
     log.innerHTML = firstMessage;

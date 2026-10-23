@@ -6,7 +6,7 @@
 <header class="page-hero">
   <div class="wrap">
     <h1 data-i18n="commands.title">Here’s everything you can type</h1>
-    <p class="lead" data-i18n="commands.lead">Type / in Discord to see them. Pause, skip, shuffle, and loop are buttons on the Now Playing card, so you won’t find them here.</p>
+    <p class="lead" data-i18n="commands.lead">Type / in Discord to see them, or /help for all of them on one card. Pause, skip, loop, and shuffle are also buttons on the Now Playing card.</p>
   </div>
 </header>
 
@@ -68,6 +68,8 @@
         <button type="button" class="chip" data-demo-run="/radio play">/radio play</button>
         <button type="button" class="chip" data-demo-run="/remove 1">/remove</button>
         <button type="button" class="chip" data-demo-run="/setup status">/setup status</button>
+        <button type="button" class="chip" data-demo-run="/quiz start">/quiz start</button>
+        <button type="button" class="chip" data-demo-run="/help">/help</button>
         <button type="button" class="chip" data-demo-run="/stop">/stop</button>
       </div>
       <p class="kbd-hint"><kbd>/</kbd> <span data-i18n="demo.kbdOpen">opens the menu</span> · <kbd>↑</kbd><kbd>↓</kbd> <span data-i18n="demo.kbdPick">pick</span> · <kbd>Enter</kbd> <span data-i18n="demo.kbdSend">send</span> · <kbd>Esc</kbd> <span data-i18n="demo.kbdClose">close</span></p>
@@ -86,36 +88,95 @@
         <input type="search" data-cmd-filter placeholder="Search: radio, queue, setup…" data-i18n-placeholder="commands.filter" />
       </label>
     </div>
+    <!-- Printed like a café menu, grouped the way the bot's /help groups them. -->
     <div class="cmd-menu" data-reveal>
-      <article class="cmd-item" id="play" data-cmd>
-        <header><code class="cmd-name">/play</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.play">Joins your voice channel and plays a YouTube or Spotify link, or whatever you search for. play_next puts it at the front of the queue.</p>
-        <ul class="opts"><li><code>play_next</code></li></ul>
-      </article>
-      <article class="cmd-item" id="queue" data-cmd>
-        <header><code class="cmd-name">/queue</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/queue"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.queue">Shows what’s coming up, one page at a time.</p>
-        <ul class="opts"><li><code>◀ Prev</code></li><li><code>Next ▶</code></li></ul>
-      </article>
-      <article class="cmd-item" id="stop" data-cmd>
-        <header><code class="cmd-name">/stop</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/stop"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.stop">Stops the music, clears the queue, deletes the Now Playing card, and leaves.</p>
-      </article>
-      <article class="cmd-item" id="remove" data-cmd>
-        <header><code class="cmd-name">/remove</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/remove"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.remove">Removes one song from the queue. Position 1 is the next song.</p>
-      </article>
-      <article class="cmd-item" id="radio" data-cmd>
-        <header><code class="cmd-name">/radio</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/radio play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.radio">play, stop, night, and night-off. Pick Kiss, Rock, or Beat.</p>
-        <ul class="opts"><li><code>play</code></li><li><code>stop</code></li><li><code>night</code></li><li><code>night-off</code></li></ul>
-      </article>
-      <article class="cmd-item" id="setup" data-cmd>
-        <header><code class="cmd-name">/setup</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/setup status"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-        <p data-i18n="commands.setup">Sets which channels get deals, welcome messages, and the Kitchen Board. Needs Manage Server.</p>
-        <ul class="opts"><li><code>steam</code></li><li><code>epic</code></li><li><code>welcome</code></li><li><code>goodbye</code></li><li><code>kitchen</code></li><li><code>idle-radio</code></li><li><code>status</code></li><li><code>disable</code></li></ul>
-        <a class="link-arrow" href="setup.html"><span data-i18n="nav.setup">Setup</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
-      </article>
+      <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gMusic">
+        <h3 class="cmd-group-title" id="cmd-gMusic" data-i18n="commands.gMusic">Music</h3>
+        <article class="cmd-item" id="play" data-cmd>
+          <header><code class="cmd-name">/play</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.play">Joins your voice channel and plays a YouTube or Spotify link, or whatever you search for. play_next puts it at the front of the queue.</p>
+          <ul class="opts"><li><code>play_next</code></li></ul>
+        </article>
+        <article class="cmd-item" id="queue" data-cmd>
+          <header><code class="cmd-name">/queue</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/queue"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.queue">Shows what’s coming up, one page at a time.</p>
+          <ul class="opts"><li><code>◀ Prev</code></li><li><code>Next ▶</code></li></ul>
+        </article>
+        <article class="cmd-item" id="nowplaying" data-cmd>
+          <header><code class="cmd-name">/nowplaying</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/nowplaying"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.nowplaying">Brings the Now Playing card down to the bottom of the chat, so the buttons are right there.</p>
+        </article>
+        <article class="cmd-item" id="skip" data-cmd>
+          <header><code class="cmd-name">/skip</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/skip"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.skip">Skips to the next song.</p>
+        </article>
+        <article class="cmd-item" id="pause" data-cmd>
+          <header><code class="cmd-name">/pause</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/pause"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.pause">Pauses the music, or resumes it if it’s already paused.</p>
+        </article>
+        <article class="cmd-item" id="volume" data-cmd>
+          <header><code class="cmd-name">/volume</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/volume"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.volume">Sets the volume for everyone in the channel, from 25 to 150. 100 is normal.</p>
+          <ul class="opts"><li><code>percent</code></li></ul>
+        </article>
+        <article class="cmd-item" id="remove" data-cmd>
+          <header><code class="cmd-name">/remove</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/remove"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.remove">Removes one song from the queue. Position 1 is the next song.</p>
+        </article>
+        <article class="cmd-item" id="stop" data-cmd>
+          <header><code class="cmd-name">/stop</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/stop"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.stop">Stops the music, clears the queue, deletes the Now Playing card, and leaves.</p>
+        </article>
+      </section>
+      <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gRadio">
+        <h3 class="cmd-group-title" id="cmd-gRadio" data-i18n="commands.gRadio">Radio</h3>
+        <article class="cmd-item" id="radio" data-cmd>
+          <header><code class="cmd-name">/radio</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/radio play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.radio">play, stop, night, and night-off. Pick Kiss, Rock, or Beat.</p>
+          <ul class="opts"><li><code>play</code></li><li><code>stop</code></li><li><code>night</code></li><li><code>night-off</code></li></ul>
+        </article>
+      </section>
+      <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gSteam">
+        <h3 class="cmd-group-title" id="cmd-gSteam" data-i18n="commands.gSteam">Steam wishlist</h3>
+        <article class="cmd-item" id="steam" data-cmd>
+          <header><code class="cmd-name">/steam</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/steam link"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.steam">Wishlist Radar: link your Steam profile and get pinged when a game on your wishlist goes on sale. wishlist shows the whole list with prices, sales first.</p>
+          <ul class="opts"><li><code>link</code></li><li><code>wishlist</code></li><li><code>unlink</code></li></ul>
+        </article>
+      </section>
+      <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gQuiz">
+        <h3 class="cmd-group-title" id="cmd-gQuiz" data-i18n="commands.gQuiz">Kitchen Quiz</h3>
+        <article class="cmd-item" id="quiz" data-cmd>
+          <header><code class="cmd-name">/quiz</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/quiz start"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.quiz">Name that tune in voice. It plays 15-second clips of songs your kitchen has played, and everyone picks the title from four buttons. 10 rounds unless you ask for up to 20, or quiz on a playlist instead.</p>
+          <ul class="opts"><li><code>start</code></li><li><code>stop</code></li><li><code>rounds</code></li><li><code>playlist</code></li></ul>
+        </article>
+      </section>
+      <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gSetup">
+        <h3 class="cmd-group-title" id="cmd-gSetup" data-i18n="commands.gSetup">Kitchen & setup</h3>
+        <article class="cmd-item" id="setup" data-cmd>
+          <header><code class="cmd-name">/setup</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/setup status"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.setup">Sets which channels get deals, welcome messages, Wishlist Radar, and the Kitchen Board. Needs Manage Server.</p>
+          <ul class="opts"><li><code>steam</code></li><li><code>epic</code></li><li><code>welcome</code></li><li><code>goodbye</code></li><li><code>kitchen</code></li><li><code>wishlist</code></li><li><code>idle-radio</code></li><li><code>status</code></li><li><code>disable</code></li></ul>
+          <a class="link-arrow" href="setup.html"><span data-i18n="nav.setup">Setup</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
+        </article>
+      </section>
+      <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gRooms">
+        <h3 class="cmd-group-title" id="cmd-gRooms" data-i18n="commands.gRooms">Rooms</h3>
+        <article class="cmd-item" id="rooms" data-cmd>
+          <header><code class="cmd-name">/textroom · /voiceroom</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/textroom"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.rooms">Opens a text or voice room under a category and adds an emoji to the name. Public, or hidden from everyone but admins. Admins only.</p>
+          <ul class="opts"><li><code>name</code></li><li><code>category</code></li><li><code>access</code></li></ul>
+        </article>
+      </section>
+      <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gHelp">
+        <h3 class="cmd-group-title" id="cmd-gHelp" data-i18n="commands.gHelp">Help</h3>
+        <article class="cmd-item" id="help" data-cmd>
+          <header><code class="cmd-name">/help</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/help"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <p data-i18n="commands.help">Shows every command on one card. Add a command’s name to get just that one, with all its options.</p>
+          <ul class="opts"><li><code>command</code></li></ul>
+        </article>
+      </section>
     </div>
     <p class="empty-state" data-cmd-empty hidden data-i18n="commands.none">No command by that name.</p>
     <p class="note callout" data-reveal><svg width="20" height="20" aria-hidden="true"><use href="#i-speaker" /></svg> <span data-i18n="commands.share">Music and radio share one voice connection per server, so starting one stops the other.</span></p>
@@ -136,6 +197,9 @@
           <div><dt><span class="dc-btn dc-btn-red">Stop</span></dt><dd data-i18n="buttons.stop">Stops and leaves. On the radio card, you need to be in the bot’s voice channel.</dd></div>
           <div><dt><span class="dc-btn">Loop</span></dt><dd data-i18n="buttons.loop">Switches between Loop (off), Repeat (this song), and Queue (the whole queue).</dd></div>
           <div><dt><span class="dc-btn">Shuffle</span></dt><dd data-i18n="buttons.shuffle">Shuffles what’s left in the queue.</dd></div>
+          <div><dt><span class="dc-btn">⏮️ Previous</span></dt><dd data-i18n="buttons.previous">Goes back to the song before this one.</dd></div>
+          <div><dt><span class="dc-btn">🔉</span> <span class="dc-btn">🔊</span></dt><dd data-i18n="buttons.volume">Turns the volume down or up for everyone.</dd></div>
+          <div><dt><span class="dc-btn">📜 Queue</span></dt><dd data-i18n="buttons.queue">Shows what’s coming up.</dd></div>
         </dl>
       </div>
       <div class="btn-group">
@@ -151,6 +215,13 @@
         <dl>
           <div><dt><span class="dc-btn">◀ Prev</span></dt><dd data-i18n="buttons.prev">Previous page of the queue.</dd></div>
           <div><dt><span class="dc-btn">Next ▶</span></dt><dd data-i18n="buttons.next">Next page of the queue.</dd></div>
+        </dl>
+      </div>
+      <div class="btn-group">
+        <h3 data-i18n="commands.groupQuiz">Kitchen Quiz</h3>
+        <dl>
+          <div><dt><span class="dc-btn">A · …</span></dt><dd data-i18n="buttons.answer">Your guess. Four songs, one is playing. You have 20 seconds.</dd></div>
+          <div><dt><span class="dc-btn">Play again</span></dt><dd data-i18n="buttons.again">Starts another quiz from the podium.</dd></div>
         </dl>
       </div>
     </div>
