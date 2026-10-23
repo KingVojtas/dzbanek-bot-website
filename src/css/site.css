@@ -3754,6 +3754,149 @@ html.theme-light .receipt-wrap {
   color: var(--dc-title);
 }
 
+button.dc-ch {
+  width: 100%;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+button.dc-ch:hover {
+  background: var(--dc-hover);
+  color: var(--dc-text);
+}
+
+button.dc-ch.is-active {
+  background: var(--dc-active);
+  color: var(--dc-title);
+}
+
+button.dc-ch:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: -2px;
+}
+
+/* Phones have no sidebar: the channels sit in a row under the title. */
+.dc-mchans {
+  display: none;
+}
+
+/* What Discord shows instead of the message box in a channel you can only read. */
+.dc-locked {
+  margin: 0 1rem 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.6rem;
+  background: var(--dc-input);
+  color: var(--dc-muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.dc-pane .dc-start {
+  padding-bottom: 0.6rem;
+}
+
+.dc-pane .dc-start-title {
+  font-size: 1.25rem;
+}
+
+.dc-join {
+  margin: 0.6rem 0 0.2rem;
+  padding-left: 0.6rem;
+  color: var(--dc-muted);
+}
+
+.dc-join > span:first-child {
+  color: #23a55a;
+}
+
+.dc-join b {
+  color: var(--dc-title);
+}
+
+.dc-join .dc-time {
+  margin-left: 0.4rem;
+}
+
+[data-demo-name] {
+  flex: none;
+  white-space: nowrap;
+}
+
+a.dc-btn {
+  text-decoration: none;
+}
+
+a.dc-btn:hover {
+  background: var(--dc-btn-hover);
+}
+
+.dc-embed.is-block {
+  display: block;
+  max-width: 34rem;
+  padding: 0.85rem 1rem 0.95rem;
+}
+
+.art-hue {
+  background:
+    radial-gradient(circle at 68% 30%, hsl(var(--hue) 80% 75% / 0.7), transparent 38%),
+    linear-gradient(150deg, hsl(var(--hue) 40% 40%), hsl(var(--hue) 45% 14%));
+}
+
+.epic-covers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.epic-covers .epic-cover {
+  height: 6rem;
+  margin: 0.7rem 0 0.75rem;
+}
+
+.epic-cover-warm {
+  background:
+    radial-gradient(circle at 30% 70%, rgba(255, 196, 110, 0.55), transparent 45%),
+    linear-gradient(170deg, #3b2418, #120b08);
+}
+
+.epic-second {
+  margin-top: 0.75rem;
+}
+
+.radar-head,
+.radar-for {
+  margin-bottom: 0.5rem;
+  color: var(--dc-title);
+  font-weight: 700;
+}
+
+.radar-for {
+  margin-top: 0.9rem;
+  font-weight: 400;
+}
+
+.radar-list {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--dc-text);
+  font-size: 0.85rem;
+}
+
+.radar-list s {
+  color: var(--dc-muted);
+}
+
+.radar-list .deal-name {
+  font-size: inherit;
+}
+
 .dc-voice {
   margin: 0 0 0.2rem;
   padding: 0 0 0 1.9rem;
@@ -5673,6 +5816,32 @@ html.js [data-reveal-group].is-in > * {
   .dc-side,
   .dc-search {
     display: none;
+  }
+
+  .dc-mchans {
+    display: flex;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--dc-line);
+    scrollbar-width: none;
+  }
+
+  .dc-mchans .dc-ch {
+    flex: none;
+    width: auto;
+    padding: 0.25rem 0.65rem 0.25rem 0.45rem;
+    border-radius: 999px;
+    background: var(--dc-side);
+    font-size: 0.85rem;
+  }
+
+  .dc-mchans .dc-ch.is-active {
+    background: var(--dc-active);
+  }
+
+  .dc-embed.is-block {
+    padding: 0.75rem 0.8rem 0.85rem;
   }
 
   .dc-embed-thumb,

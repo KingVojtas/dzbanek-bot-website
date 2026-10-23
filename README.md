@@ -66,7 +66,7 @@ src/js/listen.js       the live stations: one player for the page, song info fro
 src/js/site.js         year, menu, nav pill, the shelf radio, copy buttons, command filter
 src/js/reveal.js       scroll reveals ([data-reveal], [data-reveal-group])
 src/js/clock.js        Europe/Prague clock and the next scheduled event
-src/js/discord-demo.js the pretend Discord server and its #kitchen demo on commands.html
+src/js/discord-demo.js the pretend Discord server on commands.html: #kitchen takes commands, the other channels show the bot's posts
 src/js/radio.js        tuner, on-air lines and Radio Night vote on radio.html
 src/js/film.js         the hero ad on index.html: autoplay, sound, chapters, captions, glow
 scripts/build.mjs

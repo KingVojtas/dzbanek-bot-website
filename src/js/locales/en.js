@@ -279,7 +279,7 @@
     },
     demo: {
       title: 'Try it here',
-      lead: 'This is a fake server that runs in your browser. Type / in #kitchen and pick a command, or click one of these. The buttons on the cards work too. Nothing gets sent to Discord.',
+      lead: 'This is a fake server that runs in your browser. Type / in #kitchen and pick a command, or click one of these. The buttons on the cards work, and the other channels show what the bot posts there. Nothing gets sent to Discord.',
       topic: 'A fake channel. Nothing here reaches Discord.',
       startTitle: 'Welcome to #kitchen!',
       startBody: 'This is the start of the #kitchen channel.',
@@ -301,6 +301,12 @@
       online: 'Online',
       offline: 'Offline',
       search: 'Search',
+      channels: 'Channels',
+      topicWelcome: 'Hi and bye, from Dzbanek',
+      topicSteam: 'Ten Steam deals every day at 03:33',
+      topicEpic: 'Epic’s free games, checked at 12:00 and 17:00',
+      topicRadar: 'A ping when a game on your wishlist goes on sale',
+      locked: 'You don’t have permission to send messages in this channel.',
     },
     buttons: {
       pause: 'Pauses the song, or resumes it.',

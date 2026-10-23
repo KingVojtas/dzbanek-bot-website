@@ -280,7 +280,7 @@
     },
     demo: {
       title: 'Vyzkoušej si to tady',
-      lead: 'Tohle je falešný server, který běží ve tvém prohlížeči. Napiš / do #kitchen a vyber příkaz, nebo klikni na některý z těchhle. Tlačítka na kartách fungují taky. Nic se neposílá na Discord.',
+      lead: 'Tohle je falešný server, který běží ve tvém prohlížeči. Napiš / do #kitchen a vyber příkaz, nebo klikni na některý z těchhle. Tlačítka na kartách fungují a v ostatních kanálech uvidíš, co tam bot posílá. Nic se neposílá na Discord.',
       topic: 'Falešný kanál. Nic odsud nejde na Discord.',
       startTitle: 'Vítej v kanálu #kitchen!',
       startBody: 'Tohle je začátek kanálu #kitchen.',
@@ -302,6 +302,12 @@
       online: 'Online',
       offline: 'Offline',
       search: 'Hledat',
+      channels: 'Kanály',
+      topicWelcome: 'Ahoj a čau od Dzbanka',
+      topicSteam: 'Každý den v 03:33 deset slev ze Steamu',
+      topicEpic: 'Hry zdarma z Epicu, kontrola ve 12:00 a v 17:00',
+      topicRadar: 'Upozornění, když hra z tvého wishlistu zlevní',
+      locked: 'V tomhle kanálu nemáš oprávnění posílat zprávy.',
     },
     buttons: {
       pause: 'Pozastaví písničku, nebo ji pustí dál.',

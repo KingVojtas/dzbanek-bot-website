@@ -15,7 +15,7 @@
     <div class="demo-intro" data-reveal>
       <div>
         <h2 id="demo-title" class="h-small" data-i18n="demo.title">Try it here</h2>
-        <p class="lead" data-i18n="demo.lead">This is a fake server that runs in your browser. Type / in #kitchen and pick a command, or click one of these. The buttons on the cards work too. Nothing gets sent to Discord.</p>
+        <p class="lead" data-i18n="demo.lead">This is a fake server that runs in your browser. Type / in #kitchen and pick a command, or click one of these. The buttons on the cards work, and the other channels show what the bot posts there. Nothing gets sent to Discord.</p>
       </div>
       <div class="demo-tools">
         <div class="demo-chips">
@@ -42,27 +42,27 @@
         <span class="dc-guild dc-guild-add"><svg width="20" height="20"><use href="#i-plus" /></svg></span>
       </nav>
 
-      <aside class="dc-side" aria-hidden="true">
-        <p class="dc-server">The Kitchen <svg width="16" height="16"><use href="#i-chevron" /></svg></p>
-        <div class="dc-channels">
+      <aside class="dc-side">
+        <p class="dc-server" aria-hidden="true">The Kitchen <svg width="16" height="16"><use href="#i-chevron" /></svg></p>
+        <nav class="dc-channels" aria-label="Channels" data-i18n-aria="demo.channels">
           <p class="dc-cat" data-i18n="demo.textChannels">Text channels</p>
-          <span class="dc-ch"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>welcome</span>
-          <span class="dc-ch is-active"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>kitchen</span>
-          <span class="dc-ch"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>steam-deals</span>
-          <span class="dc-ch"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>epic-free</span>
-          <span class="dc-ch"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>wishlist-radar</span>
-          <p class="dc-cat" data-i18n="demo.voiceChannels">Voice channels</p>
-          <span class="dc-ch"><svg width="18" height="18"><use href="#i-speaker" /></svg>Lounge</span>
-          <ul class="dc-voice">
+          <button type="button" class="dc-ch" data-demo-channel="welcome"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>welcome</button>
+          <button type="button" class="dc-ch is-active" data-demo-channel="kitchen" aria-current="true"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>kitchen</button>
+          <button type="button" class="dc-ch" data-demo-channel="steam-deals"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>steam-deals</button>
+          <button type="button" class="dc-ch" data-demo-channel="epic-free"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>epic-free</button>
+          <button type="button" class="dc-ch" data-demo-channel="wishlist-radar"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>wishlist-radar</button>
+          <p class="dc-cat" aria-hidden="true" data-i18n="demo.voiceChannels">Voice channels</p>
+          <span class="dc-ch" aria-hidden="true"><svg width="18" height="18"><use href="#i-speaker" /></svg>Lounge</span>
+          <ul class="dc-voice" aria-hidden="true">
             <li><span class="dc-voice-av you">Y</span>you</li>
             <li data-demo-voice-bot hidden><img class="dc-voice-av" src="assets/avatar.jpg" alt="" width="24" height="24" loading="lazy" decoding="async" />Dzbanek</li>
           </ul>
-          <span class="dc-ch"><svg width="18" height="18"><use href="#i-speaker" /></svg>Radio Night</span>
-        </div>
-        <div class="dc-call">
+          <span class="dc-ch" aria-hidden="true"><svg width="18" height="18"><use href="#i-speaker" /></svg>Radio Night</span>
+        </nav>
+        <div class="dc-call" aria-hidden="true">
           <p><strong data-i18n="demo.connected">Voice connected</strong><small>Lounge / The Kitchen</small></p>
         </div>
-        <div class="dc-me">
+        <div class="dc-me" aria-hidden="true">
           <span class="dc-face you">Y<i class="dc-dot"></i></span>
           <span class="dc-me-name"><strong>you</strong><small data-i18n="demo.online">Online</small></span>
           <span class="dc-me-tools"><svg width="18" height="18"><use href="#i-mic" /></svg><svg width="18" height="18"><use href="#i-headset" /></svg><svg width="18" height="18"><use href="#i-gear" /></svg></span>
@@ -72,8 +72,8 @@
       <div class="dc-app" data-demo>
         <div class="dc-titlebar">
           <svg width="22" height="22" aria-hidden="true"><use href="#i-hash" /></svg>
-          <strong>kitchen</strong>
-          <span class="dc-topic" data-i18n="demo.topic">A fake channel. Nothing here reaches Discord.</span>
+          <strong data-demo-name>kitchen</strong>
+          <span class="dc-topic" data-demo-topic data-i18n="demo.topic">A fake channel. Nothing here reaches Discord.</span>
           <span class="dc-bar-tools" aria-hidden="true">
             <svg width="20" height="20"><use href="#i-bell" /></svg>
             <svg width="20" height="20"><use href="#i-pin" /></svg>
@@ -81,6 +81,13 @@
             <span class="dc-search"><span data-i18n="demo.search">Search</span><svg width="14" height="14"><use href="#i-search" /></svg></span>
           </span>
         </div>
+        <nav class="dc-mchans" aria-label="Channels" data-i18n-aria="demo.channels">
+          <button type="button" class="dc-ch" data-demo-channel="welcome"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>welcome</button>
+          <button type="button" class="dc-ch is-active" data-demo-channel="kitchen" aria-current="true"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>kitchen</button>
+          <button type="button" class="dc-ch" data-demo-channel="steam-deals"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>steam-deals</button>
+          <button type="button" class="dc-ch" data-demo-channel="epic-free"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>epic-free</button>
+          <button type="button" class="dc-ch" data-demo-channel="wishlist-radar"><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg>wishlist-radar</button>
+        </nav>
         <div class="dc-log" data-demo-log role="log" aria-live="polite" aria-label="Demo channel" data-i18n-aria="demo.logLabel" tabindex="0">
           <div class="dc-start">
             <span class="dc-start-icon" aria-hidden="true">#</span>
@@ -95,6 +102,224 @@
             </div>
           </div>
         </div>
+          <div class="dc-log dc-pane" data-demo-pane="welcome" role="region" aria-label="#welcome" tabindex="0" hidden>
+            <div class="dc-start">
+              <span class="dc-start-icon" aria-hidden="true">#</span>
+              <p class="dc-start-title">#welcome</p>
+            </div>
+            <div class="dc-msg">
+              <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+              <div class="dc-body">
+                <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Monday at 19:40</span></p>
+                <p class="dc-text"><span class="dc-mention">@Milo</span></p>
+                <div class="dc-embed greet" style="--bar: #6e5846">
+                  <div class="dc-embed-main">
+                    <p class="dc-embed-author"><span class="server-icon" aria-hidden="true">TK</span>The Kitchen</p>
+                    <p class="dc-embed-title">Milo left the kitchen</p>
+                    <p class="dc-embed-desc">👋 Hasta la vista, <span class="dc-mention">@Milo</span>! 🕶️🍪<br />We’ll keep a cookie warm in case they come back.</p>
+                    <dl class="dc-fields"><div><dt>Still here</dt><dd><b>23</b> people</dd></div><div><dt>Sat down</dt><dd>August 30, 2025 · <span class="dc-ts">a year ago</span></dd></div></dl>
+                    <p class="dc-embed-footer">The oven stays on • Monday at 19:40</p>
+                  </div>
+                  <span class="dc-embed-thumb greet-face" style="--hue: 160" aria-hidden="true">M</span>
+                </div>
+              </div>
+            </div>
+            <p class="dc-join"><span aria-hidden="true">→</span>&nbsp; Everyone welcome <b>Nova</b>! <span class="dc-time">Today at 21:14</span></p>
+            <div class="dc-msg">
+              <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+              <div class="dc-body">
+                <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Today at 21:14</span></p>
+                <p class="dc-text"><span class="dc-mention">@Nova</span></p>
+                <div class="dc-embed greet" style="--bar: #c4783a">
+                  <div class="dc-embed-main">
+                    <p class="dc-embed-author"><span class="server-icon" aria-hidden="true">TK</span>The Kitchen</p>
+                    <p class="dc-embed-title">Welcome, Nova</p>
+                    <p class="dc-embed-desc">🍪 Hey <span class="dc-mention">@Nova</span>! Welcome to the dark side, we have cookies.<br />I’m Dzbanek — grab one, say hi, and don’t mind the crumbs. 😈</p>
+                    <dl class="dc-fields"><div><dt>In the kitchen</dt><dd><b>24</b> people</dd></div><div><dt>Joined Discord</dt><dd>March 12, 2021 · <span class="dc-ts">5 years ago</span></dd></div></dl>
+                    <p class="dc-embed-footer">Grab a seat • Today at 21:14</p>
+                  </div>
+                  <span class="dc-embed-thumb greet-face" style="--hue: 268" aria-hidden="true">N</span>
+                </div>
+                <p class="dc-reactions"><span>🍪 <b>4</b></span><span>👋 <b>2</b></span></p>
+              </div>
+            </div>
+          </div>
+          <div class="dc-log dc-pane" data-demo-pane="steam-deals" role="region" aria-label="#steam-deals" tabindex="0" hidden>
+            <div class="dc-start">
+              <span class="dc-start-icon" aria-hidden="true">#</span>
+              <p class="dc-start-title">#steam-deals</p>
+            </div>
+            <div class="dc-msg">
+              <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+              <div class="dc-body">
+                <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Yesterday at 03:33</span></p>
+                <p class="dc-text dc-muted">💸 Steam Daily Deals · 10 games</p>
+              </div>
+            </div>
+            <div class="dc-msg">
+              <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+              <div class="dc-body">
+                <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Today at 03:33</span></p>
+                <div class="dc-embed is-block" style="--bar: #66c0f4">
+                  <ol class="deal-rows">
+                    <li class="deal-row">
+                      <div>
+                        <p class="deal-name">1. Hollow Lantern</p>
+                        <p class="deal-price"><span class="disc">−80%</span> <s>19,99€</s> → <b>3,99€</b></p>
+                        <p class="deal-meta">Very Positive · ⏳&nbsp;ends&nbsp;<span class="dc-ts">in 3 days</span></p>
+                      </div>
+                      <span class="deal-art art-hue" style="--hue: 205" aria-hidden="true">Hollow Lantern</span>
+                    </li>
+                    <li class="deal-row">
+                      <div>
+                        <p class="deal-name">2. Star Forge Tactics</p>
+                        <p class="deal-price"><span class="disc">−75%</span> <s>15,99€</s> → <b>3,99€</b></p>
+                        <p class="deal-meta">Very Positive · ⏳&nbsp;ends&nbsp;<span class="dc-ts">in 5 days</span></p>
+                      </div>
+                      <span class="deal-art art-hue" style="--hue: 255" aria-hidden="true">Star Forge Tactics</span>
+                    </li>
+                    <li class="deal-row">
+                      <div>
+                        <p class="deal-name">3. Ember &amp; Ash</p>
+                        <p class="deal-price"><span class="disc">−70%</span> <s>19,99€</s> → <b>5,99€</b></p>
+                        <p class="deal-meta">Very Positive · ⏳&nbsp;ends&nbsp;<span class="dc-ts">in 2 days</span></p>
+                      </div>
+                      <span class="deal-art art-hue" style="--hue: 18" aria-hidden="true">Ember &amp; Ash</span>
+                    </li>
+                    <li class="deal-row">
+                      <div>
+                        <p class="deal-name">4. Quiet Harbor</p>
+                        <p class="deal-price"><span class="disc">−67%</span> <s>19,99€</s> → <b>6,59€</b></p>
+                        <p class="deal-meta">Very Positive · ⏳&nbsp;ends&nbsp;<span class="dc-ts">in 4 days</span></p>
+                      </div>
+                      <span class="deal-art art-hue" style="--hue: 190" aria-hidden="true">Quiet Harbor</span>
+                    </li>
+                    <li class="deal-row">
+                      <div>
+                        <p class="deal-name">5. Neon Ledger</p>
+                        <p class="deal-price"><span class="disc">−60%</span> <s>19,99€</s> → <b>7,99€</b></p>
+                        <p class="deal-meta">Very Positive · ⏳&nbsp;ends&nbsp;<span class="dc-ts">in 6 days</span></p>
+                      </div>
+                      <span class="deal-art art-hue" style="--hue: 300" aria-hidden="true">Neon Ledger</span>
+                    </li>
+                    <li class="deal-row">
+                      <div>
+                        <p class="deal-name">6. The Long Furrow</p>
+                        <p class="deal-price"><span class="disc">−60%</span> <s>24,99€</s> → <b>9,99€</b></p>
+                        <p class="deal-meta">Very Positive · ⏳&nbsp;ends&nbsp;<span class="dc-ts">in 3 days</span></p>
+                      </div>
+                      <span class="deal-art art-hue" style="--hue: 80" aria-hidden="true">The Long Furrow</span>
+                    </li>
+                    <li class="deal-row">
+                      <div>
+                        <p class="deal-name">7. Gearwright</p>
+                        <p class="deal-price"><span class="disc">−55%</span> <s>19,99€</s> → <b>8,99€</b></p>
+                        <p class="deal-meta">Very Positive · ⏳&nbsp;ends&nbsp;<span class="dc-ts">in a day</span></p>
+                      </div>
+                      <span class="deal-art art-hue" style="--hue: 35" aria-hidden="true">Gearwright</span>
+                    </li>
+                    <li class="deal-row">
+                      <div>
+                        <p class="deal-name">8. Saltmarsh Saga</p>
+                        <p class="deal-price"><span class="disc">−58%</span> <s>29,99€</s> → <b>12,59€</b></p>
+                        <p class="deal-meta">Mostly Positive · ⏳&nbsp;ends&nbsp;<span class="dc-ts">in 6 days</span></p>
+                      </div>
+                      <span class="deal-art art-hue" style="--hue: 165" aria-hidden="true">Saltmarsh Saga</span>
+                    </li>
+                    <li class="deal-row">
+                      <div>
+                        <p class="deal-name">9. Paper Comets</p>
+                        <p class="deal-price"><span class="disc">−50%</span> <s>8,99€</s> → <b>4,49€</b></p>
+                        <p class="deal-meta">Mostly Positive · ⏳&nbsp;ends&nbsp;<span class="dc-ts">in 2 days</span></p>
+                      </div>
+                      <span class="deal-art art-hue" style="--hue: 230" aria-hidden="true">Paper Comets</span>
+                    </li>
+                    <li class="deal-row">
+                      <div>
+                        <p class="deal-name">10. Frostline Couriers</p>
+                        <p class="deal-price"><span class="disc">−45%</span> <s>19,99€</s> → <b>10,99€</b></p>
+                        <p class="deal-meta">Mostly Positive · ⏳&nbsp;ends&nbsp;<span class="dc-ts">in 5 days</span></p>
+                      </div>
+                      <span class="deal-art art-hue" style="--hue: 195" aria-hidden="true">Frostline Couriers</span>
+                    </li>
+                  </ol>
+                  <div class="deal-foot">
+                    <p>💸 Steam Daily Deals</p>
+                    <a class="dc-btn" href="https://store.steampowered.com/specials" target="_blank" rel="noopener noreferrer">All specials <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
+                  </div>
+                </div>
+                <p class="dc-reactions"><span>🔥 <b>5</b></span><span>💸 <b>2</b></span></p>
+              </div>
+            </div>
+          </div>
+          <div class="dc-log dc-pane" data-demo-pane="epic-free" role="region" aria-label="#epic-free" tabindex="0" hidden>
+            <div class="dc-start">
+              <span class="dc-start-icon" aria-hidden="true">#</span>
+              <p class="dc-start-title">#epic-free</p>
+            </div>
+            <div class="dc-msg">
+              <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+              <div class="dc-body">
+                <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Today at 17:00</span></p>
+                <div class="dc-embed is-block epic-post" style="--bar: #26bbff">
+                  <p class="epic-head">🎁 Epic Free Games</p>
+                  <p class="deal-meta">2 free now · 1 coming next</p>
+                  <div class="epic-covers">
+                    <div class="epic-cover" aria-hidden="true"><span class="epic-moon"></span><span class="epic-hills"></span><span class="epic-name">Starbound Atlas</span></div>
+                    <div class="epic-cover epic-cover-warm" aria-hidden="true"><span class="epic-name">Lantern Keepers</span></div>
+                  </div>
+                  <p class="deal-name">Starbound Atlas</p>
+                  <p class="deal-price"><span class="free-tag">FREE</span> <s>$19.99</s></p>
+                  <p class="deal-meta">⏳ Free until Thursday 17:00 · <span class="dc-ts">in 6 days</span></p>
+                  <p class="deal-name epic-second">Lantern Keepers</p>
+                  <p class="deal-price"><span class="free-tag">FREE</span> <s>$9.99</s></p>
+                  <p class="deal-meta">⏳ ends <span class="dc-ts">in 6 days</span> · by Quiet Hours Games</p>
+                  <p class="epic-next">💰 <b>$29.98</b> worth of games, yours for nothing this week.</p>
+                  <div class="dc-row">
+                    <a class="dc-btn" href="https://store.epicgames.com/free-games" target="_blank" rel="noopener noreferrer">Claim Starbound Atlas <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
+                    <a class="dc-btn" href="https://store.epicgames.com/free-games" target="_blank" rel="noopener noreferrer">Claim Lantern Keepers <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
+                  </div>
+                </div>
+                <div class="dc-embed is-block" style="--bar: #8b93a7">
+                  <p class="dc-embed-title">➡️ Coming next</p>
+                  <p class="deal-meta">Set a reminder.</p>
+                  <p class="deal-name epic-second">Moss &amp; Mortar</p>
+                  <p class="deal-meta">🔒 Free <span class="dc-ts">in 6 days</span> · worth $14.99</p>
+                </div>
+                <p class="dc-reactions"><span>🎁 <b>3</b></span><span>🆓 <b>2</b></span><span>⭐ <b>1</b></span></p>
+              </div>
+            </div>
+          </div>
+          <div class="dc-log dc-pane" data-demo-pane="wishlist-radar" role="region" aria-label="#wishlist-radar" tabindex="0" hidden>
+            <div class="dc-start">
+              <span class="dc-start-icon" aria-hidden="true">#</span>
+              <p class="dc-start-title">#wishlist-radar</p>
+            </div>
+            <div class="dc-msg">
+              <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+              <div class="dc-body">
+                <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Today at 09:00</span></p>
+                <p class="dc-text"><span class="dc-mention">@you</span> <span class="dc-mention">@Nova</span></p>
+                <div class="dc-embed is-block" style="--bar: #5dd39e">
+                  <p class="radar-head">🤝 Wanted together</p>
+                  <div class="deal-row">
+                    <div>
+                      <p class="deal-name">Ember &amp; Ash</p>
+                      <p class="deal-price"><span class="disc">−70%</span> <s>19,99€</s> → <b>5,99€</b></p>
+                      <p class="deal-meta">🤝 <span class="dc-mention">@you</span>, <span class="dc-mention">@Nova</span> · ⏳&nbsp;ends&nbsp;<span class="dc-ts">in 2 days</span></p>
+                    </div>
+                    <span class="deal-art art-hue" style="--hue: 18" aria-hidden="true">Ember &amp; Ash</span>
+                  </div>
+                  <p class="radar-for">🎯 <b>For <span class="dc-mention">@you</span></b></p>
+                  <ul class="radar-list">
+                    <li><b class="deal-name">Quiet Harbor</b> · <span class="disc">−67%</span> <s>19,99€</s> → <b>6,59€</b> · ⏳ ends <span class="dc-ts">in 4 days</span></li>
+                    <li><b class="deal-name">Paper Comets</b> · <span class="disc">−50%</span> <s>8,99€</s> → <b>4,49€</b> · ⏳ ends <span class="dc-ts">in 2 days</span></li>
+                  </ul>
+                  <p class="deal-foot deal-meta">🎯 Wishlist Radar · games on your Steam wishlist that are on sale · /steam link to join</p>
+                </div>
+              </div>
+            </div>
+          </div>
         <p class="dc-typing" data-demo-typing hidden><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span> <strong>Dzbanek</strong> is thinking…</p>
         <form class="dc-composer" data-demo-form autocomplete="off">
           <div class="dc-suggest" data-demo-suggest hidden>
@@ -120,6 +345,7 @@
             <button type="submit" class="dc-send" aria-label="Send" data-i18n-aria="demo.send"><svg width="20" height="20" aria-hidden="true"><use href="#i-send" /></svg></button>
           </div>
         </form>
+        <p class="dc-locked" data-demo-locked hidden data-i18n="demo.locked">You don’t have permission to send messages in this channel.</p>
       </div>
 
       <aside class="dc-members" aria-hidden="true">

@@ -220,7 +220,7 @@
   // Bot replies arrive after a short "thinking" beat, like a deferred interaction.
   function reply(build, delay = 650) {
     state.thinking += 1;
-    typing.hidden = false;
+    typing.hidden = channel !== 'kitchen';
     later(() => {
       state.thinking -= 1;
       if (state.thinking <= 0) {
@@ -866,6 +866,7 @@
   function run(raw) {
     const value = raw.trim();
     if (!value) return;
+    if (channel !== 'kitchen') showChannel('kitchen');
     closeMenu();
 
     if (!value.startsWith('/')) {
@@ -910,6 +911,53 @@
   const status = document.querySelector('[data-demo-status]');
   if (status) status.textContent = LORE[Math.floor(new Date().getMinutes() / 20)];
 
+  /* ---------- the other channels ---------- */
+
+  // Only #kitchen takes commands; the rest show what the bot posts there, read-only.
+  const TOPICS = {
+    kitchen: ['demo.topic', 'A fake channel. Nothing here reaches Discord.'],
+    welcome: ['demo.topicWelcome', 'Hi and bye, from Dzbanek'],
+    'steam-deals': ['demo.topicSteam', 'Ten Steam deals every day at 03:33'],
+    'epic-free': ['demo.topicEpic', 'Epic’s free games, checked at 12:00 and 17:00'],
+    'wishlist-radar': ['demo.topicRadar', 'A ping when a game on your wishlist goes on sale'],
+  };
+  const channelName = root.querySelector('[data-demo-name]');
+  const channelTopic = root.querySelector('[data-demo-topic]');
+  const locked = root.querySelector('[data-demo-locked]');
+  const panes = root.querySelectorAll('[data-demo-pane]');
+  const channelButtons = document.querySelectorAll('[data-demo-channel]');
+  let channel = 'kitchen';
+
+  function showChannel(name) {
+    channel = name;
+    const kitchen = name === 'kitchen';
+    channelButtons.forEach((button) => {
+      const on = button.getAttribute('data-demo-channel') === name;
+      button.classList.toggle('is-active', on);
+      if (on) button.setAttribute('aria-current', 'true');
+      else button.removeAttribute('aria-current');
+    });
+    log.hidden = !kitchen;
+    form.hidden = !kitchen;
+    locked.hidden = kitchen;
+    typing.hidden = !kitchen || state.thinking === 0;
+    if (!kitchen) closeMenu();
+    panes.forEach((pane) => {
+      pane.hidden = pane.getAttribute('data-demo-pane') !== name;
+      // Discord opens a channel at its newest message.
+      if (!pane.hidden) pane.scrollTop = pane.scrollHeight;
+    });
+    if (kitchen) log.scrollTop = log.scrollHeight;
+    channelName.textContent = name;
+    const [key, fallback] = TOPICS[name];
+    channelTopic.setAttribute('data-i18n', key);
+    channelTopic.textContent = ui(key, fallback);
+  }
+
+  channelButtons.forEach((button) => {
+    button.addEventListener('click', () => showChannel(button.getAttribute('data-demo-channel')));
+  });
+
   /* ---------- the slash menu (combobox) ---------- */
 
   let items = [];
@@ -918,6 +966,7 @@
   let parent = null;
 
   function openWith(value) {
+    if (channel !== 'kitchen') showChannel('kitchen');
     input.value = value;
     input.focus({ preventScroll: true });
     refresh();
@@ -1075,6 +1124,7 @@
     log.innerHTML = firstMessage;
     input.value = '';
     closeMenu();
+    showChannel('kitchen');
   });
 
   window.addEventListener('dzbanek:lang', () => {
