@@ -202,7 +202,10 @@ html.theme-light {
   display: none !important;
 }
 
+/* Clip on html too: otherwise body's overflow is handed to the viewport and
+   stops clipping, so glows near the edge (the .dc-stage halo) widen the page. */
 html {
+  overflow-x: clip;
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
   -webkit-text-size-adjust: 100%;
@@ -1542,6 +1545,9 @@ button.dc-btn[aria-pressed="true"]:hover {
 /* ---------- pages: home ---------- */
 
 .hero {
+  /* Shared by the sticker and the copy, which keeps clear of it. */
+  --sticker-right: clamp(1.25rem, 4vw, 3.5rem);
+  --sticker-size: clamp(7.25rem, 10vw, 9rem);
   position: relative;
   isolation: isolate;
   margin-top: calc(-1 * var(--header-space));
@@ -1843,6 +1849,11 @@ button.dc-btn[aria-pressed="true"]:hover {
   opacity: 0;
 }
 
+/* On tablets the copy is wide enough to reach the sticker; stop it short. */
+.hero[data-film] .hero-copy {
+  right: calc(var(--sticker-right) + var(--sticker-size) + 1.5rem);
+}
+
 .hero[data-film="playing"] .hero-copy,
 .hero[data-film="paused"] .hero-copy {
   opacity: 0;
@@ -2010,9 +2021,9 @@ button.dc-btn[aria-pressed="true"]:hover {
 .film-sticker {
   position: absolute;
   z-index: 4;
-  right: clamp(1.25rem, 4vw, 3.5rem);
+  right: var(--sticker-right);
   bottom: clamp(5.5rem, 16cqh, 9rem);
-  width: clamp(7.25rem, 10vw, 9rem);
+  width: var(--sticker-size);
   aspect-ratio: 1;
   padding: 0;
   border: 0;
@@ -4096,13 +4107,46 @@ html.js [data-reveal-group].is-in > * {
     bottom: 5.5rem;
   }
 
+  .hero {
+    --sticker-right: 1rem;
+    --sticker-size: 6.5rem;
+  }
+
+  /* Phones: the copy is in the flow, so the stage grows to fit it rather than
+     pushing the title up under the header and the sticker. */
   .hero-stage {
-    height: clamp(540px, 88svh, 760px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: auto;
+    min-height: clamp(540px, 88svh, 760px);
+    container-type: normal;
     border-radius: 1.4rem;
   }
 
   .hero-stage {
     --focus-x: 0.74;
+  }
+
+  /* The stage is always taller than 16:9 here, so the scene is just full height. */
+  .hero-scene {
+    left: calc(100% * var(--focus-x));
+    top: 0;
+    width: auto;
+    height: 100%;
+    translate: calc(-100% * var(--focus-x)) 0;
+  }
+
+  .hero-copy {
+    position: relative;
+    inset: auto;
+    margin: calc(var(--header-space) + 1.25rem) clamp(1.25rem, 5vw, 5rem) clamp(2rem, 8svh, 5.5rem);
+  }
+
+  /* The sticker sits above the copy here. */
+  .hero[data-film] .hero-copy {
+    right: auto;
+    margin-top: calc(var(--header-space) + 0.75rem + var(--sticker-size) + 1.25rem);
   }
 
   /* Phones: 16:9 is short in portrait, so the stage keeps its height and the film sits in it whole. */
@@ -4112,7 +4156,7 @@ html.js [data-reveal-group].is-in > * {
 
   .hero[data-film="playing"] .hero-stage,
   .hero[data-film="paused"] .hero-stage {
-    height: clamp(540px, 88svh, 760px);
+    height: auto;
   }
 
   .hero[data-film="playing"] .hero-scene,
@@ -4158,9 +4202,7 @@ html.js [data-reveal-group].is-in > * {
 
   .film-sticker {
     top: calc(var(--header-space) + 0.75rem);
-    right: 1rem;
     bottom: auto;
-    width: 6.5rem;
   }
 
   .hero-shade {
