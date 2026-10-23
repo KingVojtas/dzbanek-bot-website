@@ -1,12 +1,11 @@
-<!-- title: Commands — Dzbanek -->
+<!-- title: Commands · Dzbanek -->
 <!-- description: All six slash commands, plus what every button on the cards does. You can try them right on the page. -->
 <!-- page: commands -->
 <!-- scripts: discord-demo.js -->
 
 <header class="page-hero">
   <div class="wrap">
-    <p class="kicker" data-i18n="commands.kicker">Commands</p>
-    <h1 data-i18n="commands.title">Six commands. That’s all.</h1>
+    <h1 data-i18n="commands.title">Here’s everything you can type</h1>
     <p class="lead" data-i18n="commands.lead">Type / in Discord to see them. Pause, skip, shuffle, and loop are buttons on the Now Playing card, so you won’t find them here.</p>
   </div>
 </header>
@@ -50,7 +49,7 @@
             aria-controls="demo-list"
             aria-label="Message #kitchen"
             data-i18n-aria="demo.inputLabel"
-            placeholder="Message #kitchen — type / for commands"
+            placeholder="Message #kitchen (type / for commands)"
             data-i18n-placeholder="demo.placeholder"
             spellcheck="false"
             maxlength="80"
@@ -61,8 +60,7 @@
     </div>
 
     <aside class="demo-side" data-reveal>
-      <p class="kicker" data-i18n="demo.kicker">Try it</p>
-      <h2 id="demo-title" data-i18n="demo.title">Play around with it here.</h2>
+      <h2 id="demo-title" class="h-small" data-i18n="demo.title">Try it here</h2>
       <p class="lead" data-i18n="demo.lead">This is a fake channel that runs in your browser. Type / and pick a command, or click one below. The buttons on the cards work too. Nothing gets sent to Discord.</p>
       <div class="demo-chips">
         <button type="button" class="chip" data-demo-run="/play">/play</button>
@@ -88,32 +86,32 @@
         <input type="search" data-cmd-filter placeholder="Search: radio, queue, setup…" data-i18n-placeholder="commands.filter" />
       </label>
     </div>
-    <div class="cmd-grid" data-reveal-group>
-      <article class="cmd-card" id="play" data-cmd>
-        <header><code class="cmd-name">/play</code><button type="button" class="copy" data-copy="/play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+    <div class="cmd-menu" data-reveal>
+      <article class="cmd-item" id="play" data-cmd>
+        <header><code class="cmd-name">/play</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
         <p data-i18n="commands.play">Joins your voice channel and plays a YouTube or Spotify link, or whatever you search for. play_next puts it at the front of the queue.</p>
         <ul class="opts"><li><code>play_next</code></li></ul>
       </article>
-      <article class="cmd-card" id="queue" data-cmd>
-        <header><code class="cmd-name">/queue</code><button type="button" class="copy" data-copy="/queue"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+      <article class="cmd-item" id="queue" data-cmd>
+        <header><code class="cmd-name">/queue</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/queue"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
         <p data-i18n="commands.queue">Shows what’s coming up, one page at a time.</p>
         <ul class="opts"><li><code>◀ Prev</code></li><li><code>Next ▶</code></li></ul>
       </article>
-      <article class="cmd-card" id="stop" data-cmd>
-        <header><code class="cmd-name">/stop</code><button type="button" class="copy" data-copy="/stop"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+      <article class="cmd-item" id="stop" data-cmd>
+        <header><code class="cmd-name">/stop</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/stop"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
         <p data-i18n="commands.stop">Stops the music, clears the queue, deletes the Now Playing card, and leaves.</p>
       </article>
-      <article class="cmd-card" id="remove" data-cmd>
-        <header><code class="cmd-name">/remove</code><button type="button" class="copy" data-copy="/remove"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+      <article class="cmd-item" id="remove" data-cmd>
+        <header><code class="cmd-name">/remove</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/remove"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
         <p data-i18n="commands.remove">Removes one song from the queue. Position 1 is the next song.</p>
       </article>
-      <article class="cmd-card" id="radio" data-cmd>
-        <header><code class="cmd-name">/radio</code><button type="button" class="copy" data-copy="/radio play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+      <article class="cmd-item" id="radio" data-cmd>
+        <header><code class="cmd-name">/radio</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/radio play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
         <p data-i18n="commands.radio">play, stop, night, and night-off. Pick Kiss, Rock, or Beat.</p>
         <ul class="opts"><li><code>play</code></li><li><code>stop</code></li><li><code>night</code></li><li><code>night-off</code></li></ul>
       </article>
-      <article class="cmd-card" id="setup" data-cmd>
-        <header><code class="cmd-name">/setup</code><button type="button" class="copy" data-copy="/setup status"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+      <article class="cmd-item" id="setup" data-cmd>
+        <header><code class="cmd-name">/setup</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/setup status"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
         <p data-i18n="commands.setup">Sets which channels get deals, welcome messages, and the Kitchen Board. Needs Manage Server.</p>
         <ul class="opts"><li><code>steam</code></li><li><code>epic</code></li><li><code>welcome</code></li><li><code>goodbye</code></li><li><code>kitchen</code></li><li><code>idle-radio</code></li><li><code>status</code></li><li><code>disable</code></li></ul>
         <a class="link-arrow" href="setup.html"><span data-i18n="nav.setup">Setup</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
@@ -127,8 +125,7 @@
 <section class="section" id="buttons">
   <div class="wrap">
     <div class="section-head" data-reveal>
-      <p class="kicker" data-i18n="commands.buttonsKicker">Buttons</p>
-      <h2 data-i18n="commands.buttons">What the buttons do</h2>
+      <h2 class="h-small" data-i18n="commands.buttons">What the buttons do</h2>
     </div>
     <div class="btn-legend" data-reveal-group>
       <div class="btn-group">

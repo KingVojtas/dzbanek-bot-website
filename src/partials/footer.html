@@ -6,24 +6,12 @@
         <span class="brand-mark" aria-hidden="true"><img src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" /></span>
         <span class="brand-name">Dzbanek</span>
       </a>
-      <p data-i18n="footer.note">A cozy Discord bot for music, Czech radio, and game deals. Cookies included.</p>
+      <p data-i18n="footer.note">A free Discord bot for music, Czech radio and game deals.</p>
       <p class="signed" data-i18n="footer.signed">Built with ☕ &amp; 🍪 by Sunka</p>
       <div class="footer-actions">
         <a class="btn btn-clay btn-sm" href="{{invite}}" data-invite target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Server</a>
         <a class="btn btn-ghost btn-sm" href="{{github}}" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" aria-hidden="true"><use href="#i-github" /></svg> GitHub</a>
       </div>
-    </div>
-
-    <div class="footer-hours">
-      <h2 class="footer-title"><svg width="16" height="16" aria-hidden="true"><use href="#i-clock" /></svg> <span data-i18n="footer.hours">Schedule</span></h2>
-      <p class="footer-sub"><span data-i18n="footer.prague">Prague time</span> · <span class="mono" data-clock="time">--:--</span></p>
-      <ul class="hours">
-        <li data-clock-event="steam"><span data-i18n="clock.ev.steam">Steam daily deals</span><span class="mono" data-i18n="footer.daily0333">Daily 03:33</span></li>
-        <li data-clock-event="epic"><span data-i18n="clock.ev.epic">Epic free games</span><span class="mono" data-i18n="footer.daily1217">Daily 12:00 · 17:00</span></li>
-        <li data-clock-event="vote"><span data-i18n="clock.ev.vote">Radio Night vote</span><span class="mono" data-i18n="footer.fri12">Fri 12:00</span></li>
-        <li data-clock-event="night"><span data-i18n="clock.ev.night">Radio Night</span><span class="mono" data-i18n="footer.fri20">Fri 20:00</span></li>
-        <li data-clock-event="postcard"><span data-i18n="clock.ev.postcard">Sunday postcard</span><span class="mono" data-i18n="footer.sun18">Sun 18:00</span></li>
-      </ul>
     </div>
 
     <nav class="footer-nav" aria-label="Footer" data-i18n-aria="footer.label">
@@ -37,6 +25,7 @@
   </div>
   <div class="wrap footer-base">
     <p>© <span id="year"></span> Dzbanek · <span data-i18n="footer.fine">Not affiliated with Discord, Valve, Epic Games, or any of the radio stations.</span></p>
+    <p class="updated"><span data-i18n="footer.updated">Last updated</span> <time datetime="{{updatedIso}}">{{updated}}</time></p>
     <a class="to-top" href="#main"><span data-i18n="footer.top">Back to top</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-up" /></svg></a>
   </div>
 </footer>

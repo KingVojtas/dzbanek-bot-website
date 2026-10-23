@@ -2,6 +2,7 @@
  * Stitch partials into dist/. Node only — no packages.
  * Usage: node scripts/build.mjs
  */
+import { execFileSync } from 'node:child_process';
 import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -48,7 +49,19 @@ const icons = await readFile(join(src, 'partials', 'icons.html'), 'utf8');
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 
-const shared = { invite, github, ogImage };
+// The footer's "Last updated": the date of the latest commit, or today outside git.
+function lastUpdated() {
+  try {
+    return execFileSync('git', ['log', '-1', '--format=%cs'], { cwd: root, encoding: 'utf8' }).trim();
+  } catch {
+    return new Date().toISOString().slice(0, 10);
+  }
+}
+const updatedIso = lastUpdated();
+const [year, month, day] = updatedIso.split('-').map(Number);
+const updated = `${day}. ${month}. ${year}`;
+
+const shared = { invite, github, ogImage, updated, updatedIso };
 const pages = (await readdir(join(src, 'pages'))).filter((name) => name.endsWith('.html'));
 
 for (const file of pages) {

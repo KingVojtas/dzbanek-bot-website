@@ -301,6 +301,12 @@ h3 {
   font-size: 1.35rem;
 }
 
+/* Not every section needs a poster-sized headline. */
+h2.h-small {
+  font-size: clamp(1.65rem, 2.8vw, 2.25rem);
+  letter-spacing: -0.02em;
+}
+
 p {
   margin: 0;
   text-wrap: pretty;
@@ -634,32 +640,22 @@ html:not(.theme-light) .icon-moon {
 
 .btn-clay {
   position: relative;
-  overflow: hidden;
-  background: linear-gradient(180deg, #f0a062, var(--clay-deep));
+  background: linear-gradient(180deg, var(--clay), var(--clay-deep));
   color: #fff8f1;
   box-shadow:
-    0 10px 26px -6px rgba(197, 107, 45, 0.55),
-    inset 0 1px 0 rgba(255, 236, 214, 0.45);
-}
-
-.btn-clay::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(110deg, transparent 28%, rgba(255, 248, 241, 0.42) 48%, transparent 68%);
-  transform: translateX(-130%);
-  transition: transform 0.8s var(--ease);
-}
-
-.btn-clay:hover::after {
-  transform: translateX(130%);
+    inset 0 1px 0 rgba(255, 236, 214, 0.35),
+    0 2px 0 #8a4519;
 }
 
 .btn-clay:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
+}
+
+.btn-clay:active {
+  transform: translateY(1px);
   box-shadow:
-    0 18px 36px -8px rgba(197, 107, 45, 0.6),
-    inset 0 1px 0 rgba(255, 236, 214, 0.45);
+    inset 0 1px 0 rgba(255, 236, 214, 0.35),
+    0 1px 0 #8a4519;
 }
 
 .btn-ghost {
@@ -724,8 +720,8 @@ html:not(.theme-light) .icon-moon {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1.3fr 0.6fr;
-  gap: 2.5rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2.5rem 4rem;
   padding: 3.25rem 0 2.25rem;
 }
 
@@ -762,44 +758,6 @@ html:not(.theme-light) .icon-moon {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
-}
-
-.footer-sub {
-  margin: -0.3rem 0 0.6rem;
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
-.hours {
-  display: grid;
-  gap: 0.15rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.hours li {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.45rem 0.75rem;
-  border-radius: 0.7rem;
-  border-left: 2px solid transparent;
-  color: var(--cream-soft);
-  font-size: 0.92rem;
-  transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
-}
-
-.hours li .mono {
-  color: var(--muted);
-  font-size: 0.8rem;
-  white-space: nowrap;
-}
-
-.hours li.is-next {
-  background: color-mix(in srgb, var(--clay) 14%, transparent);
-  border-left-color: var(--clay);
-  color: var(--cream);
 }
 
 .footer-nav {
@@ -1615,19 +1573,6 @@ button.dc-btn[aria-pressed="true"]:hover {
   animation: ping var(--ping, 2s) ease-out infinite;
 }
 
-/* skeleton lines */
-.sk {
-  display: block;
-  width: var(--w, 70%);
-  height: 0.62rem;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--dc-sk-2), var(--dc-sk));
-}
-
-.dc-embed-desc .sk {
-  margin: 0.5rem 0;
-}
-
 /* ---------- pages: home ---------- */
 
 .hero {
@@ -2130,41 +2075,13 @@ button.dc-btn[aria-pressed="true"]:hover {
   transform: scale(1.1);
 }
 
-.ticker {
-  margin-top: 1.5rem;
-  padding: 1rem 0;
-  overflow: hidden;
-  border-block: 1px solid var(--line);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-}
-
-.ticker-track {
-  display: flex;
-  align-items: center;
-  gap: 1.75rem;
-  width: max-content;
-  animation: marquee 60s linear infinite;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-.ticker-track b {
-  color: var(--clay);
-  font-style: normal;
-  font-size: 0.8em;
-}
-
-.ticker:hover .ticker-track {
-  animation-play-state: paused;
-}
-
 /* menu cards */
 
-/* Notes pinned to the kitchen board: each one a little crooked, at its own height. */
+/* Notes pinned up right under the photo: each one a little crooked, at its own height. */
+.section.notes {
+  padding-top: clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
 .menu-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -2237,22 +2154,12 @@ button.dc-btn[aria-pressed="true"]:hover {
   border-color: color-mix(in srgb, var(--clay) 50%, transparent);
 }
 
-.menu-icon,
-.deal-icon,
-.shelf-icon {
-  display: grid;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 1rem;
-  background: color-mix(in srgb, var(--clay) 15%, transparent);
-  color: var(--accent-text);
-  flex: none;
-}
-
 .menu-card h3 {
-  margin-top: 1.25rem;
-  font-size: 1.35rem;
+  font-family: var(--hand);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
 }
 
 .menu-card p {
@@ -2830,17 +2737,7 @@ button.dc-btn[aria-pressed="true"]:hover {
 .deal {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
-  padding: 1.5rem;
-  border-radius: 1.6rem;
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--ink-2) 85%, transparent);
-  transition: transform 0.5s var(--spring), border-color 0.45s var(--ease);
-}
-
-.deal:hover {
-  transform: translateY(-5px);
-  border-color: color-mix(in srgb, var(--clay) 45%, transparent);
+  gap: 1.2rem;
 }
 
 .deal-head {
@@ -2867,9 +2764,9 @@ button.dc-btn[aria-pressed="true"]:hover {
 
 .digest li {
   display: grid;
-  grid-template-columns: 1.3rem minmax(0, 1fr) auto auto;
+  grid-template-columns: 1.1rem minmax(0, 1fr) auto auto 3.4rem;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
   padding: 0.45rem 0;
   border-top: 1px solid var(--dc-line);
   counter-increment: row;
@@ -2879,6 +2776,21 @@ button.dc-btn[aria-pressed="true"]:hover {
   content: counter(row);
   color: var(--dc-muted);
   font: 600 0.78rem var(--mono);
+}
+
+.digest .game {
+  overflow: hidden;
+  color: var(--dc-text);
+  font-size: 0.86rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.digest .price {
+  color: var(--dc-text);
+  font: 600 0.8rem var(--mono);
+  text-align: right;
 }
 
 .chip-vp,
@@ -2909,15 +2821,48 @@ html.theme-light .chip-vp {
 }
 
 .epic-cover {
-  display: grid;
-  place-items: center;
-  height: 7.5rem;
-  margin-top: 0.7rem;
+  position: relative;
+  overflow: hidden;
+  height: 8rem;
+  margin-top: 0.8rem;
   border-radius: 0.4rem;
   background:
-    radial-gradient(80% 120% at 20% 0%, rgba(255, 255, 255, 0.08), transparent 60%),
-    linear-gradient(135deg, #2f2f33, #141416);
-  color: rgba(255, 255, 255, 0.4);
+    radial-gradient(1px 1px at 18% 22%, #fff, transparent),
+    radial-gradient(1px 1px at 42% 12%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 66% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 84% 16%, #fff, transparent),
+    radial-gradient(1px 1px at 30% 40%, rgba(255, 255, 255, 0.7), transparent),
+    linear-gradient(180deg, #13183a 0%, #2b2f6b 55%, #6a4a7a 100%);
+}
+
+.epic-moon {
+  position: absolute;
+  top: 16%;
+  right: 14%;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: #f4e7c5;
+  box-shadow: 0 0 22px rgba(244, 231, 197, 0.45);
+}
+
+.epic-hills {
+  position: absolute;
+  inset: auto -10% 0;
+  height: 48%;
+  background:
+    radial-gradient(60% 90% at 25% 100%, #1b1430 60%, transparent 61%),
+    radial-gradient(55% 80% at 78% 100%, #241a3d 60%, transparent 61%);
+}
+
+.epic-name {
+  position: absolute;
+  left: 0.8rem;
+  bottom: 0.55rem;
+  color: #fff;
+  font: 600 1.05rem/1 var(--serif);
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
 }
 
 /* board */
@@ -2935,60 +2880,148 @@ html.theme-light .chip-vp {
   padding: 1rem 1.2rem;
 }
 
-/* steps */
+/* setting it up: a to-do list on the fridge, and a note beside it */
 
-.steps {
-  position: relative;
+.papers {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin: 0;
-  padding: 0;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: start;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+.todo,
+.letter {
+  --paper: #f6efe2;
+  --paper-ink: #2c2219;
+  position: relative;
+  padding: 2rem clamp(1.4rem, 3vw, 2.2rem) 1.8rem;
+  border-radius: 0.2rem;
+  background: var(--paper);
+  color: var(--paper-ink);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 18px 30px -18px rgba(0, 0, 0, 0.6);
+}
+
+/* Lined paper, held on by a magnet. */
+.todo {
+  rotate: -1.2deg;
+  background:
+    linear-gradient(90deg, transparent 2.6rem, rgba(201, 82, 62, 0.35) 2.6rem 2.7rem, transparent 2.7rem),
+    repeating-linear-gradient(180deg, transparent 0 1.95rem, rgba(70, 110, 160, 0.18) 1.95rem 2rem),
+    var(--paper);
+}
+
+.todo::before {
+  content: "";
+  position: absolute;
+  top: -0.7rem;
+  left: 50%;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-left: -0.8rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f6c79f, var(--clay) 55%, var(--clay-deep));
+  box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.45);
+}
+
+.todo-title,
+.letter-title {
+  font-family: var(--hand);
+  font-size: clamp(2rem, 3.4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.todo-title {
+  padding-left: 1.6rem;
+}
+
+.todo-list {
+  display: grid;
+  gap: 1.1rem;
+  margin: 1.4rem 0 0;
+  padding: 0 0 0 1.6rem;
   list-style: none;
 }
 
-/* Wide screens: the steps go down like stairs, so no connecting line. Phones draw one down the side. */
-.steps::before {
-  content: "";
-  display: none;
-  position: absolute;
-  opacity: 0.6;
-  transition: transform 1.6s var(--ease) 0.3s;
-}
-
-.step {
+.todo-list li {
   position: relative;
-  padding: 0 0.75rem;
+  padding-left: 2.1rem;
 }
 
-.step:nth-child(2) {
-  margin-top: 2.75rem;
+/* A box drawn in pen; the first one is already ticked. */
+.todo-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 2px solid var(--paper-ink);
+  border-radius: 0.2rem 0.35rem 0.15rem 0.3rem;
+  rotate: -3deg;
 }
 
-.step:nth-child(3) {
-  margin-top: 5.5rem;
+.todo-list li.is-done::after {
+  content: "✓";
+  position: absolute;
+  left: 0.1rem;
+  top: -0.55rem;
+  color: #b8452a;
+  font: 700 1.9rem/1 var(--hand);
+  rotate: 8deg;
 }
 
-.step-num {
-  display: grid;
-  place-items: center;
-  width: 3.5rem;
-  height: 3.5rem;
-  margin: 0 0 1.25rem;
-  border-radius: 50%;
-  border: 2px solid var(--clay);
-  background: var(--ink);
-  color: var(--accent-text);
-  font-family: var(--serif);
-  font-size: 1.6rem;
-  font-style: italic;
-  box-shadow: 0 0 0 6px var(--ink), 0 0 30px color-mix(in srgb, var(--clay) 35%, transparent);
+.todo-list strong {
+  display: block;
+  font: 700 1.55rem/1.1 var(--hand);
 }
 
-.step p {
-  max-width: 22rem;
-  margin: 0.6rem 0 0;
-  color: var(--muted);
+.todo-list li.is-done strong {
+  text-decoration: line-through;
+  text-decoration-color: rgba(184, 69, 42, 0.7);
+  text-decoration-thickness: 2px;
+}
+
+.todo-list span {
+  display: block;
+  margin-top: 0.25rem;
+  color: #5b4a3c;
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+
+/* The note: plain paper, a strip of tape, signed by hand. */
+.letter {
+  margin-top: 2.5rem;
+  rotate: 1.4deg;
+}
+
+.letter::before {
+  content: "";
+  position: absolute;
+  top: -0.75rem;
+  left: 1.8rem;
+  width: 5rem;
+  height: 1.5rem;
+  background: rgba(240, 228, 200, 0.55);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  rotate: -5deg;
+}
+
+.letter p {
+  margin-top: 0.9rem;
+  color: #3d3026;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.letter .letter-sign {
+  margin-top: 0.6rem;
+  font: 700 2.1rem/1 var(--hand);
+  color: #b8452a;
+  text-align: right;
+  rotate: -4deg;
 }
 
 /* faq */
@@ -3472,53 +3505,78 @@ html:not(.js) .kbd-hint {
   font: inherit;
 }
 
-.cmd-grid {
+.cmd-menu {
+  --paper-ink: #2a1f16;
+  --menu-accent: #9a4416;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 1.6rem 3.5rem;
+  padding: clamp(1.6rem, 4vw, 3rem);
+  border-radius: 0.25rem;
+  background: #f4ecdd;
+  color: var(--paper-ink);
+  outline: 1px solid rgba(42, 31, 22, 0.22);
+  outline-offset: -0.75rem;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 24px 40px -24px rgba(0, 0, 0, 0.7);
+  rotate: -0.35deg;
 }
 
-.cmd-card {
+.cmd-item {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  padding: 1.4rem;
-  border-radius: 1.4rem;
-  border: 1px solid var(--line);
-  background: var(--ink-2);
+  gap: 0.55rem;
+  margin: -0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
   scroll-margin-top: 7rem;
-  transition: transform 0.5s var(--spring), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
 
-.cmd-card:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--clay) 45%, transparent);
+.cmd-item:target {
+  background: rgba(224, 138, 69, 0.18);
 }
 
-.cmd-card:target {
-  border-color: var(--clay);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--clay) 18%, transparent);
-}
-
-.cmd-card header {
+.cmd-item header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  align-items: baseline;
+  gap: 0.6rem;
 }
 
-.cmd-name {
-  color: var(--accent-text);
-  font-size: 1.35rem;
-  font-weight: 600;
+.cmd-dots {
+  flex: 1;
+  min-width: 1.5rem;
+  border-bottom: 2px dotted rgba(42, 31, 22, 0.35);
 }
 
-.cmd-card p {
-  color: var(--muted);
+.cmd-menu .cmd-name {
+  color: var(--menu-accent);
+  font-size: 1.3rem;
+  font-weight: 700;
 }
 
-.cmd-card .link-arrow {
-  margin-top: auto;
+.cmd-item p {
+  color: #5b4a3c;
+}
+
+.cmd-menu .copy {
+  align-self: center;
+  border-color: rgba(42, 31, 22, 0.25);
+  color: #5b4a3c;
+}
+
+.cmd-menu .copy:hover {
+  border-color: var(--menu-accent);
+  color: var(--menu-accent);
+}
+
+.cmd-menu .opts code {
+  background: rgba(154, 68, 22, 0.1);
+  color: #6b3a1a;
+}
+
+.cmd-menu .link-arrow {
+  width: fit-content;
+  color: var(--menu-accent);
 }
 
 .opts {
@@ -3757,12 +3815,12 @@ html:not(.js) .tuner {
   flex-direction: column;
   gap: 0.5rem;
   padding: 1.5rem 1.4rem 1.6rem;
-  border-radius: 1.5rem;
+  border-radius: 0.5rem;
   border: 1px solid var(--line);
   background:
     radial-gradient(120% 70% at 0% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
     var(--ink-2);
-  box-shadow: inset 0 3px 0 var(--accent);
+  box-shadow: 0 16px 26px -18px rgba(0, 0, 0, 0.7);
   scroll-margin-top: 7rem;
   transition: opacity 0.5s var(--ease), transform 0.5s var(--spring), border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
 }
@@ -3771,9 +3829,12 @@ html.js .station {
   cursor: pointer;
 }
 
-.station .kicker {
+.station-name {
   margin: 1rem 0 0;
   color: color-mix(in srgb, var(--accent) 75%, var(--cream));
+  font: 600 0.8rem/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .station .slogan {
@@ -3781,7 +3842,7 @@ html.js .station {
   color: var(--cream);
 }
 
-.station p:not(.kicker):not(.slogan) {
+.station p:not(.station-name):not(.slogan) {
   color: var(--muted);
 }
 
@@ -3792,10 +3853,72 @@ html.js .station {
 
 .station.is-tuned {
   border-color: color-mix(in srgb, var(--accent) 60%, transparent);
-  box-shadow:
-    inset 0 3px 0 var(--accent),
-    0 30px 60px -28px color-mix(in srgb, var(--accent) 70%, transparent);
+  box-shadow: 0 30px 60px -28px color-mix(in srgb, var(--accent) 70%, transparent);
   transform: translateY(-6px);
+}
+
+/* Kiss: a die-cut sticker. */
+.station-sticker {
+  border: 5px solid #f3ece2;
+  border-radius: 1.8rem 1.8rem 1.8rem 0.5rem;
+  rotate: -1.6deg;
+}
+
+/* Rock: a gig ticket, with a tear-off stub at the bottom. */
+.station-ticket {
+  --stub: 3.6rem;
+  margin-top: 1.5rem;
+  padding-bottom: 1.15rem;
+  border-radius: 0.35rem;
+  rotate: 1deg;
+  -webkit-mask:
+    radial-gradient(circle at 0 calc(100% - var(--stub)), transparent 0.7rem, #000 0.75rem) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% calc(100% - var(--stub)), transparent 0.7rem, #000 0.75rem) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle at 0 calc(100% - var(--stub)), transparent 0.7rem, #000 0.75rem) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% calc(100% - var(--stub)), transparent 0.7rem, #000 0.75rem) right / 51% 100% no-repeat;
+}
+
+.station-ticket::after {
+  content: "";
+  position: absolute;
+  left: 1.1rem;
+  right: 1.1rem;
+  bottom: var(--stub);
+  border-top: 2px dashed color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* Beat: a paper tag on a string. */
+.station-tag {
+  margin-top: 0.6rem;
+  padding-top: 2.2rem;
+  border-radius: 0.4rem 0.4rem 1.4rem 0.4rem;
+  rotate: -0.7deg;
+}
+
+.station-tag::before {
+  content: "";
+  position: absolute;
+  top: 0.9rem;
+  right: 1.3rem;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.station-tag::after {
+  content: "";
+  position: absolute;
+  top: -1.5rem;
+  right: 1.55rem;
+  width: 2px;
+  height: 2.8rem;
+  border-radius: 1px;
+  background: #b9a58a;
+  rotate: 14deg;
+  transform-origin: bottom;
 }
 
 .station.is-dim {
@@ -4082,59 +4205,73 @@ html:not(.js) .vote-controls {
 
 /* setup */
 
-.shelves {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr));
-  gap: 1rem;
-}
-
-.shelf {
+.recipe {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.4rem 1.35rem 1.8rem;
-  overflow: hidden;
-  border-radius: 1.3rem;
-  border: 1px solid var(--line);
-  background: var(--ink-2);
-  transition: transform 0.5s var(--spring), border-color 0.4s var(--ease);
+  max-width: 62rem;
+  padding: 1.6rem clamp(1.4rem, 4vw, 2.8rem) 2rem;
+  border-radius: 0.2rem;
+  background:
+    linear-gradient(180deg, transparent 4.6rem, rgba(201, 82, 62, 0.45) 4.6rem 4.7rem, transparent 4.7rem),
+    #f7f1e6;
+  color: #2a1f16;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 22px 36px -22px rgba(0, 0, 0, 0.65);
+  rotate: 0.4deg;
 }
 
-.shelf::after {
+/* Taped down at two corners. */
+.recipe::before,
+.recipe::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 7px;
-  background:
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 9px),
-    linear-gradient(180deg, #8a5a35, #5a3820);
-  opacity: 0.75;
+  top: -0.7rem;
+  width: 5.5rem;
+  height: 1.5rem;
+  background: rgba(240, 228, 200, 0.55);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-.shelf:hover {
-  transform: translateY(-5px);
-  border-color: color-mix(in srgb, var(--clay) 45%, transparent);
+.recipe::before {
+  left: -1.2rem;
+  rotate: -28deg;
 }
 
-.shelf code {
-  color: var(--accent-text);
+.recipe::after {
+  right: -1.2rem;
+  rotate: 24deg;
+}
+
+.recipe-title {
+  font: 700 clamp(2rem, 3.4vw, 2.5rem) / 1.1 var(--hand);
+  letter-spacing: 0;
+}
+
+.recipe-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 3rem;
+  margin: 1.4rem 0 0;
+}
+
+.recipe-list > div {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(70, 110, 160, 0.22);
+}
+
+.recipe-list dt code {
+  color: #9a4416;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.shelf p {
-  color: var(--muted);
+.recipe-list .is-key dt code {
+  padding: 0 0.15rem;
+  background: linear-gradient(180deg, transparent 50%, rgba(255, 208, 70, 0.75) 50% 92%, transparent 92%);
+}
+
+.recipe-list dd {
+  margin: 0.25rem 0 0;
+  color: #5b4a3c;
   font-size: 0.95rem;
-}
-
-.shelf.featured {
-  background:
-    radial-gradient(80% 120% at 0% 0%, color-mix(in srgb, var(--clay) 18%, transparent), transparent 60%),
-    var(--ink-2);
-  border-color: color-mix(in srgb, var(--clay) 35%, transparent);
 }
 
 .channel-groups {
@@ -4345,14 +4482,6 @@ html.js [data-reveal-group].is-in > * {
   .duo {
     grid-template-columns: 1fr 1fr;
   }
-
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .footer-brand {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (max-width: 980px) {
@@ -4418,8 +4547,14 @@ html.js [data-reveal-group].is-in > * {
   .hours-split,
   .night-split,
   .faq-split,
-  .demo-layout {
+  .demo-layout,
+  .papers {
     grid-template-columns: 1fr;
+  }
+
+  .letter {
+    max-width: 36rem;
+    margin-top: 0.5rem;
   }
 
   .split.reverse > :first-child {
@@ -4607,29 +4742,19 @@ html.js [data-reveal-group].is-in > * {
   .menu-cards,
   .stations,
   .duo,
-  .channel-groups {
+  .channel-groups,
+  .cmd-menu,
+  .recipe-list {
     grid-template-columns: 1fr;
   }
 
-  .steps {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  .cmd-menu,
+  .recipe {
+    rotate: 0deg;
   }
 
-  .steps::before {
-    display: block;
-    top: 1.75rem;
-    bottom: 1.75rem;
-    left: 1.75rem;
-    right: auto;
-    width: 2px;
-    height: auto;
-    background: repeating-linear-gradient(180deg, var(--clay) 0 8px, transparent 8px 16px);
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-
-  .step:nth-child(n) {
+  .station-ticket,
+  .station-tag {
     margin-top: 0;
   }
 
@@ -4639,32 +4764,6 @@ html.js [data-reveal-group].is-in > * {
 
   .duo > :nth-child(2) {
     margin-top: 0;
-  }
-
-  html:not(.js) .steps::before,
-  .steps.is-in::before {
-    transform: scaleY(1);
-  }
-
-  .step {
-    display: grid;
-    grid-template-columns: 3.5rem 1fr;
-    column-gap: 1.1rem;
-    padding: 0;
-    text-align: left;
-  }
-
-  .step-num {
-    grid-row: span 2;
-    margin: 0;
-  }
-
-  .step h3 {
-    align-self: center;
-  }
-
-  .step p {
-    margin: 0.3rem 0 0;
   }
 
   .legend li {
@@ -4744,6 +4843,16 @@ html.js [data-reveal-group].is-in > * {
 
 /* Narrow phones: the speaker goes on top of the dial, like a portable set. */
 @media (max-width: 560px) {
+  /* No room for the rating on a phone; the game names come first. */
+  .digest li {
+    grid-template-columns: 1.1rem minmax(0, 1fr) auto 3.4rem;
+  }
+
+  .digest .chip-vp,
+  .digest .chip-sp {
+    display: none;
+  }
+
   .kradio {
     grid-template-columns: 1fr;
     border-radius: 1.8rem 1.8rem 1rem 1rem;
@@ -4779,17 +4888,11 @@ html.js [data-reveal-group].is-in > * {
 
 @media (hover: none) {
   .menu-card:hover,
-  .deal:hover,
-  .cmd-card:hover,
-  .shelf:hover,
   .btn:hover,
   .chip:hover {
     transform: none;
   }
 
-  .btn-clay::after {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4814,9 +4917,6 @@ html.js [data-reveal-group].is-in > * {
     translate: none;
   }
 
-  .steps::before {
-    transform: none !important;
-  }
 }
 
 ::view-transition-old(root),
@@ -4848,12 +4948,6 @@ html.js [data-reveal-group].is-in > * {
   100% {
     opacity: 0;
     translate: 0 14px;
-  }
-}
-
-@keyframes marquee {
-  to {
-    translate: -50% 0;
   }
 }
 

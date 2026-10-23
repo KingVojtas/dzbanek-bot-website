@@ -1,4 +1,4 @@
-<!-- title: Radio — Dzbanek -->
+<!-- title: Radio · Dzbanek -->
 <!-- description: Kiss, Rock Radio, and Radio Beat in your voice channel. Save songs you like with Catch, and vote on Friday’s Radio Night. -->
 <!-- page: radio -->
 <!-- scripts: radio.js -->
@@ -6,8 +6,7 @@
 <div class="tuned" data-tuner style="--tuned: var(--beat)">
   <header class="page-hero">
     <div class="wrap">
-      <p class="kicker" data-i18n="radio.kicker">Radio</p>
-      <h1 data-i18n="radio.title">Three Czech stations in your voice channel.</h1>
+      <h1 data-i18n="radio.title">Czech radio in your voice channel</h1>
       <p class="lead" data-i18n="radio.lead">/radio play joins your voice channel and starts streaming. The card takes on the station’s color and updates when the song changes (it checks about every 20 seconds). It won’t leave just because the chat has gone quiet.</p>
     </div>
   </header>
@@ -34,23 +33,23 @@
       </div>
 
       <div class="stations" data-reveal-group>
-        <article class="station" id="kiss" data-station-card="kiss" style="--accent: var(--kiss)">
+        <article class="station station-sticker" id="kiss" data-station-card="kiss" style="--accent: var(--kiss)">
           <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-          <p class="kicker">Kiss Radio</p>
+          <p class="station-name">Kiss Radio</p>
           <p class="slogan">...be happy!</p>
           <p data-i18n="radio.kiss">Pop hits. Song info comes from radia.cz, or from the stream itself.</p>
           <a class="link-arrow" href="https://www.kiss.cz/" target="_blank" rel="noopener noreferrer">kiss.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
         </article>
-        <article class="station" id="rock" data-station-card="rock" style="--accent: var(--rock)">
+        <article class="station station-ticket" id="rock" data-station-card="rock" style="--accent: var(--rock)">
           <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-          <p class="kicker">Rock Radio</p>
+          <p class="station-name">Rock Radio</p>
           <p class="slogan">Rock je slušná muzika</p>
           <p data-i18n="radio.rock">Rock. Song info comes from radia.cz, or from the stream.</p>
           <a class="link-arrow" href="https://rockovyradio.cz/" target="_blank" rel="noopener noreferrer">rockovyradio.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
         </article>
-        <article class="station" id="beat" data-station-card="beat" style="--accent: var(--beat)">
+        <article class="station station-tag" id="beat" data-station-card="beat" style="--accent: var(--beat)">
           <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-          <p class="kicker">Radio Beat</p>
+          <p class="station-name">Radio Beat</p>
           <p class="slogan">První bigbít u nás</p>
           <p data-i18n="radio.beat">Classic rock. Song info comes from Beat’s own “Právě v éteru” list first, then radia.cz, then the stream. During a show you might see the show’s name instead.</p>
           <a class="link-arrow" href="https://www.radiobeat.cz/" target="_blank" rel="noopener noreferrer">radiobeat.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
@@ -63,7 +62,6 @@
 <section class="section" id="catch">
   <div class="wrap split">
     <div data-reveal>
-      <p class="kicker">Catch</p>
       <h2 data-i18n="radio.catchTitle">Catch a song, play it later</h2>
       <p class="lead" data-i18n="radio.catchBody">Hear something you like? Catch saves the artist and title. The reply comes with a Play button that finds the song on YouTube and adds it to the queue. The Kitchen Board shows the server’s latest catch.</p>
     </div>
@@ -74,7 +72,7 @@
           <div class="dc-embed" style="--bar: var(--beat)">
             <div class="dc-embed-main">
               <p class="dc-embed-author"><span class="live-dot" aria-hidden="true"></span> Live · Radio Beat</p>
-              <p class="dc-embed-title">Example Artist — Example Song</p>
+              <p class="dc-embed-title">Iron Orchard - Highway Sermon</p>
             </div>
           </div>
           <div class="dc-row"><span class="dc-btn dc-btn-red">Stop</span><span class="dc-btn">Website</span><span class="dc-btn is-hot">Catch</span></div>
@@ -84,7 +82,7 @@
         <span class="flow-num" aria-hidden="true">2</span>
         <div class="dc dc-mini">
           <p class="dc-ephemeral" data-i18n="radio.onlyYou">Only you can see this</p>
-          <p class="dc-text">🎣 Caught <strong>Example Artist — Example Song</strong></p>
+          <p class="dc-text">🎣 Caught <strong>Iron Orchard - Highway Sermon</strong></p>
           <div class="dc-row"><span class="dc-btn is-hot">Play</span></div>
         </div>
       </li>
@@ -94,7 +92,7 @@
           <div class="dc-embed" style="--bar: var(--clay)">
             <div class="dc-embed-main">
               <p class="dc-embed-author">Now Playing</p>
-              <p class="dc-embed-title">Example Artist — Example Song</p>
+              <p class="dc-embed-title">Iron Orchard - Highway Sermon</p>
               <div class="dc-progress"><div class="progress"><span></span></div></div>
             </div>
           </div>
@@ -107,7 +105,6 @@
 <section class="section" id="night">
   <div class="wrap night-split">
     <div data-reveal>
-      <p class="kicker">Friday</p>
       <h2 data-i18n="radio.nightTitle">Radio Night</h2>
       <p class="lead" data-i18n="radio.nightBody">/radio night sets up a Friday radio night (you need Manage Server). Pick a backup station and a voice channel, or just join one. /radio night-off cancels it.</p>
       <p class="clock-chip solid"><svg width="16" height="16" aria-hidden="true"><use href="#i-clock" /></svg> <span data-i18n="radio.nextNight">Next Radio Night</span> <strong data-clock="night-in"></strong></p>
