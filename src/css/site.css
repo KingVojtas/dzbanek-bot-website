@@ -3174,18 +3174,21 @@ html.theme-light .receipt-wrap {
 /* straight from the server: instant photos taped up by the fridge */
 
 .snaps {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  align-items: start;
-  gap: 2.25rem 1.6rem;
+  columns: 3;
+  column-gap: 2rem;
   margin: 0;
-  padding: 0;
+  padding: 1rem 0 0;
   list-style: none;
 }
 
+/* inline-block keeps each photo, tape and all, in one piece; a block would leave its tape at the bottom of the previous column. */
 .snap {
   --tilt: -1.5deg;
   position: relative;
+  display: inline-block;
+  width: 100%;
+  break-inside: avoid;
+  margin-bottom: 2.6rem;
   padding: 0.65rem 0.65rem 0;
   background: #fbf8f1;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 18px 28px -18px rgba(0, 0, 0, 0.7);
@@ -3195,17 +3198,22 @@ html.theme-light .receipt-wrap {
 
 .snap:nth-child(2) {
   --tilt: 1.2deg;
-  margin-top: 2.5rem;
 }
 
 .snap:nth-child(3) {
   --tilt: -0.6deg;
-  margin-top: 1rem;
 }
 
 .snap:nth-child(4) {
   --tilt: 1.8deg;
-  margin-top: 3rem;
+}
+
+.snap:nth-child(5) {
+  --tilt: -1deg;
+}
+
+.snap:nth-child(6) {
+  --tilt: 0.8deg;
 }
 
 /* A strip of tape across the top. */
@@ -4779,7 +4787,7 @@ html.js [data-reveal-group].is-in > * {
   }
 
   .snaps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    columns: 2;
   }
 
   .duo {
@@ -5151,12 +5159,9 @@ html.js [data-reveal-group].is-in > * {
 /* Narrow phones: the speaker goes on top of the dial, like a portable set. */
 @media (max-width: 560px) {
   .snaps {
-    grid-template-columns: minmax(0, 22rem);
-    justify-content: center;
-  }
-
-  .snap:nth-child(n) {
-    margin-top: 0;
+    columns: 1;
+    max-width: 24rem;
+    margin-inline: auto;
   }
 
   .receipt-list li {
