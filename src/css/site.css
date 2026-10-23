@@ -4024,13 +4024,13 @@ html:not(.js) .tuner {
   animation-delay: -0.5s;
 }
 
-.tuner[data-state="on"] .tuner-listen .icon-play,
-.tuner[data-state="tuning"] .tuner-listen .icon-play {
+[data-tuner][data-state="on"] .tuner-listen .icon-play,
+[data-tuner][data-state="tuning"] .tuner-listen .icon-play {
   display: none;
 }
 
-.tuner[data-state="on"] .tuner-bars,
-.tuner[data-state="tuning"] .tuner-bars {
+[data-tuner][data-state="on"] .tuner-bars,
+[data-tuner][data-state="tuning"] .tuner-bars {
   display: inline-flex;
 }
 
@@ -4042,7 +4042,7 @@ html:not(.js) .tuner {
   font-size: 0.9rem;
 }
 
-.tuner[data-state="on"] .tuner-now {
+[data-tuner][data-state="on"] .tuner-now {
   color: #fff6e2;
 }
 
