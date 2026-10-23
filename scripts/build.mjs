@@ -3,7 +3,7 @@
  * Usage: node scripts/build.mjs
  */
 import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
-import { basename, dirname, join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -18,8 +18,6 @@ const github = 'https://github.com/KingVojtas/dzbanek-bot-2.0';
 const ogImage = new URL('assets/kitchen-hero.jpg', SITE_URL).href;
 // The home page carries the ad, so a pasted link can play it in Discord.
 const ogVideo = new URL('assets/ad/dzbanek-ad-720.mp4', SITE_URL).href;
-// Kept in the repo as the source for avatar.jpg and kitchen-square.jpg. No page uses it.
-const SOURCE_ONLY = new Set(['kitchen-thumb.jpg']);
 
 function fill(template, map) {
   return template.replace(/\{\{(\w+)\}\}/g, (_, key) => (key in map ? String(map[key]) : ''));
@@ -99,10 +97,7 @@ ${scripts}
 
 await cp(join(src, 'css'), join(dist, 'css'), { recursive: true });
 await cp(join(src, 'js'), join(dist, 'js'), { recursive: true });
-await cp(join(root, 'assets'), join(dist, 'assets'), {
-  recursive: true,
-  filter: (path) => !SOURCE_ONLY.has(basename(path)),
-});
+await cp(join(root, 'assets'), join(dist, 'assets'), { recursive: true });
 // A custom domain, once there is one, travels with the published folder as CNAME.
 await cp(join(root, 'CNAME'), join(dist, 'CNAME')).catch(() => {});
 

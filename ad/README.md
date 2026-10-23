@@ -17,7 +17,7 @@ node tools/render.mjs . cues          # cues.json: sound cues and chapter starts
 node tools/synth.mjs .                # bed.wav (lo-fi electric piano, bass, brushes) and sfx.wav (keys, clicks, pops)
 node tools/audio.mjs .                # vo.wav, then mix.wav: the bed ducks under the voice, -16 LUFS
 node tools/render.mjs . video video-120.mp4 120   # about 6 minutes
-node tools/encode.mjs .               # 30 fps with motion blur and grain -> dzbanek-ad-1080.mp4, dzbanek-ad-720.mp4
+node tools/encode.mjs .               # 30 fps with motion blur -> dzbanek-ad-1080.mp4, dzbanek-ad-720.mp4
 ```
 
 Then copy the two MP4s and both `.vtt` files into `assets/ad/`, and put the chapter starts from `cues.json` and the length into `src/js/film.js`.
