@@ -43,6 +43,7 @@
   let awayPaused = false;
   let looping = false;
   let lastGlow = 0;
+  let lastProgress = 0;
   let resetTimer;
 
   const state = () => hero.dataset.film;
@@ -92,7 +93,12 @@
       looping = false;
       return;
     }
-    progress(video.currentTime);
+    // The bar crawls a few pixels a second, so ten updates a second look the same as sixty
+    // and spare the page a style and paint pass on every frame.
+    if (time - lastProgress > 100) {
+      progress(video.currentTime);
+      lastProgress = time;
+    }
     // About eight glow updates a second is plenty for light that soft.
     if (paint && !calm && time - lastGlow > 120) {
       paint.drawImage(video, 0, 0, glow.width, glow.height);

@@ -1698,16 +1698,25 @@ button.dc-btn[aria-pressed="true"]:hover {
     radial-gradient(ellipse 75% 70% at 62% 45%, transparent 55%, rgba(10, 6, 4, 0.5) 100%);
 }
 
-/* Film grain over the photo and the ad, so it reads like a photo someone took, not a render. */
+/*
+ * Film grain over the photo, so it reads like a photo someone took, not a render.
+ * Dark and light specks drawn with plain alpha: a blend mode here made the GPU redraw the whole
+ * stage through an extra surface on every frame. The ad has its own grain, so this fades out for it.
+ */
 .hero-stage::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  opacity: 0.32;
-  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3 0 0 0 1.45' result='d'/%3E%3CfeColorMatrix in='n' values='0 0 0 0 1 0 0 0 0 .96 0 0 0 0 .9 3 0 0 0 -1.55' result='l'/%3E%3CfeMerge%3E%3CfeMergeNode in='d'/%3E%3CfeMergeNode in='l'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  transition: opacity 0.7s var(--ease);
+}
+
+.hero[data-film="playing"] .hero-stage::after,
+.hero[data-film="paused"] .hero-stage::after {
+  opacity: 0;
 }
 
 .hero-copy {
@@ -2061,9 +2070,21 @@ button.dc-btn[aria-pressed="true"]:hover {
   background: rgba(40, 28, 19, 0.8);
 }
 
-/* Muted, the sound button calls out: the voice-over is one tap away. */
+/* Muted, the sound button calls out: the voice-over is one tap away.
+   A ring that only scales and fades, so it runs on the compositor instead of repainting. */
 .hero[data-sound="off"] [data-film-sound] {
+  position: relative;
   border-color: var(--clay);
+}
+
+.hero[data-sound="off"] [data-film-sound]::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 2px solid rgba(224, 138, 69, 0.6);
+  opacity: 0;
+  pointer-events: none;
   animation: sound-call 2.6s var(--ease) infinite;
 }
 
@@ -2104,13 +2125,19 @@ button.dc-btn[aria-pressed="true"]:hover {
   animation-delay: 1.5s;
 }
 
+/* The spin goes on an HTML wrapper: Chrome can't hand an animated <svg> to the compositor,
+   so spinning the svg itself restyled and re-layered the page on every frame. */
 .film-ring {
   position: absolute;
   inset: 0;
+  animation: spin 24s linear infinite;
+}
+
+.film-ring svg {
+  display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
-  animation: spin 24s linear infinite;
 }
 
 .film-ring text {
@@ -4660,13 +4687,14 @@ html.js [data-reveal-group].is-in > * {
 }
 
 @keyframes sound-call {
-  0%,
-  60%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(224, 138, 69, 0);
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
   }
-  20% {
-    box-shadow: 0 0 0 6px rgba(224, 138, 69, 0.35);
+  45%,
+  100% {
+    opacity: 0;
+    transform: scale(1.12, 1.35);
   }
 }
 

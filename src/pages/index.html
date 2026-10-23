@@ -46,10 +46,12 @@
       </div>
     </div>
     <button type="button" class="film-sticker" data-film-play aria-label="Watch the trailer with sound">
-      <svg class="film-ring" viewBox="0 0 100 100" aria-hidden="true">
-        <defs><path id="film-ring-path" d="M50 50m-39 0a39 39 0 1 1 78 0a39 39 0 1 1 -78 0" /></defs>
-        <text><textPath href="#film-ring-path" textLength="243" lengthAdjust="spacing" data-film-ring>Watch with sound · 52 s ·</textPath></text>
-      </svg>
+      <span class="film-ring" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <defs><path id="film-ring-path" d="M50 50m-39 0a39 39 0 1 1 78 0a39 39 0 1 1 -78 0" /></defs>
+          <text><textPath href="#film-ring-path" textLength="243" lengthAdjust="spacing" data-film-ring>Watch with sound · 52 s ·</textPath></text>
+        </svg>
+      </span>
       <span class="film-play" aria-hidden="true"><svg width="26" height="26"><use href="#i-play" /></svg></span>
     </button>
     <a class="hero-scroll" href="#menu" data-i18n-aria="hero.scroll" aria-label="Scroll down"><span></span></a>
