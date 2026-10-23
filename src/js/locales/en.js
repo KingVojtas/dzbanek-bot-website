@@ -141,7 +141,8 @@
     hours: {
       kicker: 'Schedule',
       title: 'When things happen.',
-      body: 'Everything scheduled runs on Prague time. The needle shows what time it is in Prague right now.',
+      body: 'Everything scheduled runs on Prague time. The clock shows what time it is in Prague right now.',
+      board: 'Same time every week',
       steam: 'Steam deals, every day',
       epic: 'Epic freebies check, every day',
       postcard: 'Sunday postcard with the songs people caught',

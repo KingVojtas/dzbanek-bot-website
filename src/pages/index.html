@@ -154,34 +154,39 @@
   </div>
 </section>
 
-<section class="section radio-teaser" id="radio">
-  <div class="wrap">
+<section class="section" id="radio">
+  <div class="wrap radio-split">
     <div class="section-head" data-reveal>
       <p class="kicker" data-i18n="radioHome.kicker">Radio</p>
       <h2 data-i18n="radioHome.title">Three Czech stations, live.</h2>
       <p class="lead" data-i18n="radioHome.body">/radio play joins your voice channel and streams Kiss, Rock Radio, or Radio Beat. The card shows what’s on and updates when the song changes. Hear something good? Hit Catch to save it, then Play to queue it from YouTube.</p>
+      <p class="note"><a class="link-arrow" href="radio.html"><span data-i18n="radioHome.more">More about radio</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
     </div>
-    <div class="station-tiles" data-reveal-group>
-      <a class="station-tile" href="radio.html#kiss" style="--accent: var(--kiss)">
-        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-        <span class="station-name">Kiss</span>
-        <span class="slogan">...be happy!</span>
-        <svg class="tile-arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow-right" /></svg>
-      </a>
-      <a class="station-tile" href="radio.html#rock" style="--accent: var(--rock)">
-        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-        <span class="station-name">Rock Radio</span>
-        <span class="slogan">Rock je slušná muzika</span>
-        <svg class="tile-arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow-right" /></svg>
-      </a>
-      <a class="station-tile" href="radio.html#beat" style="--accent: var(--beat)">
-        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-        <span class="station-name">Radio Beat</span>
-        <span class="slogan">První bigbít u nás</span>
-        <svg class="tile-arrow" width="20" height="20" aria-hidden="true"><use href="#i-arrow-right" /></svg>
-      </a>
+
+    <!-- The old radio on the kitchen shelf. The keys are links; pointing at one tunes the dial to it. -->
+    <div class="shelf-radio" data-reveal>
+      <div class="kradio" data-kradio style="--tuned: var(--beat); --needle: 82%; --knob: 70deg">
+        <div class="kradio-grille" aria-hidden="true"><span class="kradio-badge">Dzbanek</span></div>
+        <div class="kradio-panel">
+          <div class="kradio-window" aria-hidden="true">
+            <div class="kradio-scale">
+              <span class="kradio-label" style="--pos: 18%" data-for="kiss">KISS</span>
+              <span class="kradio-label" style="--pos: 50%" data-for="rock">ROCK</span>
+              <span class="kradio-label is-on" style="--pos: 82%" data-for="beat">BEAT</span>
+              <span class="kradio-needle"></span>
+            </div>
+            <p class="kradio-onair"><span class="kradio-lamp"></span><span data-kradio-slogan>První bigbít u nás</span></p>
+          </div>
+          <div class="kradio-keys">
+            <a class="kradio-key" href="radio.html#kiss" data-key="kiss" aria-label="Kiss Radio" data-slogan="...be happy!" style="--accent: var(--kiss)">Kiss</a>
+            <a class="kradio-key" href="radio.html#rock" data-key="rock" aria-label="Rock Radio" data-slogan="Rock je slušná muzika" style="--accent: var(--rock)">Rock</a>
+            <a class="kradio-key is-on" href="radio.html#beat" data-key="beat" aria-label="Radio Beat" data-slogan="První bigbít u nás" style="--accent: var(--beat)">Beat</a>
+          </div>
+          <div class="kradio-knobs" aria-hidden="true"><span class="kradio-knob"></span><span class="kradio-knob kradio-tune"></span></div>
+        </div>
+      </div>
+      <div class="kradio-shelf" aria-hidden="true"></div>
     </div>
-    <p class="note" data-reveal><a class="link-arrow" href="radio.html"><span data-i18n="radioHome.more">More about radio</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
   </div>
 </section>
 
@@ -190,49 +195,80 @@
     <div data-reveal>
       <p class="kicker" data-i18n="hours.kicker">Schedule</p>
       <h2 data-i18n="hours.title">When things happen.</h2>
-      <p class="lead" data-i18n="hours.body">Everything scheduled runs on Prague time. The needle shows what time it is in Prague right now.</p>
-      <ul class="legend">
-        <li style="--dot: var(--ev-steam)"><strong class="mono">03:33</strong><span data-i18n="hours.steam">Steam deals, every day</span></li>
-        <li style="--dot: var(--ev-epic)"><strong class="mono">12:00 · 17:00</strong><span data-i18n="hours.epic">Epic freebies check, every day</span></li>
-        <li style="--dot: var(--ev-postcard)" class="is-weekly"><strong class="mono">18:00</strong><span data-i18n="hours.postcard">Sunday postcard with the songs people caught</span></li>
-        <li style="--dot: var(--ev-night)" class="is-weekly"><strong class="mono">20:00</strong><span data-i18n="hours.night">Friday Radio Night, if one’s scheduled. Voting opens at 12:00</span></li>
-      </ul>
+      <p class="lead" data-i18n="hours.body">Everything scheduled runs on Prague time. The clock shows what time it is in Prague right now.</p>
+      <!-- The chalkboard by the kitchen door. -->
+      <div class="chalkboard">
+        <div class="chalkboard-slate">
+          <p class="chalk-title" data-i18n="hours.board">Same time every week</p>
+          <ul class="legend">
+            <li style="--dot: var(--ev-steam)"><strong>03:33</strong><span data-i18n="hours.steam">Steam deals, every day</span></li>
+            <li style="--dot: var(--ev-epic)"><strong>12:00 · 17:00</strong><span data-i18n="hours.epic">Epic freebies check, every day</span></li>
+            <li style="--dot: var(--ev-postcard)" class="is-weekly"><strong>18:00</strong><span data-i18n="hours.postcard">Sunday postcard with the songs people caught</span></li>
+            <li style="--dot: var(--ev-night)" class="is-weekly"><strong>20:00</strong><span data-i18n="hours.night">Friday Radio Night, if one’s scheduled. Voting opens at 12:00</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
     <div class="dial-wrap" data-reveal>
+      <!-- An enamel kitchen wall clock with a 24-hour face. -->
       <div class="dial">
         <svg viewBox="0 0 240 240" role="img" aria-labelledby="dial-label">
           <title id="dial-label" data-i18n="hours.dialLabel">A 24-hour clock showing when the bot posts</title>
           <defs>
-            <radialGradient id="dial-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0" stop-color="var(--glow)" stop-opacity="0.22" />
-              <stop offset="1" stop-color="var(--glow)" stop-opacity="0" />
+            <linearGradient id="dial-rim" x1="0.15" y1="0" x2="0.85" y2="1">
+              <stop offset="0" stop-color="#f7f2ea" />
+              <stop offset="0.35" stop-color="#b9b1a4" />
+              <stop offset="0.6" stop-color="#766d61" />
+              <stop offset="1" stop-color="#d8d0c2" />
+            </linearGradient>
+            <radialGradient id="dial-enamel" cx="0.45" cy="0.4" r="0.65">
+              <stop offset="0" stop-color="#fdf9f1" />
+              <stop offset="0.75" stop-color="#f1e8d6" />
+              <stop offset="1" stop-color="#e2d6bf" />
             </radialGradient>
+            <radialGradient id="dial-cap" cx="0.35" cy="0.3" r="0.8">
+              <stop offset="0" stop-color="#f6d9a8" />
+              <stop offset="0.6" stop-color="#b8843f" />
+              <stop offset="1" stop-color="#6e4a1e" />
+            </radialGradient>
+            <linearGradient id="dial-glare" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff" stop-opacity="0.55" />
+              <stop offset="1" stop-color="#fff" stop-opacity="0" />
+            </linearGradient>
           </defs>
-          <circle cx="120" cy="120" r="118" fill="url(#dial-glow)" />
+          <circle class="dial-rim" cx="120" cy="120" r="116" />
+          <circle class="dial-rim-edge" cx="120" cy="120" r="107" />
           <circle class="dial-face" cx="120" cy="120" r="104" />
           <path class="dial-night" d="M120 120 L29.93 68 A104 104 0 0 1 224 120 Z" />
-          <circle class="dial-ticks" cx="120" cy="120" r="96" pathLength="240" />
-          <circle class="dial-ticks major" cx="120" cy="120" r="96" pathLength="240" />
-          <text class="dial-hour" x="120" y="52">00</text>
-          <text class="dial-hour" x="190" y="124">06</text>
-          <text class="dial-hour" x="120" y="196">12</text>
-          <text class="dial-hour" x="50" y="124">18</text>
-          <g class="dial-mark" style="--dot: var(--ev-steam)" transform="rotate(53.25 120 120)"><circle cx="120" cy="24" r="7" /></g>
-          <g class="dial-mark" style="--dot: var(--ev-epic)" transform="rotate(180 120 120)"><circle cx="120" cy="24" r="7" /></g>
-          <g class="dial-mark" style="--dot: var(--ev-epic)" transform="rotate(255 120 120)"><circle cx="120" cy="24" r="7" /></g>
-          <g class="dial-mark weekly" style="--dot: var(--ev-postcard)" transform="rotate(270 120 120)"><circle cx="120" cy="24" r="6" /></g>
-          <g class="dial-mark weekly" style="--dot: var(--ev-night)" transform="rotate(300 120 120)"><circle cx="120" cy="24" r="6" /></g>
+          <circle class="dial-ticks" cx="120" cy="120" r="97" pathLength="960" />
+          <circle class="dial-ticks hour" cx="120" cy="120" r="96" pathLength="240" />
+          <circle class="dial-ticks major" cx="120" cy="120" r="95" pathLength="240" />
+          <text class="dial-hour big" x="120.0" y="45.0">00</text>
+          <text class="dial-hour" x="174.4" y="65.6">03</text>
+          <text class="dial-hour big" x="195.0" y="120.0">06</text>
+          <text class="dial-hour" x="174.4" y="174.4">09</text>
+          <text class="dial-hour big" x="120.0" y="195.0">12</text>
+          <text class="dial-hour" x="65.6" y="174.4">15</text>
+          <text class="dial-hour big" x="45.0" y="120.0">18</text>
+          <text class="dial-hour" x="65.6" y="65.6">21</text>
+          <text class="dial-brand" x="120" y="88" data-i18n="clock.prague">Prague</text>
+          <rect class="dial-window" x="97" y="139" width="46" height="18" rx="3" />
+          <text class="dial-time" x="120" y="148.5" data-clock="time">--:--</text>
+          <g class="dial-mark" style="--dot: var(--ev-steam)" transform="rotate(53.25 120 120)"><circle cx="120" cy="24" r="6.5" /></g>
+          <g class="dial-mark" style="--dot: var(--ev-epic)" transform="rotate(180 120 120)"><circle cx="120" cy="24" r="6.5" /></g>
+          <g class="dial-mark" style="--dot: var(--ev-epic)" transform="rotate(255 120 120)"><circle cx="120" cy="24" r="6.5" /></g>
+          <g class="dial-mark weekly" style="--dot: var(--ev-postcard)" transform="rotate(270 120 120)"><circle cx="120" cy="24" r="5.5" /></g>
+          <g class="dial-mark weekly" style="--dot: var(--ev-night)" transform="rotate(300 120 120)"><circle cx="120" cy="24" r="5.5" /></g>
           <g class="dial-needle" data-clock-needle>
-            <line x1="120" y1="120" x2="120" y2="30" />
-            <circle cx="120" cy="30" r="3.5" />
+            <path class="dial-hand" d="M116.6 140 L118.9 36 L120 29 L121.1 36 L123.4 140 Z" />
+            <circle class="dial-hand" cx="120" cy="146" r="6" />
           </g>
-          <circle class="dial-hub" cx="120" cy="120" r="5" />
+          <circle class="dial-hub" cx="120" cy="120" r="7.5" />
+          <circle class="dial-pin" cx="120" cy="120" r="2" />
+          <path class="dial-glass" d="M38 104 A84 84 0 0 1 146 36 A96 96 0 0 0 38 104 Z" />
         </svg>
-        <div class="dial-center">
-          <span class="dial-time mono" data-clock="time">--:--</span>
-          <span class="dial-sub" data-i18n="clock.prague">Prague</span>
-        </div>
       </div>
+      <!-- A note tucked under the clock. -->
       <p class="dial-next">
         <span data-i18n="clock.next">Next:</span> <strong data-clock="next-name">—</strong>
         <span class="dial-next-in" data-clock="next-in"></span>

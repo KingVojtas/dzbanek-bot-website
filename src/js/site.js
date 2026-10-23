@@ -153,6 +153,35 @@
     });
   }
 
+  /* ---- home: the shelf radio tunes to whichever key you point at ---- */
+
+  const shelfRadio = document.querySelector('[data-kradio]');
+  if (shelfRadio) {
+    const NEEDLE = { kiss: '18%', rock: '50%', beat: '82%' };
+    const KNOB = { kiss: '-70deg', rock: '0deg', beat: '70deg' };
+    const keys = Array.from(shelfRadio.querySelectorAll('[data-key]'));
+    const labels = Array.from(shelfRadio.querySelectorAll('[data-for]'));
+    const slogan = shelfRadio.querySelector('[data-kradio-slogan]');
+
+    const tune = (station) => {
+      shelfRadio.style.setProperty('--tuned', 'var(--' + station + ')');
+      shelfRadio.style.setProperty('--needle', NEEDLE[station]);
+      shelfRadio.style.setProperty('--knob', KNOB[station]);
+      keys.forEach((key) => {
+        const on = key.dataset.key === station;
+        key.classList.toggle('is-on', on);
+        if (on && slogan) slogan.textContent = key.dataset.slogan;
+      });
+      labels.forEach((label) => label.classList.toggle('is-on', label.dataset.for === station));
+    };
+
+    // It stays on the last station you pointed at, the way a real dial would.
+    keys.forEach((key) => {
+      key.addEventListener('pointerenter', () => tune(key.dataset.key));
+      key.addEventListener('focus', () => tune(key.dataset.key));
+    });
+  }
+
   /* ---- toast + copy ---- */
 
   let toastTimer;

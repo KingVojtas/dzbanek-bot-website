@@ -142,7 +142,8 @@
     hours: {
       kicker: 'Rozvrh',
       title: 'Kdy se co děje.',
-      body: 'Všechno naplánované jede podle pražského času. Ručička ukazuje, kolik je teď v Praze.',
+      body: 'Všechno naplánované jede podle pražského času. Hodiny ukazují, kolik je teď v Praze.',
+      board: 'Každý týden stejně',
       steam: 'Slevy na Steamu, každý den',
       epic: 'Kontrola her zdarma z Epicu, každý den',
       postcard: 'Nedělní pohlednice s písničkami, které lidi ulovili',

@@ -78,6 +78,24 @@
   src: url("../assets/fonts/outfit-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* latin-ext */
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("../assets/fonts/caveat-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("../assets/fonts/caveat-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 /* ---------- tokens ---------- */
 
@@ -140,6 +158,8 @@
   --serif: "Fraunces", Georgia, serif;
   --sans: "Outfit", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  /* Handwriting: the chalkboard and the sign-off. */
+  --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
   --header-space: 4.3rem;
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .4 0 0 0 0 .3 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --wrap: 76rem;
@@ -1134,7 +1154,8 @@ html:not(.js) .footer-sub,
 html:not(.js) .clock-chip.solid,
 html:not(.js) .dial-next,
 html:not(.js) .dial-needle,
-html:not(.js) .dial-center {
+html:not(.js) .dial-time,
+html:not(.js) .dial-window {
   display: none;
 }
 
@@ -2299,50 +2320,254 @@ button.dc-btn[aria-pressed="true"]:hover {
   font-size: 0.97rem;
 }
 
-/* station tiles */
+/* home radio: an old walnut set on the kitchen shelf */
 
-.station-tiles {
+.radio-split {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
 }
 
-.station-tile {
+.radio-split .section-head {
+  margin-bottom: 0;
+}
+
+.radio-split .note {
+  margin-top: 1.25rem;
+}
+
+.shelf-radio {
+  position: relative;
+  padding: 0 clamp(0rem, 2vw, 1.5rem);
+}
+
+/* --tuned is a registered color (see the top of the file), so it can fade between stations. */
+.kradio {
   position: relative;
   display: grid;
-  align-content: end;
-  gap: 0.35rem;
-  min-height: 15rem;
-  padding: 1.6rem;
-  overflow: hidden;
-  border-radius: 1.6rem;
-  border: 1px solid var(--line);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr);
+  gap: 1rem;
+  padding: 1.15rem 1.2rem 1.25rem;
+  border-radius: 2.4rem 2.4rem 1.2rem 1.2rem;
   background:
-    radial-gradient(120% 90% at 0% 0%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 62%),
-    var(--ink-2);
-  text-decoration: none;
-  box-shadow: var(--shadow);
-  transition: transform 0.5s var(--spring), border-color 0.4s var(--ease), box-shadow 0.5s var(--ease);
+    linear-gradient(180deg, rgba(255, 222, 186, 0.2), transparent 16%),
+    repeating-linear-gradient(98deg, rgba(0, 0, 0, 0.11) 0 3px, transparent 3px 11px, rgba(255, 255, 255, 0.04) 11px 13px, transparent 13px 29px),
+    linear-gradient(160deg, #7d4c2b, #5b331a 60%, #48270f);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 226, 192, 0.28),
+    inset 0 -8px 14px rgba(0, 0, 0, 0.35),
+    0 26px 30px -20px rgba(0, 0, 0, 0.75);
+  transition: --tuned 0.6s var(--ease);
 }
 
-.station-tile:hover {
-  transform: translateY(-6px) rotate(-0.4deg);
-  border-color: color-mix(in srgb, var(--accent) 65%, transparent);
-  box-shadow: 0 30px 60px -24px color-mix(in srgb, var(--accent) 55%, transparent);
-}
-
-.station-tile .eq {
+/* Feet. */
+.kradio::before,
+.kradio::after {
+  content: "";
   position: absolute;
-  top: 1.5rem;
-  left: 1.6rem;
+  bottom: -0.5rem;
+  width: 2.6rem;
+  height: 0.55rem;
+  border-radius: 0 0 0.45rem 0.45rem;
+  background: #2a170b;
 }
 
-.station-name {
-  font-family: var(--serif);
-  font-size: 2rem;
-  font-weight: 560;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+.kradio::before {
+  left: 13%;
+}
+
+.kradio::after {
+  right: 13%;
+}
+
+/* Speaker cloth behind three wooden slats. */
+.kradio-grille {
+  position: relative;
+  display: grid;
+  align-items: end;
+  justify-items: center;
+  min-height: 12rem;
+  padding-bottom: 0.9rem;
+  border-radius: 1.4rem 1.4rem 0.7rem 0.7rem;
+  background:
+    linear-gradient(90deg, transparent 23%, #5e361c 23% 27%, transparent 27% 48%, #5e361c 48% 52%, transparent 52% 73%, #5e361c 73% 77%, transparent 77%),
+    repeating-linear-gradient(0deg, rgba(70, 46, 22, 0.3) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(70, 46, 22, 0.24) 0 1px, transparent 1px 3px),
+    radial-gradient(circle at 40% 35%, #dcc69c, #b89c6f);
+  box-shadow:
+    inset 0 0 0 3px #4a2a13,
+    inset 0 8px 16px rgba(0, 0, 0, 0.35);
+}
+
+.kradio-badge {
+  padding: 0.2rem 0.75rem 0.25rem;
+  border-radius: 0.3rem;
+  background: linear-gradient(180deg, #f3d9a4, #b98a45 60%, #8a6127);
+  color: #3a2410;
+  font: italic 600 0.95rem/1 var(--serif);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 245, 220, 0.6);
+}
+
+.kradio-panel {
+  display: grid;
+  align-content: space-between;
+  gap: 0.85rem;
+}
+
+/* The dial glass, lit from behind in the tuned station's colour. */
+.kradio-window {
+  padding: 0.7rem 0.85rem 0.7rem;
+  border-radius: 0.8rem;
+  background:
+    radial-gradient(120% 130% at 50% 0%, color-mix(in srgb, var(--tuned) 38%, #ffcf7a) 0%, rgba(45, 22, 6, 0) 72%),
+    linear-gradient(180deg, #2b1a0d, #170d05);
+  box-shadow:
+    inset 0 0 0 2px #c9a46a,
+    inset 0 0 0 4px #3a2412,
+    inset 0 8px 16px rgba(0, 0, 0, 0.55);
+}
+
+.kradio-scale {
+  position: relative;
+  height: 2.5rem;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 238, 205, 0.75) 0 1px, transparent 1px 25%) left bottom / 100% 0.95rem no-repeat,
+    repeating-linear-gradient(90deg, rgba(255, 238, 205, 0.45) 0 1px, transparent 1px 7px) left bottom / 100% 0.5rem no-repeat;
+}
+
+.kradio-label {
+  position: absolute;
+  top: 0.15rem;
+  left: var(--pos);
+  translate: -50% 0;
+  color: rgba(255, 238, 205, 0.5);
+  font: 600 0.66rem/1 var(--mono);
+  letter-spacing: 0.22em;
+  transition: color 0.4s var(--ease), text-shadow 0.4s var(--ease);
+}
+
+.kradio-label.is-on {
+  color: #fff6e2;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--tuned) 80%, #fff);
+}
+
+.kradio-needle {
+  position: absolute;
+  top: 0;
+  bottom: -0.1rem;
+  left: var(--needle);
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: #e5452f;
+  box-shadow: 0 0 6px rgba(229, 69, 47, 0.8);
+  transition: left 0.75s var(--spring);
+}
+
+.kradio-onair {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 1.5em;
+  margin: 0.55rem 0 0;
+  color: #ffe9c4;
+  font: italic 500 1.05rem/1.2 var(--serif);
+}
+
+.kradio-lamp {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--tuned);
+  box-shadow: 0 0 8px var(--tuned);
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Ivory piano keys; the tuned one stays pressed down. */
+.kradio-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  padding: 0.4rem 0.4rem 0.55rem;
+  border-radius: 0.55rem;
+  background: #24140a;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6);
+}
+
+.kradio-key {
+  display: grid;
+  place-items: center;
+  height: 2.7rem;
+  border-radius: 0.25rem 0.25rem 0.45rem 0.45rem;
+  border-top: 3px solid var(--accent);
+  background: linear-gradient(180deg, #fbf6ea, #e2d5bc);
+  color: #3b2a1d;
+  font: 600 0.88rem/1 var(--sans);
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  box-shadow: 0 5px 0 #b3a281, 0 7px 8px rgba(0, 0, 0, 0.45);
+  transition: translate 0.15s var(--ease), box-shadow 0.15s var(--ease), background 0.2s var(--ease);
+}
+
+.kradio-key:hover,
+.kradio-key:focus-visible,
+.kradio-key.is-on {
+  translate: 0 4px;
+  background: linear-gradient(180deg, #efe6d3, #d6c7aa);
+  box-shadow: 0 1px 0 #b3a281, 0 2px 3px rgba(0, 0, 0, 0.45);
+}
+
+.kradio-key:focus-visible {
+  outline: 2px solid #ffe9c4;
+  outline-offset: 3px;
+}
+
+.kradio-knobs {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.35rem;
+}
+
+.kradio-knob {
+  position: relative;
+  width: 2.7rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(rgba(0, 0, 0, 0.16) 0 4deg, transparent 4deg 12deg),
+    radial-gradient(circle at 35% 30%, #fbf6ea, #cfc1a6 60%, #9a8a6f);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5), inset 0 -2px 3px rgba(0, 0, 0, 0.25);
+}
+
+.kradio-knob::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0.3rem;
+  width: 2px;
+  height: 0.75rem;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: #4a3524;
+}
+
+/* The tuning knob turns with the needle. */
+.kradio-tune {
+  rotate: var(--knob, 0deg);
+  transition: rotate 0.75s var(--spring);
+}
+
+/* The shelf it stands on. */
+.kradio-shelf {
+  height: 0.85rem;
+  margin: 0.35rem calc(-1 * clamp(0rem, 2vw, 1.5rem)) 0;
+  border-radius: 0.2rem;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 13px, rgba(255, 255, 255, 0.05) 13px 14px, transparent 14px 31px),
+    linear-gradient(180deg, #9a6d46, #6e4628);
+  box-shadow: 0 16px 20px -12px rgba(0, 0, 0, 0.7);
 }
 
 .slogan {
@@ -2350,19 +2575,6 @@ button.dc-btn[aria-pressed="true"]:hover {
   font-style: italic;
   color: var(--muted);
   font-size: 1.1rem;
-}
-
-.tile-arrow {
-  position: absolute;
-  right: 1.5rem;
-  bottom: 1.6rem;
-  color: var(--muted);
-  transition: translate 0.4s var(--spring), color 0.3s var(--ease);
-}
-
-.station-tile:hover .tile-arrow {
-  translate: 5px 0;
-  color: var(--cream);
 }
 
 .eq {
@@ -2402,117 +2614,222 @@ button.dc-btn[aria-pressed="true"]:hover {
   animation-delay: -0.45s;
 }
 
-/* kitchen hours dial */
+/* schedule: the chalkboard and the wall clock */
 
 .hours-split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
 }
 
+/* A slate board in a wooden frame. Both stay the same in light and dark: they're objects. */
+.chalkboard {
+  --ev-steam: #9dd6f8;
+  --ev-epic: #f4f0e8;
+  --ev-postcard: #f3b593;
+  --ev-night: #f6d65a;
+  position: relative;
+  margin-top: 1.9rem;
+  padding: 0.7rem 0.7rem 1.15rem;
+  border-radius: 0.5rem;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 9px, rgba(255, 255, 255, 0.04) 9px 10px, transparent 10px 23px),
+    linear-gradient(180deg, #8a6140, #6b4529 55%, #57381f);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 230, 200, 0.25),
+    0 22px 34px -20px rgba(0, 0, 0, 0.75);
+  rotate: -0.6deg;
+}
+
+/* A stub of chalk on the ledge. */
+.chalkboard::after {
+  content: "";
+  position: absolute;
+  right: 18%;
+  bottom: 0.32rem;
+  width: 2.1rem;
+  height: 0.5rem;
+  border-radius: 0.2rem 0.3rem 0.3rem 0.2rem;
+  background: linear-gradient(180deg, #fbf8f1, #d9d3c6);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.35);
+  rotate: -4deg;
+}
+
+.chalkboard-slate {
+  padding: 1.25rem 1.4rem 1rem;
+  border-radius: 0.2rem;
+  background:
+    radial-gradient(60% 45% at 28% 30%, rgba(255, 255, 255, 0.07), transparent 70%),
+    radial-gradient(45% 35% at 78% 72%, rgba(255, 255, 255, 0.05), transparent 70%),
+    var(--grain),
+    #262c27;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.55);
+  color: #ece8df;
+  font-family: var(--hand);
+}
+
+.chalk-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-decoration: underline wavy rgba(236, 232, 223, 0.45) 1px;
+  text-underline-offset: 0.35rem;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
 .legend {
   display: grid;
-  gap: 0.2rem;
-  margin: 1.75rem 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .legend li {
   display: grid;
-  grid-template-columns: 0.75rem 7.5rem 1fr;
+  grid-template-columns: 0.8rem 7.9rem 1fr;
   align-items: baseline;
-  gap: 0.85rem;
-  padding: 0.6rem 0;
-  border-top: 1px solid var(--line);
-  color: var(--cream-soft);
+  gap: 0.7rem;
+  padding: 0.45rem 0;
+  border-top: 1px dashed rgba(236, 232, 223, 0.16);
+  font-size: 1.3rem;
+  line-height: 1.2;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
 }
 
+.legend li:first-child {
+  border-top: 0;
+}
+
+/* A chalk dot: filled for daily things, a ring for weekly ones. */
 .legend li::before {
   content: "";
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50% 45% 55% 48%;
   background: var(--dot);
-  translate: 0 0.1rem;
+  opacity: 0.9;
+  translate: 0 0.05rem;
 }
 
 .legend li.is-weekly::before {
   background: transparent;
-  box-shadow: inset 0 0 0 2.5px var(--dot);
+  box-shadow: inset 0 0 0 2px var(--dot);
 }
 
 .legend strong {
-  color: var(--cream);
-  font-weight: 600;
-  font-size: 0.88rem;
+  color: var(--dot);
+  font-weight: 700;
+  font-size: 1.45rem;
 }
 
+/* The wall clock. */
 .dial-wrap {
   display: grid;
   justify-items: center;
 }
 
 .dial {
+  --ev-steam: #2a7fb8;
+  --ev-epic: #3b2a1d;
+  --ev-postcard: #c4683a;
+  --ev-night: #c99a00;
   position: relative;
-  width: min(100%, 27rem);
+  width: min(100%, 26rem);
   aspect-ratio: 1;
+  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.45)) drop-shadow(0 3px 4px rgba(0, 0, 0, 0.3));
 }
 
 .dial svg {
+  display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
 }
 
+.dial-rim {
+  fill: url(#dial-rim);
+}
+
+.dial-rim-edge {
+  fill: #5c544a;
+}
+
 .dial-face {
-  fill: var(--ink-2);
-  stroke: var(--line);
+  fill: url(#dial-enamel);
 }
 
 .dial-night {
-  fill: rgba(5, 3, 2, 0.5);
-}
-
-html.theme-light .dial-night {
-  fill: rgba(42, 28, 18, 0.06);
+  fill: rgba(44, 56, 84, 0.1);
 }
 
 .dial-ticks {
   fill: none;
-  stroke: var(--muted);
-  stroke-width: 6;
+  stroke: #2b2119;
+  stroke-width: 3;
   stroke-dasharray: 0.5 9.5;
   stroke-dashoffset: 0.25;
-  opacity: 0.45;
+  opacity: 0.55;
+}
+
+.dial-ticks.hour {
+  stroke-width: 6;
+  stroke-dasharray: 1 9;
+  stroke-dashoffset: 0.5;
+  opacity: 0.85;
 }
 
 .dial-ticks.major {
-  stroke: var(--cream);
-  stroke-width: 12;
-  stroke-dasharray: 1 59;
-  stroke-dashoffset: 0.5;
-  opacity: 0.8;
+  stroke-width: 9;
+  stroke-dasharray: 2.4 57.6;
+  stroke-dashoffset: 1.2;
+  opacity: 1;
 }
 
 .dial-hour {
-  fill: var(--muted);
-  font: 600 11px var(--mono);
+  fill: #2b2119;
+  font: 500 10px var(--serif);
   text-anchor: middle;
-  dominant-baseline: middle;
+  dominant-baseline: central;
+}
+
+.dial-hour.big {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.dial-brand {
+  fill: #6b5a4b;
+  font: italic 500 9px var(--serif);
+  letter-spacing: 0.08em;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.dial-window {
+  fill: #e7dcc7;
+  stroke: rgba(43, 33, 25, 0.35);
+  stroke-width: 0.8;
+}
+
+.dial-time {
+  fill: #2b2119;
+  font: 600 10px var(--mono);
+  text-anchor: middle;
+  dominant-baseline: central;
 }
 
 .dial-mark circle {
   fill: var(--dot);
-  stroke: var(--ink-2);
-  stroke-width: 3;
+  stroke: #f6efe2;
+  stroke-width: 2.5;
 }
 
 .dial-mark.weekly circle {
-  fill: var(--ink-2);
+  fill: #f6efe2;
   stroke: var(--dot);
-  stroke-width: 3;
+  stroke-width: 2.5;
 }
 
 .dial-needle {
@@ -2522,76 +2839,49 @@ html.theme-light .dial-night {
   transition: transform 1.2s var(--spring);
 }
 
-.dial-needle line {
-  stroke: var(--clay);
-  stroke-width: 3;
-  stroke-linecap: round;
-}
-
-.dial-needle circle {
-  fill: var(--clay);
-  filter: drop-shadow(0 0 6px var(--clay));
+.dial-hand {
+  fill: #231a13;
 }
 
 .dial-hub {
-  fill: var(--cream);
+  fill: url(#dial-cap);
 }
 
-.dial-center {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
+.dial-pin {
+  fill: #3a2a1a;
+}
+
+/* Glare on the glass. */
+.dial-glass {
+  fill: url(#dial-glare);
+  opacity: 0.5;
   pointer-events: none;
 }
 
-.dial-center::before {
-  content: "";
-  grid-area: 1 / 1;
-  width: 44%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 30%, var(--ink-3), var(--ink));
-  border: 1px solid var(--line);
-  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-.dial-time,
-.dial-sub {
-  grid-area: 1 / 1;
-  position: relative;
-}
-
-.dial-time {
-  translate: 0 -0.5rem;
-  font-size: clamp(1.6rem, 4vw, 2.3rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.dial-sub {
-  translate: 0 1.35rem;
-  color: var(--muted);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
+/* The next thing, on a scrap of paper tucked under the clock. */
 .dial-next {
-  margin-top: 1.25rem;
-  color: var(--muted);
+  position: relative;
+  margin-top: -0.4rem;
+  padding: 0.55rem 1rem 0.6rem;
+  background: #f4ecdc;
+  color: #3b2a1d;
+  font-family: var(--hand);
+  font-size: 1.3rem;
+  line-height: 1.15;
   text-align: center;
+  box-shadow: 0 8px 14px -8px rgba(0, 0, 0, 0.55);
+  rotate: 2.5deg;
 }
 
 .dial-next strong {
-  color: var(--cream);
+  color: #231a13;
+  font-weight: 700;
 }
 
 .dial-next-in {
   display: block;
-  color: var(--accent-text);
-  font-weight: 600;
+  color: #b4572a;
+  font-weight: 700;
 }
 
 /* deals */
@@ -4199,6 +4489,7 @@ html.js [data-reveal-group].is-in > * {
 
   .split,
   .split.reverse,
+  .radio-split,
   .hours-split,
   .night-split,
   .faq-split,
@@ -4389,15 +4680,10 @@ html.js [data-reveal-group].is-in > * {
   }
 
   .menu-cards,
-  .station-tiles,
   .stations,
   .duo,
   .channel-groups {
     grid-template-columns: 1fr;
-  }
-
-  .station-tile {
-    min-height: 11rem;
   }
 
   .steps {
@@ -4531,6 +4817,23 @@ html.js [data-reveal-group].is-in > * {
   }
 }
 
+/* Narrow phones: the speaker goes on top of the dial, like a portable set. */
+@media (max-width: 560px) {
+  .kradio {
+    grid-template-columns: 1fr;
+    border-radius: 1.8rem 1.8rem 1rem 1rem;
+  }
+
+  .kradio-grille {
+    min-height: 6.5rem;
+    padding-bottom: 0.6rem;
+  }
+
+  .legend li {
+    font-size: 1.2rem;
+  }
+}
+
 @media (max-width: 420px) {
   .lang button {
     min-width: 2.1rem;
@@ -4551,7 +4854,6 @@ html.js [data-reveal-group].is-in > * {
 
 @media (hover: none) {
   .menu-card:hover,
-  .station-tile:hover,
   .deal:hover,
   .cmd-card:hover,
   .shelf:hover,
