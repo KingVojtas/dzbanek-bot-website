@@ -1,0 +1,838 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dzbanek ad v2</title>
+<style>
+@font-face { font-family: "Figtree"; font-weight: 400 800; src: url("assets/fonts/figtree-latin.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-weight: 400 700; src: url("../assets/fonts/fraunces-latin.woff2") format("woff2"); }
+@font-face { font-family: "Caveat"; font-weight: 500 700; src: url("../assets/fonts/caveat-latin.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 500 600; src: url("../assets/fonts/jetbrains-mono-latin.woff2") format("woff2"); }
+
+/* Discord's dark theme, as of 2025. */
+:root {
+  --rail: #1e1f22;
+  --side: #2b2d31;
+  --chat: #313338;
+  --line: #3f4147;
+  --text: #dbdee1;
+  --head: #f2f3f5;
+  --muted: #949ba4;
+  --faint: #80848e;
+  --hover: #35373c;
+  --active: #404249;
+  --blurple: #5865f2;
+  --green: #23a55a;
+  --btn: #4e5058;
+  --btn-green: #248046;
+  --btn-red: #da373c;
+  --input: #383a40;
+  --embed: #2b2d31;
+  --ui: "Figtree", "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #0d0806; }
+body { font-family: var(--ui); -webkit-font-smoothing: antialiased; }
+p { margin: 0; }
+
+#stage { position: absolute; inset: 0; overflow: hidden; }
+
+/* ---------- the kitchen ---------- */
+.layer { position: absolute; inset: 0; }
+#photo { transform-origin: 62% 58%; }
+#photo img, #blur img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#shade { background: radial-gradient(ellipse 80% 75% at 55% 50%, transparent 40%, rgba(8, 5, 3, 0.75) 100%), linear-gradient(0deg, rgba(8, 5, 3, 0.85) 0%, rgba(8, 5, 3, 0) 55%); }
+.wisp { position: absolute; width: 150px; height: 220px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 246, 236, 0.22), rgba(255, 246, 236, 0.07) 55%, transparent); filter: blur(10px); }
+
+#titles { position: absolute; left: 150px; bottom: 150px; color: #fff8f1; }
+.title-line { font: 500 74px/1.05 "Fraunces", serif; letter-spacing: -0.02em; text-shadow: 0 6px 40px rgba(0, 0, 0, 0.6); }
+.title-sub { margin-top: 18px; font: italic 400 40px/1.2 "Fraunces", serif; color: rgba(246, 240, 230, 0.86); }
+#logo { position: absolute; left: 150px; bottom: 150px; display: flex; align-items: center; gap: 34px; color: #fff8f1; }
+#logo img { width: 132px; height: 132px; border-radius: 50%; box-shadow: 0 0 0 4px rgba(255, 196, 119, 0.35), 0 20px 50px rgba(0, 0, 0, 0.6); }
+#logo .name { font: 600 150px/1 "Fraunces", serif; letter-spacing: -0.04em; text-shadow: 0 8px 50px rgba(0, 0, 0, 0.6); }
+#logo .tag { margin-top: 14px; font: italic 400 42px/1.2 "Fraunces", serif; color: rgba(246, 240, 230, 0.88); }
+
+/* ---------- the screen recording ---------- */
+#cam { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+#win {
+  position: relative;
+  width: 1600px;
+  height: 900px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--chat);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.375;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  display: grid;
+  grid-template-rows: 24px 1fr;
+}
+
+.titlebar { display: flex; align-items: center; justify-content: space-between; padding: 0 0 0 12px; background: var(--rail); color: var(--muted); font-size: 13px; font-weight: 700; letter-spacing: 0.02em; }
+.titlebar .ctrl { display: flex; height: 100%; }
+.titlebar .ctrl span { width: 46px; display: grid; place-items: center; font-weight: 400; font-size: 14px; }
+
+.shell { display: grid; grid-template-columns: 72px 240px 1fr 240px; min-height: 0; }
+
+.rail { background: var(--rail); display: flex; flex-direction: column; align-items: center; gap: 8px; padding-top: 12px; }
+.rail .srv { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; color: var(--head); font-weight: 700; font-size: 17px; background: var(--chat); position: relative; }
+.rail .srv.on { border-radius: 16px; background: #c56b2d; }
+.rail .srv.on::before { content: ""; position: absolute; left: -16px; width: 4px; height: 40px; border-radius: 0 4px 4px 0; background: var(--head); }
+.rail .home { background: var(--blurple); border-radius: 16px; }
+.rail .sep { width: 32px; height: 2px; border-radius: 1px; background: var(--line); }
+.rail .add { color: var(--green); font-size: 28px; font-weight: 400; }
+
+.side { background: var(--side); display: grid; grid-template-rows: 48px 1fr 52px; min-height: 0; }
+.guild { display: flex; align-items: center; justify-content: space-between; padding: 0 16px; color: var(--head); font-weight: 700; font-size: 16px; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25); }
+.chans { padding: 12px 8px; overflow: hidden; }
+.cat { padding: 16px 8px 4px; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; }
+.chan { display: flex; align-items: center; gap: 6px; height: 33px; padding: 0 8px; border-radius: 4px; color: var(--faint); font-size: 16px; font-weight: 500; position: relative; }
+.chan .hash { font-size: 22px; font-weight: 300; width: 20px; text-align: center; color: var(--faint); }
+.chan.on { background: var(--active); color: var(--head); }
+.chan.unread { color: var(--head); }
+.chan.unread::before { content: ""; position: absolute; left: -8px; width: 4px; height: 8px; border-radius: 0 4px 4px 0; background: var(--head); }
+.vc-user { display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 8px 0 36px; color: var(--muted); font-size: 14px; font-weight: 500; }
+.vc-user .av { width: 24px; height: 24px; font-size: 11px; }
+.vc-user .av.speak { box-shadow: 0 0 0 2px var(--side), 0 0 0 4px var(--green); }
+.me { background: #232428; display: flex; align-items: center; gap: 8px; padding: 0 8px; }
+.me .who { line-height: 1.15; }
+.me .who b { display: block; color: var(--head); font-size: 14px; }
+.me .who span { color: var(--muted); font-size: 12px; }
+.me .icons { margin-left: auto; display: flex; gap: 14px; color: var(--muted); font-size: 16px; }
+
+.av { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 16px; flex: none; position: relative; overflow: visible; }
+.av img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.av.dot::after { content: ""; position: absolute; right: -2px; bottom: -2px; width: 12px; height: 12px; border-radius: 50%; background: var(--green); border: 3px solid var(--side); }
+
+.main { display: grid; grid-template-rows: 48px 1fr auto; min-height: 0; background: var(--chat); }
+.chathead { display: flex; align-items: center; gap: 8px; padding: 0 16px; box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25); color: var(--head); font-weight: 700; }
+.chathead .hash { color: var(--faint); font-size: 24px; font-weight: 300; }
+.chathead .topic { margin-left: 8px; padding-left: 12px; border-left: 1px solid var(--line); color: var(--muted); font-weight: 500; font-size: 14px; }
+.logwrap { position: relative; min-height: 0; overflow: hidden; }
+.log { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 0 18px; }
+
+.msg { display: grid; grid-template-columns: 40px 1fr; column-gap: 16px; padding: 4px 48px 4px 16px; margin-top: 14px; }
+.msg .meta { display: flex; align-items: baseline; gap: 8px; }
+.msg .name { color: var(--head); font-weight: 600; font-size: 16px; }
+.msg .app { background: var(--blurple); color: #fff; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 3px; line-height: 15px; align-self: center; }
+.msg .time { color: var(--muted); font-size: 12px; font-weight: 500; }
+.msg .body { color: var(--text); }
+.msg .used { grid-column: 1 / -1; display: flex; align-items: center; gap: 6px; margin: 0 0 4px; padding-left: 56px; color: var(--muted); font-size: 14px; position: relative; }
+.msg .used::before { content: ""; position: absolute; left: 19px; top: 10px; width: 31px; height: 12px; border-left: 2px solid #4e5058; border-top: 2px solid #4e5058; border-top-left-radius: 6px; }
+.msg .used .av { width: 16px; height: 16px; font-size: 8px; }
+.msg .used b { color: var(--text); font-weight: 600; }
+.msg .used .cmd { color: #00a8fc; font-weight: 500; }
+.mention { background: rgba(88, 101, 242, 0.3); color: #c9cdfb; border-radius: 3px; padding: 0 2px; font-weight: 500; }
+.thinking { color: var(--muted); font-style: italic; }
+.edited { color: var(--muted); font-size: 10px; margin-left: 4px; }
+
+.sys { display: grid; grid-template-columns: 40px 1fr; column-gap: 16px; padding: 4px 48px 4px 16px; margin-top: 14px; color: var(--muted); }
+.sys .arrow { color: var(--green); font-size: 20px; text-align: center; }
+.sys b { color: var(--head); font-weight: 600; }
+
+.embed { display: grid; grid-template-columns: 1fr auto; gap: 16px; margin-top: 4px; max-width: 520px; padding: 10px 16px 14px 14px; border-radius: 4px; background: var(--embed); border-left: 4px solid var(--bar, var(--blurple)); }
+.embed .auth { display: flex; align-items: center; gap: 8px; color: var(--head); font-size: 14px; font-weight: 600; }
+.embed .ttl { margin-top: 6px; color: var(--head); font-size: 16px; font-weight: 700; }
+.embed .desc { margin-top: 4px; font-size: 14px; color: var(--text); }
+.embed .thumb { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; }
+.embed .foot { margin-top: 8px; font-size: 12px; color: var(--muted); }
+.fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px 16px; margin-top: 10px; font-size: 14px; }
+.fields .wide { grid-column: 1 / -1; }
+.fields dt { color: var(--head); font-weight: 700; font-size: 14px; }
+.fields dd { margin: 2px 0 0; color: var(--text); }
+.bar { display: flex; align-items: center; gap: 10px; margin-top: 10px; font: 500 12px var(--ui); color: var(--muted); }
+.bar .track { flex: 1; height: 4px; border-radius: 2px; background: #4e5058; overflow: hidden; }
+.bar .track span { display: block; height: 100%; background: var(--head); transform-origin: left; }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.b { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 16px; border-radius: 3px; background: var(--btn); color: #fff; font-size: 14px; font-weight: 500; }
+.b.g { background: var(--btn-green); }
+.b.r { background: var(--btn-red); }
+.b.pressed { filter: brightness(0.85); }
+.react { display: flex; gap: 4px; margin-top: 4px; }
+.react span { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 8px; border-radius: 8px; background: #2b2d31; border: 1px solid transparent; font-size: 14px; color: var(--text); font-weight: 600; }
+.react span.mine { background: rgba(88, 101, 242, 0.15); border-color: var(--blurple); }
+
+.deals { margin-top: 8px; display: grid; gap: 0; font-size: 14px; }
+.deals li { display: grid; grid-template-columns: 22px 1fr auto 62px 58px; align-items: center; gap: 10px; padding: 5px 0; border-top: 1px solid rgba(255, 255, 255, 0.05); list-style: none; }
+.deals li:first-child { border-top: 0; }
+.deals .n { color: var(--muted); font-weight: 600; }
+.deals .g { color: var(--head); font-weight: 600; }
+.deals .vp { color: #66c0f4; font-size: 12px; font-weight: 600; }
+.deals .sp { color: var(--muted); font-size: 12px; font-weight: 600; }
+.deals .off { background: #4c6b22; color: #beee11; font: 600 13px "JetBrains Mono", monospace; padding: 1px 6px; border-radius: 2px; text-align: center; }
+.deals .eur { color: var(--text); text-align: right; font-weight: 600; }
+.cover { margin-top: 10px; height: 150px; border-radius: 4px; background: radial-gradient(120% 120% at 20% 20%, #3a5a8c, #1a2238 60%, #0e1220); display: grid; place-items: end start; padding: 12px; color: #fff; font: 700 26px "Fraunces", serif; letter-spacing: -0.01em; }
+
+.composer { padding: 0 16px 22px; position: relative; }
+.inbox { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 16px; border-radius: 8px; background: var(--input); color: var(--text); font-size: 16px; }
+.inbox .plus { width: 24px; height: 24px; border-radius: 50%; background: #b5bac1; color: var(--input); display: grid; place-items: center; font-weight: 800; font-size: 18px; flex: none; }
+.inbox .ph { color: #6d6f78; }
+.inbox .caret { display: inline-block; width: 1px; height: 20px; background: var(--head); vertical-align: -4px; margin-left: 1px; }
+.pill { display: inline-flex; align-items: center; height: 24px; padding: 0 6px; border-radius: 4px; background: #1e1f22; color: var(--head); font-weight: 600; margin-right: 6px; }
+.opt { display: inline-flex; align-items: center; height: 24px; padding: 0 6px; border-radius: 4px 0 0 4px; background: #4e5058; color: var(--head); font-size: 14px; font-weight: 600; }
+.optval { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; border-radius: 0 4px 4px 0; background: #2b2d31; color: var(--text); margin-right: 4px; }
+
+.popup { position: absolute; left: 16px; right: 16px; bottom: 76px; border-radius: 8px; background: var(--side); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); overflow: hidden; }
+.popup .ph-head { padding: 12px 16px 6px; color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
+.popup .item { display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 16px; }
+.popup .item.on { background: var(--active); }
+.popup .item img { width: 24px; height: 24px; border-radius: 50%; }
+.popup .item b { color: var(--head); font-weight: 600; }
+.popup .item span { color: var(--muted); font-size: 14px; }
+.popup .item .src { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 600; }
+
+.members { background: var(--side); padding: 24px 8px; }
+.members .cat { padding: 0 8px 8px; }
+.mem { display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 8px; color: var(--muted); font-weight: 500; }
+.mem .av { width: 32px; height: 32px; font-size: 13px; }
+.mem b { color: var(--text); font-weight: 500; }
+.mem .app { background: var(--blurple); color: #fff; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+.mem small { display: block; font-size: 12px; color: var(--muted); line-height: 1.1; }
+
+/* the pointer */
+#cursor { position: absolute; left: 0; top: 0; width: 22px; height: 30px; pointer-events: none; transform-origin: 2px 2px; }
+#ripple { position: absolute; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.85); }
+
+/* end card */
+#end { position: absolute; inset: 0; display: grid; align-content: end; padding: 0 150px 150px; color: #fff8f1; }
+#end .row { display: flex; align-items: center; gap: 34px; }
+#end img { width: 128px; height: 128px; border-radius: 50%; box-shadow: 0 0 0 4px rgba(255, 196, 119, 0.35), 0 20px 50px rgba(0, 0, 0, 0.6); }
+#end .name { font: 600 140px/1 "Fraunces", serif; letter-spacing: -0.04em; text-shadow: 0 8px 50px rgba(0, 0, 0, 0.6); }
+#end .free { margin-top: 26px; font: 500 34px/1.3 var(--ui); color: rgba(246, 240, 230, 0.9); }
+#end .chair { margin-top: 10px; font: 700 64px/1.1 "Caveat", cursive; color: #ffc477; }
+#end .cta { justify-self: start; display: inline-flex; align-items: center; margin-top: 30px; height: 64px; padding: 0 34px; border-radius: 999px; background: linear-gradient(180deg, #f0a062, #c56b2d); color: #fff8f1; font: 700 26px var(--ui); box-shadow: 0 14px 34px -8px rgba(197, 107, 45, 0.7); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="layer" id="blur"><img src="assets/kitchen-blur.jpg" alt=""></div>
+  <div class="layer" id="photo"><img src="../assets/kitchen-hero.jpg" alt=""><div id="wisps"></div></div>
+  <div class="layer" id="shade"></div>
+  <div id="titles"><p class="title-line" id="t1">Every Discord server has a kitchen.</p><p class="title-sub" id="t2">The channel where everyone ends up.</p></div>
+  <div id="logo"><img src="assets/bot-avatar.png" alt=""><div><p class="name">Dzbanek</p><p class="tag" id="logotag">It keeps the kitchen going.</p></div></div>
+
+  <div id="cam">
+    <div id="win">
+      <div class="titlebar"><span>Discord</span><div class="ctrl"><span>&#8212;</span><span>&#9633;</span><span>&#10005;</span></div></div>
+      <div class="shell">
+        <nav class="rail">
+          <div class="srv home"><svg width="28" height="20" viewBox="0 0 28 20"><path fill="#fff" d="M23.7 1.7A23 23 0 0 0 18 0l-.7 1.5a21 21 0 0 0-6.6 0L10 0a23 23 0 0 0-5.7 1.7C.7 7.2-.3 12.5.2 17.7A23 23 0 0 0 7.2 21l1.5-2.4a15 15 0 0 1-2.3-1.1l.6-.4a16.5 16.5 0 0 0 14 0l.6.4c-.7.4-1.5.8-2.3 1.1l1.5 2.4a23 23 0 0 0 7-3.3c.6-6-1-11.3-4.1-16zM9.4 14.5c-1.4 0-2.5-1.3-2.5-2.8s1.1-2.8 2.5-2.8 2.5 1.3 2.5 2.8-1.1 2.8-2.5 2.8zm9.2 0c-1.4 0-2.5-1.3-2.5-2.8s1.1-2.8 2.5-2.8 2.5 1.3 2.5 2.8-1.1 2.8-2.5 2.8z" transform="scale(1 .9)"/></svg></div>
+          <div class="sep"></div>
+          <div class="srv on">TK</div>
+          <div class="srv" style="background:#3b4c6b">GN</div>
+          <div class="srv" style="background:#5b3b5e">LO</div>
+          <div class="srv" style="background:#2f5e4a">F1</div>
+          <div class="srv add">+</div>
+        </nav>
+        <aside class="side">
+          <div class="guild">The Kitchen <span style="font-weight:400">&#8964;</span></div>
+          <div class="chans">
+            <p class="cat">&#8964; Text channels</p>
+            <div class="chan" data-ch="kitchen"><span class="hash">#</span>kitchen</div>
+            <div class="chan" data-ch="board"><span class="hash">#</span>kitchen-board</div>
+            <div class="chan" data-ch="deals"><span class="hash">#</span>deals</div>
+            <div class="chan" data-ch="welcome"><span class="hash">#</span>welcome</div>
+            <div class="chan"><span class="hash">#</span>memes</div>
+            <p class="cat">&#8964; Voice channels</p>
+            <div class="chan"><span class="hash" style="font-size:17px">&#128264;</span>Radio corner</div>
+            <div id="vc"></div>
+          </div>
+          <div class="me"><span class="av dot" style="width:32px;height:32px;background:#c56b2d;font-size:13px">S</span><div class="who"><b>Sunka</b><span>Online</span></div><div class="icons"><span>&#127908;</span><span>&#127911;</span><span>&#9881;</span></div></div>
+        </aside>
+        <main class="main">
+          <div class="chathead"><span class="hash">#</span><span id="chname">kitchen</span><span class="topic" id="chtopic"></span></div>
+          <div class="logwrap" id="logs"></div>
+          <div class="composer">
+            <div class="popup" id="popup"></div>
+            <div class="inbox"><span class="plus">+</span><span id="input"></span></div>
+          </div>
+        </main>
+        <aside class="members" id="members"></aside>
+      </div>
+    </div>
+    <div id="ripple"></div>
+    <svg id="cursor" viewBox="0 0 22 30"><path d="M2 2 L2 24 L7.5 18.6 L11.4 27.4 L15 25.8 L11.2 17.2 L19 17.2 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  </div>
+
+  <div id="end"><div class="row"><img src="assets/bot-avatar.png" alt=""><p class="name">Dzbanek</p></div><p class="free" id="endfree">Free Discord bot &nbsp;·&nbsp; music &nbsp;·&nbsp; Czech radio &nbsp;·&nbsp; game deals</p><p class="chair" id="endchair">Pull up a chair.</p><span class="cta" id="endcta">Add to Server</span></div>
+</div>
+
+<script>
+/*
+ * The whole ad is a function of time: render(t) puts every element where it belongs at t seconds.
+ * Times come from the voice-over (window.TIMELINE), so the picture follows the words.
+ */
+const TL = window.TIMELINE;
+const SC = Object.fromEntries(TL.scenes.map((s) => [s.id, s]));
+const norm = (w) => w.toLowerCase().replace(/[^a-z0-9']/g, '');
+// Start of the n-th occurrence of a word in a scene's line.
+const W = (id, word, n = 0) => SC[id].words.filter((x) => norm(x.w) === norm(word))[n].s;
+const WE = (id, word, n = 0) => SC[id].words.filter((x) => norm(x.w) === norm(word))[n].e;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const io = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const sine = (x) => -(Math.cos(Math.PI * x) - 1) / 2;
+const $ = (s) => document.querySelector(s);
+const el = (html) => { const d = document.createElement('div'); d.innerHTML = html.trim(); return d.firstElementChild; };
+
+// Sound cues for the mix: [time, kind]. Collected while the timeline is built.
+const SFX = [];
+
+/* ---------- people ---------- */
+const PEOPLE = {
+  sunka: { name: 'Sunka', color: '#c56b2d', init: 'S', role: '#f0a062' },
+  mara: { name: 'Mara', color: '#8e5bd6', init: 'M', role: '#c9a7ff' },
+  tom: { name: 'Tom', color: '#2f8f6b', init: 'T', role: '#7fd6b0' },
+  lukas: { name: 'Lukáš', color: '#3b6fb6', init: 'L', role: '#9cc3ff' },
+  ondra: { name: 'Ondra', color: '#b5476a', init: 'O', role: '#ffa3bf' },
+};
+const av = (who, extra = '') => who === 'bot' ? `<span class="av ${extra}"><img src="assets/bot-avatar.png" alt=""></span>` : `<span class="av ${extra}" style="background:${PEOPLE[who].color}">${PEOPLE[who].init}</span>`;
+const nm = (who) => who === 'bot' ? '<span class="name">Dzbanek</span><span class="app">APP</span>' : `<span class="name" style="color:${PEOPLE[who].role}">${PEOPLE[who].name}</span>`;
+const stamp = (time) => `<span class="time">${time}</span>`;
+
+/* ---------- scene times ---------- */
+const T0 = {
+  musicIn: SC.music.start,
+  radio: SC.radio.start,
+  board: SC.board.start,
+  deals: SC.deals.start,
+  welcome: SC.welcome.start,
+  chair: SC.chair.start,
+  end: TL.duration,
+};
+
+/* ---------- channels and messages ---------- */
+const CHANNELS = {
+  kitchen: { name: 'kitchen', topic: 'Kettle\'s on. Say hi.' },
+  board: { name: 'kitchen-board', topic: 'One message, kept up to date by Dzbanek' },
+  deals: { name: 'deals', topic: 'Steam at 03:33, Epic at 12:00 and 17:00' },
+  welcome: { name: 'welcome', topic: 'Say hi to the new people' },
+};
+const logs = {};
+for (const id of Object.keys(CHANNELS)) {
+  logs[id] = el('<div class="log"></div>');
+  $('#logs').appendChild(logs[id]);
+}
+const MSGS = [];
+function post(ch, t, html, sound = 'msg') {
+  const node = el(html);
+  logs[ch].appendChild(node);
+  MSGS.push({ ch, t, node });
+  if (sound && t > 0.5) SFX.push([t, sound]);
+  return node;
+}
+// Which channel is on screen.
+const VIEW = [[0, 'kitchen']];
+
+/* ---------- music ---------- */
+// Chat from before the recording starts.
+post('kitchen', 0, `<div class="msg">${av('lukas')}<div><p class="meta">${nm('lukas')}${stamp('Today at 20:41')}</p><p class="body">who ate the last cookie</p></div></div>`, null);
+post('kitchen', 0, `<div class="msg">${av('mara')}<div><p class="meta">${nm('mara')}${stamp('Today at 20:42')}</p><p class="body">not me 👀</p></div></div>`, null);
+post('kitchen', 0, `<div class="msg">${av('sunka')}<div><p class="meta">${nm('sunka')}${stamp('Today at 20:44')}</p><p class="body">there's a new tin on the shelf, relax</p></div></div>`, null);
+post('kitchen', 0, `<div class="msg">${av('tom')}<div><p class="meta">${nm('tom')}${stamp('Today at 21:02')}</p><p class="body">anyone up for some music? 🎶</p></div></div>`, null);
+post('kitchen', 0, `<div class="msg">${av('mara')}<div><p class="meta">${nm('mara')}${stamp('Today at 21:03')}</p><p class="body">kettle's on, put something cozy on</p></div></div>`, null);
+post('kitchen', 0, `<div class="msg">${av('lukas')}<div><p class="meta">${nm('lukas')}${stamp('Today at 21:05')}</p><p class="body">i'm in voice 👋</p></div></div>`, null);
+
+const M = {
+  click: SC.music.voAt - 0.05,
+  slash: W('music', 'Type') + 0.08,
+  play: [W('music', 'slash') + 0.02, W('music', 'play') + 0.25],
+  pick: W('music', 'and') - 0.05,
+  query: [W('music', 'whatever'), W('music', 'mood') + 0.15],
+  enter: W('music', 'for') + 0.3,
+};
+M.reply = M.enter + 0.65;
+const npCard = post('kitchen', M.enter + 0.12, `<div class="msg">
+  <p class="used">${av('sunka')}<b>Sunka</b> used <span class="cmd">/play</span></p>${av('bot')}<div>
+  
+  <p class="meta">${nm('bot')}${stamp('Today at 21:06')}</p>
+  <p class="thinking">Dzbanek is thinking…</p>
+  <div class="embed np" style="--bar:#e08a45">
+    <div>
+      <p class="auth">🔊 Now Playing</p>
+      <p class="ttl">Midnight Crumbs</p>
+      <p class="desc">The Late Bakers · requested by <span class="mention">@Sunka</span> · YouTube</p>
+      <div class="bar"><span class="pos">0:00</span><div class="track"><span></span></div><span>3:41</span></div>
+    </div>
+    <img class="thumb" src="assets/cover-crumbs.jpg" alt="">
+  </div>
+  <div class="btns"><span class="b">⏸ Pause</span><span class="b">⏭ Skip</span><span class="b r">⏹ Stop</span><span class="b">🔁 Loop</span><span class="b">🔀 Shuffle</span></div>
+  </div></div>`, null);
+SFX.push([M.reply, 'msg']);
+
+const Q = [
+  { who: 'mara', at: W('music', 'YouTube') - 0.1, cmd: 'https://youtu.be/rN-kettle-jazz', added: 'Added to the queue: <b>Rainy Window Jazz</b> · 2 in queue' },
+  { who: 'tom', at: W('music', 'Spotify') - 0.05, cmd: 'open.spotify.com/playlist/sunday-kitchen', added: 'Added <b>24 songs</b> from <b>Sunday Kitchen</b> (Spotify playlist)' },
+  { who: 'lukas', at: W('music', 'name') - 0.25, cmd: 'pancakes for dinner', added: 'Added to the queue: <b>Pancakes for Dinner</b> · 27 in queue' },
+];
+for (const q of Q) {
+  post('kitchen', q.at + 0.45, `<div class="msg"><p class="used">${av(q.who)}<b>${PEOPLE[q.who].name}</b> used <span class="cmd">/play</span> <span style="color:#949ba4">${q.cmd}</span></p>${av('bot')}<div><p class="meta">${nm('bot')}${stamp('Today at 21:07')}</p><p class="body">➕ ${q.added}</p></div></div>`);
+}
+
+/* ---------- radio ---------- */
+const R = {
+  click: SC.radio.start + 0.15,
+  slash: SC.radio.start + 0.3,
+  word: [SC.radio.start + 0.36, SC.radio.start + 0.82],
+  sub: SC.radio.start + 1.0,
+  station: W('radio', 'radio') + 0.1,
+  kiss: W('radio', 'Kiss'),
+  rock: W('radio', 'Rock'),
+  beat: W('radio', 'Beat'),
+};
+R.enter = R.beat + 0.38;
+R.reply = R.enter + 0.6;
+R.update = W('radio', 'playing') - 0.05;
+const radioCard = post('kitchen', R.enter + 0.1, `<div class="msg">
+  <p class="used">${av('sunka')}<b>Sunka</b> used <span class="cmd">/radio play</span></p>${av('bot')}<div>
+  
+  <p class="meta">${nm('bot')}${stamp('Today at 21:08')}</p>
+  <p class="thinking">Dzbanek is thinking…</p>
+  <div class="embed rc" style="--bar:#f5c400">
+    <div>
+      <p class="auth">📻 Radio Beat <span style="margin-left:auto;color:#f23f42;font-size:12px;font-weight:700;letter-spacing:.06em">● LIVE</span></p>
+      <p class="ttl song">Highway Sermon</p>
+      <p class="desc artist">Iron Orchard</p>
+      <p class="foot upd">On air on Radio Beat · updated 20 s ago</p>
+    </div>
+  </div>
+  <div class="btns"><span class="b">🌐 Website</span><span class="b g">🎣 Catch</span><span class="b r">⏹ Stop</span></div>
+  </div></div>`, null);
+SFX.push([R.reply, 'msg']);
+
+/* ---------- kitchen board ---------- */
+VIEW.push([0, 'kitchen']);
+const B = {
+  click: SC.board.start + 0.35,
+  edit: W('board', 'keeps') + 0.1,
+  playing: W('board', "What's"),
+  voice: W('board', "who's"),
+  deal: W('board', "today's"),
+};
+VIEW.push([B.click + 0.05, 'board']);
+SFX.push([B.click, 'click']);
+post('board', 0, `<div class="msg">
+  ${av('bot')}<div>
+  <p class="meta">${nm('bot')}${stamp('Today at 18:00')}<span class="edited">(edited)</span></p>
+  <div class="embed kb" style="--bar:#e08a45;max-width:600px">
+    <div>
+      <p class="auth">🍳 The Kitchen</p>
+      <p class="ttl">What's cooking right now</p>
+      <dl class="fields">
+        <div class="wide f-play"><dt>🎶 Playing</dt><dd><span class="kb-song">📻 Radio Beat · Highway Sermon</span></dd></div>
+        <div class="f-voice"><dt>🎧 In voice</dt><dd class="kb-voice">3 in Radio corner</dd></div>
+        <div><dt>👋 Joined today</dt><dd>2</dd></div>
+        <div><dt>🌙 Radio Night</dt><dd>Fri 20:00</dd></div>
+        <div class="wide f-deal"><dt>🛒 Today's best deal</dt><dd><span style="background:#4c6b22;color:#beee11;font:600 13px 'JetBrains Mono',monospace;padding:1px 6px;border-radius:2px">−80%</span> <b style="color:#f2f3f5">Hollow Lantern</b> · €3.99 · Very Positive</dd></div>
+        <div class="wide"><dt>🎁 Free on Epic</dt><dd>Starbound Atlas, until Thursday</dd></div>
+      </dl>
+    </div>
+    <img class="thumb" src="assets/cover-crumbs.jpg" alt="">
+  </div>
+  </div></div>`, null);
+
+/* ---------- deals ---------- */
+const D = {
+  click: SC.deals.start + 0.25,
+  ten: W('deals', 'ten'),
+  look: W('deals', 'look'),
+  epic: W('deals', "Epic's") - 0.15,
+};
+VIEW.push([D.click + 0.05, 'deals']);
+SFX.push([D.click, 'click']);
+const GAMES = [
+  ['Hollow Lantern', 'vp', 80, '3.99'], ['Star Forge Tactics', 'vp', 75, '4.99'], ['Ember & Ash', 'vp', 70, '5.99'],
+  ['Quiet Harbor', 'vp', 67, '6.59'], ['Neon Ledger', 'vp', 60, '7.99'], ['The Long Furrow', 'vp', 60, '9.99'],
+  ['Gearwright', 'vp', 55, '8.99'], ['Saltmarsh Saga', 'sp', 50, '12.49'], ['Paper Comets', 'sp', 50, '4.49'], ['Frostline Couriers', 'sp', 45, '10.99'],
+];
+post('deals', 0, `<div class="msg">${av('bot')}<div><p class="meta">${nm('bot')}${stamp('Yesterday at 03:33')}</p><p class="body" style="color:#949ba4">🛒 Yesterday's Steam deals · 10 games</p></div></div>`, null);
+const dealsMsg = post('deals', D.click + 0.35, `<div class="msg">
+  ${av('bot')}<div>
+  <p class="meta deals-head">${nm('bot')}<span class="time" style="color:#dbdee1;font-weight:700">Today at 03:33</span></p>
+  <div class="embed" style="--bar:#66c0f4;max-width:620px;display:block">
+    <p class="auth">🛒 Steam daily deals</p>
+    <ol class="deals" style="padding:0;margin:8px 0 0">
+      ${GAMES.map((g, i) => `<li><span class="n">${i + 1}</span><span class="g">${g[0]}</span><span class="${g[1]}">${g[1] === 'vp' ? 'Very Positive' : 'Special'}</span><span class="off">−${g[2]}%</span><span class="eur">€${g[3]}</span></li>`).join('')}
+    </ol>
+    <p class="foot">Prices in € · Very Positive games first</p>
+  </div>
+  </div></div>`);
+const epicMsg = post('deals', D.epic + 0.2, `<div class="msg">
+  ${av('bot')}<div>
+  <p class="meta">${nm('bot')}<span class="time" style="color:#dbdee1;font-weight:700">Today at 17:00</span></p>
+  <div class="embed epic" style="--bar:#f2f3f5;max-width:620px;display:block">
+    <p class="auth">🎁 Free on Epic Games Store</p>
+    <p class="ttl">Starbound Atlas</p>
+    <p class="desc">Free until Thursday 17:00 · claim it and keep it</p>
+    <div class="cover">Starbound Atlas</div>
+  </div>
+  </div></div>`);
+
+/* ---------- welcome ---------- */
+const Wl = {
+  click: SC.welcome.start + 0.2,
+  join: W('welcome', 'somebody') - 0.1,
+  hello: W('welcome', 'walks') + 0.1,
+  // The reactions come in just after the word, like people answering it.
+  cookie: WE('welcome', 'cookie') + 0.05,
+};
+VIEW.push([Wl.click + 0.05, 'welcome']);
+SFX.push([Wl.click, 'click']);
+post('welcome', 0, `<div class="sys"><span class="arrow">→</span><p><b>Lukáš</b> hopped into the server. · <span style="font-size:12px">Monday at 19:40</span></p></div>`, null);
+post('welcome', Wl.join, `<div class="sys"><span class="arrow">→</span><p>Everyone welcome <b>Ondra</b>! · <span style="font-size:12px">Today at 21:10</span></p></div>`, 'join');
+const welcomeMsg = post('welcome', Wl.hello, `<div class="msg">
+  ${av('bot')}<div>
+  <p class="meta">${nm('bot')}${stamp('Today at 21:10')}</p>
+  <p class="body welcome-body">🍪 Hey <span class="mention">@Ondra</span>! Welcome to the dark side, we have cookies. I'm Dzbanek — grab one, say hi, and don't mind the crumbs. 😈</p>
+  <div class="react"><span class="r-cookie">🍪 <b class="r-n">1</b></span><span class="r-wave">👋 <b>2</b></span></div>
+  </div></div>`);
+const COOKIE_POPS = [0, 0.18, 0.32, 0.5].map((d) => Wl.cookie + d);
+COOKIE_POPS.forEach((t) => SFX.push([t, 'pop']));
+
+/* ---------- members and voice ---------- */
+$('#members').innerHTML = `<p class="cat">Online — 5</p>
+  <div class="mem">${av('bot', 'dot')}<div><b>Dzbanek</b> <span class="app">APP</span><small class="mem-status">Pouring fresh drops</small></div></div>
+  <div class="mem">${av('lukas', 'dot')}<b>Lukáš</b></div>
+  <div class="mem">${av('mara', 'dot')}<b>Mara</b></div>
+  <div class="mem">${av('sunka', 'dot')}<b>Sunka</b></div>
+  <div class="mem">${av('tom', 'dot')}<b>Tom</b></div>
+  <p class="cat" style="margin-top:20px">Offline — 2</p>
+  <div class="mem" style="opacity:.45">${av('ondra')}<b>Ondra</b></div>`;
+$('#vc').innerHTML = `<div class="vc-user vc-bot">${av('bot')}Dzbanek</div><div class="vc-user">${av('lukas')}Lukáš</div><div class="vc-user">${av('mara')}Mara</div><div class="vc-user">${av('tom')}Tom</div>`;
+const vcBot = $('.vc-bot');
+
+/* ---------- the composer ---------- */
+const COMMANDS = [['play', 'Play a song, a link, or a playlist'], ['queue', 'Show what\'s coming up'], ['radio', 'Kiss, Rock Radio, or Radio Beat, live'], ['remove', 'Take a song out of the queue'], ['setup', 'Choose where deals and the board go'], ['stop', 'Stop and leave the voice channel']];
+function typed(text, t, a, b) { return text.slice(0, Math.round(text.length * prog(t, a, b))); }
+// Characters as they're typed, for the keyboard clicks.
+function keys(text, a, b) { for (let i = 0; i < text.length; i++) SFX.push([a + (b - a) * (i / text.length), 'key']); }
+keys('/', M.slash, M.slash + 0.01); keys('play', ...M.play); keys('midnight crumbs', ...M.query); SFX.push([M.enter, 'enter']);
+keys('/', R.slash, R.slash + 0.01); keys('radio', ...R.word); SFX.push([R.sub, 'key'], [R.station, 'key'], [R.enter, 'enter']);
+
+function composer(t) {
+  const caret = '<span class="caret"></span>';
+  const blink = Math.floor(t * 2) % 2 === 0;
+  const c = blink ? caret : '';
+  let html = `<span class="ph">Message #${CHANNELS[currentChannel(t)].name}</span>`;
+  let popup = '';
+  // music: /play midnight crumbs
+  if (t >= M.slash && t < M.enter) {
+    if (t < M.pick) {
+      const word = typed('play', t, ...M.play);
+      html = '/' + word + caret;
+      const list = COMMANDS.filter(([n]) => n.startsWith(word));
+      popup = `<p class="ph-head">Commands matching /${word}</p>` + list.map(([n, d], i) => `<div class="item ${i === 0 ? 'on' : ''}"><img src="assets/bot-avatar.png" alt=""><b>/${n}</b><span>${d}</span><span class="src">Dzbanek</span></div>`).join('');
+    } else {
+      html = `<span class="pill">/play</span><span class="opt">query</span><span class="optval">${typed('midnight crumbs', t, ...M.query)}${caret}</span>`;
+    }
+  }
+  // radio: /radio play station: Radio Beat
+  if (t >= R.slash && t < R.enter) {
+    if (t < R.sub) {
+      const word = typed('radio', t, ...R.word);
+      html = '/' + word + caret;
+      const list = COMMANDS.filter(([n]) => n.startsWith(word));
+      popup = `<p class="ph-head">Commands matching /${word}</p>` + list.map(([n, d], i) => `<div class="item ${i === 0 ? 'on' : ''}"><img src="assets/bot-avatar.png" alt=""><b>/${n}</b><span>${d}</span><span class="src">Dzbanek</span></div>`).join('');
+    } else {
+      const choices = [['kiss', 'Kiss Radio', R.kiss], ['rock', 'Rock Radio', R.rock], ['beat', 'Radio Beat', R.beat]];
+      let on = -1;
+      choices.forEach(([, , at], i) => { if (t >= at) on = i; });
+      const picked = t >= R.beat + 0.22;
+      html = `<span class="pill">/radio play</span><span class="opt">station</span><span class="optval">${picked ? 'Radio Beat' : ''}${caret}</span>`;
+      if (t >= R.station && !picked) popup = `<p class="ph-head">station</p>` + choices.map(([, label], i) => `<div class="item ${i === on ? 'on' : ''}"><b>${label}</b></div>`).join('');
+    }
+  }
+  return { html, popup };
+}
+
+function currentChannel(t) {
+  let ch = 'kitchen';
+  for (const [at, id] of VIEW) if (t >= at) ch = id;
+  return ch;
+}
+
+/* ---------- the camera ---------- */
+// Window placement on the stage: 1600x900 logical, shown at 1.08 when zoomed out.
+const Z0 = 1.08;
+// Rows: [time, x, y, zoom] or [time, selector, zoom]. At ZC the chat column fills the frame.
+const ZC = 1.84;
+const CAM = [
+  [0, 800, 450, Z0],
+  [M.click - 0.25, 800, 450, Z0],
+  [M.click + 0.5, '.inbox', ZC],
+  [M.enter + 0.1, '.inbox', ZC],
+  [M.reply + 0.45, '.np', ZC],
+  [Q[0].at + 0.25, '.np', ZC],
+  [Q[0].at + 1.0, '.inbox', ZC],
+  [R.click + 0.3, '.inbox', ZC],
+  [R.enter + 0.05, '.inbox', ZC],
+  [R.reply + 0.45, '.rc', 1.95],
+  [R.update + 1.0, '.rc', 1.95],
+  [B.click + 0.1, 800, 450, 1.12],
+  [B.click + 0.95, '.kb', 1.5],
+  [B.playing - 0.1, '.f-play', 1.75],
+  [B.playing + 0.6, '.f-play', 1.95],
+  [B.voice - 0.05, '.f-voice', 2.05],
+  [B.voice + 0.7, '.f-voice', 2.05],
+  [B.deal - 0.05, '.f-deal', 1.95],
+  [B.deal + 0.9, '.f-deal', 1.95],
+  [D.click + 0.1, 800, 450, 1.12],
+  [D.click + 0.95, '.deals-head', 1.95],
+  [D.ten - 0.2, '.deals-head', 1.95],
+  [D.look + 0.35, '.deals', ZC],
+  [D.epic + 0.15, '.deals', ZC],
+  [D.epic + 0.95, '.epic', ZC],
+  [Wl.click + 0.1, 800, 450, 1.12],
+  [Wl.hello + 0.25, '.welcome-body', ZC],
+  [Wl.cookie + 0.6, '.r-cookie', ZC],
+  [T0.chair + 0.05, '.r-cookie', ZC],
+  [T0.chair + 0.95, 800, 450, Z0],
+  [T0.end, 800, 450, Z0],
+];
+function cam(t) {
+  let i = 0;
+  while (i < CAM.length - 2 && t >= CAM[i + 1][0]) i++;
+  const [ta, xa, ya, za] = CAM[i];
+  const [tb, xb, yb, zb] = CAM[i + 1];
+  const e = io(prog(t, ta, tb));
+  // Zoom eases in log space, so pushing in and pulling out feel the same speed.
+  const z = Math.exp(Math.log(za) + (Math.log(zb) - Math.log(za)) * e);
+  let x = xa + (xb - xa) * e;
+  let y = ya + (yb - ya) * e;
+  // Fully clamped from 1.16x up; between the overview and that, it blends in.
+  const k = clamp((z - Z0) / (1.16 - Z0));
+  const hw = 960 / z, hh = 540 / z;
+  if (hw * 2 < 1600) x = x + (clamp(x, hw, 1600 - hw) - x) * k;
+  if (hh * 2 < 900) y = y + (clamp(y, hh, 900 - hh) - y) * k;
+  return { x, y, z };
+}
+
+/* ---------- the pointer ---------- */
+// Positions are in window coordinates, so the pointer zooms with the screen like a real recording.
+const COMPOSER = [640, 846];
+const CUR = [
+  [0, 1180, 640],
+  [M.click - 0.55, 1180, 640],
+  [M.click, ...COMPOSER],
+  [M.enter + 0.3, ...COMPOSER],
+  [M.enter + 1.0, 1010, 590],
+  [Q[2].at + 0.8, 1040, 600],
+  [R.click, 660, 846],
+  [R.enter + 0.4, 660, 846],
+  [R.reply + 0.9, 1090, 560],
+  [B.click - 0.45, 1000, 560],
+  [B.click, '.chan[data-ch="board"]'],
+  [B.click + 0.8, 640, 300],
+  [B.voice, '.kb-voice'],
+  [B.deal, '.f-deal dd'],
+  [D.click - 0.4, '.f-deal dd'],
+  [D.click, '.chan[data-ch="deals"]'],
+  [D.click + 0.9, 1080, 340],
+  [Wl.click - 0.35, 1080, 340],
+  [Wl.click, '.chan[data-ch="welcome"]'],
+  [Wl.click + 0.8, 980, 700],
+  [Wl.cookie - 0.15, '.r-cookie'],
+  [T0.chair + 0.4, '.r-cookie'],
+  [T0.end, '.r-cookie'],
+];
+const CLICKS = [M.click, R.click, B.click, D.click, Wl.click, Wl.cookie - 0.05];
+SFX.push([M.click, 'click'], [R.click, 'click'], [Wl.cookie - 0.05, 'click']);
+// The window sliding in over the kitchen, and back out.
+SFX.push([T0.musicIn - 0.2, 'whoosh'], [T0.chair + 0.2, 'whoosh']);
+function cursorAt(t) {
+  let i = 0;
+  while (i < CUR.length - 2 && t >= CUR[i + 1][0]) i++;
+  const [ta, xa, ya] = CUR[i];
+  const [tb, xb, yb] = CUR[i + 1];
+  const e = io(prog(t, ta, tb));
+  // A slight arc, the way a hand moves a mouse.
+  const arc = Math.sin(Math.PI * e) * Math.min(40, Math.hypot(xb - xa, yb - ya) * 0.08);
+  return { x: xa + (xb - xa) * e, y: ya + (yb - ya) * e - arc };
+}
+
+/* ---------- steam over the mug ---------- */
+const WISPS = Array.from({ length: 6 }, (_, i) => { const d = el('<div class="wisp"></div>'); $('#wisps').appendChild(d); return { d, phase: i / 6, drift: (i % 3) - 1 }; });
+
+/* ---------- render ---------- */
+function render(t) {
+  const musicIn = T0.musicIn;
+  const chair = T0.chair;
+  const end = T0.end;
+
+  // Kitchen photo: frame 0 is exactly the site's hero photo, then a slow push in.
+  const push = sine(prog(t, 0, musicIn + 0.6));
+  const back = sine(prog(t, chair + 0.2, chair + 1.6));
+  const scale = 1 + 0.085 * push * (1 - back);
+  $('#photo').style.transform = `scale(${scale})`;
+  const photoOpacity = t < musicIn - 0.75 ? 1 : t < chair ? 1 - io(prog(t, musicIn - 0.75, musicIn + 0.05)) : io(prog(t, chair + 0.1, chair + 1.0));
+  $('#photo').style.opacity = photoOpacity;
+  $('#blur').style.opacity = t > musicIn - 0.8 && t < chair + 1.2 ? 1 : 0;
+
+  // Steam: soft wisps rising from the mug and fading.
+  WISPS.forEach((w) => {
+    const p = ((t / 6.5) + w.phase) % 1;
+    w.d.style.left = (1395 + w.drift * 22 + Math.sin((t + w.phase * 7) * 0.9) * 18) + 'px';
+    w.d.style.top = (560 - p * 330) + 'px';
+    w.d.style.opacity = Math.sin(Math.PI * p) * 0.55;
+    w.d.style.transform = `scale(${0.6 + p * 1.1})`;
+  });
+
+  // Shade: none on frame 0, darker under the titles, gone for the screen recording.
+  const shadeIn = io(prog(t, 0.6, 1.6)) * 0.85 + io(prog(t, SC.intro.voAt - 0.2, SC.intro.voAt + 0.5)) * 0.15;
+  const shadeEnd = t >= chair ? io(prog(t, chair + 0.3, chair + 1.3)) * (1 - io(prog(t, end - 1.4, end - 0.2))) : 0;
+  $('#shade').style.opacity = t < musicIn ? shadeIn * (1 - io(prog(t, musicIn - 0.4, musicIn + 0.2))) : shadeEnd;
+
+  // Titles over the kitchen.
+  const t1 = io(prog(t, W('kitchen', 'Every') - 0.15, W('kitchen', 'Every') + 0.55));
+  const t2 = io(prog(t, W('kitchen', 'The') - 0.1, W('kitchen', 'The') + 0.6));
+  const titlesOut = 1 - io(prog(t, SC.intro.voAt - 0.25, SC.intro.voAt + 0.2));
+  $('#t1').style.opacity = t1 * titlesOut;
+  $('#t1').style.transform = `translateY(${(1 - t1) * 18}px)`;
+  $('#t2').style.opacity = t2 * titlesOut;
+  $('#t2').style.transform = `translateY(${(1 - t2) * 14}px)`;
+  const lg = io(prog(t, W('intro', 'This') + 0.15, W('intro', 'Dzbanek') + 0.4));
+  const lgOut = 1 - io(prog(t, musicIn - 0.55, musicIn - 0.1));
+  $('#logo').style.opacity = lg * lgOut;
+  $('#logo').style.transform = `translateY(${(1 - lg) * 22}px)`;
+  const tag = io(prog(t, W('intro', 'It') - 0.05, W('intro', 'It') + 0.55));
+  $('#logotag').style.opacity = tag;
+
+  // The screen recording rises in, then settles back into the kitchen at the end.
+  const winIn = out(prog(t, musicIn - 0.15, musicIn + 0.6));
+  const winOut = io(prog(t, chair + 0.25, chair + 1.15));
+  const winVis = winIn * (1 - winOut);
+  const c = cam(t);
+  const lift = (1 - winIn) * 60 + winOut * 30;
+  const shrink = 1 - (1 - winIn) * 0.06 - winOut * 0.05;
+  $('#cam').style.transform = `translate(${960 - c.x * c.z * shrink}px, ${540 - c.y * c.z * shrink + lift}px) scale(${c.z * shrink})`;
+  $('#cam').style.opacity = winVis;
+  $('#cam').style.display = winVis > 0.001 ? '' : 'none';
+
+  // Channel on screen.
+  const ch = currentChannel(t);
+  for (const [id, node] of Object.entries(logs)) node.style.display = id === ch ? '' : 'none';
+  document.querySelectorAll('.chan[data-ch]').forEach((n) => n.classList.toggle('on', n.dataset.ch === ch));
+  $('#chname').textContent = CHANNELS[ch].name;
+  $('#chtopic').textContent = CHANNELS[ch].topic;
+  // Unread dots: deals and welcome light up before they're opened.
+  document.querySelector('.chan[data-ch="deals"]').classList.toggle('unread', ch !== 'deals' && t > T0.board + 2);
+  document.querySelector('.chan[data-ch="welcome"]').classList.toggle('unread', ch !== 'welcome' && t > T0.deals + 3);
+
+  // Messages: in when their time comes, with a short fade and lift.
+  for (const m of MSGS) {
+    const on = t >= m.t;
+    m.node.style.display = on ? '' : 'none';
+    if (on) {
+      const f = out(prog(t, m.t, m.t + 0.18));
+      m.node.style.opacity = f;
+      m.node.style.transform = `translateY(${(1 - f) * 6}px)`;
+    }
+  }
+
+  // Now Playing: thinking first, then the card; the bar moves with the song.
+  const npReady = t >= M.reply;
+  npCard.querySelector('.thinking').style.display = npReady ? 'none' : '';
+  npCard.querySelector('.np').style.display = npReady ? '' : 'none';
+  npCard.querySelector('.btns').style.display = npReady ? '' : 'none';
+  const songT = Math.max(0, t - M.reply);
+  npCard.querySelector('.pos').textContent = `0:${String(Math.floor(songT)).padStart(2, '0')}`;
+  npCard.querySelector('.track span').style.transform = `scaleX(${songT / 221})`;
+
+  // Radio: thinking, then live; the song changes on "playing right now".
+  const rcReady = t >= R.reply;
+  radioCard.querySelector('.thinking').style.display = rcReady ? 'none' : '';
+  radioCard.querySelector('.rc').style.display = rcReady ? '' : 'none';
+  radioCard.querySelector('.btns').style.display = rcReady ? '' : 'none';
+  const changed = t >= R.update;
+  radioCard.querySelector('.song').textContent = changed ? 'Paper Moon Motel' : 'Highway Sermon';
+  radioCard.querySelector('.artist').textContent = changed ? 'The Slow Lanes' : 'Iron Orchard';
+  radioCard.querySelector('.upd').textContent = changed ? 'On air on Radio Beat · updated just now' : 'On air on Radio Beat · updated 20 s ago';
+  vcBot.style.display = t >= R.reply ? '' : 'none';
+  document.querySelector('.mem-status').textContent = t >= R.reply ? '📻 Radio Beat' : t >= M.reply ? '🎶 Midnight Crumbs' : 'The kitchen is quiet';
+  vcBot.querySelector('.av').classList.toggle('speak', t >= R.reply && Math.floor(t * 3) % 4 !== 0);
+
+  // Board: it edits itself while you watch.
+  const edited = t >= B.edit;
+  document.querySelector('.kb-song').textContent = edited ? '📻 Radio Beat · Paper Moon Motel' : '📻 Radio Beat · Highway Sermon';
+  document.querySelector('.kb-voice').textContent = edited ? '4 in Radio corner' : '3 in Radio corner';
+
+  // Welcome: cookies pile up.
+  let cookies = 1;
+  COOKIE_POPS.forEach((at, i) => { if (t >= at) cookies = 2 + i; });
+  welcomeMsg.querySelector('.r-n').textContent = String(Math.min(cookies, 5));
+  welcomeMsg.querySelector('.r-cookie').classList.toggle('mine', t >= COOKIE_POPS[0]);
+  const pop = COOKIE_POPS.reduce((acc, at) => acc + Math.max(0, 1 - Math.abs(t - at - 0.06) / 0.12), 0);
+  welcomeMsg.querySelector('.r-cookie').style.transform = `scale(${1 + Math.min(pop, 1) * 0.18})`;
+
+  // Composer and its popup.
+  const comp = composer(t);
+  $('#input').innerHTML = comp.html;
+  $('#popup').innerHTML = comp.popup;
+  $('#popup').style.display = comp.popup ? '' : 'none';
+
+  // Pointer, with a press and a ripple on clicks.
+  const p = cursorAt(t);
+  let press = 0;
+  let ripple = null;
+  for (const at of CLICKS) {
+    press = Math.max(press, 1 - Math.abs(t - at) / 0.09);
+    if (t >= at && t < at + 0.45) ripple = prog(t, at, at + 0.45);
+  }
+  press = clamp(press);
+  $('#cursor').style.transform = `translate(${p.x}px, ${p.y}px) scale(${1 - press * 0.14})`;
+  const showCursor = t > musicIn + 0.1 && t < chair + 0.6;
+  $('#cursor').style.opacity = showCursor ? 1 : 0;
+  $('#ripple').style.display = ripple !== null && showCursor ? '' : 'none';
+  if (ripple !== null) {
+    $('#ripple').style.left = p.x + 'px';
+    $('#ripple').style.top = p.y + 'px';
+    $('#ripple').style.transform = `scale(${0.3 + out(ripple) * 0.9})`;
+    $('#ripple').style.opacity = (1 - ripple) * 0.7;
+  }
+
+  // End card, then back to the plain photo for the hand-off to the site.
+  const e1 = io(prog(t, W('chair', 'Dzbanek') - 0.1, W('chair', 'Dzbanek') + 0.5));
+  const e2 = io(prog(t, W('chair', "It's") - 0.05, W('chair', "It's") + 0.45));
+  const e3 = io(prog(t, W('chair', 'Pull') - 0.05, W('chair', 'Pull') + 0.5));
+  const eOut = 1 - io(prog(t, end - 1.5, end - 0.35));
+  $('#end').style.opacity = e1 * eOut;
+  $('#end').style.transform = `translateY(${(1 - e1) * 20}px)`;
+  $('#endfree').style.opacity = e2;
+  $('#endchair').style.opacity = e3;
+  $('#endchair').style.transform = `translateY(${(1 - e3) * 10}px) rotate(-2deg)`;
+  $('#endcta').style.opacity = e3;
+}
+
+window.render = render;
+window.SFX_EVENTS = SFX.filter(([at]) => at >= 0 && at <= TL.duration).sort((a, b) => a[0] - b[0]);
+window.CHAPTERS = [['kitchen', 0], ['music', SC.music.start], ['radio', SC.radio.start], ['board', SC.board.start], ['deals', SC.deals.start], ['welcome', SC.welcome.start], ['chair', SC.chair.start]];
+// Selector targets become window coordinates, measured at the moment each one is used.
+function centerOf(sel, at) {
+  render(at);
+  const win = $('#win').getBoundingClientRect();
+  const k = win.width / 1600;
+  const r = document.querySelector(sel).getBoundingClientRect();
+  return [(r.left + r.width / 2 - win.left) / k, (r.top + r.height / 2 - win.top) / k];
+}
+function resolveTargets() {
+  for (const row of CUR) {
+    if (typeof row[1] !== 'string') continue;
+    const [x, y] = centerOf(row[1], Math.min(row[0] + 0.3, T0.chair));
+    row.splice(1, 1, x, y);
+  }
+  // The chat column runs from x 312 to 1360 in window coordinates.
+  for (const row of CAM) {
+    if (typeof row[1] !== 'string') continue;
+    const [ex, y] = centerOf(row[1], Math.min(row[0] + 0.3, T0.chair));
+    const hw = 960 / row[2];
+    const x = hw * 2 <= 1048 ? clamp(ex, 312 + hw, 1360 - hw) : 836;
+    row.splice(1, 1, x, y);
+  }
+}
+window.ready = Promise.all([document.fonts.ready, ...Array.from(document.images).map((i) => i.decode().catch(() => {}))]).then(() => { resolveTargets(); render(0); });
+</script>
+</body>
+</html>

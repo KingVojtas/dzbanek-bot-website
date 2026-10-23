@@ -1,0 +1,10 @@
+{
+  "name": "dzbanek-ad-tools",
+  "private": true,
+  "type": "module",
+  "description": "Renders the Dzbanek ad: voice, timeline, frames, sound and the final encodes.",
+  "dependencies": {
+    "msedge-tts": "^2.1.0",
+    "puppeteer-core": "^23.11.1"
+  }
+}

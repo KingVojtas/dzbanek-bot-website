@@ -18,16 +18,9 @@ Four static pages and a 404, one stylesheet, vanilla JavaScript. No framework an
 
 Every card, the demo channel, and the vote are examples that run in the browser tab. The clock is the only live thing, and it is the browser's own Europe/Prague time.
 
-English is in the HTML. Czech is in `src/js/locales/cs.js`. The header switches language and light/dark. The night theme matches the kitchen photos copied from the bot (`assets/kitchen-hero.jpg`, `assets/kitchen-thumb.jpg`). `assets/avatar.jpg` (128 px) and `assets/kitchen-square.jpg` (640 px) are smaller copies of the thumb for avatars and cards. The thumb itself is only their source, so the build leaves it out of `dist/`. The `.webp` files next to the JPGs are what browsers load first, and the JPGs are the fallback. `assets/fonts/` holds the self-hosted Fraunces, Outfit, and JetBrains Mono (latin and latin-ext, which has the Czech letters). `assets/dzbanek.svg` is the favicon.
+English is in the HTML. Czech is in `src/js/locales/cs.js`. The header switches language and light/dark. The night theme matches the kitchen photos copied from the bot (`assets/kitchen-hero.jpg`, `assets/kitchen-thumb.jpg`). `assets/avatar.jpg` (128 px) and `assets/kitchen-square.jpg` (640 px) are smaller copies of the thumb for avatars and cards. The thumb itself is only their source, so the build leaves it out of `dist/`. The `.webp` files next to the JPGs are what browsers load first, and the JPGs are the fallback. `assets/fonts/` holds the self-hosted Fraunces, Outfit, JetBrains Mono, and Caveat for the handwriting (latin and latin-ext, which has the Czech letters). `assets/dzbanek.svg` is the favicon.
 
-The home hero plays the 52-second Dzbanek ad (`src/js/film.js`). Its first frame is `kitchen-hero.jpg`, so the photo seems to start moving. On the first visit of a browser session it starts muted, since browsers only allow sound after a click; "Turn on sound" restarts it with the voice-over and captions. It skips the autoplay for `prefers-reduced-motion` and data saver, and the round sticker plays it with sound. `assets/ad/` holds a 1080p and a 720p H.264 encode (phones get the 720p) and EN / CS captions. `og:video` on the home page points at the 720p file, so a pasted link plays the ad in Discord. The encodes come from the ad's silent master plus the finished mix's audio:
-
-```bash
-ffmpeg -i video-silent.mp4 -i dzbanek-ad.mp4 -map 0:v:0 -map 1:a:0 \
-  -vf "scale=1920:1080:in_range=full:out_range=tv,format=yuv420p" \
-  -c:v libx264 -preset slow -crf 23 -c:a copy -shortest -movflags +faststart assets/ad/dzbanek-ad-1080.mp4
-# the same with scale=1280:720:flags=lanczos and -crf 24 for dzbanek-ad-720.mp4
-```
+The home hero plays the 54-second Dzbanek ad (`src/js/film.js`). Its first frame is `kitchen-hero.jpg` and so is its last, so the photo seems to start moving and the ad hands back to the hero without a jump. On the first visit of a browser session it starts muted, since browsers only allow sound after a click; "Turn on sound" restarts it with the voice-over and captions. It skips the autoplay for `prefers-reduced-motion` and data saver, and the round sticker plays it with sound. `assets/ad/` holds a 1080p and a 720p H.264 encode (phones get the 720p) and EN / CS captions. `og:video` on the home page points at the 720p file, so a pasted link plays the ad in Discord. The ad's source, and how to rebuild it, is in `ad/` (see `ad/README.md`).
 
 `scripts/build.mjs` stitches `src/partials/` and `src/pages/` into `dist/`. That folder is what you open, and what GitHub Pages publishes.
 

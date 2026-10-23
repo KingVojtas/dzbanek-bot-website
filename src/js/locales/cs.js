@@ -86,7 +86,7 @@
     },
     film: {
       label: 'Trailer Dzbanka',
-      watch: 'Pustit se zvukem · 52 s ·',
+      watch: 'Pustit se zvukem · 54 s ·',
       again: 'Pustit znovu · se zvukem ·',
       watchAria: 'Pustit trailer se zvukem',
       againAria: 'Pustit trailer znovu se zvukem',

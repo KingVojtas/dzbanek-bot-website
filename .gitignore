@@ -2,3 +2,11 @@ dist/
 .DS_Store
 Thumbs.db
 *.log
+
+# ad build output (see ad/README.md)
+ad/tools/node_modules/
+ad/stills/
+ad/*.wav
+ad/*.mp4
+ad/cues.json
+ad/captions-*.vtt
