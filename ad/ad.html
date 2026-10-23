@@ -140,6 +140,12 @@ p { margin: 0; }
 .embed .foot { margin-top: 8px; font-size: 12px; color: var(--muted); }
 .fields { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px 16px; margin-top: 10px; font-size: 14px; }
 .fields .wide { grid-column: 1 / -1; }
+.embed.greet { max-width: 580px; }
+.greet .fields { display: flex; gap: 10px 28px; }
+.greet .fields b { color: var(--head); }
+.greet .sicon { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #c56b2d; color: var(--head); font-size: 9px; font-weight: 700; }
+.greet .face { display: grid; place-items: center; width: 80px; height: 80px; border-radius: 4px; color: #fff; font-size: 34px; font-weight: 700; }
+.ts { padding: 0 3px; border-radius: 3px; background: rgba(255, 255, 255, 0.06); }
 .fields dt { color: var(--head); font-weight: 700; font-size: 14px; }
 .fields dd { margin: 2px 0 0; color: var(--text); }
 .bar { display: flex; align-items: center; gap: 10px; margin-top: 10px; font: 500 12px var(--ui); color: var(--muted); }
@@ -288,6 +294,7 @@ const PEOPLE = {
   tom: { name: 'Tom', color: '#2f8f6b', init: 'T', role: '#7fd6b0' },
   lukas: { name: 'Lukáš', color: '#3b6fb6', init: 'L', role: '#9cc3ff' },
   ondra: { name: 'Ondra', color: '#b5476a', init: 'O', role: '#ffa3bf' },
+  filip: { name: 'Filip', color: '#6a8f2f', init: 'F', role: '#c3e07f' },
 };
 const av = (who, extra = '') => who === 'bot' ? `<span class="av ${extra}"><img src="assets/bot-avatar.png" alt=""></span>` : `<span class="av ${extra}" style="background:${PEOPLE[who].color}">${PEOPLE[who].init}</span>`;
 const nm = (who) => who === 'bot' ? '<span class="name">Dzbanek</span><span class="app">APP</span>' : `<span class="name" style="color:${PEOPLE[who].role}">${PEOPLE[who].name}</span>`;
@@ -481,12 +488,34 @@ const Wl = {
 };
 VIEW.push([Wl.click + 0.05, 'welcome']);
 SFX.push([Wl.click, 'click']);
-post('welcome', 0, `<div class="sys"><span class="arrow">→</span><p><b>Lukáš</b> hopped into the server. · <span style="font-size:12px">Monday at 19:40</span></p></div>`, null);
-post('welcome', Wl.join, `<div class="sys"><span class="arrow">→</span><p>Everyone welcome <b>Ondra</b>! · <span style="font-size:12px">Today at 21:10</span></p></div>`, 'join');
-const welcomeMsg = post('welcome', Wl.hello, `<div class="msg">
+// The bot's join and leave cards, as in src/greetings/messages.ts of the bot.
+const greet = ({ who, time, bar, title, desc, fields, foot }) => `<div class="msg">
   ${av('bot')}<div>
-  <p class="meta">${nm('bot')}${stamp('Today at 21:10')}</p>
-  <p class="body welcome-body">🍪 Hey <span class="mention">@Ondra</span>! Welcome to the dark side, we have cookies. I'm Dzbanek — grab one, say hi, and don't mind the crumbs. 😈</p>
+  <p class="meta">${nm('bot')}${stamp(time)}</p>
+  <p class="body"><span class="mention">@${PEOPLE[who].name}</span></p>
+  <div class="embed greet" style="--bar:${bar}">
+    <div>
+      <p class="auth"><span class="sicon">TK</span>The Kitchen</p>
+      <p class="ttl">${title}</p>
+      <p class="desc">${desc}</p>
+      <dl class="fields">${fields.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
+      <p class="foot">${foot} • ${time}</p>
+    </div>
+    <span class="face" style="background:${PEOPLE[who].color}">${PEOPLE[who].init}</span>
+  </div>`;
+post('welcome', 0, greet({
+  who: 'filip', time: 'Monday at 19:40', bar: '#6e5846', title: 'Filip left the kitchen',
+  desc: '👋 Hasta la vista, <span class="mention">@Filip</span>! 🕶️🍪<br>We’ll keep a cookie warm in case they come back.',
+  fields: [['Still here', '<b>6</b> people'], ['Sat down', 'May 9, 2025 · <span class="ts">a year ago</span>']],
+  foot: 'The oven stays on',
+}) + '</div></div>', null);
+post('welcome', Wl.join, `<div class="sys"><span class="arrow">→</span><p>Everyone welcome <b>Ondra</b>! · <span style="font-size:12px">Today at 21:10</span></p></div>`, 'join');
+const welcomeMsg = post('welcome', Wl.hello, greet({
+  who: 'ondra', time: 'Today at 21:10', bar: '#c4783a', title: 'Welcome, Ondra',
+  desc: '<span class="welcome-body">🍪 Hey <span class="mention">@Ondra</span>! Welcome to the dark side, we have cookies.<br>I’m Dzbanek — grab one, say hi, and don’t mind the crumbs. 😈</span>',
+  fields: [['In the kitchen', '<b>7</b> people'], ['Joined Discord', 'March 12, 2021 · <span class="ts">5 years ago</span>']],
+  foot: 'Grab a seat',
+}) + `
   <div class="react"><span class="r-cookie">🍪 <b class="r-n">1</b></span><span class="r-wave">👋 <b>2</b></span></div>
   </div></div>`);
 const COOKIE_POPS = [0, 0.18, 0.32, 0.5].map((d) => Wl.cookie + d);
