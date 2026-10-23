@@ -373,7 +373,7 @@ kbd {
   min-height: 3.6rem;
   margin: 0.7rem auto 0;
   padding: 0.35rem 0.4rem 0.35rem 0.5rem;
-  background: color-mix(in srgb, var(--ink) 90%, transparent);
+  background: color-mix(in srgb, var(--ink) 94%, transparent);
   border: 1px solid var(--line);
   border-radius: 999px;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
@@ -381,8 +381,9 @@ kbd {
 }
 
 /* No transition: fading a blurred shadow repaints the header on every frame of the first scroll. */
+/* Solid once content scrolls under it, so headings don't ghost through. */
 .site-header.is-scrolled {
-  background: color-mix(in srgb, var(--ink) 96%, transparent);
+  background: var(--ink);
   border-color: var(--line-strong);
   box-shadow: 0 16px 40px -14px rgba(0, 0, 0, 0.55);
 }
@@ -648,6 +649,37 @@ html:not(.theme-light) .icon-moon {
   background: color-mix(in srgb, var(--clay) 12%, transparent);
 }
 
+/* site.js drops a few cookies in here when a button is pointed at. */
+.crumbs {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.crumbs span {
+  position: absolute;
+  font-size: 1.2rem;
+  line-height: 1;
+  translate: -50% -50%;
+  animation: crumb 0.8s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes crumb {
+  0% {
+    transform: translate(0, 0) scale(0.3) rotate(0deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--spin));
+    opacity: 0;
+  }
+}
+
 /* footer */
 
 .site-footer {
@@ -676,6 +708,18 @@ html:not(.theme-light) .icon-moon {
   max-width: 22rem;
   margin: 1rem 0 1.25rem;
   color: var(--muted);
+}
+
+/* A sign-off, written rather than typed. */
+.footer-brand .signed {
+  width: fit-content;
+  margin: -0.5rem 0 1.4rem;
+  color: var(--accent-text);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  rotate: -2deg;
+  transform-origin: left center;
 }
 
 .footer-actions {
@@ -804,7 +848,7 @@ html:not(.theme-light) .icon-moon {
 /* ---------- components ---------- */
 
 .section {
-  padding: clamp(4rem, 9vw, 7rem) 0;
+  padding: clamp(2.75rem, 5.5vw, 4.25rem) 0;
 }
 
 /* reveal.js marks blocks that are off-screen; their loops wait until you scroll back. */
@@ -1002,11 +1046,22 @@ html:not(.theme-light) .icon-moon {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--clay) 18%, transparent);
 }
 
+/* Uneven on purpose: the words get the wider column, and the example drops a little lower. */
 .split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
   gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
+}
+
+.split.reverse {
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+}
+
+.split > .dc-stage,
+.split > .dc {
+  position: relative;
+  top: 2.5rem;
 }
 
 .split.top {
@@ -1019,8 +1074,13 @@ html:not(.theme-light) .icon-moon {
 
 .duo {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  align-items: start;
   gap: 1.25rem;
+}
+
+.duo > :nth-child(2) {
+  margin-top: 3rem;
 }
 
 .clock-chip {
@@ -1588,24 +1648,6 @@ button.dc-btn[aria-pressed="true"]:hover {
   object-fit: cover;
 }
 
-.hero-lights i {
-  position: absolute;
-  top: 9%;
-  width: 34%;
-  height: 36%;
-  background: radial-gradient(ellipse 50% 42% at 50% 22%, rgba(255, 200, 130, 0.3), transparent 72%);
-  opacity: 0.8;
-  pointer-events: none;
-}
-
-.hero-lights i:nth-child(1) {
-  left: 8%;
-}
-
-.hero-lights i:nth-child(2) {
-  left: 54%;
-}
-
 .steam {
   position: absolute;
   left: 66.5%;
@@ -1652,7 +1694,20 @@ button.dc-btn[aria-pressed="true"]:hover {
   background:
     linear-gradient(180deg, rgba(10, 6, 4, 0.55) 0%, transparent 18%),
     linear-gradient(90deg, rgba(10, 6, 4, 0.86) 0%, rgba(10, 6, 4, 0.55) 34%, transparent 62%),
-    linear-gradient(0deg, rgba(10, 6, 4, 0.9) 0%, rgba(10, 6, 4, 0.2) 38%, transparent 55%);
+    linear-gradient(0deg, rgba(10, 6, 4, 0.9) 0%, rgba(10, 6, 4, 0.2) 38%, transparent 55%),
+    radial-gradient(ellipse 75% 70% at 62% 45%, transparent 55%, rgba(10, 6, 4, 0.5) 100%);
+}
+
+/* Film grain over the photo and the ad, so it reads like a photo someone took, not a render. */
+.hero-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  opacity: 0.32;
+  mix-blend-mode: overlay;
 }
 
 .hero-copy {
@@ -2120,55 +2175,77 @@ button.dc-btn[aria-pressed="true"]:hover {
 
 /* menu cards */
 
+/* Notes pinned to the kitchen board: each one a little crooked, at its own height. */
 .menu-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  counter-reset: card;
+  align-items: start;
+  gap: 1.75rem 1.25rem;
+  padding-top: 0.5rem;
 }
 
 .menu-card {
+  --tilt: -1.8deg;
+  --pin-x: 46%;
   position: relative;
-  overflow: hidden;
-  padding: 1.6rem 1.4rem 1.7rem;
-  border-radius: 1.5rem;
+  padding: 2.1rem 1.4rem 1.6rem;
+  border-radius: 0.3rem 0.45rem 0.7rem 0.25rem;
   border: 1px solid var(--line);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--ink-2) 70%, transparent), var(--ink-2));
-  box-shadow: var(--shadow);
-  counter-increment: card;
-  transition: transform 0.5s var(--spring), border-color 0.45s var(--ease);
+  background: color-mix(in srgb, var(--ink-2), var(--cream) 6%);
+  box-shadow:
+    0 1px 0 rgba(255, 248, 241, 0.04) inset,
+    0 18px 26px -18px rgba(0, 0, 0, 0.7);
+  rotate: var(--tilt);
+  transition: transform 0.5s var(--spring), rotate 0.5s var(--spring), border-color 0.45s var(--ease);
 }
 
+.menu-card:nth-child(2) {
+  --tilt: 1.3deg;
+  --pin-x: 61%;
+  margin-top: 1.6rem;
+}
+
+.menu-card:nth-child(3) {
+  --tilt: -0.5deg;
+  margin-top: 0.3rem;
+}
+
+.menu-card:nth-child(4) {
+  --tilt: 2.2deg;
+  --pin-x: 33%;
+  margin-top: 2.2rem;
+}
+
+/* The pin. */
 .menu-card::before {
-  content: counter(card, decimal-leading-zero);
-  position: absolute;
-  top: 0.6rem;
-  right: 1rem;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 3.6rem;
-  line-height: 1;
-  color: color-mix(in srgb, var(--clay) 18%, transparent);
-}
-
-.menu-card::after {
   content: "";
   position: absolute;
-  inset: -40% -20% auto;
-  height: 80%;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--glow) 18%, transparent), transparent);
-  opacity: 0;
-  transition: opacity 0.5s var(--ease);
-  pointer-events: none;
+  top: 0.65rem;
+  left: var(--pin-x);
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f6c79f, var(--clay) 55%, var(--clay-deep));
+  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.45);
+}
+
+/* The third one ran out of pins and got a strip of tape. */
+.menu-card:nth-child(3)::before {
+  top: -0.6rem;
+  left: 50%;
+  width: 4.6rem;
+  height: 1.3rem;
+  margin-left: -2.3rem;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--cream-soft) 22%, transparent);
+  box-shadow: none;
+  rotate: -4deg;
 }
 
 .menu-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
+  rotate: 0deg;
   border-color: color-mix(in srgb, var(--clay) 50%, transparent);
-}
-
-.menu-card:hover::after {
-  opacity: 1;
 }
 
 .menu-icon,
@@ -2612,29 +2689,26 @@ html.theme-light .chip-vp {
   list-style: none;
 }
 
+/* Wide screens: the steps go down like stairs, so no connecting line. Phones draw one down the side. */
 .steps::before {
   content: "";
+  display: none;
   position: absolute;
-  top: 1.75rem;
-  left: 16%;
-  right: 16%;
-  height: 2px;
-  background: repeating-linear-gradient(90deg, var(--clay) 0 8px, transparent 8px 16px);
   opacity: 0.6;
-  transform: scaleX(0);
-  transform-origin: left;
   transition: transform 1.6s var(--ease) 0.3s;
-}
-
-html:not(.js) .steps::before,
-.steps.is-in::before {
-  transform: scaleX(1);
 }
 
 .step {
   position: relative;
-  text-align: center;
   padding: 0 0.75rem;
+}
+
+.step:nth-child(2) {
+  margin-top: 2.75rem;
+}
+
+.step:nth-child(3) {
+  margin-top: 5.5rem;
 }
 
 .step-num {
@@ -2642,7 +2716,7 @@ html:not(.js) .steps::before,
   place-items: center;
   width: 3.5rem;
   height: 3.5rem;
-  margin: 0 auto 1.25rem;
+  margin: 0 0 1.25rem;
   border-radius: 50%;
   border: 2px solid var(--clay);
   background: var(--ink);
@@ -2655,7 +2729,7 @@ html:not(.js) .steps::before,
 
 .step p {
   max-width: 22rem;
-  margin: 0.6rem auto 0;
+  margin: 0.6rem 0 0;
   color: var(--muted);
 }
 
@@ -2821,7 +2895,7 @@ html.theme-light .steam.small i {
 .dc-app {
   display: flex;
   flex-direction: column;
-  height: clamp(30rem, 72vh, 42rem);
+  height: clamp(28rem, 64vh, 36rem);
   padding: 0;
   overflow: hidden;
   background: var(--dc-bg);
@@ -2872,6 +2946,37 @@ html.theme-light .steam.small i {
 
 .dc-log > :first-child {
   margin-top: auto;
+}
+
+/* What Discord shows at the top of a brand-new channel. */
+.dc-start {
+  padding: 0 0.25rem 1rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--dc-line);
+}
+
+.dc-start-icon {
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  margin-bottom: 0.6rem;
+  border-radius: 50%;
+  background: var(--dc-btn);
+  color: var(--dc-text);
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.dc-start-title {
+  color: var(--dc-text);
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+.dc-start-body {
+  color: var(--dc-text-2);
 }
 
 .dc-log .dc-msg.is-new,
@@ -3571,11 +3676,12 @@ html.js .station:not(.is-tuned) .eq i {
   animation: glow 2s ease-in-out infinite;
 }
 
+/* Under the row's label, where there's room, instead of over the text. */
 .timeline li.is-now::after {
   content: attr(data-now);
   position: absolute;
-  top: 0.95rem;
-  right: 0;
+  top: 2.75rem;
+  left: 1.6rem;
   padding: 0.1rem 0.55rem;
   border-radius: 999px;
   background: var(--clay);
@@ -3994,6 +4100,10 @@ html.js [data-reveal-group].is-in > * {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .duo {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -4061,6 +4171,7 @@ html.js [data-reveal-group].is-in > * {
   }
 
   .split,
+  .split.reverse,
   .hours-split,
   .night-split,
   .faq-split,
@@ -4070,6 +4181,11 @@ html.js [data-reveal-group].is-in > * {
 
   .split.reverse > :first-child {
     order: 0;
+  }
+
+  .split > .dc-stage,
+  .split > .dc {
+    top: 0;
   }
 
   .demo-side {
@@ -4101,6 +4217,17 @@ html.js [data-reveal-group].is-in > * {
 
   .sticky-invite .btn {
     width: 100%;
+  }
+
+  .sticky-invite {
+    transition: translate 0.35s var(--ease), opacity 0.25s var(--ease), visibility 0s;
+  }
+
+  .sticky-invite.is-tucked {
+    translate: 0 calc(100% + 1.5rem);
+    opacity: 0;
+    visibility: hidden;
+    transition: translate 0.35s var(--ease), opacity 0.25s var(--ease), visibility 0s linear 0.35s;
   }
 
   .toast {
@@ -4252,6 +4379,7 @@ html.js [data-reveal-group].is-in > * {
   }
 
   .steps::before {
+    display: block;
     top: 1.75rem;
     bottom: 1.75rem;
     left: 1.75rem;
@@ -4261,6 +4389,18 @@ html.js [data-reveal-group].is-in > * {
     background: repeating-linear-gradient(180deg, var(--clay) 0 8px, transparent 8px 16px);
     transform: scaleY(0);
     transform-origin: top;
+  }
+
+  .step:nth-child(n) {
+    margin-top: 0;
+  }
+
+  .menu-card:nth-child(n) {
+    margin-top: 0;
+  }
+
+  .duo > :nth-child(2) {
+    margin-top: 0;
   }
 
   html:not(.js) .steps::before,
@@ -4322,6 +4462,13 @@ html.js [data-reveal-group].is-in > * {
   .timeline li {
     grid-template-columns: 1fr;
     gap: 0.25rem;
+  }
+
+  /* Here the label has its own line, so the badge sits at the end of it. */
+  .timeline li.is-now::after {
+    top: 0.95rem;
+    left: auto;
+    right: 0;
   }
 
   .btn-group dl > div {

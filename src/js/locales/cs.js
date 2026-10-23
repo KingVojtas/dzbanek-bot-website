@@ -58,6 +58,7 @@
       explore: 'Stránky',
       fine: 'Nemá nic společného s Discordem, Valve, Epic Games ani s žádným z rádií.',
       top: 'Nahoru',
+      signed: 'S ☕ a 🍪 to dělá Sunka',
     },
     meta: {
       homeTitle: 'Dzbanek — pohodový Discord bot na hudbu, české rádio a slevy na hry',
@@ -245,6 +246,8 @@
       title: 'Klidně si tu hraj.',
       lead: 'Tohle je falešný kanál, který běží ve tvém prohlížeči. Napiš / a vyber příkaz, nebo klikni na některý dole. Tlačítka na kartách fungují taky. Nic se neposílá na Discord.',
       topic: 'Falešný kanál. Nic odsud nejde na Discord.',
+      startTitle: 'Vítej v kanálu #kitchen!',
+      startBody: 'Tohle je začátek kanálu #kitchen.',
       logLabel: 'Ukázkový kanál',
       listLabel: 'Příkazy',
       inputLabel: 'Zpráva do #kitchen',

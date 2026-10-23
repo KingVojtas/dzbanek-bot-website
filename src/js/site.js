@@ -97,6 +97,62 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
+  /* ---- phones: the floating invite steps aside while another one is on screen ---- */
+
+  const sticky = document.querySelector('.sticky-invite');
+  if (sticky && 'IntersectionObserver' in window) {
+    const onScreen = new Set();
+    const others = Array.from(document.querySelectorAll('.btn[data-invite]')).filter(
+      (button) => !sticky.contains(button) && !button.closest('.site-header')
+    );
+    const watcher = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) onScreen.add(entry.target);
+        else onScreen.delete(entry.target);
+      });
+      sticky.classList.toggle('is-tucked', onScreen.size > 0);
+    });
+    // Tucked until the first answer, so it slides in rather than flashing on and off.
+    if (others.length) sticky.classList.add('is-tucked');
+    others.forEach((button) => watcher.observe(button));
+  }
+
+  /* ---- a few cookies pop out of a button when you point at it ---- */
+
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!calm && mouse) {
+    const jar = document.createElement('div');
+    jar.className = 'crumbs';
+    jar.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(jar);
+
+    document.addEventListener('pointerover', (event) => {
+      const button = event.target.closest('.btn');
+      if (!button || button.contains(event.relatedTarget)) return;
+      // Once per visit to the button, and not again for a moment.
+      const now = performance.now();
+      if (now - Number(button.dataset.crumbs || 0) < 900) return;
+      button.dataset.crumbs = String(now);
+
+      const box = button.getBoundingClientRect();
+      // Near the top of the screen they'd fly out of sight, so they fall instead.
+      const up = box.top > 70 ? -1 : 1;
+      for (let i = 0; i < 4; i++) {
+        const cookie = document.createElement('span');
+        cookie.textContent = '🍪';
+        cookie.style.left = (box.left + box.width * (0.2 + Math.random() * 0.6)).toFixed(0) + 'px';
+        cookie.style.top = (up < 0 ? box.top + 6 : box.bottom - 6).toFixed(0) + 'px';
+        cookie.style.setProperty('--dx', (Math.random() * 70 - 35).toFixed(0) + 'px');
+        cookie.style.setProperty('--dy', (up * (26 + Math.random() * 30)).toFixed(0) + 'px');
+        cookie.style.setProperty('--spin', (Math.random() * 300 - 150).toFixed(0) + 'deg');
+        cookie.style.animationDelay = i * 45 + 'ms';
+        cookie.addEventListener('animationend', () => cookie.remove());
+        jar.appendChild(cookie);
+      }
+    });
+  }
+
   /* ---- toast + copy ---- */
 
   let toastTimer;

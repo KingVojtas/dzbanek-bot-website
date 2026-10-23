@@ -57,6 +57,7 @@
       explore: 'Pages',
       fine: 'Not affiliated with Discord, Valve, Epic Games, or any of the radio stations.',
       top: 'Back to top',
+      signed: 'Built with ☕ & 🍪 by Sunka',
     },
     meta: {
       homeTitle: 'Dzbanek — a cozy Discord bot for music, Czech radio, and game deals',
@@ -244,6 +245,8 @@
       title: 'Play around with it here.',
       lead: 'This is a fake channel that runs in your browser. Type / and pick a command, or click one below. The buttons on the cards work too. Nothing gets sent to Discord.',
       topic: 'A fake channel. Nothing here reaches Discord.',
+      startTitle: 'Welcome to #kitchen!',
+      startBody: 'This is the start of the #kitchen channel.',
       logLabel: 'Demo channel',
       listLabel: 'Commands',
       inputLabel: 'Message #kitchen',
