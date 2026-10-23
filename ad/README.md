@@ -27,5 +27,5 @@ Then copy the two MP4s and both `.vtt` files into `assets/ad/`, and put the chap
 ## Rules the ad keeps
 
 - Frame 0 is exactly `assets/kitchen-hero.jpg` and the last frame goes back to it, so the hero photo seems to start moving and the ad hands back to the site without a jump.
-- Everything said or shown is something the bot does (see the site copy): six commands, ten Steam deals at 03:33, Epic at 12:00 and 17:00, the Kitchen Board fields, the welcome and goodbye cards.
+- Everything said or shown is something the bot does (see the site copy): the slash commands with their own descriptions, the bot's status line, ten Steam deals at 03:33, Epic at 12:00 and 17:00, the Kitchen Board fields, the welcome and goodbye cards.
 - The songs, games and people in the Discord window are made up.
