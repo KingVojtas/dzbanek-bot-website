@@ -170,7 +170,8 @@ p { margin: 0; }
 .sr-price small, .sr-meta { color: var(--muted); font-size: 12px; }
 .sr-meta { margin-top: 2px; }
 .off { background: #4c6b22; color: #beee11; font: 600 13px "JetBrains Mono", monospace; padding: 0 5px; border-radius: 2px; }
-.free { background: #2f7fd6; color: #fff; font-size: 11px; font-weight: 800; padding: 1px 5px; border-radius: 3px; }
+/* Epic's FREE chip. Not .free: the end card uses that. */
+.free-tag { background: #2f7fd6; color: #fff; font-size: 11px; font-weight: 800; padding: 1px 5px; border-radius: 3px; }
 .sfoot { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.06); color: var(--muted); font-size: 12px; }
 .e-head { color: #00a8fc; font-size: 16px; font-weight: 700; }
 .cover { margin: 10px 0 8px; height: 130px; border-radius: 4px; background: radial-gradient(120% 120% at 20% 20%, #3a5a8c, #1a2238 60%, #0e1220); display: grid; place-items: end start; padding: 12px; color: #fff; font: 700 26px "Fraunces", serif; letter-spacing: -0.01em; }
@@ -210,8 +211,8 @@ p { margin: 0; }
 #end .row { display: flex; align-items: center; gap: 34px; }
 #end img { width: 128px; height: 128px; border-radius: 50%; box-shadow: 0 0 0 4px rgba(255, 196, 119, 0.35), 0 20px 50px rgba(0, 0, 0, 0.6); }
 #end .name { font: 600 140px/1 "Fraunces", serif; letter-spacing: -0.04em; text-shadow: 0 8px 50px rgba(0, 0, 0, 0.6); }
-#end .free { margin-top: 26px; font: 500 34px/1.3 var(--ui); color: rgba(246, 240, 230, 0.9); }
-#end .chair { margin-top: 10px; font: 700 64px/1.1 "Caveat", cursive; color: #ffc477; }
+#end .free { margin-top: 26px; font: 500 34px/1.3 var(--ui); color: rgba(246, 240, 230, 0.92); text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75); }
+#end .chair { margin-top: 10px; font: 700 64px/1.1 "Caveat", cursive; color: #ffc477; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7); }
 #end .cta { justify-self: start; display: inline-flex; align-items: center; margin-top: 30px; height: 64px; padding: 0 34px; border-radius: 999px; background: linear-gradient(180deg, #f0a062, #c56b2d); color: #fff8f1; font: 700 26px var(--ui); box-shadow: 0 14px 34px -8px rgba(197, 107, 45, 0.7); }
 </style>
 </head>
@@ -483,7 +484,7 @@ const epicMsg = post('deals', D.epic + 0.2, `<div class="msg">
     <p class="sr-meta">1 free now · 1 coming next</p>
     <div class="cover">Starbound Atlas</div>
     <p class="sr-name">Starbound Atlas</p>
-    <p class="sr-price"><span class="free">FREE</span><s>$19.99</s></p>
+    <p class="sr-price"><span class="free-tag">FREE</span><s>$19.99</s></p>
     <p class="sr-meta">⏳ Free until Thursday 17:00 · <span class="ts">in 6 days</span></p>
     <div class="btns"><span class="b">Claim Starbound Atlas ↗</span></div>
   </div>
