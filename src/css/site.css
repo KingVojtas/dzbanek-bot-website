@@ -519,7 +519,7 @@ kbd {
   border-radius: 999px;
 }
 
-.lang button,
+.lang a,
 .icon-btn,
 .copy {
   font: inherit;
@@ -529,7 +529,10 @@ kbd {
   cursor: pointer;
 }
 
-.lang button {
+.lang a {
+  display: grid;
+  place-items: center;
+  text-decoration: none;
   min-width: 2.4rem;
   min-height: 2rem;
   border-radius: 999px;
@@ -539,7 +542,7 @@ kbd {
   transition: background 0.35s var(--ease), color 0.35s var(--ease);
 }
 
-.lang button[aria-pressed="true"] {
+.lang a[aria-current="true"] {
   background: var(--clay);
   /* Dark on clay: white would be 2.5:1 at this size. */
   color: #1c110a;
@@ -6149,7 +6152,7 @@ html.js [data-reveal-group].is-in > * {
 }
 
 @media (max-width: 420px) {
-  .lang button {
+  .lang a {
     min-width: 2.1rem;
   }
 

@@ -16,7 +16,8 @@
   const list = root.querySelector('#demo-list');
   const firstMessage = log.innerHTML;
 
-  const AVATAR = 'assets/avatar.jpg';
+  // The same picture the header uses, so it resolves from cs/ too.
+  const AVATAR = document.querySelector('.brand-mark img')?.getAttribute('src') || 'assets/avatar.jpg';
   const SPEED = 10; // one real second plays ten seconds of a song
 
   const STATIONS = {

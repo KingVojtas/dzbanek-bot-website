@@ -19,7 +19,7 @@ Four static pages and a 404, one stylesheet, vanilla JavaScript. No framework an
 
 Every card, the demo channel, and the vote are examples that run in the browser tab. The clock is the only live thing, and it is the browser's own Europe/Prague time.
 
-English is in the HTML. Czech is in `src/js/locales/cs.js`. The header switches language and light/dark. The night theme matches the kitchen photo copied from the bot (`assets/kitchen-hero.jpg`). Every small pitcher on the site is the bot's Discord avatar, made from `ad/assets/bot-avatar.png`: `assets/avatar.jpg` (160 px) for the Discord examples, the navbar and the footer, `assets/avatar-large.*` (435 px) for the invite at the bottom and the 404 page, plus `assets/favicon.png` and `assets/apple-touch-icon.png`. The `.webp` files next to the JPGs are what browsers load first, and the JPGs are the fallback. `assets/fonts/` holds the self-hosted Fraunces, Outfit, JetBrains Mono, and Caveat for the handwriting (latin and latin-ext, which has the Czech letters). The footer's "Last updated" date is the date of the latest commit; the build fills it in.
+English is in the HTML. Czech is in `src/js/locales/cs.js`, and the build writes a Czech copy of every page into `cs/` with it, so `/cs/` is Czech before any script runs and search engines see both (`hreflang` links and `sitemap.xml`). The header switches between the two copies, and light/dark. An old `?lang=` link, the saved choice, or a Czech or Slovak browser picks the copy before the page paints. `404.html` is one page for both languages. `data-i18n` replaces an element’s text, so put it only on elements that hold nothing but text; the build warns when one doesn’t. The night theme matches the kitchen photo copied from the bot (`assets/kitchen-hero.jpg`). Every small pitcher on the site is the bot's Discord avatar, made from `ad/assets/bot-avatar.png`: `assets/avatar.jpg` (160 px) for the Discord examples, the navbar and the footer, `assets/avatar-large.*` (435 px) for the invite at the bottom and the 404 page, plus `assets/favicon.png` and `assets/apple-touch-icon.png`. The `.webp` files next to the JPGs are what browsers load first, and the JPGs are the fallback. `assets/fonts/` holds the self-hosted Fraunces, Outfit, JetBrains Mono, and Caveat for the handwriting (latin and latin-ext, which has the Czech letters). The footer's "Last updated" date is the date of the latest commit; the build fills it in.
 
 The radio plays the stations' public streams, the same ones the bot uses (`src/radio/station.ts` in the bot repo; Rock Radio needs its `https://` address here). Nothing plays until someone presses a key, and the ad mutes itself when the radio starts, and the other way round. The song titles come from radia.cz, which only answers `https://` pages, so on a local `http://` server the radio plays but shows no titles.
 
@@ -60,8 +60,8 @@ This website does not start the bot.
 src/partials/          head, header, footer, icons (inline SVG sprite)
 src/pages/             page content only
 src/css/site.css       wood, cream, and clay: fonts, tokens, chrome, Discord cards, pages, motion
-src/js/i18n.js         EN / CS, ?lang=, localStorage dzbanek_lang
-src/js/theme-boot.js   theme before first paint, adds html.js, and html.film-soon when the ad will autoplay
+src/js/i18n.js         EN / CS strings for what scripts draw, the language switch, localStorage dzbanek_lang
+src/js/theme-boot.js   the right language copy and the theme before first paint, adds html.js, and html.film-soon when the ad will autoplay
 src/js/theme.js        localStorage dzbanek_theme
 src/js/listen.js       the live stations: one player for the page, song info from radia.cz
 src/js/site.js         year, menu, nav pill, the shelf radio, copy buttons, command filter
@@ -74,7 +74,7 @@ scripts/build.mjs
 dist/             generated, not committed
 ```
 
-The top of `scripts/build.mjs` is the single list of public links: `SITE_URL` (where the site is served), the invite URL, and the GitHub URL. `SITE_URL` sets the canonical link, `og:url`, `og:image`, and the asset paths in `404.html`, which GitHub Pages serves at any missing path.
+The top of `scripts/build.mjs` is the single list of public links: `SITE_URL` (where the site is served), the invite URL, and the GitHub URL. `SITE_URL` sets the canonical link, `og:url`, `og:image`, the `hreflang` links, `sitemap.xml`, the home page’s JSON-LD, and the asset paths in `404.html`, which GitHub Pages serves at any missing path.
 
 Pages are HTML comments plus the unique markup. The build fills `{{invite}}`, `{{github}}` and `{{changes}}` and wraps each page in the shared chrome. Script order on every page: `theme-boot.js` in `<head>`, then both locales, `i18n.js`, `listen.js`, `site.js`, `theme.js`, `reveal.js`, `clock.js`. A page can load its own scripts after those with a comment:
 

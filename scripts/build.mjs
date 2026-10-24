@@ -3,9 +3,11 @@
  * Usage: node scripts/build.mjs
  */
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import vm from 'node:vm';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const src = join(root, 'src');
@@ -29,16 +31,77 @@ function field(raw, name) {
   return match ? match[1].trim() : '';
 }
 
+// Run every href, src, poster, and srcset URL in the page through `change`.
+function rewriteUrls(html, change) {
+  return html
+    .replace(/(\s(?:href|src|poster)=")([^"]*)"/g, (_, attr, url) => `${attr}${change(url)}"`)
+    .replace(/(\ssrcset=")([^"]*)"/g, (_, attr, list) =>
+      `${attr}${list.split(',').map((entry) => entry.trim().replace(/^\S+/, change)).join(', ')}"`
+    );
+}
+
 // GitHub Pages serves 404.html at any missing path, so its relative links would
 // resolve against that path. Pin them to the site root instead.
 function rootRelative(html) {
   const base = new URL(SITE_URL).pathname;
-  const pin = (url) => (/^([a-z][a-z0-9+.-]*:|#|\/)/i.test(url) ? url : base + url);
-  return html
-    .replace(/(\s(?:href|src)=")([^"]*)"/g, (_, attr, url) => `${attr}${pin(url)}"`)
-    .replace(/(\ssrcset=")([^"]*)"/g, (_, attr, list) =>
-      `${attr}${list.split(',').map((entry) => entry.trim().replace(/^\S+/, pin)).join(', ')}"`
-    );
+  return rewriteUrls(html, (url) => (/^([a-z][a-z0-9+.-]*:|#|\/)/i.test(url) ? url : base + url.replace(/^\.\//, '')));
+}
+
+// The Czech copy lives in cs/: its page links stay next to it, and the shared files are one folder up.
+function fromSubfolder(html) {
+  return rewriteUrls(html, (url) => (/^(assets|css|js)\//.test(url) ? '../' + url : url));
+}
+
+// The same strings i18n.js uses in the browser, read with a pretend window.
+const locales = (() => {
+  const sandbox = { window: {} };
+  for (const name of ['en', 'cs']) {
+    vm.runInNewContext(readFileSync(join(src, 'js', 'locales', `${name}.js`), 'utf8'), sandbox);
+  }
+  return sandbox.window.DZBANEK_LOCALES;
+})();
+
+function lookup(lang, key) {
+  let node = locales[lang];
+  for (const part of key.split('.')) {
+    if (!node || typeof node !== 'object' || !(part in node)) return null;
+    node = node[part];
+  }
+  return typeof node === 'string' ? node : null;
+}
+
+const t = (lang, key) => lookup(lang, key) ?? lookup('en', key);
+
+// What i18n.js apply() does in the browser, done once here so the Czech copy is Czech before any script runs.
+// data-i18n replaces an element's text, so it only goes on elements that hold nothing but text.
+function translate(html, lang, file) {
+  let done = 0;
+  html = html.replace(
+    /(<([a-z][a-z0-9]*)\b[^>]*?\sdata-i18n="([^"]+)"[^>]*>)([^<]*)(<\/\2>)/g,
+    (whole, open, _tag, key, _text, close) => {
+      done += 1;
+      const value = t(lang, key);
+      return value == null ? whole : open + escapeHtml(value) + close;
+    }
+  );
+  const all = html.match(/\sdata-i18n="/g)?.length ?? 0;
+  if (done !== all) console.warn(`${file}: ${all - done} data-i18n element(s) hold markup, so the build left them in English.`);
+  for (const [from, to] of [
+    ['data-i18n-aria', 'aria-label'],
+    ['data-i18n-alt', 'alt'],
+    ['data-i18n-placeholder', 'placeholder'],
+  ]) {
+    html = html.replace(new RegExp(`<[a-z][^>]*\\s${from}="([^"]+)"[^>]*>`, 'g'), (tag, key) => {
+      const value = t(lang, key);
+      if (value == null) return tag;
+      const attr = `${to}="${escapeHtml(value)}"`;
+      const existing = new RegExp(`\\s${to}="[^"]*"`);
+      return existing.test(tag)
+        ? tag.replace(existing, () => ` ${attr}`)
+        : tag.replace(/\s*\/?>$/, (end) => ` ${attr}${end}`);
+    });
+  }
+  return html;
 }
 
 const head = await readFile(join(src, 'partials', 'head.html'), 'utf8');
@@ -145,16 +208,35 @@ const changes = changesLog(await botCommits());
 const shared = { invite, github, ogImage, updated, updatedIso, changes };
 const pages = (await readdir(join(src, 'pages'))).filter((name) => name.endsWith('.html'));
 
+// English at the root, Czech under cs/. 404.html is one page for both; i18n.js switches it.
+const LANGS = {
+  en: { dir: '', locale: 'en_US' },
+  cs: { dir: 'cs/', locale: 'cs_CZ' },
+};
+const pageUrl = (lang, name) => new URL(LANGS[lang].dir + name, SITE_URL).href;
+// Search engines read this on the home page: what Dzbanek is, that it's free, and where to add it.
+const jsonLd = (lang, description) =>
+  `<script type="application/ld+json">${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Dzbanek',
+    description,
+    applicationCategory: 'EntertainmentApplication',
+    operatingSystem: 'Discord',
+    inLanguage: lang,
+    url: pageUrl(lang, ''),
+    image: ogImage,
+    installUrl: invite,
+    sameAs: [github],
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  }).replace(/</g, '\\u003c')}</script>`;
+const sitemap = [];
+
 for (const file of pages) {
   const raw = await readFile(join(src, 'pages', file), 'utf8');
-  const title = field(raw, 'title') || 'Dzbanek';
-  const description = field(raw, 'description');
   const page = field(raw, 'page') || 'home';
   const missing = file === '404.html';
-  const url = new URL(file === 'index.html' ? '' : file, SITE_URL).href;
-  const canonical = missing
-    ? ''
-    : `<link rel="canonical" href="${url}" />\n  <meta property="og:url" content="${url}" />`;
+  const name = file === 'index.html' ? '' : file;
   const video =
     file === 'index.html'
       ? [
@@ -169,15 +251,57 @@ for (const file of pages) {
   const scripts = field(raw, 'scripts')
     .split(/\s+/)
     .filter(Boolean)
-    .map((name) => `<script src="js/${name}"></script>`)
+    .map((script) => `<script src="js/${script}"></script>`)
     .join('\n');
   const content = raw.replace(/<!--\s*(title|description|page|scripts):[\s\S]*?-->\s*/g, '').trim();
-  const html = `<!DOCTYPE html>
-<html lang="en">
-${fill(head, { ...shared, title, description, canonical, video })}
+  const alternates = missing
+    ? ''
+    : [
+        `<link rel="alternate" hreflang="en" href="${pageUrl('en', name)}" />`,
+        `<link rel="alternate" hreflang="cs" href="${pageUrl('cs', name)}" />`,
+        `<link rel="alternate" hreflang="x-default" href="${pageUrl('en', name)}" />`,
+      ].join('\n  ');
+  if (!missing) sitemap.push(name);
+
+  for (const lang of missing ? ['en'] : ['en', 'cs']) {
+    const other = lang === 'en' ? 'cs' : 'en';
+    const title = lang === 'en' ? field(raw, 'title') || 'Dzbanek' : t(lang, `meta.${page}Title`) || 'Dzbanek';
+    const description = lang === 'en' ? field(raw, 'description') : t(lang, `meta.${page}Description`) || '';
+    const url = pageUrl(lang, name);
+    const canonical = missing
+      ? ''
+      : `<link rel="canonical" href="${url}" />\n  <meta property="og:url" content="${url}" />`;
+    // The switch and theme-boot.js link straight to the other copy of this page. 404.html has none, so it links home.
+    const here = missing ? '' : name;
+    const href = {
+      en: lang === 'en' ? here || './' : '../' + here,
+      cs: lang === 'cs' ? here || './' : 'cs/' + here,
+    };
+    const switches = {
+      hrefEn: href.en,
+      hrefCs: href.cs,
+      currentEn: ` aria-current="${lang === 'en'}"`,
+      currentCs: ` aria-current="${lang === 'cs'}"`,
+    };
+    const htmlAttrs = missing ? '' : ` data-href-en="${href.en}" data-href-cs="${href.cs}"`;
+    const headFill = {
+      ...shared,
+      title: escapeHtml(title),
+      description: escapeHtml(description),
+      canonical,
+      alternates,
+      video,
+      locale: LANGS[lang].locale,
+      localeAlt: LANGS[other].locale,
+      imageAlt: escapeHtml(t(lang, 'hero.alt') || ''),
+      jsonLd: file === 'index.html' ? jsonLd(lang, description) : '',
+    };
+    let html = `<!DOCTYPE html>
+<html lang="${lang}"${htmlAttrs}>
+${fill(head, headFill)}
 <body data-page="${page}">
 ${icons.trim()}
-${fill(header, shared)}
+${fill(header, { ...shared, ...switches })}
 <main id="main" tabindex="-1">
 ${fill(content, shared)}
 </main>
@@ -186,7 +310,38 @@ ${scripts}
 </body>
 </html>
 `;
-  await writeFile(join(dist, file), missing ? rootRelative(html) : html, 'utf8');
+    if (lang !== 'en') html = fromSubfolder(translate(html, lang, file));
+    if (missing) html = rootRelative(html);
+    await mkdir(join(dist, LANGS[lang].dir), { recursive: true });
+    await writeFile(join(dist, LANGS[lang].dir, file), html, 'utf8');
+  }
+}
+
+// Both copies of every page, each naming the other.
+await writeFile(
+  join(dist, 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${sitemap
+  .flatMap((name) =>
+    ['en', 'cs'].map(
+      (lang) => `  <url>
+    <loc>${pageUrl(lang, name)}</loc>
+    <lastmod>${updatedIso}</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="${pageUrl('en', name)}" />
+    <xhtml:link rel="alternate" hreflang="cs" href="${pageUrl('cs', name)}" />
+  </url>`
+    )
+  )
+  .join('\n')}
+</urlset>
+`,
+  'utf8'
+);
+// Crawlers only read robots.txt at the root of a domain, so it only helps once the site has its own.
+if (new URL(SITE_URL).pathname === '/') {
+  const map = new URL('sitemap.xml', SITE_URL).href;
+  await writeFile(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${map}\n`, 'utf8');
 }
 
 await cp(join(src, 'css'), join(dist, 'css'), { recursive: true });
@@ -195,4 +350,4 @@ await cp(join(root, 'assets'), join(dist, 'assets'), { recursive: true });
 // A custom domain, once there is one, travels with the published folder as CNAME.
 await cp(join(root, 'CNAME'), join(dist, 'CNAME')).catch(() => {});
 
-console.log(`Built ${pages.length} pages into dist/`);
+console.log(`Built ${pages.length} pages, ${sitemap.length} of them also in Czech, into dist/`);
