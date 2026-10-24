@@ -80,7 +80,7 @@
     },
     film: {
       label: 'Dzbanek trailer',
-      watch: 'Watch with sound · 54 s ·',
+      watch: 'Watch with sound · 56 s ·',
       again: 'Watch again · with sound ·',
       watchAria: 'Watch the trailer with sound',
       againAria: 'Watch the trailer again with sound',

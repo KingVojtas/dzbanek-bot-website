@@ -15,16 +15,16 @@
   if (!hero || !video) return;
 
   const SEEN = 'dzbanek_film';
-  const LENGTH = 53.833;
+  const LENGTH = 55.933;
   // Where each scene of the ad starts, in seconds.
   const CHAPTERS = [
     { id: 'kitchen', at: 0 },
     { id: 'music', at: 10.15 },
     { id: 'radio', at: 19.445 },
-    { id: 'board', at: 27.592 },
-    { id: 'deals', at: 36.002 },
-    { id: 'welcome', at: 44.206 },
-    { id: 'chair', at: 47.852 },
+    { id: 'board', at: 29.68 },
+    { id: 'deals', at: 38.09 },
+    { id: 'welcome', at: 46.294 },
+    { id: 'chair', at: 49.94 },
   ];
 
   const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -133,7 +133,7 @@
   function labels() {
     hero.dataset.sound = video.muted ? 'off' : 'on';
     soundLabel.textContent = video.muted ? t('film.sound', 'Turn on sound') : t('film.mute', 'Sound off');
-    ring.textContent = seenBefore ? t('film.again', 'Watch again · with sound ·') : t('film.watch', 'Watch with sound · 54 s ·');
+    ring.textContent = seenBefore ? t('film.again', 'Watch again · with sound ·') : t('film.watch', 'Watch with sound · 56 s ·');
     sticker.setAttribute(
       'aria-label',
       seenBefore ? t('film.againAria', 'Watch the trailer again with sound') : t('film.watchAria', 'Watch the trailer with sound')

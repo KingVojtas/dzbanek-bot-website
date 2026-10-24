@@ -3,8 +3,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 1063750,
-        "Duration": 2393750,
+        "Offset": 930830,
+        "Duration": 2526660,
         "text": {
           "Text": "Rather",
           "Length": 6,
@@ -27,8 +27,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 5319160,
-        "Duration": 532080,
+        "Offset": 5186250,
+        "Duration": 665000,
         "text": {
           "Text": "the",
           "Length": 3,
@@ -40,7 +40,7 @@
       "Type": "WordBoundary",
       "Data": {
         "Offset": 5851250,
-        "Duration": 4920000,
+        "Duration": 4521250,
         "text": {
           "Text": "radio",
           "Length": 5,
@@ -51,7 +51,7 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 10771250,
+        "Offset": 10372500,
         "Duration": 2526660,
         "text": {
           "Text": "on",
@@ -63,8 +63,104 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 17686250,
-        "Duration": 4255410,
+        "Offset": 17287080,
+        "Duration": 3590410,
+        "text": {
+          "Text": "Seven",
+          "Length": 5,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 20877500,
+        "Duration": 2792500,
+        "text": {
+          "Text": "live",
+          "Length": 4,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 23670410,
+        "Duration": 7446660,
+        "text": {
+          "Text": "stations",
+          "Length": 8,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 33244580,
+        "Duration": 1728750,
+        "text": {
+          "Text": "from",
+          "Length": 4,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 34973330,
+        "Duration": 5452080,
+        "text": {
+          "Text": "Capital",
+          "Length": 7,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 40425410,
+        "Duration": 1728750,
+        "text": {
+          "Text": "in",
+          "Length": 2,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 42287080,
+        "Duration": 4122500,
+        "text": {
+          "Text": "London",
+          "Length": 6,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 46409580,
+        "Duration": 1196660,
+        "text": {
+          "Text": "to",
+          "Length": 2,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 47606250,
+        "Duration": 5319160,
         "text": {
           "Text": "Kiss",
           "Length": 4,
@@ -75,11 +171,11 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 24467910,
-        "Duration": 3058330,
+        "Offset": 54654160,
+        "Duration": 2393750,
         "text": {
-          "Text": "Rock",
-          "Length": 4,
+          "Text": "and",
+          "Length": 3,
           "BoundaryType": "WordBoundary"
         }
       }
@@ -87,32 +183,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 27659580,
-        "Duration": 5452080,
-        "text": {
-          "Text": "Radio",
-          "Length": 5,
-          "BoundaryType": "WordBoundary"
-        }
-      }
-    },
-    {
-      "Type": "WordBoundary",
-      "Data": {
-        "Offset": 36037080,
-        "Duration": 1462910,
-        "text": {
-          "Text": "or",
-          "Length": 2,
-          "BoundaryType": "WordBoundary"
-        }
-      }
-    },
-    {
-      "Type": "WordBoundary",
-      "Data": {
-        "Offset": 37500000,
-        "Duration": 3590410,
+        "Offset": 57047910,
+        "Duration": 3856250,
         "text": {
           "Text": "Radio",
           "Length": 5,
@@ -123,8 +195,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 41223330,
-        "Duration": 3723330,
+        "Offset": 60904160,
+        "Duration": 3989160,
         "text": {
           "Text": "Beat",
           "Length": 4,
@@ -135,8 +207,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 49335000,
-        "Duration": 4654160,
+        "Offset": 69282080,
+        "Duration": 4521250,
         "text": {
           "Text": "Live",
           "Length": 4,
@@ -147,8 +219,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 56382910,
-        "Duration": 1196660,
+        "Offset": 77526660,
+        "Duration": 1063750,
         "text": {
           "Text": "with",
           "Length": 4,
@@ -159,7 +231,7 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 57579580,
+        "Offset": 78590410,
         "Duration": 797910,
         "text": {
           "Text": "the",
@@ -171,8 +243,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 58377500,
-        "Duration": 4255410,
+        "Offset": 79388330,
+        "Duration": 3723330,
         "text": {
           "Text": "song",
           "Length": 4,
@@ -183,8 +255,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 62632910,
-        "Duration": 1329580,
+        "Offset": 83111660,
+        "Duration": 1196660,
         "text": {
           "Text": "that's",
           "Length": 6,
@@ -195,8 +267,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 63962910,
-        "Duration": 3324160,
+        "Offset": 84441660,
+        "Duration": 3191250,
         "text": {
           "Text": "playing",
           "Length": 7,
@@ -207,7 +279,7 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 67287080,
+        "Offset": 87632910,
         "Duration": 1861660,
         "text": {
           "Text": "right",
@@ -219,8 +291,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 69148750,
-        "Duration": 3324580,
+        "Offset": 89627500,
+        "Duration": 3723330,
         "text": {
           "Text": "now",
           "Length": 3,

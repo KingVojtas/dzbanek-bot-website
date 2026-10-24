@@ -8,7 +8,7 @@ const CS = {
   "Type /play, and whatever you're in the mood for.": "Napiš /play a cokoli, na co máš zrovna chuť.",
   "A YouTube link, a Spotify playlist, or just the name of a song.": "Odkaz z YouTube, playlist ze Spotify, nebo jen název písničky.",
   "Rather have the radio on?": "Radši si pustíš rádio?",
-  "Kiss, Rock Radio, or Radio Beat.": "Kiss, Rock Radio nebo Radio Beat.",
+  "Seven live stations, from Capital in London to Kiss and Radio Beat.": "Sedm živých stanic, od Capitalu v Londýně po Kiss a Radio Beat.",
   "Live, with the song that's playing right now.": "Živě, i s písničkou, která zrovna hraje.",
   "The Kitchen Board is one message that keeps itself up to date.": "Kitchen Board je jedna zpráva, která se sama aktualizuje.",
   "What's playing, who's in voice, and today's best deal.": "Co hraje, kdo je ve voice a nejlepší sleva dne.",

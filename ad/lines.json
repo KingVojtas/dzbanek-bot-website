@@ -2,7 +2,7 @@
  {"id": "kitchen", "say": "Every Discord server has a kitchen. The channel where everyone ends up."},
  {"id": "intro", "say": "This is Dzbahnek. It keeps the kitchen going."},
  {"id": "music", "say": "Type slash play, and whatever you're in the mood for. A YouTube link, a Spotify playlist, or just the name of a song."},
- {"id": "radio", "say": "Rather have the radio on? Kiss, Rock Radio, or Radio Beat. Live, with the song that's playing right now."},
+ {"id": "radio", "say": "Rather have the radio on? Seven live stations, from Capital in London to Kiss and Radio Beat. Live, with the song that's playing right now."},
  {"id": "board", "say": "The Kitchen Board is one message that keeps itself up to date. What's playing, who's in voice, and today's best deal."},
  {"id": "deals", "say": "Every morning at three thirty-three, ten Steam deals worth a look. And Epic's free games, as soon as they drop."},
  {"id": "welcome", "say": "And when somebody new walks in? They get a cookie."},

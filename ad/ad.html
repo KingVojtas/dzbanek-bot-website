@@ -391,8 +391,8 @@ const R = {
   word: [SC.radio.start + 0.36, SC.radio.start + 0.82],
   sub: SC.radio.start + 1.0,
   station: W('radio', 'radio') + 0.1,
+  capital: W('radio', 'Capital'),
   kiss: W('radio', 'Kiss'),
-  rock: W('radio', 'Rock'),
   beat: W('radio', 'Beat'),
 };
 R.enter = R.beat + 0.38;
@@ -600,9 +600,11 @@ function composer(t) {
       const list = COMMANDS.filter(([n]) => n.startsWith(word));
       popup = `<p class="ph-head">Commands matching /${word}</p>` + list.map(([n, d], i) => `<div class="item ${i === 0 ? 'on' : ''}"><img src="assets/bot-avatar.png" alt=""><b>/${n}</b><span>${d}</span><span class="src">Dzbanek</span></div>`).join('');
     } else {
-      const choices = [['kiss', 'Kiss Radio', R.kiss], ['rock', 'Rock Radio', R.rock], ['beat', 'Radio Beat', R.beat]];
+      // The bot's seven choices in /radio order. The highlight follows the voice: Capital, then Kiss, then Beat.
+      const choices = [['kiss', 'Kiss', R.kiss], ['rock', 'Rock Radio'], ['beat', 'Radio Beat', R.beat], ['frekvence1', 'Frekvence 1'], ['heart', 'Heart London'], ['capital', 'Capital London', R.capital], ['paradise', 'Radio Paradise']];
       let on = -1;
-      choices.forEach(([, , at], i) => { if (t >= at) on = i; });
+      let last = -Infinity;
+      choices.forEach(([, , at], i) => { if (at !== undefined && t >= at && at > last) { on = i; last = at; } });
       const picked = t >= R.beat + 0.22;
       html = `<span class="pill">/radio play</span><span class="opt">station</span><span class="optval">${picked ? 'Radio Beat' : ''}${caret}</span>`;
       if (t >= R.station && !picked) popup = `<p class="ph-head">station</p>` + choices.map(([, label], i) => `<div class="item ${i === on ? 'on' : ''}"><b>${label}</b></div>`).join('');
