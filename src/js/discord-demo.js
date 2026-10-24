@@ -900,7 +900,7 @@
           embed({
             bar: '#c4783a',
             author: '🍪 What’s cooking',
-            desc: 'Dzbanek plays YouTube and Spotify, streams Czech radio live, posts Steam deals and Epic freebies, pings you when your Steam wishlist goes on sale, and keeps the Kitchen Board up to date.',
+            desc: 'Dzbanek plays YouTube and Spotify, streams live radio from Prague, London and California, posts Steam deals and Epic freebies, pings you when your Steam wishlist goes on sale, and keeps the Kitchen Board up to date.',
             children: groups.map(([title, names]) =>
               h('div', { class: 'dc-help-group' }, h('p', { class: 'dc-help-title', text: title }), h('p', { class: 'dc-help-cmds' }, names.map((name) => h('code', { text: name }))))
             ),

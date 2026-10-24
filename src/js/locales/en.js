@@ -56,7 +56,7 @@
     },
     meta: {
       homeTitle: 'Dzbanek: Discord bot for music, live radio and game deals',
-      homeDescription: 'Dzbanek plays music, streams Czech and London radio, and posts Steam deals and Epic freebies to your Discord server. Free, no premium tier.',
+      homeDescription: 'Dzbanek plays music, streams radio from Prague, London and California, and posts Steam deals and Epic freebies to your Discord server. Free, no premium tier.',
       commandsTitle: 'Commands · Dzbanek',
       commandsDescription:
         'The main slash commands, plus what every button on the cards does. You can try them right on the page.',

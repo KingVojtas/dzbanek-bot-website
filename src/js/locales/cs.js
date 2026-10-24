@@ -57,7 +57,7 @@
     },
     meta: {
       homeTitle: 'Dzbanek: Discord bot na hudbu, živá rádia a slevy na hry',
-      homeDescription: 'Dzbanek hraje hudbu, pouští česká a londýnská rádia a posílá slevy ze Steamu a hry zdarma z Epicu na tvůj Discord server. Zdarma, bez placené verze.',
+      homeDescription: 'Dzbanek hraje hudbu, pouští rádia z Prahy, Londýna a Kalifornie a posílá slevy ze Steamu a hry zdarma z Epicu na tvůj Discord server. Zdarma, bez placené verze.',
       commandsTitle: 'Příkazy · Dzbanek',
       commandsDescription:
         'Hlavní slash příkazy a k tomu, co dělají tlačítka na kartách. Vyzkoušet si je můžeš rovnou na stránce.',
