@@ -207,7 +207,7 @@
       q3: 'Why can’t music and radio play at the same time?',
       a3: 'Discord gives a bot one voice connection per server, so music and radio take turns.',
       q4: 'Is anything on this site live?',
-      a4: 'The clock and the radio. The radio plays the real stations, and the song info comes from radia.cz and Triton, same as in the bot. Heart, Capital and Radio Paradise only name the song inside the stream, which a web page can’t read, so here they show their slogan. The bot itself has no public API, so the Discord cards here are examples.',
+      a4: 'The clock and the radio. The radio plays the real stations, and the song info comes from each station’s own feed: radia.cz, Triton, Global, and Radio Paradise’s stream. The bot itself has no public API, so the Discord cards here are examples.',
       q5: 'Can I host it myself?',
       a5: 'Sure. It’s a Node.js app that needs FFmpeg and Deno, and it runs fine on a home PC or a VPS. The repo has the full setup guide.',
     },

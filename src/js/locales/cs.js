@@ -208,7 +208,7 @@
       q3: 'Proč nemůže hrát hudba a rádio zároveň?',
       a3: 'Discord dá botovi na serveru jen jedno hlasové připojení, takže se hudba a rádio střídají.',
       q4: 'Je tady na webu něco živě?',
-      a4: 'Hodiny a rádio. Rádio hraje skutečné stanice a info o písničkách bere z radia.cz a Tritonu, stejně jako bot. Heart, Capital a Radio Paradise název písničky posílají jen uvnitř streamu, který webová stránka nepřečte, takže tady ukazují svůj slogan. Bot sám veřejné API nemá, takže karty z Discordu jsou tady ukázky.',
+      a4: 'Hodiny a rádio. Rádio hraje skutečné stanice a info o písničkách bere z vlastních zdrojů každé stanice: z radia.cz, Tritonu, Globalu a ze streamu Radia Paradise. Bot sám veřejné API nemá, takže karty z Discordu jsou tady ukázky.',
       q5: 'Můžu si ho hostovat sám?',
       a5: 'Jasně. Je to aplikace v Node.js, která potřebuje FFmpeg a Deno, a v pohodě běží na domácím PC nebo na VPS. Celý návod je v repozitáři.',
     },

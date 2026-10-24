@@ -3,9 +3,9 @@
  * (src/radio/station.ts in the bot), in the bot's /radio order. One player for the whole
  * page, and nothing plays until someone presses a key.
  *
- * Song info comes from radia.cz or Triton's public feed, where the bot reads it too.
- * Heart, Capital and Radio Paradise only name the song inside the stream, which a page
- * can't read, so the site shows their slogan instead.
+ * Song info: radia.cz for the Czech three (where the bot reads it too), Triton's public feed
+ * for Frekvence 1, Global's now-playing socket for Heart and Capital, and for Radio Paradise
+ * the title inside the stream itself (a few kilobytes up to the first ICY metadata block).
  *
  * window.dzbanekRadio: stations, keys, toggle(key), play(key), stop(), nowPlaying(key), onChange(fn).
  * States: off, tuning, on, error.
@@ -47,18 +47,23 @@
       short: 'Heart',
       slogan: 'Turn up the feel good!',
       stream: 'https://media-ssl.musicradio.com/HeartLondonMP3',
+      // Global's id for the station (heraldId on globalplayer.com).
+      global: '91',
     },
     capital: {
       name: 'Capital London',
       short: 'Capital',
       slogan: 'The UK’s No.1 Hit Music Station',
       stream: 'https://media-ssl.musicradio.com/CapitalMP3',
+      global: '27',
     },
     paradise: {
       name: 'Radio Paradise',
       short: 'Paradise',
       slogan: 'Human curated radio',
       stream: 'https://stream.radioparadise.com/mp3-128',
+      // Its stream answers this page's requests and sends the song every 16000 bytes.
+      icy: true,
     },
   };
   const KEYS = Object.keys(STATIONS);
@@ -99,12 +104,92 @@
     return title ? { artist: prop('track_artist_name'), title, cover: '' } : null;
   }
 
-  // What's on air right now, or null when nobody says (talk shows, ads, a hiccup, or no feed at all).
+  // Global's player gets Heart and Capital's songs over one socket. It opens the first time it's
+  // needed, keeps the latest track for each station, and opens again after it drops.
+  const globalSongs = new Map();
+  let globalSocket = null;
+
+  function globalSubscribe(id) {
+    if (globalSocket && globalSocket.readyState === WebSocket.OPEN) {
+      globalSocket.send(JSON.stringify({ actions: [{ type: 'subscribe', service: id }] }));
+    }
+  }
+
+  function fromGlobal(id) {
+    if (!globalSocket || globalSocket.readyState > WebSocket.OPEN) {
+      globalSocket = new WebSocket('wss://metadata.musicradio.com/v2/now-playing');
+      globalSocket.addEventListener('open', () => Array.from(globalSongs.keys()).forEach(globalSubscribe));
+      globalSocket.addEventListener('message', (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          const now = data.now_playing;
+          if (!data.service) return;
+          globalSongs.set(
+            String(data.service),
+            now && now.type === 'track' && now.title ? { artist: now.artist || '', title: now.title, cover: now.artwork || '' } : null
+          );
+        } catch (e) {
+          /* not a now-playing message */
+        }
+      });
+    }
+    if (!globalSongs.has(id)) {
+      globalSongs.set(id, undefined);
+      globalSubscribe(id);
+    }
+    // The first answer takes a moment; after that the latest one is already here.
+    return new Promise((resolve) => {
+      let waited = 0;
+      const check = () => {
+        const found = globalSongs.get(id);
+        if (found !== undefined || waited >= 5000) return resolve(found || null);
+        waited += 250;
+        setTimeout(check, 250);
+      };
+      check();
+    });
+  }
+
+  // Radio Paradise: read the stream up to its first metadata block (icy-metaint is 16000) and stop.
+  async function fromIcy(url) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch(url, { headers: { 'Icy-MetaData': '1' }, cache: 'no-store', signal: controller.signal });
+      if (!response.ok || !response.body) return null;
+      const reader = response.body.getReader();
+      const INTERVAL = 16000;
+      const bytes = new Uint8Array(INTERVAL + 1 + 255 * 16);
+      let have = 0;
+      let need = INTERVAL + 1;
+      while (have < need) {
+        const { value, done } = await reader.read();
+        if (done) return null;
+        const take = Math.min(value.length, bytes.length - have);
+        bytes.set(value.subarray(0, take), have);
+        have += take;
+        if (have > INTERVAL) need = INTERVAL + 1 + bytes[INTERVAL] * 16;
+      }
+      const meta = new TextDecoder().decode(bytes.subarray(INTERVAL + 1, need));
+      const title = (meta.match(/StreamTitle='(.*?)';/) || [])[1] || '';
+      const cover = (meta.match(/StreamUrl='(https?:\/\/[^']+\.(?:jpe?g|png|webp)(?:\?[^']*)?)';/i) || [])[1] || '';
+      const [artist, ...rest] = title.split(' - ');
+      if (!title) return null;
+      return rest.length ? { artist: artist.trim(), title: rest.join(' - ').trim(), cover } : { artist: '', title: title.trim(), cover };
+    } finally {
+      clearTimeout(timeout);
+      controller.abort();
+    }
+  }
+
+  // What's on air right now, or null when nobody says (talk shows, ads, a hiccup).
   async function nowPlaying(key) {
     const station = STATIONS[key];
     if (!station) return null;
     try {
       if (station.triton) return await fromTriton(station.triton);
+      if (station.global) return await fromGlobal(station.global);
+      if (station.icy) return await fromIcy(station.stream);
       if (!station.now) return null;
       const response = await fetch(station.now, { cache: 'no-store' });
       if (!response.ok) return null;
