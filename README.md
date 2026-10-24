@@ -76,6 +76,8 @@ dist/             generated, not committed
 
 The top of `scripts/build.mjs` is the single list of public links: `SITE_URL` (where the site is served), the invite URL, and the GitHub URL. `SITE_URL` sets the canonical link, `og:url`, `og:image`, the `hreflang` links, `sitemap.xml`, the home page’s JSON-LD, and the asset paths in `404.html`, which GitHub Pages serves at any missing path.
 
+After building, `scripts/check.mjs` checks `dist/` and fails the build (and so the deploy) when a string is in one locale file and not the other, a page or script uses a key `en.js` doesn’t have, or a link points at a file or `#id` that isn’t there. It warns when the bot has a change newer than the home page’s “What’s cooking”. Run it alone with `node scripts/check.mjs`. The build also adds `?v=` and a short hash of the file to every CSS and JS link, so a deploy reaches returning visitors at once.
+
 Pages are HTML comments plus the unique markup. The build fills `{{invite}}`, `{{github}}` and `{{changes}}` and wraps each page in the shared chrome. Script order on every page: `theme-boot.js` in `<head>`, then both locales, `i18n.js`, `listen.js`, `site.js`, `theme.js`, `reveal.js`, `clock.js`. A page can load its own scripts after those with a comment:
 
 ```html

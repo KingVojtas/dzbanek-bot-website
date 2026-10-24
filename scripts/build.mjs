@@ -3,11 +3,12 @@
  * Usage: node scripts/build.mjs
  */
 import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import vm from 'node:vm';
+import { check, report } from './check.mjs';
+import { loadLocales } from './locales.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const src = join(root, 'src');
@@ -52,14 +53,8 @@ function fromSubfolder(html) {
   return rewriteUrls(html, (url) => (/^(assets|css|js)\//.test(url) ? '../' + url : url));
 }
 
-// The same strings i18n.js uses in the browser, read with a pretend window.
-const locales = (() => {
-  const sandbox = { window: {} };
-  for (const name of ['en', 'cs']) {
-    vm.runInNewContext(readFileSync(join(src, 'js', 'locales', `${name}.js`), 'utf8'), sandbox);
-  }
-  return sandbox.window.DZBANEK_LOCALES;
-})();
+// The same strings i18n.js uses in the browser.
+const locales = loadLocales(src);
 
 function lookup(lang, key) {
   let node = locales[lang];
@@ -203,7 +198,24 @@ function changesLog(commits) {
 <p class="log-since"><span data-i18n="changes.since">Cooking since</span> <time datetime="${first}">${dotted(first)}</time></p>`;
 }
 
-const changes = changesLog(await botCommits());
+const commits = await botCommits();
+const changes = changesLog(commits);
+
+// css/site.css?v=1a2b3c4d: a returning visitor gets the new file right after a deploy, not a cached mix.
+const versions = new Map();
+async function hashFiles(dir, prefix) {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) await hashFiles(path, `${prefix}${entry.name}/`);
+    else versions.set(prefix + entry.name, createHash('sha256').update(await readFile(path)).digest('hex').slice(0, 8));
+  }
+}
+await hashFiles(join(src, 'css'), 'css/');
+await hashFiles(join(src, 'js'), 'js/');
+const versioned = (html) =>
+  html.replace(/(\s(?:href|src)="[^"?]*?)((?:css|js)\/[^"?]+)"/g, (whole, start, path) =>
+    versions.has(path) ? `${start}${path}?v=${versions.get(path)}"` : whole
+  );
 
 const shared = { invite, github, ogImage, updated, updatedIso, changes };
 const pages = (await readdir(join(src, 'pages'))).filter((name) => name.endsWith('.html'));
@@ -312,6 +324,7 @@ ${scripts}
 `;
     if (lang !== 'en') html = fromSubfolder(translate(html, lang, file));
     if (missing) html = rootRelative(html);
+    html = versioned(html);
     await mkdir(join(dist, LANGS[lang].dir), { recursive: true });
     await writeFile(join(dist, LANGS[lang].dir, file), html, 'utf8');
   }
@@ -351,3 +364,6 @@ await cp(join(root, 'assets'), join(dist, 'assets'), { recursive: true });
 await cp(join(root, 'CNAME'), join(dist, 'CNAME')).catch(() => {});
 
 console.log(`Built ${pages.length} pages, ${sitemap.length} of them also in Czech, into dist/`);
+
+const newestBotDate = commits.find((commit) => !QUIET.test(commit.subject))?.date;
+if (!report(check({ root, dist, siteUrl: SITE_URL, newestBotDate }))) process.exitCode = 1;
