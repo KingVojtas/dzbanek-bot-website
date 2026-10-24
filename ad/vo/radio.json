@@ -3,8 +3,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 930830,
-        "Duration": 2526660,
+        "Offset": 1063750,
+        "Duration": 2127500,
         "text": {
           "Text": "Rather",
           "Length": 6,
@@ -15,8 +15,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 3457500,
-        "Duration": 1728750,
+        "Offset": 3191660,
+        "Duration": 1462500,
         "text": {
           "Text": "have",
           "Length": 4,
@@ -27,7 +27,7 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 5186250,
+        "Offset": 4654160,
         "Duration": 665000,
         "text": {
           "Text": "the",
@@ -39,8 +39,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 5851250,
-        "Duration": 4521250,
+        "Offset": 5319160,
+        "Duration": 4388330,
         "text": {
           "Text": "radio",
           "Length": 5,
@@ -51,8 +51,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 10372500,
-        "Duration": 2526660,
+        "Offset": 9707500,
+        "Duration": 2260830,
         "text": {
           "Text": "on",
           "Length": 2,
@@ -63,8 +63,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 17287080,
-        "Duration": 3590410,
+        "Offset": 16356250,
+        "Duration": 3058330,
         "text": {
           "Text": "Seven",
           "Length": 5,
@@ -75,8 +75,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 20877500,
-        "Duration": 2792500,
+        "Offset": 19547910,
+        "Duration": 2393750,
         "text": {
           "Text": "live",
           "Length": 4,
@@ -87,8 +87,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 23670410,
-        "Duration": 7446660,
+        "Offset": 21941660,
+        "Duration": 6782080,
         "text": {
           "Text": "stations",
           "Length": 8,
@@ -99,68 +99,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 33244580,
-        "Duration": 1728750,
-        "text": {
-          "Text": "from",
-          "Length": 4,
-          "BoundaryType": "WordBoundary"
-        }
-      }
-    },
-    {
-      "Type": "WordBoundary",
-      "Data": {
-        "Offset": 34973330,
-        "Duration": 5452080,
-        "text": {
-          "Text": "Capital",
-          "Length": 7,
-          "BoundaryType": "WordBoundary"
-        }
-      }
-    },
-    {
-      "Type": "WordBoundary",
-      "Data": {
-        "Offset": 40425410,
-        "Duration": 1728750,
-        "text": {
-          "Text": "in",
-          "Length": 2,
-          "BoundaryType": "WordBoundary"
-        }
-      }
-    },
-    {
-      "Type": "WordBoundary",
-      "Data": {
-        "Offset": 42287080,
-        "Duration": 4122500,
-        "text": {
-          "Text": "London",
-          "Length": 6,
-          "BoundaryType": "WordBoundary"
-        }
-      }
-    },
-    {
-      "Type": "WordBoundary",
-      "Data": {
-        "Offset": 46409580,
-        "Duration": 1196660,
-        "text": {
-          "Text": "to",
-          "Length": 2,
-          "BoundaryType": "WordBoundary"
-        }
-      }
-    },
-    {
-      "Type": "WordBoundary",
-      "Data": {
-        "Offset": 47606250,
-        "Duration": 5319160,
+        "Offset": 32845830,
+        "Duration": 5053330,
         "text": {
           "Text": "Kiss",
           "Length": 4,
@@ -171,8 +111,104 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 54654160,
-        "Duration": 2393750,
+        "Offset": 40292500,
+        "Duration": 2925410,
+        "text": {
+          "Text": "Rock",
+          "Length": 4,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 43217910,
+        "Duration": 6382910,
+        "text": {
+          "Text": "Radio",
+          "Length": 5,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 52526660,
+        "Duration": 5717910,
+        "text": {
+          "Text": "Frekventseh",
+          "Length": 11,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 58377500,
+        "Duration": 3723330,
+        "text": {
+          "Text": "1",
+          "Length": 1,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 65159580,
+        "Duration": 3856250,
+        "text": {
+          "Text": "Heart",
+          "Length": 5,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 71143750,
+        "Duration": 5186250,
+        "text": {
+          "Text": "Capital",
+          "Length": 7,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 79122500,
+        "Duration": 3324160,
+        "text": {
+          "Text": "Radio",
+          "Length": 5,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 82446660,
+        "Duration": 7047910,
+        "text": {
+          "Text": "Paradise",
+          "Length": 8,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 89760830,
+        "Duration": 1462910,
         "text": {
           "Text": "and",
           "Length": 3,
@@ -183,7 +219,7 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 57047910,
+        "Offset": 91356250,
         "Duration": 3856250,
         "text": {
           "Text": "Radio",
@@ -195,8 +231,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 60904160,
-        "Duration": 3989160,
+        "Offset": 95345830,
+        "Duration": 4122500,
         "text": {
           "Text": "Beat",
           "Length": 4,
@@ -207,8 +243,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 69282080,
-        "Duration": 4521250,
+        "Offset": 103856250,
+        "Duration": 4388330,
         "text": {
           "Text": "Live",
           "Length": 4,
@@ -219,7 +255,7 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 77526660,
+        "Offset": 110638330,
         "Duration": 1063750,
         "text": {
           "Text": "with",
@@ -231,7 +267,7 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 78590410,
+        "Offset": 111835000,
         "Duration": 797910,
         "text": {
           "Text": "the",
@@ -243,8 +279,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 79388330,
-        "Duration": 3723330,
+        "Offset": 112765830,
+        "Duration": 4521250,
         "text": {
           "Text": "song",
           "Length": 4,
@@ -255,7 +291,7 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 83111660,
+        "Offset": 117287080,
         "Duration": 1196660,
         "text": {
           "Text": "that's",
@@ -267,8 +303,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 84441660,
-        "Duration": 3191250,
+        "Offset": 118617080,
+        "Duration": 3590410,
         "text": {
           "Text": "playing",
           "Length": 7,
@@ -279,8 +315,8 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 87632910,
-        "Duration": 1861660,
+        "Offset": 122340410,
+        "Duration": 1994580,
         "text": {
           "Text": "right",
           "Length": 5,
@@ -291,7 +327,7 @@
     {
       "Type": "WordBoundary",
       "Data": {
-        "Offset": 89627500,
+        "Offset": 124467910,
         "Duration": 3723330,
         "text": {
           "Text": "now",

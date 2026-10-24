@@ -6377,3 +6377,28 @@ html.js [data-reveal-group].is-in > * {
     opacity: 0;
   }
 }
+
+/* The radio ad (radio-film.js): on the home page's radio section and on radio.html. */
+.radio-film {
+  margin: 1.75rem 0 0;
+}
+
+.split .radio-film {
+  margin: 0;
+}
+
+.radio-film video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 1rem;
+  background: #0d0806;
+  box-shadow: var(--shadow);
+}
+
+.radio-film figcaption {
+  margin-top: 0.65rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}

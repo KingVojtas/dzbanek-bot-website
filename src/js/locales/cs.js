@@ -81,7 +81,7 @@
     },
     film: {
       label: 'Trailer Dzbanka',
-      watch: 'Pustit se zvukem · 56 s ·',
+      watch: 'Pustit se zvukem · 59 s ·',
       again: 'Pustit znovu · se zvukem ·',
       watchAria: 'Pustit trailer se zvukem',
       againAria: 'Pustit trailer znovu se zvukem',
@@ -126,6 +126,12 @@
       title: 'Písnička z fronty',
       requested: 'Pustil(a)',
       note: 'Jen ukázka, nic tu nehraje.',
+    },
+    radioFilm: {
+      title: 'Všech sedm na Discordu',
+      body: 'Půl minuty s /radio play: živá karta každé stanice, Catch a páteční hlasování.',
+      caption: '31 sekund, se zvukem. Písničky a lidi jsou vymyšlení, stanice jsou skutečné.',
+      label: 'Reklama na rádio Dzbanku: všech sedm stanic na Discordu',
     },
     radioHome: {
       kicker: 'Rádio',

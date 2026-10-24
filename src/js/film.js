@@ -15,16 +15,16 @@
   if (!hero || !video) return;
 
   const SEEN = 'dzbanek_film';
-  const LENGTH = 55.933;
+  const LENGTH = 59.400;
   // Where each scene of the ad starts, in seconds.
   const CHAPTERS = [
     { id: 'kitchen', at: 0 },
     { id: 'music', at: 10.15 },
     { id: 'radio', at: 19.445 },
-    { id: 'board', at: 29.68 },
-    { id: 'deals', at: 38.09 },
-    { id: 'welcome', at: 46.294 },
-    { id: 'chair', at: 49.94 },
+    { id: 'board', at: 33.164 },
+    { id: 'deals', at: 41.574 },
+    { id: 'welcome', at: 49.778 },
+    { id: 'chair', at: 53.424 },
   ];
 
   const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -133,7 +133,7 @@
   function labels() {
     hero.dataset.sound = video.muted ? 'off' : 'on';
     soundLabel.textContent = video.muted ? t('film.sound', 'Turn on sound') : t('film.mute', 'Sound off');
-    ring.textContent = seenBefore ? t('film.again', 'Watch again · with sound ·') : t('film.watch', 'Watch with sound · 56 s ·');
+    ring.textContent = seenBefore ? t('film.again', 'Watch again · with sound ·') : t('film.watch', 'Watch with sound · 59 s ·');
     sticker.setAttribute(
       'aria-label',
       seenBefore ? t('film.againAria', 'Watch the trailer again with sound') : t('film.watchAria', 'Watch the trailer with sound')
@@ -234,6 +234,14 @@
   }
 
   window.addEventListener('dzbanek:lang', labels);
+
+  // Another video started with sound (the radio ad, radio-film.js): this one goes quiet.
+  document.addEventListener('dzbanek:film-sound', (event) => {
+    if (!event.detail || !event.detail.source || video.muted) return;
+    video.muted = true;
+    captionsOn = false;
+    labels();
+  });
 
   // And the other way round: when the radio starts, the ad goes quiet.
   document.addEventListener('dzbanek:radio', (event) => {

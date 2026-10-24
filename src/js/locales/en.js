@@ -80,7 +80,7 @@
     },
     film: {
       label: 'Dzbanek trailer',
-      watch: 'Watch with sound · 56 s ·',
+      watch: 'Watch with sound · 59 s ·',
       again: 'Watch again · with sound ·',
       watchAria: 'Watch the trailer with sound',
       againAria: 'Watch the trailer again with sound',
@@ -125,6 +125,12 @@
       title: 'A song from the queue',
       requested: 'Requested by',
       note: 'Just an example, not a live player.',
+    },
+    radioFilm: {
+      title: 'All seven, in Discord',
+      body: 'Half a minute of /radio play: every station’s live card, Catch, and the Friday vote.',
+      caption: '31 seconds, with sound. The songs and people are made up; the stations are real.',
+      label: 'The Dzbanek radio ad: all seven stations in Discord',
     },
     radioHome: {
       kicker: 'Radio',

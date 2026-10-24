@@ -1,0 +1,52 @@
+{
+  "Metadata": [
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 930830,
+        "Duration": 5452080,
+        "text": {
+          "Text": "Dzbahnek",
+          "Length": 8,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 10771250,
+        "Duration": 1595830,
+        "text": {
+          "Text": "Turn",
+          "Length": 4,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 12367080,
+        "Duration": 797910,
+        "text": {
+          "Text": "it",
+          "Length": 2,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 13165000,
+        "Duration": 2260830,
+        "text": {
+          "Text": "up",
+          "Length": 2,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    }
+  ]
+}

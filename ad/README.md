@@ -1,6 +1,6 @@
 # The Dzbanek ad
 
-Source for the 56-second ad in the home hero (`assets/ad/`). It isn't part of the site build; `scripts/build.mjs` only publishes `assets/` and `src/`.
+Source for the 59-second ad in the home hero (`assets/ad/`). It isn't part of the site build; `scripts/build.mjs` only publishes `assets/` and `src/`.
 
 The picture is one HTML page, `ad.html`, where `render(t)` puts everything where it belongs at `t` seconds: the kitchen photo, a Discord window, the camera, the pointer and the typing. Chrome renders it frame by frame. All the timing comes from the voice-over, so the picture follows the words.
 
@@ -23,6 +23,24 @@ node tools/encode.mjs .               # 30 fps with motion blur -> dzbanek-ad-10
 Then copy the two MP4s and both `.vtt` files into `assets/ad/`, and put the chapter starts from `cues.json` and the length into `src/js/film.js`.
 
 `vo/` is committed, because the TTS service can change its voices; rerun `tts.mjs` only when the script in `lines.json` changes. `ONLY=radio node tools/tts.mjs vo lines.json` redoes one line. When msedge-tts can’t reach the service (in October 2026 it answered every request with an error), `python tools/tts.py lines.json vo radio` makes the same voice and timings with the Python `edge-tts` client (`pip install edge-tts`). `node tools/render.mjs . stills 0,12.5,30` writes single frames to `stills/` for checking a moment without a full render.
+
+## The radio ad
+
+`radio/` holds a second, 31-second ad about the seven stations, for the radio section on the home page and on `radio.html`. It is built the same way, from its own folder, and shares `ad.css` (the Discord window, the kitchen and the end card) with the main ad:
+
+```bash
+cd radio
+python ../tools/tts.py lines.json vo open    # and czech, world, song, night, end
+node ../tools/timeline.mjs .
+node ../cs-captions.mjs
+node ../tools/render.mjs . cues
+node ../tools/synth.mjs .
+node ../tools/audio.mjs .
+node ../tools/render.mjs . video video-120.mp4 120
+node ../tools/encode.mjs . 0 dzbanek-radio   # dzbanek-radio-1080.mp4, dzbanek-radio-720.mp4
+```
+
+Then copy the two MP4s to `assets/ad/`, the captions as `radio-captions-en.vtt` and `radio-captions-cs.vtt`, and a frame as `dzbanek-radio-poster.jpg`. A line in `lines.json` can set its own `lead` and `tail`, and `synth.mjs` brings the drums in with the second scene and out on the last one.
 
 ## Rules the ad keeps
 

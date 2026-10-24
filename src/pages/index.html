@@ -1,7 +1,7 @@
 <!-- title: Dzbanek: Discord bot for music, live radio and game deals -->
 <!-- description: Dzbanek plays music, streams Czech and London radio, and posts Steam deals and Epic freebies to your Discord server. Free, no premium tier. -->
 <!-- page: home -->
-<!-- scripts: film.js -->
+<!-- scripts: film.js radio-film.js -->
 
 <section class="hero" data-hero>
   <canvas class="film-glow" width="32" height="18" aria-hidden="true"></canvas>
@@ -48,7 +48,7 @@
       <span class="film-ring" aria-hidden="true">
         <svg viewBox="0 0 100 100">
           <defs><path id="film-ring-path" d="M50 50m-39 0a39 39 0 1 1 78 0a39 39 0 1 1 -78 0" /></defs>
-          <text><textPath href="#film-ring-path" textLength="243" lengthAdjust="spacing" data-film-ring>Watch with sound · 56 s ·</textPath></text>
+          <text><textPath href="#film-ring-path" textLength="243" lengthAdjust="spacing" data-film-ring>Watch with sound · 59 s ·</textPath></text>
         </svg>
       </span>
       <span class="film-play" aria-hidden="true"><svg width="26" height="26"><use href="#i-play" /></svg></span>
@@ -145,6 +145,15 @@
       <p class="kicker" data-i18n="radioHome.kicker">Radio</p>
       <h2 data-i18n="radioHome.title">Seven stations, live</h2>
       <p class="lead" data-i18n="radioHome.body">/radio play joins your voice channel and streams one of seven stations: Kiss, Rock Radio, Radio Beat and Frekvence 1 from Czechia, Heart and Capital from London, and Radio Paradise from California. The card shows what’s on and updates when the song changes. Hear something good? Hit Catch to save it, then Play to queue it from YouTube.</p>
+      <figure class="radio-film">
+        <video data-radio-film controls preload="none" playsinline width="1280" height="720" poster="assets/ad/dzbanek-radio-poster.jpg" aria-label="The Dzbanek radio ad: all seven stations in Discord" data-i18n-aria="radioFilm.label">
+          <source src="assets/ad/dzbanek-radio-720.mp4" type="video/mp4" media="(max-width: 900px)" />
+          <source src="assets/ad/dzbanek-radio-1080.mp4" type="video/mp4" />
+          <track kind="captions" srclang="en" label="English" src="assets/ad/radio-captions-en.vtt" />
+          <track kind="captions" srclang="cs" label="Čeština" src="assets/ad/radio-captions-cs.vtt" />
+        </video>
+        <figcaption data-i18n="radioFilm.caption">31 seconds, with sound. The songs and people are made up; the stations are real.</figcaption>
+      </figure>
       <p class="note"><a class="link-arrow" href="radio.html"><span data-i18n="radioHome.more">More about radio</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
     </div>
 

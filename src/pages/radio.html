@@ -1,7 +1,7 @@
 <!-- title: Radio · Dzbanek -->
 <!-- description: Seven live stations in your voice channel, from Kiss and Radio Beat to Capital London and Radio Paradise. Save songs you like with Catch, and vote on Friday’s Radio Night. -->
 <!-- page: radio -->
-<!-- scripts: radio.js -->
+<!-- scripts: radio.js radio-film.js -->
 
 <div class="tuned" data-tuner style="--tuned: var(--beat)">
   <header class="page-hero">
@@ -106,6 +106,26 @@
     </div>
   </section>
 </div>
+
+<section class="section" id="film" aria-labelledby="film-title">
+  <div class="wrap split">
+    <div data-reveal>
+      <h2 id="film-title" data-i18n="radioFilm.title">All seven, in Discord</h2>
+      <p class="lead" data-i18n="radioFilm.body">Half a minute of /radio play: every station’s live card, Catch, and the Friday vote.</p>
+    </div>
+    <div data-reveal>
+      <figure class="radio-film">
+        <video data-radio-film controls preload="none" playsinline width="1280" height="720" poster="assets/ad/dzbanek-radio-poster.jpg" aria-label="The Dzbanek radio ad: all seven stations in Discord" data-i18n-aria="radioFilm.label">
+          <source src="assets/ad/dzbanek-radio-720.mp4" type="video/mp4" media="(max-width: 900px)" />
+          <source src="assets/ad/dzbanek-radio-1080.mp4" type="video/mp4" />
+          <track kind="captions" srclang="en" label="English" src="assets/ad/radio-captions-en.vtt" />
+          <track kind="captions" srclang="cs" label="Čeština" src="assets/ad/radio-captions-cs.vtt" />
+        </video>
+        <figcaption data-i18n="radioFilm.caption">31 seconds, with sound. The songs and people are made up; the stations are real.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="catch">
   <div class="wrap split">

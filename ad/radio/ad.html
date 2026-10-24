@@ -1,0 +1,507 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dzbanek radio ad</title>
+<!-- The Discord window, the kitchen and the end card, shared with the main ad. -->
+<link rel="stylesheet" href="../ad.css">
+<style>
+/* The radio card's station mark, standing in for the logo the bot attaches. */
+.mark { display: grid; place-items: center; width: 80px; height: 80px; border-radius: 4px; color: #fff; font: 800 22px/1 var(--ui); letter-spacing: 0.02em; text-align: center; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12); }
+.rc { transition: none; }
+.rc .live { margin-left: auto; color: #f23f42; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; }
+.rc .slogan { margin-top: 2px; color: var(--muted); font-size: 13px; font-style: italic; }
+.rc .ttl { font-size: 18px; }
+.flash { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); }
+
+/* "Only you can see this" */
+.eph { margin-top: 6px; color: var(--muted); font-size: 12px; }
+.eph b { color: #00a8fc; font-weight: 500; }
+.b.blurple { background: var(--blurple); }
+
+/* The Radio Night vote, as the board's last card draws it. */
+.vote { max-width: 560px; }
+.vote h4 { margin: 2px 0 8px; color: var(--head); font-size: 16px; font-weight: 700; }
+.tally { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.tally li { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.tally code { padding: 1px 6px; border-radius: 3px; background: #1e1f22; color: var(--text); font: 500 14px "JetBrains Mono", monospace; white-space: pre; }
+.tally b { color: var(--head); }
+.tally .crown { visibility: hidden; }
+.tally li.lead .crown { visibility: visible; }
+.vote .sub { margin-top: 8px; color: var(--muted); font-size: 12px; }
+.vb { display: grid; grid-template-columns: repeat(5, max-content); gap: 8px; margin-top: 10px; }
+.vb .b.lead { background: var(--btn-green); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="layer" id="blur"><img src="../assets/kitchen-blur.jpg" alt=""></div>
+  <div class="layer" id="photo"><img src="../../assets/kitchen-hero.jpg" alt=""><div id="wisps"></div></div>
+  <div class="layer" id="shade"></div>
+  <div id="titles"><p class="title-line" id="t1">Seven stations, live.</p><p class="title-sub" id="t2">Right in your voice channel.</p></div>
+
+  <div id="cam">
+    <div id="win">
+      <div class="titlebar"><span>Discord</span><div class="ctrl"><span>&#8212;</span><span>&#9633;</span><span>&#10005;</span></div></div>
+      <div class="shell">
+        <nav class="rail">
+          <div class="srv home"><svg width="28" height="20" viewBox="0 0 28 20"><path fill="#fff" d="M23.7 1.7A23 23 0 0 0 18 0l-.7 1.5a21 21 0 0 0-6.6 0L10 0a23 23 0 0 0-5.7 1.7C.7 7.2-.3 12.5.2 17.7A23 23 0 0 0 7.2 21l1.5-2.4a15 15 0 0 1-2.3-1.1l.6-.4a16.5 16.5 0 0 0 14 0l.6.4c-.7.4-1.5.8-2.3 1.1l1.5 2.4a23 23 0 0 0 7-3.3c.6-6-1-11.3-4.1-16zM9.4 14.5c-1.4 0-2.5-1.3-2.5-2.8s1.1-2.8 2.5-2.8 2.5 1.3 2.5 2.8-1.1 2.8-2.5 2.8zm9.2 0c-1.4 0-2.5-1.3-2.5-2.8s1.1-2.8 2.5-2.8 2.5 1.3 2.5 2.8-1.1 2.8-2.5 2.8z" transform="scale(1 .9)"/></svg></div>
+          <div class="sep"></div>
+          <div class="srv on">TK</div>
+          <div class="srv" style="background:#3b4c6b">GN</div>
+          <div class="srv" style="background:#5b3b5e">LO</div>
+          <div class="srv add">+</div>
+        </nav>
+        <aside class="side">
+          <div class="guild">The Kitchen <span style="font-weight:400">&#8964;</span></div>
+          <div class="chans">
+            <p class="cat">&#8964; Text channels</p>
+            <div class="chan" data-ch="kitchen"><span class="hash">#</span>kitchen</div>
+            <div class="chan" data-ch="board"><span class="hash">#</span>kitchen-board</div>
+            <div class="chan"><span class="hash">#</span>deals</div>
+            <div class="chan"><span class="hash">#</span>welcome</div>
+            <p class="cat">&#8964; Voice channels</p>
+            <div class="chan"><span class="hash" style="font-size:17px">&#128264;</span>Radio corner</div>
+            <div id="vc"></div>
+          </div>
+          <div class="me"><span class="av dot" style="width:32px;height:32px;background:#c56b2d;font-size:13px">S</span><div class="who"><b>Sunka</b><span>Online</span></div><div class="icons"><span>&#127908;</span><span>&#127911;</span><span>&#9881;</span></div></div>
+        </aside>
+        <main class="main">
+          <div class="chathead"><span class="hash">#</span><span id="chname">kitchen</span><span class="topic" id="chtopic"></span></div>
+          <div class="logwrap" id="logs"></div>
+          <div class="composer">
+            <div class="popup" id="popup"></div>
+            <div class="inbox"><span class="plus">+</span><span id="input"></span></div>
+          </div>
+        </main>
+        <aside class="members" id="members"></aside>
+      </div>
+    </div>
+    <div id="ripple"></div>
+    <svg id="cursor" viewBox="0 0 22 30"><path d="M2 2 L2 24 L7.5 18.6 L11.4 27.4 L15 25.8 L11.2 17.2 L19 17.2 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  </div>
+
+  <div id="end"><div class="row"><img src="../assets/bot-avatar.png" alt=""><p class="name">Dzbanek</p></div><p class="free" id="endfree">Seven live stations &nbsp;·&nbsp; Prague, London &amp; California &nbsp;·&nbsp; /radio play</p><p class="chair" id="endchair">Turn it up.</p><span class="cta" id="endcta">Add to Server</span></div>
+</div>
+
+<script>
+/*
+ * The radio ad, a function of time like the main one (../ad.html): render(t) puts everything
+ * where it belongs at t seconds, and the times come from the voice-over (window.TIMELINE).
+ * Stations, names, slogans, colours and vote emoji are the bot's (src/radio/station.ts).
+ * The songs and people are made up.
+ */
+const TL = window.TIMELINE;
+const SC = Object.fromEntries(TL.scenes.map((s) => [s.id, s]));
+const norm = (w) => w.toLowerCase().replace(/[^a-z0-9']/g, '');
+const W = (id, word, n = 0) => SC[id].words.filter((x) => norm(x.w) === norm(word))[n].s;
+const WE = (id, word, n = 0) => SC[id].words.filter((x) => norm(x.w) === norm(word))[n].e;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const io = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const sine = (x) => -(Math.cos(Math.PI * x) - 1) / 2;
+const $ = (s) => document.querySelector(s);
+const el = (html) => { const d = document.createElement('div'); d.innerHTML = html.trim(); return d.firstElementChild; };
+const SFX = [];
+
+/* ---------- people ---------- */
+const PEOPLE = {
+  sunka: { name: 'Sunka', color: '#c56b2d', init: 'S', role: '#f0a062' },
+  mara: { name: 'Mara', color: '#8e5bd6', init: 'M', role: '#c9a7ff' },
+  tom: { name: 'Tom', color: '#2f8f6b', init: 'T', role: '#7fd6b0' },
+  lukas: { name: 'Lukáš', color: '#3b6fb6', init: 'L', role: '#9cc3ff' },
+};
+const av = (who, extra = '') => who === 'bot' ? `<span class="av ${extra}"><img src="../assets/bot-avatar.png" alt=""></span>` : `<span class="av ${extra}" style="background:${PEOPLE[who].color}">${PEOPLE[who].init}</span>`;
+const nm = (who) => who === 'bot' ? '<span class="name">Dzbanek</span><span class="app">APP</span>' : `<span class="name" style="color:${PEOPLE[who].role}">${PEOPLE[who].name}</span>`;
+const stamp = (time) => `<span class="time">${time}</span>`;
+
+/* ---------- the stations ---------- */
+// [key, choice name, card name, slogan, colour, vote name, emoji, mark, song, artist]
+const STATIONS = [
+  ['kiss', 'Kiss', 'Kiss Radio', '...be happy!', '#e30613', 'Kiss', '💋', 'KISS', 'Glitter on the Tram', 'Neon Kiosk'],
+  ['rock', 'Rock Radio', 'Rock Radio', 'Rock je slušná muzika', '#c8102e', 'Rock', '🎸', 'ROCK', 'Gravel Hymn', 'Iron Orchard'],
+  ['beat', 'Radio Beat', 'Radio Beat', 'První bigbít u nás', '#f5c400', 'Beat', '🥁', 'BEAT', 'Paper Moon Motel', 'The Slow Lanes'],
+  ['frekvence1', 'Frekvence 1', 'Frekvence 1', 'Zapni rádio, vypni starosti', '#0033a0', 'F1', '1️⃣', 'F1', 'Noční Vltava', 'Lampa'],
+  ['heart', 'Heart London', 'Heart London', 'Turn up the feel good!', '#e2003b', 'Heart', '❤️', '♥', 'Golden Hour Again', 'Ruby Lane'],
+  ['capital', 'Capital London', 'Capital London', 'The UK’s No.1 Hit Music Station', '#1472f5', 'Capital', '🎤', 'CAP', 'Turn the Bass Up', 'Maya K'],
+  ['paradise', 'Radio Paradise', 'Radio Paradise', 'Human curated radio', '#356457', 'Paradise', '🌴', 'RP', 'Desert Lantern', 'The Long Valley'],
+].map(([key, choice, name, slogan, color, vote, emoji, mark, song, artist]) => ({ key, choice, name, slogan, color, vote, emoji, mark, song, artist }));
+const BY = Object.fromEntries(STATIONS.map((s) => [s.key, s]));
+
+// When each station comes on: as the voice names it.
+const ON = [
+  ['kiss', W('czech', 'Kiss')],
+  ['rock', W('czech', 'Rock')],
+  ['beat', W('czech', 'Beat')],
+  ['frekvence1', W('czech', 'Frekvence')],
+  ['heart', W('world', 'Heart')],
+  ['capital', W('world', 'Capital')],
+  ['paradise', W('world', 'Paradise')],
+];
+const stationAt = (t) => { let k = null; for (const [key, at] of ON) if (t >= at - 0.05) k = key; return k; };
+
+/* ---------- channels and messages ---------- */
+const CHANNELS = {
+  kitchen: { name: 'kitchen', topic: 'Kettle\'s on. Say hi.' },
+  board: { name: 'kitchen-board', topic: 'One message, kept up to date by Dzbanek' },
+};
+const logs = {};
+for (const id of Object.keys(CHANNELS)) {
+  logs[id] = el('<div class="log"></div>');
+  $('#logs').appendChild(logs[id]);
+}
+const MSGS = [];
+function post(ch, t, html, sound = 'msg') {
+  const node = el(html);
+  logs[ch].appendChild(node);
+  MSGS.push({ ch, t, node });
+  if (sound && t > 0.5) SFX.push([t, sound]);
+  return node;
+}
+
+post('kitchen', 0, `<div class="msg">${av('tom')}<div><p class="meta">${nm('tom')}${stamp('Today at 21:02')}</p><p class="body">put the radio on? 📻</p></div></div>`, null);
+post('kitchen', 0, `<div class="msg">${av('mara')}<div><p class="meta">${nm('mara')}${stamp('Today at 21:03')}</p><p class="body">something czech first, then london</p></div></div>`, null);
+post('kitchen', 0, `<div class="msg">${av('lukas')}<div><p class="meta">${nm('lukas')}${stamp('Today at 21:04')}</p><p class="body">i'm in radio corner 👋</p></div></div>`, null);
+
+/* ---------- the radio card ---------- */
+const R = {
+  click: SC.czech.start + 0.3,
+  slash: SC.czech.start + 0.55,
+  pick: SC.czech.start + 1.05,
+  enter: ON[0][1] - 0.18,
+};
+const SONG = { change: W('song', 'song') - 0.05 };
+const radioMsg = post('kitchen', R.enter + 0.05, `<div class="msg">
+  <p class="used">${av('sunka')}<b>Sunka</b> used <span class="cmd">/radio play</span></p>${av('bot')}<div>
+  <p class="meta">${nm('bot')}${stamp('Today at 21:05')}</p>
+  <div class="embed rc">
+    <div>
+      <p class="auth"><span class="rc-name"></span> <span class="live">● LIVE</span></p>
+      <p class="slogan"></p>
+      <p class="ttl song"></p>
+      <p class="desc artist"></p>
+      <p class="foot upd"></p>
+    </div>
+    <span class="mark"></span>
+  </div>
+  <div class="btns"><span class="b">🌐 Website</span><span class="b g rc-catch">🎣 Catch</span><span class="b r">⏹ Stop</span></div>
+  </div></div>`, null);
+for (const [, at] of ON) SFX.push([at - 0.2, 'enter'], [at, 'msg']);
+
+/* ---------- Catch ---------- */
+const C = {
+  catch: W('song', 'Catch') + 0.05,
+  play: W('song', 'play') + 0.1,
+};
+C.reply = C.catch + 0.45;
+C.queued = C.play + 0.55;
+const caught = BY.paradise;
+const catchMsg = post('kitchen', C.reply, `<div class="msg caught-msg">
+  <p class="used">${av('sunka')}<b>Sunka</b> used <span class="cmd">Catch</span></p>${av('bot')}<div>
+  <p class="meta">${nm('bot')}${stamp('Today at 21:06')}</p>
+  <p class="body">🎣 Caught <b style="color:#f2f3f5">${caught.artist} – ${caught.song}</b>. Press Play to queue it.</p>
+  <div class="btns"><span class="b blurple play-btn">▶️ Play</span></div>
+  <p class="eph">👁 Only you can see this · <b>Dismiss message</b></p>
+  </div></div>`);
+const queuedMsg = post('kitchen', C.queued, `<div class="msg"><p class="used">${av('sunka')}<b>Sunka</b> used <span class="cmd">Play</span></p>${av('bot')}<div><p class="meta">${nm('bot')}${stamp('Today at 21:06')}</p><p class="body">➕ Added to the queue: <b>${caught.song}</b> · 1 in queue</p></div></div>`);
+
+/* ---------- Radio Night vote, on the board ---------- */
+const N = {
+  click: SC.night.start + 0.25,
+  more: W('night', 'kitchen'),
+  votes: W('night', 'votes'),
+  mine: W('night', 'for') + 0.05,
+  last: W('night', 'Night') + 0.2,
+};
+// A few neighbours vote while the line plays; Sunka's own click puts Paradise ahead.
+const VOTES = [
+  [0, { kiss: 2, rock: 1, beat: 2, frekvence1: 1, heart: 1, capital: 0, paradise: 1 }],
+  [N.more, { beat: 3 }],
+  [N.votes, { paradise: 2, capital: 1 }],
+  [N.mine, { paradise: 3 }],
+  [N.last, { paradise: 4 }],
+];
+const votesAt = (t) => { const c = {}; for (const [at, set] of VOTES) if (t >= at) Object.assign(c, set); return c; };
+const bar = (n, total) => { const f = total ? Math.round((n / total) * 10) : 0; return '▰'.repeat(f) + '▱'.repeat(10 - f); };
+post('board', 0, `<div class="msg">
+  ${av('bot')}<div>
+  <p class="meta">${nm('bot')}${stamp('Today at 12:00')}<span class="edited">(edited)</span></p>
+  <div class="embed vote" style="--bar:#c4783a;display:block">
+    <h4>🌙 Radio Night · voting closes <span class="ts">in 8 hours</span></h4>
+    <ul class="tally">${STATIONS.map((s) => `<li data-k="${s.key}"><code>${s.emoji} ${s.vote.padEnd(8)} <span class="tb"></span></code><b class="n"></b><span class="crown">👑</span></li>`).join('')}</ul>
+    <p class="sub">One vote each, change it any time · <span class="total"></span></p>
+    <div class="vb">${STATIONS.map((s) => `<span class="b vb-${s.key}" data-k="${s.key}">${s.emoji} ${s.vote} · <span class="n"></span></span>`).join('')}</div>
+  </div>
+  </div></div>`, null);
+[N.more, N.votes, N.last].forEach((at) => SFX.push([at, 'pop']));
+
+/* ---------- members and voice ---------- */
+$('#members').innerHTML = `<p class="cat">Online — 5</p>
+  <div class="mem">${av('bot', 'dot')}<div><b>Dzbanek</b> <span class="app">APP</span><small class="mem-status">Pouring fresh drops</small></div></div>
+  <div class="mem">${av('lukas', 'dot')}<b>Lukáš</b></div>
+  <div class="mem">${av('mara', 'dot')}<b>Mara</b></div>
+  <div class="mem">${av('sunka', 'dot')}<b>Sunka</b></div>
+  <div class="mem">${av('tom', 'dot')}<b>Tom</b></div>`;
+$('#vc').innerHTML = `<div class="vc-user vc-bot">${av('bot')}Dzbanek</div><div class="vc-user">${av('lukas')}Lukáš</div><div class="vc-user">${av('mara')}Mara</div><div class="vc-user">${av('tom')}Tom</div>`;
+const vcBot = $('.vc-bot');
+
+/* ---------- the composer ---------- */
+function typed(text, t, a, b) { return text.slice(0, Math.round(text.length * prog(t, a, b))); }
+function keys(text, a, b) { for (let i = 0; i < text.length; i++) SFX.push([a + (b - a) * (i / text.length), 'key']); }
+keys('/radio play', R.slash, R.pick - 0.1);
+const VIEW = [[0, 'kitchen'], [N.click + 0.05, 'board']];
+const currentChannel = (t) => { let ch = 'kitchen'; for (const [at, id] of VIEW) if (t >= at) ch = id; return ch; };
+
+function composer(t) {
+  const caret = '<span class="caret"></span>';
+  let html = `<span class="ph">Message #${CHANNELS[currentChannel(t)].name}</span>`;
+  let popup = '';
+  // /radio play, the station list, then each station sent as the voice names it.
+  if (t >= R.slash && t < R.pick) {
+    html = '/' + typed('radio play', t, R.slash, R.pick - 0.1) + caret;
+  } else if (t >= R.pick && t < ON.at(-1)[1] + 0.25) {
+    const next = ON.find(([, at]) => t < at + 0.05);
+    const key = next ? next[0] : ON.at(-1)[0];
+    html = `<span class="pill">/radio play</span><span class="opt">station</span><span class="optval">${BY[key].choice}${caret}</span>`;
+    if (t < ON[0][1]) {
+      popup = `<p class="ph-head">station</p>` + STATIONS.map((s, i) => `<div class="item ${i === 0 ? 'on' : ''}"><b>${s.choice}</b></div>`).join('');
+    }
+  }
+  return { html, popup };
+}
+
+/* ---------- the camera ---------- */
+const Z0 = 1.08;
+const ZC = 1.84;
+const CAM = [
+  [0, 800, 450, Z0],
+  [SC.czech.start + 0.2, 800, 450, Z0],
+  [R.enter + 0.6, '.rc', 1.95],
+  [C.catch - 0.3, '.rc', 1.95],
+  [C.reply + 0.5, '.caught-msg', ZC],
+  [C.queued + 0.6, '.caught-msg', ZC],
+  [N.click + 0.1, 800, 450, 1.12],
+  [N.click + 0.9, '.vote', 1.75],
+  [SC.end.start + 0.05, '.vote', 1.75],
+  [SC.end.start + 0.95, 800, 450, Z0],
+  [TL.duration, 800, 450, Z0],
+];
+function cam(t) {
+  let i = 0;
+  while (i < CAM.length - 2 && t >= CAM[i + 1][0]) i++;
+  const [ta, xa, ya, za] = CAM[i];
+  const [tb, xb, yb, zb] = CAM[i + 1];
+  const e = io(prog(t, ta, tb));
+  const z = Math.exp(Math.log(za) + (Math.log(zb) - Math.log(za)) * e);
+  let x = xa + (xb - xa) * e;
+  let y = ya + (yb - ya) * e;
+  const k = clamp((z - Z0) / (1.16 - Z0));
+  const hw = 960 / z, hh = 540 / z;
+  if (hw * 2 < 1600) x = x + (clamp(x, hw, 1600 - hw) - x) * k;
+  if (hh * 2 < 900) y = y + (clamp(y, hh, 900 - hh) - y) * k;
+  return { x, y, z };
+}
+
+/* ---------- the pointer ---------- */
+const COMPOSER = [640, 846];
+const CUR = [
+  [0, 1180, 640],
+  [R.click - 0.5, 1180, 640],
+  [R.click, ...COMPOSER],
+  [R.enter + 0.4, ...COMPOSER],
+  [R.enter + 1.2, 1100, 560],
+  [C.catch - 0.45, 1100, 560],
+  [C.catch, '.rc-catch'],
+  [C.play - 0.3, '.rc-catch'],
+  [C.play, '.play-btn'],
+  [N.click - 0.4, '.play-btn'],
+  [N.click, '.chan[data-ch="board"]'],
+  [N.click + 0.8, 900, 400],
+  [N.mine, '.vb-paradise'],
+  [TL.duration, '.vb-paradise'],
+];
+const CLICKS = [R.click, C.catch, C.play, N.click, N.mine];
+CLICKS.forEach((at) => SFX.push([at, 'click']));
+SFX.push([SC.czech.start - 0.2, 'whoosh'], [SC.end.start + 0.2, 'whoosh']);
+function cursorAt(t) {
+  let i = 0;
+  while (i < CUR.length - 2 && t >= CUR[i + 1][0]) i++;
+  const [ta, xa, ya] = CUR[i];
+  const [tb, xb, yb] = CUR[i + 1];
+  const e = io(prog(t, ta, tb));
+  const arc = Math.sin(Math.PI * e) * Math.min(40, Math.hypot(xb - xa, yb - ya) * 0.08);
+  return { x: xa + (xb - xa) * e, y: ya + (yb - ya) * e - arc };
+}
+
+/* ---------- steam over the mug ---------- */
+const WISPS = Array.from({ length: 6 }, (_, i) => { const d = el('<div class="wisp"></div>'); $('#wisps').appendChild(d); return { d, phase: i / 6, drift: (i % 3) - 1 }; });
+
+/* ---------- render ---------- */
+function render(t) {
+  const screenIn = SC.czech.start;
+  const endAt = SC.end.start;
+  const end = TL.duration;
+
+  // Kitchen photo: frame 0 is the site's hero photo, then a slow push in; the end settles back.
+  const push = sine(prog(t, 0, screenIn + 0.6));
+  const back = sine(prog(t, endAt + 0.2, endAt + 1.6));
+  $('#photo').style.transform = `scale(${1 + 0.085 * push * (1 - back)})`;
+  $('#photo').style.opacity = t < screenIn - 0.75 ? 1 : t < endAt ? 1 - io(prog(t, screenIn - 0.75, screenIn + 0.05)) : io(prog(t, endAt + 0.1, endAt + 1.0));
+  $('#blur').style.opacity = t > screenIn - 0.8 && t < endAt + 1.2 ? 1 : 0;
+  WISPS.forEach((w) => {
+    const p = ((t / 6.5) + w.phase) % 1;
+    w.d.style.left = (1395 + w.drift * 22 + Math.sin((t + w.phase * 7) * 0.9) * 18) + 'px';
+    w.d.style.top = (560 - p * 330) + 'px';
+    w.d.style.opacity = Math.sin(Math.PI * p) * 0.55;
+    w.d.style.transform = `scale(${0.6 + p * 1.1})`;
+  });
+  const shadeIn = io(prog(t, 0.6, 1.6)) * 0.85;
+  const shadeEnd = t >= endAt ? io(prog(t, endAt + 0.3, endAt + 1.3)) * (1 - io(prog(t, end - 1.4, end - 0.2))) : 0;
+  $('#shade').style.opacity = t < screenIn ? shadeIn * (1 - io(prog(t, screenIn - 0.4, screenIn + 0.2))) : shadeEnd;
+
+  // Titles over the kitchen, on the opening line.
+  const t1 = io(prog(t, W('open', 'Seven') - 0.15, W('open', 'Seven') + 0.55));
+  const t2 = io(prog(t, W('open', 'right') - 0.1, W('open', 'right') + 0.6));
+  const titlesOut = 1 - io(prog(t, screenIn - 0.6, screenIn - 0.1));
+  $('#t1').style.opacity = t1 * titlesOut;
+  $('#t1').style.transform = `translateY(${(1 - t1) * 18}px)`;
+  $('#t2').style.opacity = t2 * titlesOut;
+  $('#t2').style.transform = `translateY(${(1 - t2) * 14}px)`;
+
+  // The screen recording rises in, then settles back into the kitchen.
+  const winIn = out(prog(t, screenIn - 0.15, screenIn + 0.6));
+  const winOut = io(prog(t, endAt + 0.25, endAt + 1.15));
+  const winVis = winIn * (1 - winOut);
+  const c = cam(t);
+  const lift = (1 - winIn) * 60 + winOut * 30;
+  const shrink = 1 - (1 - winIn) * 0.06 - winOut * 0.05;
+  $('#cam').style.transform = `translate(${960 - c.x * c.z * shrink}px, ${540 - c.y * c.z * shrink + lift}px) scale(${c.z * shrink})`;
+  $('#cam').style.opacity = winVis;
+  $('#cam').style.display = winVis > 0.001 ? '' : 'none';
+
+  const ch = currentChannel(t);
+  for (const [id, node] of Object.entries(logs)) node.style.display = id === ch ? '' : 'none';
+  document.querySelectorAll('.chan[data-ch]').forEach((n) => n.classList.toggle('on', n.dataset.ch === ch));
+  $('#chname').textContent = CHANNELS[ch].name;
+  $('#chtopic').textContent = CHANNELS[ch].topic;
+  document.querySelector('.chan[data-ch="board"]').classList.toggle('unread', ch !== 'board' && t > SC.song.start);
+
+  for (const m of MSGS) {
+    const on = t >= m.t;
+    m.node.style.display = on ? '' : 'none';
+    if (on) {
+      const f = out(prog(t, m.t, m.t + 0.18));
+      m.node.style.opacity = f;
+      m.node.style.transform = `translateY(${(1 - f) * 6}px)`;
+    }
+  }
+
+  // The radio card: the station that's on, with its colour, slogan and song.
+  const key = stationAt(t) || 'kiss';
+  const s = BY[key];
+  const switched = ON.find(([k]) => k === key)[1];
+  const card = radioMsg.querySelector('.rc');
+  card.style.setProperty('--bar', s.color);
+  radioMsg.querySelector('.rc-name').textContent = '📻 ' + s.name;
+  radioMsg.querySelector('.slogan').textContent = s.slogan;
+  const fresh = key === 'paradise' && t >= SONG.change;
+  radioMsg.querySelector('.song').textContent = fresh ? caught.song : key === 'paradise' ? 'Salt Road' : s.song;
+  radioMsg.querySelector('.artist').textContent = fresh ? caught.artist : key === 'paradise' ? 'Harbor Lights' : s.artist;
+  radioMsg.querySelector('.upd').textContent = fresh || t - switched < 1.5 ? `On air on ${s.name} · updated just now` : `On air on ${s.name} · updated 20 s ago`;
+  const mark = radioMsg.querySelector('.mark');
+  mark.textContent = s.mark;
+  mark.style.background = s.color;
+  mark.style.color = key === 'beat' ? '#1e1500' : '#fff';
+  // A short flash each time the card changes.
+  const flash = Math.max(1 - (t - switched) / 0.35, fresh ? 1 - (t - SONG.change) / 0.5 : 0);
+  card.style.boxShadow = flash > 0 ? `0 0 0 ${2 * flash}px rgba(255,255,255,${0.55 * flash})` : '';
+  vcBot.style.display = t >= R.enter + 0.05 ? '' : 'none';
+  vcBot.querySelector('.av').classList.toggle('speak', t >= R.enter && Math.floor(t * 3) % 4 !== 0);
+  radioMsg.querySelector('.rc-catch').classList.toggle('pressed', Math.abs(t - C.catch) < 0.12);
+  catchMsg.querySelector('.play-btn').classList.toggle('pressed', Math.abs(t - C.play) < 0.12);
+
+  // The vote fills in while you watch.
+  const votes = votesAt(t);
+  const total = Object.values(votes).reduce((a, b) => a + b, 0);
+  const top = Math.max(...Object.values(votes));
+  const leaders = STATIONS.filter((x) => votes[x.key] === top);
+  document.querySelectorAll('.tally li').forEach((li) => {
+    const k = li.dataset.k;
+    li.querySelector('.tb').textContent = bar(votes[k], total);
+    li.querySelector('.n').textContent = String(votes[k]);
+    li.classList.toggle('lead', leaders.length === 1 && leaders[0].key === k);
+  });
+  document.querySelectorAll('.vb .b').forEach((b) => {
+    const k = b.dataset.k;
+    b.querySelector('.n').textContent = String(votes[k]);
+    b.classList.toggle('lead', leaders.length === 1 && leaders[0].key === k);
+    b.classList.toggle('pressed', k === 'paradise' && Math.abs(t - N.mine) < 0.12);
+  });
+  $('.vote .total').textContent = total + ' votes so far';
+
+  const comp = composer(t);
+  $('#input').innerHTML = comp.html;
+  $('#popup').innerHTML = comp.popup;
+  $('#popup').style.display = comp.popup ? '' : 'none';
+
+  const p = cursorAt(t);
+  let press = 0;
+  let ripple = null;
+  for (const at of CLICKS) {
+    press = Math.max(press, 1 - Math.abs(t - at) / 0.09);
+    if (t >= at && t < at + 0.45) ripple = prog(t, at, at + 0.45);
+  }
+  press = clamp(press);
+  $('#cursor').style.transform = `translate(${p.x}px, ${p.y}px) scale(${1 - press * 0.14})`;
+  const showCursor = t > screenIn + 0.1 && t < endAt + 0.6;
+  $('#cursor').style.opacity = showCursor ? 1 : 0;
+  $('#ripple').style.display = ripple !== null && showCursor ? '' : 'none';
+  if (ripple !== null) {
+    $('#ripple').style.left = p.x + 'px';
+    $('#ripple').style.top = p.y + 'px';
+    $('#ripple').style.transform = `scale(${0.3 + out(ripple) * 0.9})`;
+    $('#ripple').style.opacity = (1 - ripple) * 0.7;
+  }
+
+  // End card, then back to the plain photo.
+  const e1 = io(prog(t, W('end', 'Dzbanek') - 0.1, W('end', 'Dzbanek') + 0.5));
+  const e3 = io(prog(t, W('end', 'Turn') - 0.05, W('end', 'Turn') + 0.5));
+  const eOut = 1 - io(prog(t, end - 1.5, end - 0.35));
+  $('#end').style.opacity = e1 * eOut;
+  $('#end').style.transform = `translateY(${(1 - e1) * 20}px)`;
+  $('#endfree').style.opacity = e1;
+  $('#endchair').style.opacity = e3;
+  $('#endchair').style.transform = `translateY(${(1 - e3) * 10}px) rotate(-2deg)`;
+  $('#endcta').style.opacity = e3;
+}
+
+window.render = render;
+window.SFX_EVENTS = SFX.filter(([at]) => at >= 0 && at <= TL.duration).sort((a, b) => a[0] - b[0]);
+window.CHAPTERS = TL.scenes.map((s) => [s.id, s.start]);
+function centerOf(sel, at) {
+  render(at);
+  const win = $('#win').getBoundingClientRect();
+  const k = win.width / 1600;
+  const r = document.querySelector(sel).getBoundingClientRect();
+  return [(r.left + r.width / 2 - win.left) / k, (r.top + r.height / 2 - win.top) / k];
+}
+function resolveTargets() {
+  const last = SC.end.start;
+  for (const row of CUR) {
+    if (typeof row[1] !== 'string') continue;
+    const [x, y] = centerOf(row[1], Math.min(row[0] + 0.3, last));
+    row.splice(1, 1, x, y);
+  }
+  for (const row of CAM) {
+    if (typeof row[1] !== 'string') continue;
+    const [ex, y] = centerOf(row[1], Math.min(row[0] + 0.3, last));
+    const hw = 960 / row[2];
+    const x = hw * 2 <= 1048 ? clamp(ex, 312 + hw, 1360 - hw) : 836;
+    row.splice(1, 1, x, y);
+  }
+}
+window.ready = Promise.all([document.fonts.ready, ...Array.from(document.images).map((i) => i.decode().catch(() => {}))]).then(() => { resolveTargets(); render(0); });
+</script>
+</body>
+</html>

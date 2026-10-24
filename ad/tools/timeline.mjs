@@ -1,24 +1,26 @@
 // Places each voice line in its scene and records every word's absolute time:
 // node timeline.mjs <adDir>  ->  timeline.json, captions-en.vtt
 // lead = gap before the line starts in its scene; tail = gap after it ends (time for visuals to land).
+// A line in lines.json can set its own "lead" and "tail"; the main ad's are below.
 import fs from "node:fs";
 import path from "node:path";
 const dir = process.argv[2];
 const lines = JSON.parse(fs.readFileSync(path.join(dir, "lines.json"), "utf8"));
 const LEAD = { kitchen: 1.2, intro: 0.35, music: 0.7, radio: 0.35, board: 0.4, deals: 0.35, welcome: 0.45, chair: 0.6 };
 const TAIL = { kitchen: 0.25, intro: 0.85, music: 0.55, radio: 0.55, board: 0.55, deals: 0.5, welcome: 0.55, chair: 2.6 };
-const show = (w) => w.replace(/Dzbahnek/g, "Dzbanek");
+// The script spells some names the way they're said; captions and timings use the real spelling.
+const show = (w) => w.replace(/Dzbahnek/g, "Dzbanek").replace(/Frekventseh/g, "Frekvence");
 let t = 0;
 const scenes = [];
 for (const l of lines) {
   const meta = JSON.parse(fs.readFileSync(path.join(dir, "vo", l.id + ".json"), "utf8")).Metadata;
-  const lead = LEAD[l.id] ?? 0.5;
+  const lead = l.lead ?? LEAD[l.id] ?? 0.5;
   const words = meta.filter((m) => m.Type === "WordBoundary").map((m) => ({
     w: show(m.Data.text.Text),
     s: +(t + lead + m.Data.Offset / 1e7).toFixed(3),
     e: +(t + lead + (m.Data.Offset + m.Data.Duration) / 1e7).toFixed(3),
   }));
-  const end = words.at(-1).e + (TAIL[l.id] ?? 0.6);
+  const end = words.at(-1).e + (l.tail ?? TAIL[l.id] ?? 0.6);
   scenes.push({ id: l.id, start: +t.toFixed(3), voAt: +(t + lead).toFixed(3), end: +end.toFixed(3), text: show(l.say), words });
   t = end;
 }

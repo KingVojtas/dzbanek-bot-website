@@ -10,3 +10,9 @@ ad/*.wav
 ad/*.mp4
 ad/cues.json
 ad/captions-*.vtt
+ad/radio/stills/
+ad/radio/out/
+ad/radio/*.wav
+ad/radio/*.mp4
+ad/radio/cues.json
+ad/radio/captions-*.vtt

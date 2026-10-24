@@ -51,9 +51,13 @@ const CHORDS = [
   { root: 36, notes: [52, 55, 59, 62, 64] }, // Cmaj9 (E G B D E)
   { root: 45, notes: [52, 55, 60, 64, 67] }, // Am9  (E G C E G)
 ];
-const drumsIn = scene.music.start - BEAT;
-const drumsOut = scene.chair.start + 0.3;
-const lastChordAt = Math.floor((scene.chair.start + 0.6) / BAR) * BAR + BAR;
+// Drums come in with the screen recording (the main ad's "music" scene, otherwise the second scene)
+// and stop on the end card ("chair", otherwise the last scene).
+const screenIn = scene.music ?? tl.scenes[1];
+const endCard = scene.chair ?? tl.scenes.at(-1);
+const drumsIn = screenIn.start - BEAT;
+const drumsOut = endCard.start + 0.3;
+const lastChordAt = Math.floor((endCard.start + 0.6) / BAR) * BAR + BAR;
 
 // FM electric piano: carrier and modulator at 1:1, with a short bright tine at the attack.
 function rhodes(at, midi, vel, len, pan) {

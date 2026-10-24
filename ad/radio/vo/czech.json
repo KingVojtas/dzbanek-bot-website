@@ -1,0 +1,124 @@
+{
+  "Metadata": [
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 1329580,
+        "Duration": 1196660,
+        "text": {
+          "Text": "From",
+          "Length": 4,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 2526660,
+        "Duration": 4787080,
+        "text": {
+          "Text": "Prague",
+          "Length": 6,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 11569160,
+        "Duration": 4521250,
+        "text": {
+          "Text": "Kiss",
+          "Length": 4,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 18882910,
+        "Duration": 3058330,
+        "text": {
+          "Text": "Rock",
+          "Length": 4,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 22074580,
+        "Duration": 5717910,
+        "text": {
+          "Text": "Radio",
+          "Length": 5,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 30585000,
+        "Duration": 4388330,
+        "text": {
+          "Text": "Radio",
+          "Length": 5,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 35106250,
+        "Duration": 3723330,
+        "text": {
+          "Text": "Beat",
+          "Length": 4,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 41622500,
+        "Duration": 664580,
+        "text": {
+          "Text": "and",
+          "Length": 3,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 42287080,
+        "Duration": 5186250,
+        "text": {
+          "Text": "Frekventseh",
+          "Length": 11,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 47473330,
+        "Duration": 3191660,
+        "text": {
+          "Text": "1",
+          "Length": 1,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    }
+  ]
+}

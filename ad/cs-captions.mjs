@@ -8,7 +8,7 @@ const CS = {
   "Type /play, and whatever you're in the mood for.": "Napiš /play a cokoli, na co máš zrovna chuť.",
   "A YouTube link, a Spotify playlist, or just the name of a song.": "Odkaz z YouTube, playlist ze Spotify, nebo jen název písničky.",
   "Rather have the radio on?": "Radši si pustíš rádio?",
-  "Seven live stations, from Capital in London to Kiss and Radio Beat.": "Sedm živých stanic, od Capitalu v Londýně po Kiss a Radio Beat.",
+  "Seven live stations: Kiss, Rock Radio, Frekvence 1, Heart, Capital, Radio Paradise, and Radio Beat.": "Sedm živých stanic: Kiss, Rock Radio, Frekvence 1, Heart, Capital, Radio Paradise a Radio Beat.",
   "Live, with the song that's playing right now.": "Živě, i s písničkou, která zrovna hraje.",
   "The Kitchen Board is one message that keeps itself up to date.": "Kitchen Board je jedna zpráva, která se sama aktualizuje.",
   "What's playing, who's in voice, and today's best deal.": "Co hraje, kdo je ve voice a nejlepší sleva dne.",
@@ -19,6 +19,15 @@ const CS = {
   "Dzbanek.": "Dzbanek.",
   "It's free.": "Je zdarma.",
   "Pull up a chair.": "Přisedni si.",
+  // radio/: the radio ad. Run this from its folder: node ../cs-captions.mjs
+  "Seven live radio stations, right in your voice channel.": "Sedm živých rádií, přímo ve tvém hlasovém kanálu.",
+  "From Prague: Kiss, Rock Radio, Radio Beat, and Frekvence 1.": "Z Prahy: Kiss, Rock Radio, Radio Beat a Frekvence 1.",
+  "From London, Heart and Capital.": "Z Londýna Heart a Capital.",
+  "And from California, Radio Paradise.": "A z Kalifornie Radio Paradise.",
+  "Every card shows the song on air.": "Každá karta ukazuje písničku, která zrovna hraje.",
+  "Hit Catch, and play it later.": "Zmáčkni Catch a pusť si ji později.",
+  "And on Fridays, the kitchen votes for Radio Night.": "A v pátek kuchyně hlasuje o Radio Night.",
+  "Turn it up.": "Dej to nahlas.",
 };
 const en = fs.readFileSync("captions-en.vtt", "utf8");
 let missing = [];

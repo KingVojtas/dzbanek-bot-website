@@ -1,0 +1,8 @@
+[
+ {"id": "open", "say": "Seven live radio stations, right in your voice channel.", "lead": 1.0, "tail": 0.35},
+ {"id": "czech", "say": "From Prague: Kiss, Rock Radio, Radio Beat, and Frekventseh 1.", "lead": 0.45, "tail": 0.35},
+ {"id": "world", "say": "From London, Heart and Capital. And from California, Radio Paradise.", "lead": 0.2, "tail": 0.45},
+ {"id": "song", "say": "Every card shows the song on air. Hit Catch, and play it later.", "lead": 0.3, "tail": 0.6},
+ {"id": "night", "say": "And on Fridays, the kitchen votes for Radio Night.", "lead": 0.4, "tail": 0.8},
+ {"id": "end", "say": "Dzbahnek. Turn it up.", "lead": 0.5, "tail": 2.4}
+]
