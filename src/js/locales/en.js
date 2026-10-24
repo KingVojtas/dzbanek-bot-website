@@ -117,6 +117,7 @@
       b1: 'Pause, skip, shuffle, and loop are right on the card',
       b2: 'Up to 100 songs in the queue. /remove takes one out',
       b3: 'Queue ran out but people are still hanging around? After two minutes it switches to the last radio station',
+      b4: 'Kitchen Quiz: /quiz start plays short clips of songs your kitchen has played, and everyone in voice races to name them',
     },
     player: {
       state: 'Now Playing',

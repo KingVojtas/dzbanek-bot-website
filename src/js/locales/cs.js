@@ -118,6 +118,7 @@
       b1: 'Pauza, přeskočení, zamíchání a opakování jsou přímo na kartě',
       b2: 'Do fronty se vejde až 100 písniček. /remove jednu odebere',
       b3: 'Fronta došla, ale lidi pořád sedí ve voice? Po dvou minutách se přepne na poslední rádio',
+      b4: 'Kitchen Quiz: /quiz start pouští krátké ukázky písniček, které u vás už hrály, a všichni ve voice závodí, kdo je pozná dřív',
     },
     player: {
       state: 'Now Playing',
