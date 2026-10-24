@@ -541,7 +541,8 @@ kbd {
 
 .lang button[aria-pressed="true"] {
   background: var(--clay);
-  color: #fff8f1;
+  /* Dark on clay: white would be 2.5:1 at this size. */
+  color: #1c110a;
 }
 
 .icon-btn {
@@ -1227,6 +1228,18 @@ html:not(.js) .dial-window {
   font-weight: 500;
 }
 
+button.dc-mention {
+  border: 0;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button.dc-mention:hover {
+  background: #5865f2;
+  color: #fff;
+}
+
 .dc-muted {
   color: var(--dc-muted);
 }
@@ -1767,12 +1780,17 @@ button.dc-btn[aria-pressed="true"]:hover {
   display: none;
 }
 
+/* When the ad is about to autoplay (html.film-soon, from theme-boot.js) or is loading (starting),
+   the stage already has its shape, so nothing under the hero jumps when it begins. */
 .hero[data-film] .hero-film,
-.hero[data-film] .film-glow {
+.hero[data-film] .film-glow,
+html.film-soon .hero .hero-film {
   display: block;
 }
 
 .hero[data-film="playing"] .film-bar,
+.hero[data-film="starting"] .film-bar,
+html.film-soon .hero:not([data-film]) .film-bar,
 .hero[data-film="paused"] .film-bar {
   display: flex;
 }
@@ -1827,6 +1845,8 @@ button.dc-btn[aria-pressed="true"]:hover {
 }
 
 .hero[data-film="playing"] .hero-stage,
+.hero[data-film="starting"] .hero-stage,
+html.film-soon .hero:not([data-film]) .hero-stage,
 .hero[data-film="paused"] .hero-stage {
   /* 16:9, so the ad's titles on the left and cards on the right are not cut off,
      and short enough that the deck under it stays on screen. */
@@ -1835,18 +1855,26 @@ button.dc-btn[aria-pressed="true"]:hover {
 }
 
 .hero[data-film="playing"] .hero-film,
+.hero[data-film="starting"] .hero-film,
+html.film-soon .hero:not([data-film]) .hero-film,
 .hero[data-film="paused"] .hero-film {
   opacity: 1;
 }
 
 .hero[data-film="playing"] .film-glow,
+.hero[data-film="starting"] .film-glow,
+html.film-soon .hero:not([data-film]) .film-glow,
 .hero[data-film="paused"] .film-glow {
   opacity: 0.7;
 }
 
 .hero[data-film="playing"] .hero-shade,
+.hero[data-film="starting"] .hero-shade,
+html.film-soon .hero:not([data-film]) .hero-shade,
 .hero[data-film="paused"] .hero-shade,
 .hero[data-film="playing"] .hero-scroll,
+.hero[data-film="starting"] .hero-scroll,
+html.film-soon .hero:not([data-film]) .hero-scroll,
 .hero[data-film="paused"] .hero-scroll {
   opacity: 0;
 }
@@ -1857,6 +1885,8 @@ button.dc-btn[aria-pressed="true"]:hover {
 }
 
 .hero[data-film="playing"] .hero-copy,
+.hero[data-film="starting"] .hero-copy,
+html.film-soon .hero:not([data-film]) .hero-copy,
 .hero[data-film="paused"] .hero-copy {
   opacity: 0;
   translate: 0 1.5rem;
@@ -1865,10 +1895,16 @@ button.dc-btn[aria-pressed="true"]:hover {
 
 /* The title stays for screen readers; the links and the clock leave the tab order. */
 .hero[data-film="playing"] .hero-actions,
+.hero[data-film="starting"] .hero-actions,
+html.film-soon .hero:not([data-film]) .hero-actions,
 .hero[data-film="paused"] .hero-actions,
 .hero[data-film="playing"] .clock-chip,
+.hero[data-film="starting"] .clock-chip,
+html.film-soon .hero:not([data-film]) .clock-chip,
 .hero[data-film="paused"] .clock-chip,
 .hero[data-film="playing"] .hero-scroll,
+.hero[data-film="starting"] .hero-scroll,
+html.film-soon .hero:not([data-film]) .hero-scroll,
 .hero[data-film="paused"] .hero-scroll {
   visibility: hidden;
   transition:
@@ -3377,6 +3413,125 @@ html.theme-light .receipt-wrap {
 .receipt-list span {
   font-family: var(--sans);
   font-size: 0.95rem;
+}
+
+/* changes.html: the whole log on one long slip */
+.receipt-wrap.is-long {
+  max-width: 48rem;
+  margin-inline: auto;
+  rotate: -0.3deg;
+}
+
+.log {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.log-day {
+  display: grid;
+  grid-template-columns: 6.6rem minmax(0, 1fr);
+  gap: 0.9rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px dashed rgba(42, 36, 32, 0.22);
+}
+
+.log-day h2 {
+  margin: 0;
+  color: #8a5a35;
+  font: inherit;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.log-day ul {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.log-day li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.log-kind {
+  min-width: 4.4rem;
+  padding: 0 0.35rem;
+  border: 1px solid currentColor;
+  border-radius: 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.log-kind.is-new {
+  color: #2f7a3f;
+}
+
+.log-kind.is-fix {
+  color: #b2452c;
+}
+
+.log-kind.is-tweak {
+  color: #7b6a5a;
+}
+
+.log-text {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+}
+
+.log-sha {
+  color: #8a5a35;
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+.log-sha:hover {
+  text-decoration: underline;
+}
+
+.log-total,
+.log-since {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.log-total {
+  margin-top: 1.1rem;
+  padding-top: 0.8rem;
+  border-top: 2px dashed rgba(42, 36, 32, 0.35);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.log-since {
+  margin-top: 0.3rem;
+  color: #6f6157;
+  font-size: 0.8rem;
+}
+
+.receipt-empty {
+  padding-top: 1rem;
+}
+
+.receipt .link-arrow {
+  color: #8a5a35;
+}
+
+.log-more {
+  margin-top: 2rem;
+  text-align: center;
 }
 
 /* straight from the server: instant photos taped up by the fridge */
@@ -5652,6 +5807,8 @@ html.js [data-reveal-group].is-in > * {
   }
 
   .hero[data-film="playing"] .hero-stage,
+  .hero[data-film="starting"] .hero-stage,
+  html.film-soon .hero:not([data-film]) .hero-stage,
   .hero[data-film="paused"] .hero-stage {
     min-height: 0;
     height: min(clamp(540px, 88svh, 760px), calc(100svh - 6.5rem));
@@ -5660,6 +5817,8 @@ html.js [data-reveal-group].is-in > * {
   /* The copy is hidden while the film plays; out of the flow, it lets the stage
      fit the screen again, so the deck stays clear of the sticky invite. */
   .hero[data-film="playing"] .hero-copy,
+  .hero[data-film="starting"] .hero-copy,
+  html.film-soon .hero:not([data-film]) .hero-copy,
   .hero[data-film="paused"] .hero-copy {
     position: absolute;
     left: 0;
@@ -5668,6 +5827,8 @@ html.js [data-reveal-group].is-in > * {
   }
 
   .hero[data-film="playing"] .hero-scene,
+  .hero[data-film="starting"] .hero-scene,
+  html.film-soon .hero:not([data-film]) .hero-scene,
   .hero[data-film="paused"] .hero-scene {
     opacity: 0.32;
   }
@@ -5872,9 +6033,22 @@ html.js [data-reveal-group].is-in > * {
     margin-inline: auto;
   }
 
-  .receipt-list li {
+  .receipt-list li,
+  .log-day {
     grid-template-columns: 1fr;
     gap: 0.15rem;
+  }
+
+  .log-day ul {
+    margin-top: 0.4rem;
+  }
+
+  .log-day li {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .log-sha {
+    grid-column: 2;
   }
 
   .door {

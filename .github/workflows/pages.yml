@@ -4,6 +4,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Every morning, so changes.html picks up new bot commits.
+  schedule:
+    - cron: '20 4 * * *'
   workflow_dispatch:
 
 permissions:
@@ -32,6 +35,8 @@ jobs:
 
       - name: Build
         run: node scripts/build.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

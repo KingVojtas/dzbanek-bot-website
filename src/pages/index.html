@@ -73,8 +73,9 @@
   </div>
 </section>
 
-<section class="section notes" id="menu" aria-label="Good to know" data-i18n-aria="facts.label">
+<section class="section notes" id="menu" aria-labelledby="menu-title">
   <div class="wrap">
+    <h2 class="sr-only" id="menu-title" data-i18n="facts.label">Good to know</h2>
     <div class="menu-cards" data-reveal-group>
       <article class="menu-card">
         <h3 data-i18n="facts.voiceTitle">One thing at a time</h3>
@@ -578,22 +579,22 @@
   <div class="wrap changelog-split">
     <div data-reveal>
       <h2 class="h-small" data-i18n="changelog.title">What’s cooking</h2>
-      <p class="lead" data-i18n="changelog.lead">The latest changes to the bot. Every change is on GitHub, too.</p>
-      <p class="note"><a class="link-arrow" href="{{github}}/commits/main" target="_blank" rel="noopener noreferrer"><span data-i18n="changelog.all">All changes on GitHub</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
+      <p class="lead" data-i18n="changelog.lead">The latest changes to the bot.</p>
+      <p class="note"><a class="link-arrow" href="changes.html"><span data-i18n="changelog.all">Every change, day by day</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
     </div>
     <!-- An order slip from the kitchen printer. New entries go on top. -->
     <div class="receipt-wrap" data-reveal>
     <div class="receipt">
       <p class="receipt-head">DZBANEK · <span data-i18n="changelog.slip">kitchen log</span></p>
       <ol class="receipt-list">
+        <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c9">Steam deals: genres like “Card & Board Game” show properly, and a sale that ends today shows its time instead of a countdown.</span></li>
+        <li><time datetime="2026-10-23">23. 10. 2026</time><span data-i18n="changelog.c10">When a YouTube song can’t play, the bot says why instead of skipping it quietly.</span></li>
+        <li><time datetime="2026-10-23">23. 10. 2026</time><span data-i18n="changelog.c11">The welcome and goodbye cards @mention the member.</span></li>
         <li><time datetime="2026-10-22">22. 10. 2026</time><span data-i18n="changelog.c1">Kitchen Quiz: /quiz start plays songs your kitchen has played before, and everyone in voice guesses the title.</span></li>
         <li><time datetime="2026-10-22">22. 10. 2026</time><span data-i18n="changelog.c2">Wishlist Radar: link your Steam profile with /steam link and get pinged when a game on your wishlist goes on sale.</span></li>
         <li><time datetime="2026-10-22">22. 10. 2026</time><span data-i18n="changelog.c3">Cleaner Steam deals: one line per game, a short description, and no games whose sale has already ended.</span></li>
         <li><time datetime="2026-10-21">21. 10. 2026</time><span data-i18n="changelog.c4">/help, /volume, and a Previous button on the Now Playing card.</span></li>
         <li><time datetime="2026-10-21">21. 10. 2026</time><span data-i18n="changelog.c5">Songs start sooner, and Spotify playlists start playing while the rest is still loading.</span></li>
-        <li><time datetime="2026-10-19">19. 10. 2026</time><span data-i18n="changelog.c6">Admins can open text and voice rooms with /textroom and /voiceroom.</span></li>
-        <li><time datetime="2026-10-17">17. 10. 2026</time><span data-i18n="changelog.c7">The radio picks up again after the bot restarts.</span></li>
-        <li><time datetime="2026-09-20">20. 9. 2026</time><span data-i18n="changelog.c8">Kiss, Rock Radio, and Radio Beat, live in your voice channel.</span></li>
       </ol>
     </div>
     </div>

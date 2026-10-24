@@ -57,11 +57,92 @@ function lastUpdated() {
     return new Date().toISOString().slice(0, 10);
   }
 }
+const dotted = (iso) => {
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${d}. ${m}. ${y}`;
+};
 const updatedIso = lastUpdated();
-const [year, month, day] = updatedIso.split('-').map(Number);
-const updated = `${day}. ${month}. ${year}`;
+const updated = dotted(updatedIso);
 
-const shared = { invite, github, ogImage, updated, updatedIso };
+// changes.html: the bot's commit history, from GitHub, or from a clone next to this repo when offline.
+const BOT_REPO = 'KingVojtas/dzbanek-bot-2.0';
+// Housekeeping commits that mean nothing to someone using the bot.
+const QUIET = /deploy skill|prettier|readme|prisma|fingerprint|layout key|initial commit/i;
+const pragueDay = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Prague' });
+
+async function botCommits() {
+  try {
+    const headers = { Accept: 'application/vnd.github+json', 'User-Agent': 'dzbanek-site-build' };
+    if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+    const response = await fetch(`https://api.github.com/repos/${BOT_REPO}/commits?per_page=100`, {
+      headers,
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!response.ok) throw new Error(`GitHub answered ${response.status}`);
+    return (await response.json()).map((entry) => ({
+      sha: entry.sha,
+      date: pragueDay.format(new Date(entry.commit.committer.date)),
+      subject: entry.commit.message.split('\n')[0],
+    }));
+  } catch (error) {
+    try {
+      const log = execFileSync('git', ['log', '-100', '--format=%H%x09%cs%x09%s'], {
+        cwd: join(root, '..', 'Dzbanek-bot 2.0'),
+        encoding: 'utf8',
+      });
+      console.warn(`Changes: ${error.message}, read the local clone instead.`);
+      return log
+        .trim()
+        .split('\n')
+        .map((line) => {
+          const [sha, date, subject] = line.split('\t');
+          return { sha, date, subject };
+        });
+    } catch {
+      console.warn(`Changes: ${error.message}, and no local clone. The page links to GitHub instead.`);
+      return [];
+    }
+  }
+}
+
+const escapeHtml = (text) =>
+  text.replace(/[&<>"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[char]);
+
+function kindOf(subject) {
+  if (/^add\b/i.test(subject)) return ['new', 'New'];
+  if (/\bfix(es|ed)?\b|unescape/i.test(subject)) return ['fix', 'Fix'];
+  return ['tweak', 'Better'];
+}
+
+// One long slip from the kitchen printer, a day per block, newest on top.
+function changesLog(commits) {
+  const shown = commits.filter((commit) => !QUIET.test(commit.subject));
+  if (shown.length === 0) {
+    return `<p class="receipt-empty"><a class="link-arrow" href="${github}/commits/main" target="_blank" rel="noopener noreferrer"><span data-i18n="changes.empty">The list didn’t load this time. Every change is on GitHub.</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>`;
+  }
+  const days = new Map();
+  for (const commit of shown) {
+    if (!days.has(commit.date)) days.set(commit.date, []);
+    days.get(commit.date).push(commit);
+  }
+  const blocks = [...days].map(([date, list]) => {
+    const rows = list.map((commit) => {
+      const [kind, label] = kindOf(commit.subject);
+      const text = escapeHtml(commit.subject.replace(/\.$/, ''));
+      const sha = commit.sha.slice(0, 7);
+      return `<li><span class="log-kind is-${kind}" data-i18n="changes.${kind}">${label}</span><span class="log-text">${text}</span><a class="log-sha" href="${github}/commit/${commit.sha}" target="_blank" rel="noopener noreferrer" aria-label="Commit ${sha} on GitHub">${sha}</a></li>`;
+    });
+    return `<li class="log-day"><h2><time datetime="${date}">${dotted(date)}</time></h2><ul>${rows.join('')}</ul></li>`;
+  });
+  const first = shown[shown.length - 1].date;
+  return `<ol class="log">${blocks.join('')}</ol>
+<p class="log-total"><span data-i18n="changes.total">Total</span><b>${shown.length}</b></p>
+<p class="log-since"><span data-i18n="changes.since">Cooking since</span> <time datetime="${first}">${dotted(first)}</time></p>`;
+}
+
+const changes = changesLog(await botCommits());
+
+const shared = { invite, github, ogImage, updated, updatedIso, changes };
 const pages = (await readdir(join(src, 'pages'))).filter((name) => name.endsWith('.html'));
 
 for (const file of pages) {

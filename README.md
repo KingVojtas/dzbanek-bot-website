@@ -14,6 +14,7 @@ Four static pages and a 404, one stylesheet, vanilla JavaScript. No framework an
 | `commands.html` | A pretend `#kitchen` channel you can type `/` into (every command, a three-round Kitchen Quiz, and the card buttons), then the full command menu, grouped like the bot's `/help` |
 | `radio.html` | A tuner that plays Kiss, Rock Radio, and Radio Beat live, what each one has on air, Catch → Play, and a Friday Radio Night vote you can click |
 | `setup.html` | Channel setup, auto-detected channel names, permissions, Server Members intent |
+| `changes.html` | Every bot commit as one long kitchen-log receipt, printed by the build |
 | `404.html` | The empty shelf. GitHub Pages serves it for missing paths |
 
 Every card, the demo channel, and the vote are examples that run in the browser tab. The clock is the only live thing, and it is the browser's own Europe/Prague time.
@@ -60,7 +61,7 @@ src/partials/          head, header, footer, icons (inline SVG sprite)
 src/pages/             page content only
 src/css/site.css       wood, cream, and clay: fonts, tokens, chrome, Discord cards, pages, motion
 src/js/i18n.js         EN / CS, ?lang=, localStorage dzbanek_lang
-src/js/theme-boot.js   theme before first paint, adds html.js
+src/js/theme-boot.js   theme before first paint, adds html.js, and html.film-soon when the ad will autoplay
 src/js/theme.js        localStorage dzbanek_theme
 src/js/listen.js       the live stations: one player for the page, song info from radia.cz
 src/js/site.js         year, menu, nav pill, the shelf radio, copy buttons, command filter
@@ -75,7 +76,7 @@ dist/             generated, not committed
 
 The top of `scripts/build.mjs` is the single list of public links: `SITE_URL` (where the site is served), the invite URL, and the GitHub URL. `SITE_URL` sets the canonical link, `og:url`, `og:image`, and the asset paths in `404.html`, which GitHub Pages serves at any missing path.
 
-Pages are HTML comments plus the unique markup. The build fills `{{invite}}` and `{{github}}` and wraps each page in the shared chrome. Script order on every page: `theme-boot.js` in `<head>`, then both locales, `i18n.js`, `listen.js`, `site.js`, `theme.js`, `reveal.js`, `clock.js`. A page can load its own scripts after those with a comment:
+Pages are HTML comments plus the unique markup. The build fills `{{invite}}`, `{{github}}` and `{{changes}}` and wraps each page in the shared chrome. Script order on every page: `theme-boot.js` in `<head>`, then both locales, `i18n.js`, `listen.js`, `site.js`, `theme.js`, `reveal.js`, `clock.js`. A page can load its own scripts after those with a comment:
 
 ```html
 <!-- scripts: discord-demo.js -->
@@ -85,7 +86,7 @@ Everything respects `prefers-reduced-motion`, and with JavaScript off the pages 
 
 ## Deployment and hosting
 
-`.github/workflows/pages.yml` runs on a push to `main`:
+`.github/workflows/pages.yml` runs on a push to `main`, and every morning so `changes.html` picks up new bot commits. The build reads them from the GitHub API (with the workflow's token), falls back to a `Dzbanek-bot 2.0` clone next to this repo, and links to GitHub if neither works. Housekeeping commits (README, Prettier, the deploy skill) are left out by `QUIET` in the build:
 
 ```yaml
 - run: node scripts/build.mjs

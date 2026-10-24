@@ -254,6 +254,8 @@
 
   setState('idle');
   labels();
+  // From here the hero's own state lays it out.
+  document.documentElement.classList.remove('film-soon');
 
   if (!calm && !saver && !seenBefore) {
     try {

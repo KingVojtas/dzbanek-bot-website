@@ -47,7 +47,7 @@
     { name: 'volume', args: '[25–150]', desc: 'Set the volume for everyone in voice', free: true },
     { name: 'remove', args: '[position]', desc: 'Drop one upcoming track', free: true },
     { name: 'stop', desc: 'Stop, clear the queue, and leave' },
-    { name: 'radio play', args: '[station]', desc: 'Stream Kiss, Rock, or Beat', choices: ['kiss', 'rock', 'beat'] },
+    { name: 'radio play', args: '[station]', desc: 'Stream Kiss, Rock, or Beat', choices: 'stations' },
     { name: 'radio stop', desc: 'Turn the radio off' },
     { name: 'radio night', desc: 'Put Friday Radio Night on the calendar' },
     { name: 'radio night-off', desc: 'Take Radio Night off the calendar' },
@@ -57,13 +57,40 @@
     { name: 'quiz start', desc: 'Kitchen Quiz: name that tune' },
     { name: 'quiz stop', desc: 'End the quiz and show the podium' },
     { name: 'setup status', desc: 'Show this server’s channels' },
+    { name: 'setup steam', desc: 'Pick where the Steam daily deals go' },
+    { name: 'setup epic', desc: 'Pick where Epic’s free games go' },
+    { name: 'setup welcome', desc: 'Pick where join messages go' },
+    { name: 'setup goodbye', desc: 'Pick where leave messages go' },
     { name: 'setup kitchen', desc: 'Pick where the Kitchen Board hangs' },
     { name: 'setup wishlist', desc: 'Pick where Wishlist Radar pings people' },
     { name: 'setup idle-radio', desc: 'Fade into radio when the queue ends' },
+    { name: 'setup disable', args: '[feature]', desc: 'Stop posting something in this server', choices: 'features' },
     { name: 'textroom', args: '[name]', desc: 'Open a text room (admins)', free: true },
     { name: 'voiceroom', args: '[name]', desc: 'Open a voice room (admins)', free: true },
     { name: 'help', desc: 'Every command on one card' },
   ];
+
+  const CHOICES = {
+    stations: {
+      head: ['demo.station', 'Station'],
+      items: Object.keys(STATIONS).map((key) => ({ key, name: STATIONS[key].name, desc: STATIONS[key].slogan, color: STATIONS[key].color })),
+    },
+    features: {
+      head: ['demo.feature', 'Feature'],
+      items: [
+        { key: 'steam', name: 'Steam deals', desc: '#steam-deals' },
+        { key: 'epic', name: 'Epic free games', desc: '#epic-free' },
+        { key: 'welcome', name: 'Welcome messages', desc: '#welcome' },
+        { key: 'goodbye', name: 'Goodbye messages', desc: '#welcome' },
+        { key: 'kitchen', name: 'Kitchen Board', desc: '#kitchen' },
+        { key: 'radio-night', name: 'Radio Night', desc: 'Friday 20:00' },
+        { key: 'idle-radio', name: 'Idle → radio', desc: 'After the queue ends' },
+      ],
+    },
+  };
+
+  // Where /setup points each feature in this fake server.
+  const FEATURE_CHANNELS = { steam: 'steam-deals', epic: 'epic-free', welcome: 'welcome', goodbye: 'welcome', kitchen: 'kitchen', wishlist: 'wishlist-radar' };
 
   const LOOP_LABELS = ['Loop', 'Repeat', 'Queue'];
 
@@ -79,6 +106,7 @@
       lastStation: 'beat',
       night: false,
       idle: true,
+      off: new Set(), // features /setup disable switched off
       thinking: 0,
       volume: 100,
       history: [], // songs already played, for Previous
@@ -205,7 +233,7 @@
     return h(
       'dl',
       { class: 'dc-fields' },
-      rows.map(([name, value, wide]) => h('div', { class: wide ? 'wide' : null }, h('dt', { text: name }), h('dd', { text: value })))
+      rows.map(([name, value, wide]) => h('div', { class: wide ? 'wide' : null }, h('dt', { text: name }), h('dd', {}, value)))
     );
   }
 
@@ -215,6 +243,12 @@
 
   function row(...buttons) {
     return h('div', { class: 'dc-row' }, buttons);
+  }
+
+  // A #channel mention. The ones in the sidebar open that channel, like in Discord.
+  function channelLink(name) {
+    if (name !== 'kitchen' && !root.querySelector('[data-demo-pane="' + name + '"]')) return h('span', { class: 'dc-mention', text: '#' + name });
+    return h('button', { type: 'button', class: 'dc-mention', onclick: () => showChannel(name), text: '#' + name });
   }
 
   // Bot replies arrive after a short "thinking" beat, like a deferred interaction.
@@ -775,7 +809,49 @@
     },
 
     'setup wishlist'() {
-      reply(() => botMessage(text('🎯 Wishlist Radar now pings people in ', h('span', { class: 'dc-mention', text: '#wishlist' }), '.')));
+      reply(() => botMessage(text('🎯 Wishlist Radar will post in ', channelLink('wishlist-radar'), ' and ping people there when their wishlist goes on sale.')));
+    },
+
+    // The bot's own /setup replies, pointed at the demo's channels.
+    'setup steam'() {
+      state.off.delete('steam');
+      reply(() => botMessage(text('✅ Steam daily deals will post in ', channelLink('steam-deals'), '. New deals appear on the next scheduled poll.')));
+    },
+
+    'setup epic'() {
+      state.off.delete('epic');
+      reply(() => botMessage(text('✅ Epic free games will post in ', channelLink('epic-free'), '. A new lineup appears on the next scheduled poll.')));
+    },
+
+    'setup welcome'() {
+      state.off.delete('welcome');
+      reply(() => botMessage(text('✅ Welcome messages will post in ', channelLink('welcome'), '.')));
+    },
+
+    'setup goodbye'() {
+      state.off.delete('goodbye');
+      reply(() => botMessage(text('✅ Goodbye messages will post in ', channelLink('welcome'), '.')));
+    },
+
+    'setup disable'(rest) {
+      const feature = pickChoice('features', rest);
+      if (!feature) {
+        openWith('/setup disable ');
+        return false;
+      }
+      if (feature.key === 'radio-night') state.night = false;
+      else if (feature.key === 'idle-radio') state.idle = false;
+      else state.off.add(feature.key);
+      const done = {
+        steam: 'Steam deals will no longer post in this server.',
+        epic: 'Epic free games will no longer post in this server.',
+        welcome: 'Welcome messages will no longer post in this server.',
+        goodbye: 'Goodbye messages will no longer post in this server.',
+        kitchen: 'The Kitchen Board will no longer update in this server.',
+        'radio-night': 'Radio Night is off.',
+        'idle-radio': 'Idle → radio is off. After the music queue ends I’ll leave like before.',
+      };
+      reply(() => botMessage(...onlyYou('✅ ' + done[feature.key])));
     },
 
     textroom(rest) {
@@ -820,11 +896,14 @@
             author: '⚙️ Setup',
             title: 'Example Server',
             children: fields([
-              ['Steam', '#steam-deals'],
-              ['Epic', '#free-games'],
-              ['Welcome', '#welcome'],
-              ['Goodbye', '#goodbye'],
-              ['Kitchen Board', '#kitchen'],
+              ...[
+                ['Steam', 'steam'],
+                ['Epic', 'epic'],
+                ['Welcome', 'welcome'],
+                ['Goodbye', 'goodbye'],
+                ['Kitchen Board', 'kitchen'],
+                ['Wishlist Radar', 'wishlist'],
+              ].map(([label, key]) => [label, state.off.has(key) ? 'Off' : channelLink(FEATURE_CHANNELS[key])]),
               ['Idle radio', state.idle ? 'On' : 'Off'],
               ['Radio Night', state.night ? 'Friday 20:00' : 'Off', true],
             ]),
@@ -834,7 +913,8 @@
     },
 
     'setup kitchen'() {
-      reply(() => botMessage(text('🍳 The Kitchen Board now hangs in ', h('span', { class: 'dc-mention', text: '#kitchen' }), '. It edits itself from here on.')));
+      state.off.delete('kitchen');
+      reply(() => botMessage(text('🍳 The Kitchen Board will live in ', channelLink('kitchen'), '. I’ll keep that one message up to date.')));
     },
 
     'setup idle-radio'() {
@@ -850,6 +930,13 @@
       );
     },
   };
+
+  function pickChoice(set, rest) {
+    const value = rest.toLowerCase().trim();
+    if (!value) return null;
+    const items = CHOICES[set].items;
+    return items.find((item) => item.key === value) || items.find((item) => item.name.toLowerCase().startsWith(value));
+  }
 
   function pickStation(rest) {
     const value = rest.toLowerCase();
@@ -989,8 +1076,9 @@
       const rest = body.slice(withChoices.name.length + 1).trim();
       mode = 'choice';
       parent = withChoices;
-      items = withChoices.choices.filter((key) => !rest || key.startsWith(rest) || STATIONS[key].name.toLowerCase().startsWith(rest));
-      suggestHead.textContent = ui('demo.station', 'station');
+      const set = CHOICES[withChoices.choices];
+      items = set.items.filter((item) => !rest || item.key.startsWith(rest) || item.name.toLowerCase().startsWith(rest));
+      suggestHead.textContent = ui(...set.head);
     } else if (COMMANDS.some((cmd) => cmd.free && body.startsWith(cmd.name + ' '))) {
       return closeMenu();
     } else {
@@ -1026,8 +1114,8 @@
                 ),
               ]
             : [
-                h('span', { class: 'swatch', style: '--accent: ' + STATIONS[item].color }),
-                h('span', {}, h('span', { class: 'dc-opt-name', text: STATIONS[item].name }), h('span', { class: 'dc-opt-desc', text: STATIONS[item].slogan })),
+                h('span', { class: 'swatch', style: '--accent: ' + (item.color || 'var(--dc-muted)') }),
+                h('span', {}, h('span', { class: 'dc-opt-name', text: item.name }), h('span', { class: 'dc-opt-desc', text: item.desc })),
               ];
         return h(
           'li',
@@ -1057,7 +1145,7 @@
     const item = items[index];
     if (!item) return;
     if (mode === 'choice') {
-      run('/' + parent.name + ' ' + item);
+      run('/' + parent.name + ' ' + item.key);
       return;
     }
     if (item.free || item.choices) {

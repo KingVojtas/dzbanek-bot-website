@@ -17,4 +17,14 @@
   } catch (e) {
     /* keep the night theme */
   }
+  // The home page's ad autoplays once a session (film.js), so lay the hero out for it from the start.
+  try {
+    var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var saver = navigator.connection && navigator.connection.saveData;
+    if (!calm && !saver && sessionStorage.getItem('dzbanek_film') !== '1') {
+      document.documentElement.classList.add('film-soon');
+    }
+  } catch (e) {
+    /* no storage: film.js decides */
+  }
 })();

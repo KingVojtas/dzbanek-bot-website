@@ -1,0 +1,24 @@
+<!-- title: What’s new · Dzbanek -->
+<!-- description: Every change to the bot, straight from its commit history on GitHub. The newest is on top. -->
+<!-- page: changes -->
+
+<header class="page-hero">
+  <div class="wrap">
+    <h1 data-i18n="changes.title">What’s new</h1>
+    <p class="lead" data-i18n="changes.lead">Every change to the bot, straight from its commit history on GitHub. The newest is on top, and the list refreshes every day.</p>
+    <p class="note" data-i18n="changes.note">These are the notes I write for each change, so they’re in English.</p>
+  </div>
+</header>
+
+<section class="section flush-top" aria-labelledby="log-head">
+  <div class="wrap">
+    <!-- The whole kitchen log, printed by scripts/build.mjs. -->
+    <div class="receipt-wrap is-long" data-reveal>
+      <div class="receipt">
+        <p class="receipt-head" id="log-head">DZBANEK · <span data-i18n="changelog.slip">kitchen log</span></p>
+        {{changes}}
+      </div>
+    </div>
+    <p class="note log-more"><a class="link-arrow" href="{{github}}/commits/main" target="_blank" rel="noopener noreferrer"><span data-i18n="changes.github">The same list on GitHub</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
+  </div>
+</section>
