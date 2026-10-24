@@ -5292,64 +5292,75 @@ html.js .station:not(.is-tuned) .eq i {
   margin: 0;
 }
 
+/* The vote as the bot draws it on the board: a code-span bar per station, the count, a crown on the leader. */
+.vote-title {
+  color: var(--dc-title);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
 .tally {
   display: grid;
-  gap: 0.55rem;
-  margin: 0.9rem 0 0;
+  gap: 0.3rem;
+  margin: 0.7rem 0 0;
   padding: 0;
   list-style: none;
 }
 
 .tally li {
-  display: grid;
-  grid-template-columns: 4.4rem minmax(0, 1fr) 1.6rem;
+  display: flex;
   align-items: center;
-  gap: 0.65rem;
-}
-
-.tally-name {
+  gap: 0.45rem;
   font-size: 0.85rem;
-  font-weight: 600;
 }
 
-.tally-bar {
-  height: 0.6rem;
-  border-radius: 999px;
-  background: var(--dc-sk);
-  overflow: hidden;
-}
-
-.tally-bar span {
-  display: block;
-  width: var(--share, 0%);
-  height: 100%;
-  border-radius: inherit;
-  background: var(--accent);
-  transition: width 0.7s var(--spring);
+.tally-line {
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  background: var(--dc-hover);
+  color: var(--dc-text);
+  font: 500 0.8rem/1.4 var(--mono);
+  white-space: pre;
 }
 
 .tally-count {
-  text-align: right;
-  font-size: 0.85rem;
-  color: var(--dc-text-2);
-}
-
-.tally li.is-winner .tally-name {
   color: var(--dc-title);
 }
 
-.tally li.is-winner .tally-bar {
-  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 60%, transparent);
+.tally-crown {
+  visibility: hidden;
 }
 
-.vote-buttons .dc-btn[aria-pressed="true"],
-.vote-buttons .dc-btn[aria-pressed="true"]:hover {
-  background: var(--accent);
+.tally li.is-lead .tally-crown,
+.tally li.is-winner .tally-crown {
+  visibility: visible;
+}
+
+/* Five to a row in Discord; here they wrap when the column is narrower than that. */
+.vote-buttons .dc-btn {
+  padding: 0.2rem 0.7rem;
+  font-size: 0.82rem;
+}
+
+/* The leader is green, like the bot's Success button; your own vote gets a ring. */
+.vote-buttons .dc-btn.is-lead {
+  background: #248046;
   color: #fff;
 }
 
-.vote-buttons [data-vote-for="beat"][aria-pressed="true"] {
-  color: #241a00;
+.vote-buttons .dc-btn[aria-pressed="true"] {
+  box-shadow: 0 0 0 2px #5865f2;
+}
+
+/* Under "caught": who can press Play. */
+.dc-note {
+  margin-top: 0.4rem;
+  color: var(--dc-muted);
+  font-size: 0.75rem;
+}
+
+.dc-link {
+  color: var(--dc-link);
 }
 
 .vote-result {

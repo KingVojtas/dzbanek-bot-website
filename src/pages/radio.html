@@ -82,7 +82,7 @@
           <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
           <p class="station-name">Heart London</p>
           <p class="slogan">Turn up the feel good!</p>
-          <p data-i18n="radio.heart">Feel-good pop from London. Heart often leaves the song name blank, so the card may show only the station, and Catch waits until a title comes through.</p>
+          <p data-i18n="radio.heart">Feel-good pop from London. In Discord the song name comes from the stream, which Heart often leaves blank, so the card may show only the station and Catch waits for a title. This page reads it from Global’s own feed.</p>
           <p class="station-now" data-station-now hidden></p>
           <a class="link-arrow" href="https://www.heart.co.uk/" target="_blank" rel="noopener noreferrer">heart.co.uk <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
         </article>
@@ -90,7 +90,7 @@
           <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
           <p class="station-name">Capital London</p>
           <p class="slogan">The UK’s No.1 Hit Music Station</p>
-          <p data-i18n="radio.capital">Chart hits from London. Like Heart, it often leaves the song name blank.</p>
+          <p data-i18n="radio.capital">Chart hits from London. Like Heart, its stream often leaves the song name blank in Discord; this page reads it from Global’s feed.</p>
           <p class="station-now" data-station-now hidden></p>
           <a class="link-arrow" href="https://www.capitalfm.com/" target="_blank" rel="noopener noreferrer">capitalfm.com <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
         </article>
@@ -131,7 +131,7 @@
   <div class="wrap split">
     <div data-reveal>
       <h2 data-i18n="radio.catchTitle">Catch a song, play it later</h2>
-      <p class="lead" data-i18n="radio.catchBody">Hear something you like? Catch saves the artist and title. The reply comes with a Play button that finds the song on YouTube and adds it to the queue. The Kitchen Board shows the server’s latest catch.</p>
+      <p class="lead" data-i18n="radio.catchBody">Hear something you like? Catch saves the artist and title and says so in the channel, with a Play button only you can press: it finds the song on YouTube and adds it to the queue. The Kitchen Board shows the server’s latest catch. While a station names only its show, Catch waits for a song.</p>
     </div>
     <ol class="flow" data-reveal aria-label="Catch a song, play it later" data-i18n-aria="radio.catchTitle">
       <li class="flow-step">
@@ -139,19 +139,21 @@
         <div class="dc dc-mini">
           <div class="dc-embed" style="--bar: var(--beat)">
             <div class="dc-embed-main">
-              <p class="dc-embed-author"><span class="live-dot" aria-hidden="true"></span> Live · Radio Beat</p>
-              <p class="dc-embed-title">Iron Orchard - Highway Sermon</p>
+              <p class="dc-embed-author">🔴 LIVE · Radio Beat</p>
+              <p class="dc-embed-title dc-link">Highway Sermon</p>
+              <p class="dc-embed-desc">by <b>Iron Orchard</b><br /><em>První bigbít u nás</em><br />🎧 in <span class="dc-mention">🔊 Radio corner</span></p>
+              <p class="dc-embed-footer">On air since · <span data-clock="stamp">Today at 21:14</span></p>
             </div>
           </div>
-          <div class="dc-row"><span class="dc-btn dc-btn-red">Stop</span><span class="dc-btn">Website</span><span class="dc-btn is-hot">Catch</span></div>
+          <div class="dc-row"><span class="dc-btn dc-btn-blurple is-hot">🍪 Catch</span><span class="dc-btn dc-btn-red">⏹️ Stop</span><span class="dc-btn">🌐 Website</span></div>
         </div>
       </li>
       <li class="flow-step">
         <span class="flow-num" aria-hidden="true">2</span>
         <div class="dc dc-mini">
-          <p class="dc-ephemeral" data-i18n="radio.onlyYou">Only you can see this</p>
-          <p class="dc-text">🎣 Caught <strong>Iron Orchard - Highway Sermon</strong></p>
-          <div class="dc-row"><span class="dc-btn is-hot">Play</span></div>
+          <p class="dc-text">🍪 <strong>Sunka</strong> caught <strong>Highway Sermon</strong> — Iron Orchard</p>
+          <div class="dc-row"><span class="dc-btn dc-btn-blurple is-hot">▶️ Play</span></div>
+          <p class="dc-note" data-i18n="radio.onlyCatcher">Only the person who caught it can press Play.</p>
         </div>
       </li>
       <li class="flow-step">
@@ -159,8 +161,9 @@
         <div class="dc dc-mini">
           <div class="dc-embed" style="--bar: var(--clay)">
             <div class="dc-embed-main">
-              <p class="dc-embed-author">Now Playing</p>
-              <p class="dc-embed-title">Iron Orchard - Highway Sermon</p>
+              <p class="dc-embed-author">🔊 Now Playing</p>
+              <p class="dc-embed-title">Highway Sermon</p>
+              <p class="dc-embed-desc">Iron Orchard · requested by <span class="dc-mention">@Sunka</span> · YouTube</p>
               <div class="dc-progress"><div class="progress"><span></span></div></div>
             </div>
           </div>
@@ -187,7 +190,7 @@
         </li>
         <li data-phase="night">
           <strong class="mono">20:00</strong>
-          <p data-i18n="radio.t2">The winner starts playing in the channel you picked. If it’s a tie, it plays the station you scheduled, then the last one that played, then Beat.</p>
+          <p data-i18n="radio.t2">The winner starts playing in the channel you picked, and the board’s channel gets a note with the votes. A tie goes to the station you scheduled if it’s one of the tied ones, otherwise to the first of them in the /radio list.</p>
         </li>
       </ol>
     </div>
@@ -198,31 +201,30 @@
         <div class="dc-msg">
           <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
           <div class="dc-body">
-            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Friday at 12:00</span></p>
-            <div class="dc-embed" style="--bar: var(--glow)">
+            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">Friday at 12:00</span><span class="dc-time" data-i18n="board.edited">(edited)</span></p>
+            <div class="dc-embed vote-card" style="--bar: #c4783a">
               <div class="dc-embed-main">
-                <p class="dc-embed-author"><svg width="16" height="16" aria-hidden="true"><use href="#i-moon-radio" /></svg> Kitchen Board · Radio Night</p>
-                <p class="dc-embed-title">Tonight at 20:00. Pick the station.</p>
+                <p class="vote-title">🌙 Radio Night · voting closes <span class="dc-ts">at 20:00</span></p>
                 <ul class="tally" data-vote-tally>
-                  <li data-tally="kiss" style="--accent: var(--kiss); --share: 29%"><span class="tally-name">Kiss</span><span class="tally-bar"><span></span></span><span class="tally-count mono">2</span></li>
-                  <li data-tally="rock" style="--accent: var(--rock); --share: 14%"><span class="tally-name">Rock</span><span class="tally-bar"><span></span></span><span class="tally-count mono">1</span></li>
-                  <li data-tally="beat" style="--accent: var(--beat); --share: 29%"><span class="tally-name">Beat</span><span class="tally-bar"><span></span></span><span class="tally-count mono">2</span></li>
-                  <li data-tally="frekvence1" style="--accent: var(--frekvence1); --share: 14%"><span class="tally-name">F1</span><span class="tally-bar"><span></span></span><span class="tally-count mono">1</span></li>
-                  <li data-tally="heart" style="--accent: var(--heart); --share: 0%"><span class="tally-name">Heart</span><span class="tally-bar"><span></span></span><span class="tally-count mono">0</span></li>
-                  <li data-tally="capital" style="--accent: var(--capital); --share: 14%"><span class="tally-name">Capital</span><span class="tally-bar"><span></span></span><span class="tally-count mono">1</span></li>
-                  <li data-tally="paradise" style="--accent: var(--paradise); --share: 0%"><span class="tally-name">Paradise</span><span class="tally-bar"><span></span></span><span class="tally-count mono">0</span></li>
+                  <li data-tally="kiss"><code class="tally-line">💋 Kiss     <span class="tally-bar">▰▰▰▱▱▱▱▱▱▱</span></code><b class="tally-count">2</b><span class="tally-crown" aria-label="leading">👑</span></li>
+                  <li data-tally="rock"><code class="tally-line">🎸 Rock     <span class="tally-bar">▰▱▱▱▱▱▱▱▱▱</span></code><b class="tally-count">1</b><span class="tally-crown" aria-label="leading">👑</span></li>
+                  <li data-tally="beat"><code class="tally-line">🥁 Beat     <span class="tally-bar">▰▰▰▱▱▱▱▱▱▱</span></code><b class="tally-count">2</b><span class="tally-crown" aria-label="leading">👑</span></li>
+                  <li data-tally="frekvence1"><code class="tally-line">1️⃣ F1       <span class="tally-bar">▰▱▱▱▱▱▱▱▱▱</span></code><b class="tally-count">1</b><span class="tally-crown" aria-label="leading">👑</span></li>
+                  <li data-tally="heart"><code class="tally-line">❤️ Heart    <span class="tally-bar">▱▱▱▱▱▱▱▱▱▱</span></code><b class="tally-count">0</b><span class="tally-crown" aria-label="leading">👑</span></li>
+                  <li data-tally="capital"><code class="tally-line">🎤 Capital  <span class="tally-bar">▰▱▱▱▱▱▱▱▱▱</span></code><b class="tally-count">1</b><span class="tally-crown" aria-label="leading">👑</span></li>
+                  <li data-tally="paradise"><code class="tally-line">🌴 Paradise <span class="tally-bar">▰▱▱▱▱▱▱▱▱▱</span></code><b class="tally-count">1</b><span class="tally-crown" aria-label="leading">👑</span></li>
                 </ul>
-                <p class="dc-embed-footer">One vote each. You can change it.</p>
+                <p class="dc-embed-footer">One vote each, change it any time · <span data-vote-total>8 votes so far</span></p>
               </div>
             </div>
             <div class="dc-row vote-buttons">
-              <button type="button" class="dc-btn" data-vote-for="kiss" aria-pressed="false" style="--accent: var(--kiss)">Kiss</button>
-              <button type="button" class="dc-btn" data-vote-for="rock" aria-pressed="false" style="--accent: var(--rock)">Rock</button>
-              <button type="button" class="dc-btn" data-vote-for="beat" aria-pressed="false" style="--accent: var(--beat)">Beat</button>
-              <button type="button" class="dc-btn" data-vote-for="frekvence1" aria-pressed="false" style="--accent: var(--frekvence1)">F1</button>
-              <button type="button" class="dc-btn" data-vote-for="heart" aria-pressed="false" style="--accent: var(--heart)">Heart</button>
-              <button type="button" class="dc-btn" data-vote-for="capital" aria-pressed="false" style="--accent: var(--capital)">Capital</button>
-              <button type="button" class="dc-btn" data-vote-for="paradise" aria-pressed="false" style="--accent: var(--paradise)">Paradise</button>
+              <button type="button" class="dc-btn" data-vote-for="kiss" aria-pressed="false">💋 Kiss · <span class="vote-n">2</span></button>
+              <button type="button" class="dc-btn" data-vote-for="rock" aria-pressed="false">🎸 Rock · <span class="vote-n">1</span></button>
+              <button type="button" class="dc-btn" data-vote-for="beat" aria-pressed="false">🥁 Beat · <span class="vote-n">2</span></button>
+              <button type="button" class="dc-btn" data-vote-for="frekvence1" aria-pressed="false">1️⃣ F1 · <span class="vote-n">1</span></button>
+              <button type="button" class="dc-btn" data-vote-for="heart" aria-pressed="false">❤️ Heart · <span class="vote-n">0</span></button>
+              <button type="button" class="dc-btn" data-vote-for="capital" aria-pressed="false">🎤 Capital · <span class="vote-n">1</span></button>
+              <button type="button" class="dc-btn" data-vote-for="paradise" aria-pressed="false">🌴 Paradise · <span class="vote-n">1</span></button>
             </div>
           </div>
         </div>

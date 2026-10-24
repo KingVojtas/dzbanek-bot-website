@@ -242,8 +242,9 @@
     );
   }
 
-  function button(label, onClick, { red = false, disabled = false } = {}) {
-    return h('button', { type: 'button', class: 'dc-btn' + (red ? ' dc-btn-red' : ''), disabled, onclick: onClick, text: label });
+  function button(label, onClick, { red = false, blurple = false, disabled = false } = {}) {
+    const style = red ? ' dc-btn-red' : blurple ? ' dc-btn-blurple' : '';
+    return h('button', { type: 'button', class: 'dc-btn' + style, disabled, onclick: onClick, text: label });
   }
 
   function row(...buttons) {
@@ -453,26 +454,39 @@
 
   let radioTimer = 0;
 
+  // ON_AIR lines are "Artist - Title".
+  const split = (line) => {
+    const [artist, ...title] = line.split(' - ');
+    return { artist, title: title.join(' - ') };
+  };
+
+  // The bot's live card (src/radio/embed.ts): the song as the title, "by" the artist, the slogan,
+  // the voice channel; Catch, Stop, Website.
   function radioCard(key) {
     const station = STATIONS[key];
-    const song = h('p', { class: 'dc-embed-title', text: ON_AIR[0] });
+    const first = split(ON_AIR[0]);
+    const song = h('p', { class: 'dc-embed-title dc-link', text: first.title });
+    const artist = h('strong', { text: first.artist });
     const edited = h('span', { class: 'dc-muted' });
     const card = botMessage(
       embed({
         bar: station.color,
-        author: [h('span', { class: 'live-dot', 'aria-hidden': 'true' }), ' Live · ' + station.name],
-        children: [song, h('p', { class: 'dc-embed-desc' }, h('em', { text: station.slogan }), ' ', edited)],
-        footer: 'Edits itself when the song on air changes',
+        author: '🔴 LIVE · ' + station.name,
+        children: [
+          song,
+          h('p', { class: 'dc-embed-desc' }, 'by ', artist, h('br'), h('em', { text: station.slogan }), h('br'), '🎧 in 🔊 Lounge ', edited),
+        ],
+        footer: 'On air since',
       }),
       row(
-        button('Stop', () => {
+        button('🍪 Catch', () => catchSong(song.textContent, artist.textContent), { blurple: true }),
+        button('⏹️ Stop', () => {
           if (stopRadio()) append(botMessage(text('📻 Radio off.')));
         }, { red: true }),
-        h('a', { class: 'dc-btn', href: station.url, target: '_blank', rel: 'noopener noreferrer', text: 'Website ↗' }),
-        button('Catch', () => catchSong(song.textContent))
+        h('a', { class: 'dc-btn', href: station.url, target: '_blank', rel: 'noopener noreferrer', text: '🌐 Website' })
       )
     );
-    return { card, song, edited };
+    return { card, song, artist, edited };
   }
 
   function startRadio(key, quiet) {
@@ -488,7 +502,9 @@
     radioTimer = setInterval(() => {
       if (!state.radio) return;
       state.radio.index = (state.radio.index + 1) % ON_AIR.length;
-      made.song.textContent = ON_AIR[state.radio.index];
+      const now = split(ON_AIR[state.radio.index]);
+      made.song.textContent = now.title;
+      made.artist.textContent = now.artist;
       made.edited.textContent = '(edited)';
     }, 12000);
   }
@@ -501,12 +517,13 @@
     return true;
   }
 
-  function catchSong(song) {
-    const play = button('Play', () => {
+  // The bot posts a catch for everyone to see; only the catcher can press Play.
+  function catchSong(title, artist) {
+    const play = button('▶️ Play', () => {
       play.disabled = true;
-      run('/play ' + song);
-    });
-    append(botMessage(...onlyYou('🎣 Caught ', strong(song), '. Press Play to queue it.'), row(play)));
+      run('/play ' + artist + ' - ' + title);
+    }, { blurple: true });
+    append(botMessage(text('🍪 ', strong('you'), ' caught ', strong(title), ' — ' + artist), row(play)));
   }
 
   /* ---------- Kitchen Quiz ---------- */

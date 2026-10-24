@@ -144,6 +144,7 @@
   const closeButton = vote.querySelector('[data-vote-close]');
   const result = vote.querySelector('[data-vote-result]');
   const resultText = vote.querySelector('[data-vote-result-text]');
+  const totalLine = vote.querySelector('[data-vote-total]');
 
   let mine = null;
   let scheduled = 'beat';
@@ -155,42 +156,64 @@
     return tally;
   }
 
-  function winner(tally) {
+  // The bot's rules (src/kitchen/vote-tally.ts): the board crowns a leader only when one station is
+  // ahead; at 20:00 the most votes win, and a tie goes to the scheduled station if it's among the tied,
+  // otherwise to the first of them in /radio order.
+  function leader(tally) {
     const top = Math.max(...KEYS.map((key) => tally[key]));
-    const leaders = KEYS.filter((key) => tally[key] === top);
-    // A tie goes to the scheduled station. (The bot falls back to the last
-    // station that played, then Beat, but a scheduled night always has one.)
-    return { key: leaders.length === 1 ? leaders[0] : scheduled || 'beat', leaders, top };
+    const ahead = KEYS.filter((key) => tally[key] === top);
+    return top > 0 && ahead.length === 1 ? ahead[0] : null;
   }
 
-  function list(keys) {
-    const names = keys.map(name);
-    return names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0];
+  function winner(tally) {
+    const ranked = KEYS.slice().sort((a, b) => tally[b] - tally[a] || (a === scheduled ? -1 : b === scheduled ? 1 : 0));
+    return tally[ranked[0]] > 0 ? ranked[0] : scheduled;
   }
+
+  // The tally bar the bot draws in a code span: ten blocks, filled by share.
+  const bar = (n, total) => {
+    const filled = total > 0 ? Math.round((n / total) * 10) : 0;
+    return '▰'.repeat(filled) + '▱'.repeat(10 - filled);
+  };
+  const short = (key) => (STATIONS[key] ? STATIONS[key].short : key);
 
   function render() {
     const tally = counts();
     const total = KEYS.reduce((sum, key) => sum + tally[key], 0);
-    const won = closed ? winner(tally).key : null;
+    const ahead = leader(tally);
+    const won = closed ? winner(tally) : null;
     rows.forEach((row) => {
       const key = row.getAttribute('data-tally');
-      row.style.setProperty('--share', total ? (tally[key] / total) * 100 + '%' : '0%');
+      row.querySelector('.tally-bar').textContent = bar(tally[key], total);
       row.querySelector('.tally-count').textContent = String(tally[key]);
+      row.classList.toggle('is-lead', key === ahead);
       row.classList.toggle('is-winner', key === won);
     });
     voteButtons.forEach((button) => {
-      button.setAttribute('aria-pressed', String(button.getAttribute('data-vote-for') === mine));
+      const key = button.getAttribute('data-vote-for');
+      button.querySelector('.vote-n').textContent = String(tally[key]);
+      button.classList.toggle('is-lead', key === ahead);
+      button.setAttribute('aria-pressed', String(key === mine));
       button.disabled = closed;
     });
+    if (totalLine) totalLine.textContent = total === 1 ? '1 vote so far' : total + ' votes so far';
     closeButton.disabled = closed;
 
+    // The note the bot posts in the board's channel at 20:00.
     result.hidden = !closed;
     if (closed) {
-      const { key, leaders, top } = winner(tally);
-      resultText.textContent =
-        leaders.length === 1
-          ? '🏆 ' + name(key) + ' wins with ' + top + ' votes. It starts now in 🔊 Kitchen.'
-          : '🤝 ' + list(leaders) + ' tied at ' + top + '. The scheduled station, ' + name(key) + ', starts now in 🔊 Kitchen.';
+      // Stations with at least one vote, in /radio order; no tally when nobody voted.
+      const voted = KEYS.filter((key) => tally[key] > 0).map((key) => short(key) + ' ' + tally[key]);
+      const votes = voted.length ? ' Vote: ' + voted.join(' · ') + '.' : '';
+      resultText.replaceChildren(
+        '🍪 ',
+        Object.assign(document.createElement('strong'), { textContent: 'Radio Night' }),
+        ' — ',
+        Object.assign(document.createElement('strong'), { textContent: name(won) }),
+        ' is live in ',
+        Object.assign(document.createElement('strong'), { textContent: '#Radio corner' }),
+        '. Hop in.' + votes
+      );
     }
   }
 
