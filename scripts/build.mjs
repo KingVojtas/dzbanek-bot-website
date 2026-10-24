@@ -132,19 +132,23 @@ async function botCommits() {
   try {
     const headers = { Accept: 'application/vnd.github+json', 'User-Agent': 'dzbanek-site-build' };
     if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-    const response = await fetch(`https://api.github.com/repos/${BOT_REPO}/commits?per_page=100`, {
-      headers,
-      signal: AbortSignal.timeout(15_000),
-    });
-    if (!response.ok) throw new Error(`GitHub answered ${response.status}`);
-    return (await response.json()).map((entry) => ({
+    // GitHub sends 100 at a time and names the next page in the Link header.
+    const entries = [];
+    let next = `https://api.github.com/repos/${BOT_REPO}/commits?per_page=100`;
+    for (let page = 0; next && page < 20; page += 1) {
+      const response = await fetch(next, { headers, signal: AbortSignal.timeout(15_000) });
+      if (!response.ok) throw new Error(`GitHub answered ${response.status}`);
+      entries.push(...(await response.json()));
+      next = response.headers.get('link')?.match(/<([^>]+)>;\s*rel="next"/)?.[1];
+    }
+    return entries.map((entry) => ({
       sha: entry.sha,
       date: pragueDay.format(new Date(entry.commit.committer.date)),
       subject: entry.commit.message.split('\n')[0],
     }));
   } catch (error) {
     try {
-      const log = execFileSync('git', ['log', '-100', '--format=%H%x09%cs%x09%s'], {
+      const log = execFileSync('git', ['log', '--format=%H%x09%cs%x09%s'], {
         cwd: join(root, '..', 'Dzbanek-bot 2.0'),
         encoding: 'utf8',
       });
