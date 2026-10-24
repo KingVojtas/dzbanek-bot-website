@@ -199,13 +199,14 @@ const radioCard = post('kitchen', R.enter + 0.1, `<div class="msg">
   <p class="thinking">Dzbanek is thinking…</p>
   <div class="embed rc" style="--bar:#f5c400">
     <div>
-      <p class="auth">📻 Radio Beat <span style="margin-left:auto;color:#f23f42;font-size:12px;font-weight:700;letter-spacing:.06em">● LIVE</span></p>
-      <p class="ttl song">Highway Sermon</p>
-      <p class="desc artist">Iron Orchard</p>
-      <p class="foot upd">On air on Radio Beat · updated 20 s ago</p>
+      <p class="auth">🔴 LIVE · Radio Beat</p>
+      <p class="ttl link song">Highway Sermon</p>
+      <p class="desc">by <b class="artist">Iron Orchard</b><br><i>První bigbít u nás</i><br>🎧 in <span class="mention">🔊 Radio corner</span></p>
+      <p class="foot upd">On air since • Today at 21:05</p>
     </div>
+    <span class="mark" style="background:#f5c400;color:#1e1500">BEAT</span>
   </div>
-  <div class="btns"><span class="b">🌐 Website</span><span class="b g">🎣 Catch</span><span class="b r">⏹ Stop</span></div>
+  <div class="btns"><span class="b blurple">🍪 Catch</span><span class="b r">⏹️ Stop</span><span class="b">🌐 Website</span></div>
   </div></div>`, null);
 SFX.push([R.reply, 'msg']);
 
@@ -608,7 +609,7 @@ function render(t) {
   const changed = t >= R.update;
   radioCard.querySelector('.song').textContent = changed ? 'Paper Moon Motel' : 'Highway Sermon';
   radioCard.querySelector('.artist').textContent = changed ? 'The Slow Lanes' : 'Iron Orchard';
-  radioCard.querySelector('.upd').textContent = changed ? 'On air on Radio Beat · updated just now' : 'On air on Radio Beat · updated 20 s ago';
+  radioCard.querySelector('.upd').textContent = changed ? 'On air since • Today at 21:08' : 'On air since • Today at 21:05';
   vcBot.style.display = t >= R.reply ? '' : 'none';
   vcBot.querySelector('.av').classList.toggle('speak', t >= R.reply && Math.floor(t * 3) % 4 !== 0);
 

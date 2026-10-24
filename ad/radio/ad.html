@@ -6,18 +6,9 @@
 <!-- The Discord window, the kitchen and the end card, shared with the main ad. -->
 <link rel="stylesheet" href="../ad.css">
 <style>
-/* The radio card's station mark, standing in for the logo the bot attaches. */
-.mark { display: grid; place-items: center; width: 80px; height: 80px; border-radius: 4px; color: #fff; font: 800 22px/1 var(--ui); letter-spacing: 0.02em; text-align: center; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12); }
+/* The live card itself (.rc, .mark, .ttl.link, .b.blurple) is in ../ad.css. */
 .rc { transition: none; }
-.rc .live { margin-left: auto; color: #f23f42; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; }
-.rc .slogan { margin-top: 2px; color: var(--muted); font-size: 13px; font-style: italic; }
 .rc .ttl { font-size: 18px; }
-.flash { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); }
-
-/* "Only you can see this" */
-.eph { margin-top: 6px; color: var(--muted); font-size: 12px; }
-.eph b { color: #00a8fc; font-weight: 500; }
-.b.blurple { background: var(--blurple); }
 
 /* The Radio Night vote, as the board's last card draws it. */
 .vote { max-width: 560px; }
@@ -177,15 +168,14 @@ const radioMsg = post('kitchen', R.enter + 0.05, `<div class="msg">
   <p class="meta">${nm('bot')}${stamp('Today at 21:05')}</p>
   <div class="embed rc">
     <div>
-      <p class="auth"><span class="rc-name"></span> <span class="live">● LIVE</span></p>
-      <p class="slogan"></p>
-      <p class="ttl song"></p>
-      <p class="desc artist"></p>
+      <p class="auth">🔴 LIVE · <span class="rc-name"></span></p>
+      <p class="ttl link song"></p>
+      <p class="desc">by <b class="artist"></b><br><i class="slogan"></i><br>🎧 in <span class="mention">🔊 Radio corner</span></p>
       <p class="foot upd"></p>
     </div>
     <span class="mark"></span>
   </div>
-  <div class="btns"><span class="b">🌐 Website</span><span class="b g rc-catch">🎣 Catch</span><span class="b r">⏹ Stop</span></div>
+  <div class="btns"><span class="b blurple rc-catch">🍪 Catch</span><span class="b r">⏹️ Stop</span><span class="b">🌐 Website</span></div>
   </div></div>`, null);
 for (const [, at] of ON) SFX.push([at - 0.2, 'enter'], [at, 'msg']);
 
@@ -195,16 +185,14 @@ const C = {
   play: W('song', 'play') + 0.1,
 };
 C.reply = C.catch + 0.45;
-C.queued = C.play + 0.55;
 const caught = BY.paradise;
+// The bot says it in the channel for everyone (src/events/buttons/radio.ts); only Sunka can press Play.
 const catchMsg = post('kitchen', C.reply, `<div class="msg caught-msg">
-  <p class="used">${av('sunka')}<b>Sunka</b> used <span class="cmd">Catch</span></p>${av('bot')}<div>
+  ${av('bot')}<div>
   <p class="meta">${nm('bot')}${stamp('Today at 21:06')}</p>
-  <p class="body">🎣 Caught <b style="color:#f2f3f5">${caught.artist} – ${caught.song}</b>. Press Play to queue it.</p>
+  <p class="body">🍪 <b style="color:#f2f3f5">Sunka</b> caught <b style="color:#f2f3f5">${caught.song}</b> — ${caught.artist}</p>
   <div class="btns"><span class="b blurple play-btn">▶️ Play</span></div>
-  <p class="eph">👁 Only you can see this · <b>Dismiss message</b></p>
   </div></div>`);
-const queuedMsg = post('kitchen', C.queued, `<div class="msg"><p class="used">${av('sunka')}<b>Sunka</b> used <span class="cmd">Play</span></p>${av('bot')}<div><p class="meta">${nm('bot')}${stamp('Today at 21:06')}</p><p class="body">➕ Added to the queue: <b>${caught.song}</b> · 1 in queue</p></div></div>`);
 
 /* ---------- Radio Night vote, on the board ---------- */
 const N = {
@@ -280,7 +268,7 @@ const CAM = [
   [R.enter + 0.6, '.rc', 1.95],
   [C.catch - 0.3, '.rc', 1.95],
   [C.reply + 0.5, '.caught-msg', ZC],
-  [C.queued + 0.6, '.caught-msg', ZC],
+  [C.play + 0.8, '.caught-msg', ZC],
   [N.click + 0.1, 800, 450, 1.12],
   [N.click + 0.9, '.vote', 1.75],
   [SC.end.start + 0.05, '.vote', 1.75],
@@ -403,12 +391,12 @@ function render(t) {
   const switched = ON.find(([k]) => k === key)[1];
   const card = radioMsg.querySelector('.rc');
   card.style.setProperty('--bar', s.color);
-  radioMsg.querySelector('.rc-name').textContent = '📻 ' + s.name;
+  radioMsg.querySelector('.rc-name').textContent = s.name;
   radioMsg.querySelector('.slogan').textContent = s.slogan;
   const fresh = key === 'paradise' && t >= SONG.change;
   radioMsg.querySelector('.song').textContent = fresh ? caught.song : key === 'paradise' ? 'Salt Road' : s.song;
   radioMsg.querySelector('.artist').textContent = fresh ? caught.artist : key === 'paradise' ? 'Harbor Lights' : s.artist;
-  radioMsg.querySelector('.upd').textContent = fresh || t - switched < 1.5 ? `On air on ${s.name} · updated just now` : `On air on ${s.name} · updated 20 s ago`;
+  radioMsg.querySelector('.upd').textContent = fresh ? 'On air since • Today at 21:06' : 'On air since • Today at 21:05';
   const mark = radioMsg.querySelector('.mark');
   mark.textContent = s.mark;
   mark.style.background = s.color;

@@ -209,3 +209,9 @@ p { margin: 0; }
 #end .free { margin-top: 26px; font: 500 34px/1.3 var(--ui); color: rgba(246, 240, 230, 0.92); text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75); }
 #end .chair { margin-top: 10px; font: 700 64px/1.1 "Caveat", cursive; color: #ffc477; text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7); }
 #end .cta { justify-self: start; display: inline-flex; align-items: center; margin-top: 30px; height: 64px; padding: 0 34px; border-radius: 999px; background: linear-gradient(180deg, #f0a062, #c56b2d); color: #fff8f1; font: 700 26px var(--ui); box-shadow: 0 14px 34px -8px rgba(197, 107, 45, 0.7); }
+
+/* The live radio card, as the bot draws it (src/radio/embed.ts): the song links to the station,
+   and the station's mark stands in for the logo it attaches. */
+.ttl.link { color: #00a8fc; }
+.mark { display: grid; place-items: center; width: 80px; height: 80px; border-radius: 4px; color: #fff; font: 800 22px/1 var(--ui); letter-spacing: 0.02em; text-align: center; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12); }
+.b.blurple { background: var(--blurple); }
