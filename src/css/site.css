@@ -126,6 +126,11 @@
   --kiss: #e30613;
   --rock: #c8102e;
   --beat: #f5c400;
+  /* The bot's colours, except Frekvence 1 and Radio Paradise, a step lighter so they glow on the dark wood. */
+  --frekvence1: #2a5bd7;
+  --heart: #e2003b;
+  --capital: #1472f5;
+  --paradise: #4a8f78;
   --ev-steam: #66c0f4;
   --ev-epic: #f6f0e6;
   --ev-postcard: #e9a27d;
@@ -2348,7 +2353,7 @@ html.film-soon .hero:not([data-film]) .hero-scroll,
 
 .kradio-scale {
   position: relative;
-  height: 2.5rem;
+  height: 3.1rem;
   background:
     repeating-linear-gradient(90deg, rgba(255, 238, 205, 0.75) 0 1px, transparent 1px 25%) left bottom / 100% 0.95rem no-repeat,
     repeating-linear-gradient(90deg, rgba(255, 238, 205, 0.45) 0 1px, transparent 1px 7px) left bottom / 100% 0.5rem no-repeat;
@@ -2360,9 +2365,14 @@ html.film-soon .hero:not([data-film]) .hero-scroll,
   left: var(--pos);
   translate: -50% 0;
   color: rgba(255, 238, 205, 0.5);
-  font: 600 0.66rem/1 var(--mono);
-  letter-spacing: 0.22em;
+  font: 600 0.62rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  white-space: nowrap;
   transition: color 0.4s var(--ease), text-shadow 0.4s var(--ease);
+}
+
+.kradio-label.is-low {
+  top: 1.05rem;
 }
 
 .kradio-label.is-on {
@@ -2429,7 +2439,7 @@ html.film-soon .hero:not([data-film]) .hero-scroll,
 /* Ivory piano keys; the tuned one stays pressed down. */
 .kradio-keys {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.4rem;
   padding: 0.4rem 0.4rem 0.55rem;
   border-radius: 0.55rem;
@@ -2440,15 +2450,16 @@ html.film-soon .hero:not([data-film]) .hero-scroll,
 .kradio-key {
   display: grid;
   place-items: center;
-  height: 2.7rem;
+  height: 2.5rem;
+  padding: 0 0.2rem;
   border: 0;
   border-radius: 0.25rem 0.25rem 0.45rem 0.45rem;
   border-top: 3px solid var(--accent);
   cursor: pointer;
   background: linear-gradient(180deg, #fbf6ea, #e2d5bc);
   color: #3b2a1d;
-  font: 600 0.88rem/1 var(--sans);
-  letter-spacing: 0.03em;
+  font: 600 0.8rem/1 var(--sans);
+  letter-spacing: 0.02em;
   text-decoration: none;
   box-shadow: 0 5px 0 #b3a281, 0 7px 8px rgba(0, 0, 0, 0.45);
   transition: translate 0.15s var(--ease), box-shadow 0.15s var(--ease), background 0.2s var(--ease);
@@ -4832,7 +4843,7 @@ html:not(.js) .tuner {
   padding: 1.2rem 1.6rem 1rem;
   border-radius: 1rem;
   overflow: hidden;
-  background: radial-gradient(60% 120% at var(--needle, 82%) 100%, color-mix(in srgb, var(--tuned) 22%, transparent), transparent 70%), linear-gradient(180deg, #1d150f, #0e0906);
+  background: radial-gradient(60% 120% at var(--needle, 36%) 100%, color-mix(in srgb, var(--tuned) 22%, transparent), transparent 70%), linear-gradient(180deg, #1d150f, #0e0906);
   box-shadow: inset 0 3px 14px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(255, 220, 180, 0.08);
   transition: background-position 0.9s var(--ease);
 }
@@ -4860,8 +4871,25 @@ html:not(.js) .tuner {
   translate: -50% 0;
   color: rgba(246, 240, 230, 0.45);
   font: 600 0.8rem var(--mono);
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
+  white-space: nowrap;
   transition: color 0.5s var(--ease), text-shadow 0.5s var(--ease);
+}
+
+.tuner-label.is-low {
+  top: 1.35rem;
+}
+
+/* Seven names on a phone-wide dial. */
+@media (max-width: 700px) {
+  .tuner-window {
+    padding-inline: 1rem;
+  }
+
+  .tuner-label {
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+  }
 }
 
 .tuner-label.is-on {
@@ -5001,7 +5029,7 @@ html:not(.js) .tuner-listen {
 
 .stations {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 1rem;
 }
 
@@ -5274,7 +5302,7 @@ html.js .station:not(.is-tuned) .eq i {
 
 .tally li {
   display: grid;
-  grid-template-columns: 3.2rem minmax(0, 1fr) 1.6rem;
+  grid-template-columns: 4.4rem minmax(0, 1fr) 1.6rem;
   align-items: center;
   gap: 0.65rem;
 }
@@ -5312,18 +5340,6 @@ html.js .station:not(.is-tuned) .eq i {
 
 .tally li.is-winner .tally-bar {
   box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 60%, transparent);
-}
-
-.vote-buttons [data-vote-for="kiss"] {
-  --accent: var(--kiss);
-}
-
-.vote-buttons [data-vote-for="rock"] {
-  --accent: var(--rock);
-}
-
-.vote-buttons [data-vote-for="beat"] {
-  --accent: var(--beat);
 }
 
 .vote-buttons .dc-btn[aria-pressed="true"],
@@ -5372,9 +5388,10 @@ html:not(.js) .vote-controls {
 
 .seg {
   display: inline-flex;
+  flex-wrap: wrap;
   padding: 0.2rem;
   border: 1px solid var(--line-strong);
-  border-radius: 999px;
+  border-radius: 1.2rem;
 }
 
 .seg button {

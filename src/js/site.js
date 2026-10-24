@@ -157,10 +157,15 @@
 
   const shelfRadio = document.querySelector('[data-kradio]');
   if (shelfRadio) {
-    const NEEDLE = { kiss: '18%', rock: '50%', beat: '82%' };
-    const KNOB = { kiss: '-70deg', rock: '0deg', beat: '70deg' };
     const keys = Array.from(shelfRadio.querySelectorAll('[data-key]'));
     const labels = Array.from(shelfRadio.querySelectorAll('[data-for]'));
+    // The needle stops under each label on the dial, and the knob turns from -70° to 70° across them.
+    const NEEDLE = {};
+    const KNOB = {};
+    labels.forEach((label, index) => {
+      NEEDLE[label.dataset.for] = label.style.getPropertyValue('--pos');
+      KNOB[label.dataset.for] = Math.round(-70 + (140 * index) / Math.max(1, labels.length - 1)) + 'deg';
+    });
     const slogan = shelfRadio.querySelector('[data-kradio-slogan]');
     const hint = shelfRadio.closest('.shelf-radio').querySelector('[data-kradio-hint]');
     const radio = window.dzbanekRadio;

@@ -47,7 +47,7 @@
       },
     },
     footer: {
-      note: 'Discord bot zdarma na hudbu, české rádio a slevy na hry.',
+      note: 'Discord bot zdarma na hudbu, živá rádia a slevy na hry.',
       updated: 'Naposledy upraveno',
       label: 'Patička',
       explore: 'Stránky',
@@ -56,15 +56,13 @@
       signed: 'S ☕ a 🍪 to dělá Sunka',
     },
     meta: {
-      homeTitle: 'Dzbanek: Discord bot na hudbu, české rádio a slevy na hry',
-      homeDescription:
-        'Dzbanek hraje hudbu, pouští česká rádia a posílá slevy ze Steamu a hry zdarma z Epicu na tvůj Discord server. Zdarma, bez placené verze.',
+      homeTitle: 'Dzbanek: Discord bot na hudbu, živá rádia a slevy na hry',
+      homeDescription: 'Dzbanek hraje hudbu, pouští česká a londýnská rádia a posílá slevy ze Steamu a hry zdarma z Epicu na tvůj Discord server. Zdarma, bez placené verze.',
       commandsTitle: 'Příkazy · Dzbanek',
       commandsDescription:
         'Hlavní slash příkazy a k tomu, co dělají tlačítka na kartách. Vyzkoušet si je můžeš rovnou na stránce.',
       radioTitle: 'Rádio · Dzbanek',
-      radioDescription:
-        'Kiss, Rock Radio a Radio Beat ve tvém hlasovém kanálu. Písničky, které se ti líbí, si ulož přes Catch, a v pátek hlasuj o Radio Night.',
+      radioDescription: 'Sedm živých stanic ve tvém hlasovém kanálu, od Kissu a Radia Beat po Capital London a Radio Paradise. Písničky, které se ti líbí, si ulož přes Catch, a v pátek hlasuj o Radio Night.',
       setupTitle: 'Nastavení · Dzbanek',
       setupDescription:
         'Vyber, kam Dzbanek posílá zprávy, podívej se, které kanály najde sám, a jaká oprávnění potřebuje.',
@@ -77,7 +75,7 @@
       alt: 'Keramický džbánek, čokoládové sušenky a hrnek, ze kterého stoupá pára, na dřevěné lince v noci.',
       kicker: 'Discord bot zdarma',
       title: 'Každý Discord server má svou kuchyni',
-      lead: 'Dzbanek se postará o tu tvoji. Hraje tvoji hudbu, pouští česká rádia, každé ráno pošle slevy ze Steamu a nové lidi přivítá sušenkou.',
+      lead: 'Dzbanek se postará o tu tvoji. Hraje tvoji hudbu, pouští živá rádia, každé ráno pošle slevy ze Steamu a nové lidi přivítá sušenkou.',
       secondary: 'Vyzkoušet příkazy',
       scroll: 'Dolů',
     },
@@ -130,8 +128,8 @@
     },
     radioHome: {
       kicker: 'Rádio',
-      title: 'Kiss, Rock Radio a Radio Beat, živě',
-      body: '/radio play se připojí do tvého hlasového kanálu a pustí Kiss, Rock Radio nebo Radio Beat. Karta ukazuje, co zrovna hraje, a aktualizuje se, když se písnička změní. Hraje něco dobrého? Zmáčkni Catch a ulož si to, pak Play a pustíš si to z YouTube.',
+      title: 'Sedm stanic, živě',
+      body: '/radio play se připojí do tvého hlasového kanálu a pustí jednu ze sedmi stanic: Kiss, Rock Radio, Radio Beat a Frekvenci 1 z Česka, Heart a Capital z Londýna a Radio Paradise z Kalifornie. Karta ukazuje, co zrovna hraje, a aktualizuje se, když se písnička změní. Hraje něco dobrého? Zmáčkni Catch a ulož si to, pak Play a pustíš si to z YouTube.',
       more: 'Víc o rádiu',
     },
     hours: {
@@ -182,7 +180,7 @@
       s2t: 'Vyber kanály',
       s2b: 'Nepovinné. Admini můžou přes /setup vybrat, kam půjdou slevy, přivítání a Kitchen Board. Kanály s jasnými názvy si najde sám.',
       s3t: 'Pusť něco',
-      s3b: 'Skoč do voice a dej /play, nebo /radio play pro Kiss, Rock nebo Beat.',
+      s3b: 'Skoč do voice a dej /play, nebo /radio play a vyber stanici.',
     },
     server: {
       title: 'Přímo z našeho serveru',
@@ -209,7 +207,7 @@
       q3: 'Proč nemůže hrát hudba a rádio zároveň?',
       a3: 'Discord dá botovi na serveru jen jedno hlasové připojení, takže se hudba a rádio střídají.',
       q4: 'Je tady na webu něco živě?',
-      a4: 'Hodiny a rádio. Rádio hraje skutečné stanice a info o písničkách bere z radia.cz, stejně jako bot. Bot sám veřejné API nemá, takže karty z Discordu jsou tady ukázky.',
+      a4: 'Hodiny a rádio. Rádio hraje skutečné stanice a info o písničkách bere z radia.cz a Tritonu, stejně jako bot. Heart, Capital a Radio Paradise název písničky posílají jen uvnitř streamu, který webová stránka nepřečte, takže tady ukazují svůj slogan. Bot sám veřejné API nemá, takže karty z Discordu jsou tady ukázky.',
       q5: 'Můžu si ho hostovat sám?',
       a5: 'Jasně. Je to aplikace v Node.js, která potřebuje FFmpeg a Deno, a v pohodě běží na domácím PC nebo na VPS. Celý návod je v repozitáři.',
     },
@@ -232,6 +230,7 @@
       c10: 'Když skladba z YouTube nejde přehrát, bot napíše proč, místo aby ji potichu přeskočil.',
       c11: 'Uvítací a rozlučkové karty člena @označí.',
       c12: 'Kitchen Board má kartu In voice: všichni ze všech hovorů, živě, i když v žádném bot není.',
+      c13: 'Čtyři nové stanice: Frekvence 1, Heart London, Capital London a Radio Paradise. Páteční hlasování má tlačítko pro každou ze sedmi.',
     },
     changes: {
       title: 'Novinky',
@@ -265,7 +264,7 @@
       queue: 'Ukáže, co přijde, stránku po stránce.',
       stop: 'Zastaví hudbu, vyprázdní frontu, smaže kartu Now Playing a odpojí se.',
       remove: 'Odebere jednu písničku z fronty. Pozice 1 je další písnička.',
-      radio: 'play, stop, night a night-off. Vybíráš z Kiss, Rock a Beat.',
+      radio: 'play, stop, night a night-off. Vybíráš ze sedmi stanic.',
       setup: 'Nastaví, do kterých kanálů jdou slevy, přivítání, Wishlist Radar a Kitchen Board. Potřebuje Manage Server.',
       groupQuiz: 'Kitchen Quiz',
       gMusic: 'Hudba',
@@ -334,11 +333,15 @@
       again: 'Spustí další kvíz rovnou z výsledků.',
     },
     radio: {
-      title: 'Česká rádia ve tvém hlasovém kanálu',
+      title: 'Živá rádia ve tvém hlasovém kanálu',
       lead: '/radio play se připojí do tvého hlasového kanálu a začne hrát. Karta převezme barvu stanice a aktualizuje se, když se změní písnička (kontroluje zhruba každých 20 sekund). Neodpojí se jen proto, že v chatu chvíli nikdo nepíše.',
       kiss: 'Popové hity. Info o písničce bere z radia.cz, nebo přímo ze streamu.',
       rock: 'Rock. Info o písničce bere z radia.cz, nebo ze streamu.',
       beat: 'Klasický rock. Info o písničce bere nejdřív z Beatova „Právě v éteru“, pak z radia.cz, pak ze streamu. Během pořadu můžeš místo toho vidět název pořadu.',
+      frekvence1: 'České i zahraniční hity. Stream písničku nejmenuje, takže ji bot čte z veřejného feedu Tritonu.',
+      heart: 'Pohodový pop z Londýna. Heart název písničky často neposílá, takže karta může ukázat jen stanici a Catch počká, než nějaký název přijde.',
+      capital: 'Hity z hitparád z Londýna. Stejně jako Heart název písničky často neposílá.',
+      paradise: 'Rock, indie, world a elektronika z Kalifornie, vybírají je lidi, ne algoritmus. Písnička i obal alba jdou přímo ze streamu.',
       catchTitle: 'Ulov písničku, pusť si ji později',
       catchBody:
         'Hraje něco, co se ti líbí? Catch uloží interpreta a název. Odpověď má tlačítko Play, které písničku najde na YouTube a přidá ji do fronty. Kitchen Board ukazuje poslední úlovek serveru.',
@@ -348,7 +351,7 @@
       during: 'Během hlasování',
       nightBody:
         '/radio night naplánuje páteční rádiový večer (potřebuješ Manage Server). Vyber záložní stanici a hlasový kanál, nebo se do nějakého prostě připoj. /radio night-off ho zruší.',
-      t1: 'Kitchen Board ukáže tlačítka Kiss, Rock a Beat. Každý má jeden hlas a může ho změnit.',
+      t1: 'Kitchen Board ukáže hlasovací tlačítko pro každou ze sedmi stanic. Každý má jeden hlas a může ho změnit.',
       t2: 'Vítěz začne hrát ve vybraném kanálu. Při remíze hraje naplánovaná stanice, pak ta, co hrála naposledy, pak Beat.',
       t3: 'Board ukazuje hlasy, jak přibývají. Po 20:00 se vrátí do normálu.',
       note: 'Přepnutí stanice používá stejné hlasové připojení a nahradí starou kartu. S /setup idle-radio (zapnuté) začne hrát poslední stanice, když dojde fronta hudby a ve voice pořád někdo je.',
@@ -370,6 +373,10 @@
       kiss: 'Poslouchat Kiss Radio',
       rock: 'Poslouchat Rock Radio',
       beat: 'Poslouchat Radio Beat',
+      frekvence1: 'Poslouchat Frekvenci 1',
+      heart: 'Poslouchat Heart London',
+      capital: 'Poslouchat Capital London',
+      paradise: 'Poslouchat Radio Paradise',
     },
     vote: {
       note: 'Ukázkové hlasování. Tvoje kliknutí nikam nejdou.',

@@ -1,5 +1,5 @@
-<!-- title: Dzbanek: Discord bot for music, Czech radio and game deals -->
-<!-- description: Dzbanek plays music, streams Czech radio, and posts Steam deals and Epic freebies to your Discord server. Free, no premium tier. -->
+<!-- title: Dzbanek: Discord bot for music, live radio and game deals -->
+<!-- description: Dzbanek plays music, streams Czech and London radio, and posts Steam deals and Epic freebies to your Discord server. Free, no premium tier. -->
 <!-- page: home -->
 <!-- scripts: film.js -->
 
@@ -38,7 +38,7 @@
       </p>
       <p class="kicker" data-i18n="hero.kicker">Free Discord bot</p>
       <h1 class="hero-title" data-i18n="hero.title">Every Discord server has a kitchen</h1>
-      <p class="lead" data-i18n="hero.lead">Dzbanek keeps yours going. It plays your music, streams Czech radio, posts Steam deals every morning and gives new people a cookie.</p>
+      <p class="lead" data-i18n="hero.lead">Dzbanek keeps yours going. It plays your music, streams live radio, posts Steam deals every morning and gives new people a cookie.</p>
       <div class="hero-actions">
         <a class="btn btn-clay btn-lg" href="{{invite}}" data-invite target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Server</a>
         <a class="btn btn-ghost btn-lg" href="commands.html#demo"><span data-i18n="hero.secondary">Try the commands</span> <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
@@ -142,21 +142,25 @@
   <div class="wrap radio-split">
     <div class="section-head" data-reveal>
       <p class="kicker" data-i18n="radioHome.kicker">Radio</p>
-      <h2 data-i18n="radioHome.title">Kiss, Rock Radio and Radio Beat, live</h2>
-      <p class="lead" data-i18n="radioHome.body">/radio play joins your voice channel and streams Kiss, Rock Radio, or Radio Beat. The card shows what’s on and updates when the song changes. Hear something good? Hit Catch to save it, then Play to queue it from YouTube.</p>
+      <h2 data-i18n="radioHome.title">Seven stations, live</h2>
+      <p class="lead" data-i18n="radioHome.body">/radio play joins your voice channel and streams one of seven stations: Kiss, Rock Radio, Radio Beat and Frekvence 1 from Czechia, Heart and Capital from London, and Radio Paradise from California. The card shows what’s on and updates when the song changes. Hear something good? Hit Catch to save it, then Play to queue it from YouTube.</p>
       <p class="note"><a class="link-arrow" href="radio.html"><span data-i18n="radioHome.more">More about radio</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
     </div>
 
     <!-- The old radio on the kitchen shelf. Pointing at a key tunes the dial; pressing it plays that station live. -->
     <div class="shelf-radio" data-reveal>
-      <div class="kradio" data-kradio style="--tuned: var(--beat); --needle: 82%; --knob: 70deg">
+      <div class="kradio" data-kradio style="--tuned: var(--beat); --needle: 36%; --knob: -23deg">
         <div class="kradio-grille" aria-hidden="true"><span class="kradio-badge">Dzbanek</span></div>
         <div class="kradio-panel">
           <div class="kradio-window" aria-hidden="true">
             <div class="kradio-scale">
-              <span class="kradio-label" style="--pos: 18%" data-for="kiss">KISS</span>
-              <span class="kradio-label" style="--pos: 50%" data-for="rock">ROCK</span>
-              <span class="kradio-label is-on" style="--pos: 82%" data-for="beat">BEAT</span>
+              <span class="kradio-label" style="--pos: 8%" data-for="kiss">KISS</span>
+              <span class="kradio-label is-low" style="--pos: 22%" data-for="rock">ROCK</span>
+              <span class="kradio-label is-on" style="--pos: 36%" data-for="beat">BEAT</span>
+              <span class="kradio-label is-low" style="--pos: 50%" data-for="frekvence1">F1</span>
+              <span class="kradio-label" style="--pos: 64%" data-for="heart">HEART</span>
+              <span class="kradio-label is-low" style="--pos: 78%" data-for="capital">CAPITAL</span>
+              <span class="kradio-label" style="--pos: 92%" data-for="paradise">PARADISE</span>
               <span class="kradio-needle"></span>
             </div>
             <p class="kradio-onair"><span class="kradio-lamp"></span><span class="kradio-text" data-kradio-slogan>První bigbít u nás</span></p>
@@ -165,6 +169,10 @@
             <button type="button" class="kradio-key" data-key="kiss" aria-pressed="false" aria-label="Listen to Kiss Radio" data-i18n-aria="radioLive.kiss" data-slogan="...be happy!" style="--accent: var(--kiss)">Kiss</button>
             <button type="button" class="kradio-key" data-key="rock" aria-pressed="false" aria-label="Listen to Rock Radio" data-i18n-aria="radioLive.rock" data-slogan="Rock je slušná muzika" style="--accent: var(--rock)">Rock</button>
             <button type="button" class="kradio-key is-on" data-key="beat" aria-pressed="false" aria-label="Listen to Radio Beat" data-i18n-aria="radioLive.beat" data-slogan="První bigbít u nás" style="--accent: var(--beat)">Beat</button>
+            <button type="button" class="kradio-key" data-key="frekvence1" aria-pressed="false" aria-label="Listen to Frekvence 1" data-i18n-aria="radioLive.frekvence1" data-slogan="Zapni rádio, vypni starosti" style="--accent: var(--frekvence1)">F1</button>
+            <button type="button" class="kradio-key" data-key="heart" aria-pressed="false" aria-label="Listen to Heart London" data-i18n-aria="radioLive.heart" data-slogan="Turn up the feel good!" style="--accent: var(--heart)">Heart</button>
+            <button type="button" class="kradio-key" data-key="capital" aria-pressed="false" aria-label="Listen to Capital London" data-i18n-aria="radioLive.capital" data-slogan="The UK’s No.1 Hit Music Station" style="--accent: var(--capital)">Capital</button>
+            <button type="button" class="kradio-key" data-key="paradise" aria-pressed="false" aria-label="Listen to Radio Paradise" data-i18n-aria="radioLive.paradise" data-slogan="Human curated radio" style="--accent: var(--paradise)">Paradise</button>
           </div>
           <div class="kradio-knobs" aria-hidden="true"><span class="kradio-knob"></span><span class="kradio-knob kradio-tune"></span></div>
         </div>
@@ -497,7 +505,7 @@
         </li>
         <li>
           <strong data-i18n="steps.s3t">Play something</strong>
-          <span data-i18n="steps.s3b">Hop into voice and run /play, or /radio play for Kiss, Rock, or Beat.</span>
+          <span data-i18n="steps.s3b">Hop into voice and run /play, or /radio play and pick a station.</span>
         </li>
       </ol>
     </div>
@@ -597,7 +605,7 @@
       </details>
       <details>
         <summary><span data-i18n="faq.q4">Is anything on this site live?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-        <p data-i18n="faq.a4">The clock and the radio. The radio plays the real stations, and the song info comes from radia.cz, same as in the bot. The bot itself has no public API, so the Discord cards here are examples.</p>
+        <p data-i18n="faq.a4">The clock and the radio. The radio plays the real stations, and the song info comes from radia.cz and Triton, same as in the bot. Heart, Capital and Radio Paradise only name the song inside the stream, which a web page can’t read, so here they show their slogan. The bot itself has no public API, so the Discord cards here are examples.</p>
       </details>
       <details>
         <summary><span data-i18n="faq.q5">Can I host it myself?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
@@ -619,6 +627,7 @@
     <div class="receipt">
       <p class="receipt-head">DZBANEK · <span data-i18n="changelog.slip">kitchen log</span></p>
       <ol class="receipt-list">
+        <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c13">Four new stations: Frekvence 1, Heart London, Capital London and Radio Paradise. The Friday vote has a button for each of the seven.</span></li>
         <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c12">The Kitchen Board has an In voice card: everyone in every call, live, even when the bot isn’t in one.</span></li>
         <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c9">Steam deals: genres like “Card & Board Game” show properly, and a sale that ends today shows its time instead of a countdown.</span></li>
         <li><time datetime="2026-10-23">23. 10. 2026</time><span data-i18n="changelog.c10">When a YouTube song can’t play, the bot says why instead of skipping it quietly.</span></li>

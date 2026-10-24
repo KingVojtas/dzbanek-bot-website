@@ -1,12 +1,12 @@
 <!-- title: Radio · Dzbanek -->
-<!-- description: Kiss, Rock Radio, and Radio Beat in your voice channel. Save songs you like with Catch, and vote on Friday’s Radio Night. -->
+<!-- description: Seven live stations in your voice channel, from Kiss and Radio Beat to Capital London and Radio Paradise. Save songs you like with Catch, and vote on Friday’s Radio Night. -->
 <!-- page: radio -->
 <!-- scripts: radio.js -->
 
 <div class="tuned" data-tuner style="--tuned: var(--beat)">
   <header class="page-hero">
     <div class="wrap">
-      <h1 data-i18n="radio.title">Czech radio in your voice channel</h1>
+      <h1 data-i18n="radio.title">Live radio in your voice channel</h1>
       <p class="lead" data-i18n="radio.lead">/radio play joins your voice channel and starts streaming. The card takes on the station’s color and updates when the song changes (it checks about every 20 seconds). It won’t leave just because the chat has gone quiet.</p>
     </div>
   </header>
@@ -16,9 +16,13 @@
       <div class="tuner" data-reveal>
         <div class="tuner-window" aria-hidden="true">
           <div class="tuner-scale">
-            <span class="tuner-label" style="--pos: 18%" data-for="kiss">KISS</span>
-            <span class="tuner-label" style="--pos: 50%" data-for="rock">ROCK</span>
-            <span class="tuner-label" style="--pos: 82%" data-for="beat">BEAT</span>
+            <span class="tuner-label" style="--pos: 8%" data-for="kiss">KISS</span>
+            <span class="tuner-label is-low" style="--pos: 22%" data-for="rock">ROCK</span>
+            <span class="tuner-label" style="--pos: 36%" data-for="beat">BEAT</span>
+            <span class="tuner-label is-low" style="--pos: 50%" data-for="frekvence1">F1</span>
+            <span class="tuner-label" style="--pos: 64%" data-for="heart">HEART</span>
+            <span class="tuner-label is-low" style="--pos: 78%" data-for="capital">CAPITAL</span>
+            <span class="tuner-label" style="--pos: 92%" data-for="paradise">PARADISE</span>
             <span class="tuner-needle"></span>
           </div>
         </div>
@@ -27,6 +31,10 @@
             <button type="button" role="radio" aria-checked="false" tabindex="-1" data-station="kiss" style="--accent: var(--kiss)"><span class="led" aria-hidden="true"></span>Kiss</button>
             <button type="button" role="radio" aria-checked="false" tabindex="-1" data-station="rock" style="--accent: var(--rock)"><span class="led" aria-hidden="true"></span>Rock</button>
             <button type="button" role="radio" aria-checked="true" tabindex="0" data-station="beat" style="--accent: var(--beat)"><span class="led" aria-hidden="true"></span>Beat</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-station="frekvence1" style="--accent: var(--frekvence1)"><span class="led" aria-hidden="true"></span>F1</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-station="heart" style="--accent: var(--heart)"><span class="led" aria-hidden="true"></span>Heart</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-station="capital" style="--accent: var(--capital)"><span class="led" aria-hidden="true"></span>Capital</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-station="paradise" style="--accent: var(--paradise)"><span class="led" aria-hidden="true"></span>Paradise</button>
           </div>
           <button type="button" class="btn btn-clay btn-sm tuner-listen" data-tuner-listen aria-pressed="false">
             <svg class="icon-play" width="16" height="16" aria-hidden="true"><use href="#i-play" /></svg>
@@ -61,6 +69,38 @@
           <p data-i18n="radio.beat">Classic rock. Song info comes from Beat’s own “Právě v éteru” list first, then radia.cz, then the stream. During a show you might see the show’s name instead.</p>
           <p class="station-now" data-station-now hidden></p>
           <a class="link-arrow" href="https://www.radiobeat.cz/" target="_blank" rel="noopener noreferrer">radiobeat.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
+        </article>
+        <article class="station station-ticket" id="frekvence1" data-station-card="frekvence1" style="--accent: var(--frekvence1)">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="station-name">Frekvence 1</p>
+          <p class="slogan">Zapni rádio, vypni starosti</p>
+          <p data-i18n="radio.frekvence1">Czech and international hits. The stream doesn’t name the song, so the bot reads it from Triton’s public feed.</p>
+          <p class="station-now" data-station-now hidden></p>
+          <a class="link-arrow" href="https://www.frekvence1.cz/" target="_blank" rel="noopener noreferrer">frekvence1.cz <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
+        </article>
+        <article class="station station-sticker" id="heart" data-station-card="heart" style="--accent: var(--heart)">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="station-name">Heart London</p>
+          <p class="slogan">Turn up the feel good!</p>
+          <p data-i18n="radio.heart">Feel-good pop from London. Heart often leaves the song name blank, so the card may show only the station, and Catch waits until a title comes through.</p>
+          <p class="station-now" data-station-now hidden></p>
+          <a class="link-arrow" href="https://www.heart.co.uk/" target="_blank" rel="noopener noreferrer">heart.co.uk <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
+        </article>
+        <article class="station station-tag" id="capital" data-station-card="capital" style="--accent: var(--capital)">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="station-name">Capital London</p>
+          <p class="slogan">The UK’s No.1 Hit Music Station</p>
+          <p data-i18n="radio.capital">Chart hits from London. Like Heart, it often leaves the song name blank.</p>
+          <p class="station-now" data-station-now hidden></p>
+          <a class="link-arrow" href="https://www.capitalfm.com/" target="_blank" rel="noopener noreferrer">capitalfm.com <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
+        </article>
+        <article class="station station-ticket" id="paradise" data-station-card="paradise" style="--accent: var(--paradise)">
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="station-name">Radio Paradise</p>
+          <p class="slogan">Human curated radio</p>
+          <p data-i18n="radio.paradise">Rock, indie, world and electronic from California, picked by people instead of an algorithm. The song and its album cover come from the stream.</p>
+          <p class="station-now" data-station-now hidden></p>
+          <a class="link-arrow" href="https://radioparadise.com/" target="_blank" rel="noopener noreferrer">radioparadise.com <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
         </article>
       </div>
     </div>
@@ -119,7 +159,7 @@
       <ol class="timeline">
         <li>
           <strong class="mono">12:00</strong>
-          <p data-i18n="radio.t1">The Kitchen Board shows Kiss, Rock, and Beat buttons. Everyone gets one vote and can change it.</p>
+          <p data-i18n="radio.t1">The Kitchen Board shows a vote button for each of the seven stations. Everyone gets one vote and can change it.</p>
         </li>
         <li data-phase="vote">
           <strong data-i18n="radio.during">While voting</strong>
@@ -144,17 +184,25 @@
                 <p class="dc-embed-author"><svg width="16" height="16" aria-hidden="true"><use href="#i-moon-radio" /></svg> Kitchen Board · Radio Night</p>
                 <p class="dc-embed-title">Tonight at 20:00. Pick the station.</p>
                 <ul class="tally" data-vote-tally>
-                  <li data-tally="kiss" style="--accent: var(--kiss); --share: 40%"><span class="tally-name">Kiss</span><span class="tally-bar"><span></span></span><span class="tally-count mono">2</span></li>
-                  <li data-tally="rock" style="--accent: var(--rock); --share: 20%"><span class="tally-name">Rock</span><span class="tally-bar"><span></span></span><span class="tally-count mono">1</span></li>
-                  <li data-tally="beat" style="--accent: var(--beat); --share: 40%"><span class="tally-name">Beat</span><span class="tally-bar"><span></span></span><span class="tally-count mono">2</span></li>
+                  <li data-tally="kiss" style="--accent: var(--kiss); --share: 29%"><span class="tally-name">Kiss</span><span class="tally-bar"><span></span></span><span class="tally-count mono">2</span></li>
+                  <li data-tally="rock" style="--accent: var(--rock); --share: 14%"><span class="tally-name">Rock</span><span class="tally-bar"><span></span></span><span class="tally-count mono">1</span></li>
+                  <li data-tally="beat" style="--accent: var(--beat); --share: 29%"><span class="tally-name">Beat</span><span class="tally-bar"><span></span></span><span class="tally-count mono">2</span></li>
+                  <li data-tally="frekvence1" style="--accent: var(--frekvence1); --share: 14%"><span class="tally-name">F1</span><span class="tally-bar"><span></span></span><span class="tally-count mono">1</span></li>
+                  <li data-tally="heart" style="--accent: var(--heart); --share: 0%"><span class="tally-name">Heart</span><span class="tally-bar"><span></span></span><span class="tally-count mono">0</span></li>
+                  <li data-tally="capital" style="--accent: var(--capital); --share: 14%"><span class="tally-name">Capital</span><span class="tally-bar"><span></span></span><span class="tally-count mono">1</span></li>
+                  <li data-tally="paradise" style="--accent: var(--paradise); --share: 0%"><span class="tally-name">Paradise</span><span class="tally-bar"><span></span></span><span class="tally-count mono">0</span></li>
                 </ul>
                 <p class="dc-embed-footer">One vote each. You can change it.</p>
               </div>
             </div>
             <div class="dc-row vote-buttons">
-              <button type="button" class="dc-btn" data-vote-for="kiss" aria-pressed="false">Kiss</button>
-              <button type="button" class="dc-btn" data-vote-for="rock" aria-pressed="false">Rock</button>
-              <button type="button" class="dc-btn" data-vote-for="beat" aria-pressed="false">Beat</button>
+              <button type="button" class="dc-btn" data-vote-for="kiss" aria-pressed="false" style="--accent: var(--kiss)">Kiss</button>
+              <button type="button" class="dc-btn" data-vote-for="rock" aria-pressed="false" style="--accent: var(--rock)">Rock</button>
+              <button type="button" class="dc-btn" data-vote-for="beat" aria-pressed="false" style="--accent: var(--beat)">Beat</button>
+              <button type="button" class="dc-btn" data-vote-for="frekvence1" aria-pressed="false" style="--accent: var(--frekvence1)">F1</button>
+              <button type="button" class="dc-btn" data-vote-for="heart" aria-pressed="false" style="--accent: var(--heart)">Heart</button>
+              <button type="button" class="dc-btn" data-vote-for="capital" aria-pressed="false" style="--accent: var(--capital)">Capital</button>
+              <button type="button" class="dc-btn" data-vote-for="paradise" aria-pressed="false" style="--accent: var(--paradise)">Paradise</button>
             </div>
           </div>
         </div>
@@ -173,6 +221,10 @@
             <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sched="kiss">Kiss</button>
             <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sched="rock">Rock</button>
             <button type="button" role="radio" aria-checked="true" tabindex="0" data-sched="beat">Beat</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sched="frekvence1">F1</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sched="heart">Heart</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sched="capital">Capital</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-sched="paradise">Paradise</button>
           </div>
         </div>
         <div class="vote-actions">

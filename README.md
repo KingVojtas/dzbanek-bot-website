@@ -1,6 +1,6 @@
 # Dzbanek website
 
-Presentation site for **[Dzbanek-bot 2.0](https://github.com/KingVojtas/dzbanek-bot-2.0)**: a Discord kitchen that plays music, streams Czech radio, and posts Steam and Epic deals.
+Presentation site for **[Dzbanek-bot 2.0](https://github.com/KingVojtas/dzbanek-bot-2.0)**: a Discord kitchen that plays music, streams live radio from Prague and London, and posts Steam and Epic deals.
 
 The bot has no website API. This site does not show live stats, and it does not log anyone in.
 
@@ -12,7 +12,7 @@ Four static pages and a 404, one stylesheet, vanilla JavaScript. No framework an
 | --- | --- |
 | `index.html` | The kitchen: the hero ad, music, a shelf radio that plays the real stations, the Prague kitchen-hours dial, deals, the Kitchen Board, welcomes, setting it up, FAQ, the changelog, invite |
 | `commands.html` | A pretend `#kitchen` channel you can type `/` into (every command, a three-round Kitchen Quiz, and the card buttons), then the full command menu, grouped like the bot's `/help` |
-| `radio.html` | A tuner that plays Kiss, Rock Radio, and Radio Beat live, what each one has on air, Catch → Play, and a Friday Radio Night vote you can click |
+| `radio.html` | A tuner that plays all seven stations live (Kiss, Rock Radio, Radio Beat, Frekvence 1, Heart London, Capital London, Radio Paradise), what each one has on air, Catch → Play, and a Friday Radio Night vote you can click |
 | `setup.html` | Channel setup, auto-detected channel names, permissions, Server Members intent |
 | `changes.html` | Every bot commit as one long kitchen-log receipt, printed by the build |
 | `404.html` | The empty shelf. GitHub Pages serves it for missing paths |
@@ -21,7 +21,7 @@ Every card, the demo channel, and the vote are examples that run in the browser 
 
 English is in the HTML. Czech is in `src/js/locales/cs.js`, and the build writes a Czech copy of every page into `cs/` with it, so `/cs/` is Czech before any script runs and search engines see both (`hreflang` links and `sitemap.xml`). The header switches between the two copies, and light/dark. An old `?lang=` link, the saved choice, or a Czech or Slovak browser picks the copy before the page paints. `404.html` is one page for both languages. `data-i18n` replaces an element’s text, so put it only on elements that hold nothing but text; the build warns when one doesn’t. The night theme matches the kitchen photo copied from the bot (`assets/kitchen-hero.jpg`). Every small pitcher on the site is the bot's Discord avatar, made from `ad/assets/bot-avatar.png`: `assets/avatar.jpg` (160 px) for the Discord examples, the navbar and the footer, `assets/avatar-large.*` (435 px) for the invite at the bottom and the 404 page, plus `assets/favicon.png` and `assets/apple-touch-icon.png`. The `.webp` files next to the JPGs are what browsers load first, and the JPGs are the fallback. `assets/fonts/` holds the self-hosted Fraunces, Outfit, JetBrains Mono, and Caveat for the handwriting (latin and latin-ext, which has the Czech letters). The footer's "Last updated" date is the date of the latest commit; the build fills it in.
 
-The radio plays the stations' public streams, the same ones the bot uses (`src/radio/station.ts` in the bot repo; Rock Radio needs its `https://` address here). Nothing plays until someone presses a key, and the ad mutes itself when the radio starts, and the other way round. The song titles come from radia.cz, which only answers `https://` pages, so on a local `http://` server the radio plays but shows no titles.
+The radio plays the stations' public streams, the same ones the bot uses, in the bot's `/radio` order (`src/radio/station.ts` in the bot repo; Rock Radio needs its `https://` address here). `src/js/listen.js` holds the one list of stations; the radio page, the shelf radio and the vote read their names from it and their dial positions from the labels in the HTML, so a new station means a line there, its markup on `radio.html` and the home page, a `--key` colour in `site.css`, and its strings in both locales. Nothing plays until someone presses a key, and the ad mutes itself when the radio starts, and the other way round. The song titles come from radia.cz, which only answers `https://` pages, so on a local `http://` server those stations play but show no titles. Frekvence 1's come from Triton's public feed, which answers anywhere. Heart, Capital and Radio Paradise only name the song inside the stream, which a page can't read, so they show their slogan.
 
 "What's cooking" on the home page is the changelog. To add a change, put a new `<li>` at the top of the list in `src/pages/index.html` with the next free `changelog.cN` key, and add that key to both locale files.
 

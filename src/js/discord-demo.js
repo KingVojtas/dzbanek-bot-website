@@ -24,6 +24,10 @@
     kiss: { name: 'Kiss Radio', short: 'Kiss', color: '#e30613', slogan: '...be happy!', url: 'https://www.kiss.cz/' },
     rock: { name: 'Rock Radio', short: 'Rock', color: '#c8102e', slogan: 'Rock je slušná muzika', url: 'https://rockovyradio.cz/' },
     beat: { name: 'Radio Beat', short: 'Beat', color: '#f5c400', slogan: 'První bigbít u nás', url: 'https://www.radiobeat.cz/' },
+    frekvence1: { name: 'Frekvence 1', short: 'F1', color: '#0033a0', slogan: 'Zapni rádio, vypni starosti', url: 'https://www.frekvence1.cz/' },
+    heart: { name: 'Heart London', short: 'Heart', color: '#e2003b', slogan: 'Turn up the feel good!', url: 'https://www.heart.co.uk/' },
+    capital: { name: 'Capital London', short: 'Capital', color: '#1472f5', slogan: 'The UK’s No.1 Hit Music Station', url: 'https://www.capitalfm.com/' },
+    paradise: { name: 'Radio Paradise', short: 'Paradise', color: '#356457', slogan: 'Human curated radio', url: 'https://radioparadise.com/' },
   };
   // Made up, like everything in this channel.
   const ON_AIR = ['Iron Orchard - Highway Sermon', 'The Late Bakers - Midnight Crumbs', 'Paper Comets - Slow Steam'];
@@ -48,7 +52,7 @@
     { name: 'volume', args: '[25–150]', desc: 'Set the volume for everyone in voice', free: true },
     { name: 'remove', args: '[position]', desc: 'Drop one upcoming track', free: true },
     { name: 'stop', desc: 'Stop, clear the queue, and leave' },
-    { name: 'radio play', args: '[station]', desc: 'Stream Kiss, Rock, or Beat', choices: 'stations' },
+    { name: 'radio play', args: '[station]', desc: 'Join your voice channel and start a radio station.', choices: 'stations' },
     { name: 'radio stop', desc: 'Turn the radio off' },
     { name: 'radio night', desc: 'Put Friday Radio Night on the calendar' },
     { name: 'radio night-off', desc: 'Take Radio Night off the calendar' },

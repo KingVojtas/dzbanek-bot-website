@@ -1,30 +1,67 @@
 /**
- * The three stations, live in the browser: the same streams the bot plays in Discord
- * (src/radio/station.ts in the bot). One player for the whole page, and nothing plays
- * until someone presses a key. Song info comes from radia.cz, where the bot reads it too.
+ * The seven stations, live in the browser: the same streams the bot plays in Discord
+ * (src/radio/station.ts in the bot), in the bot's /radio order. One player for the whole
+ * page, and nothing plays until someone presses a key.
  *
- * window.dzbanekRadio: toggle(key), play(key), stop(), nowPlaying(key), onChange(fn).
+ * Song info comes from radia.cz or Triton's public feed, where the bot reads it too.
+ * Heart, Capital and Radio Paradise only name the song inside the stream, which a page
+ * can't read, so the site shows their slogan instead.
+ *
+ * window.dzbanekRadio: stations, keys, toggle(key), play(key), stop(), nowPlaying(key), onChange(fn).
  * States: off, tuning, on, error.
  */
 (function () {
+  const radia = (slug) => 'https://radia.cz/api/v1/radio/' + slug + '/songs/now.json';
   const STATIONS = {
     kiss: {
       name: 'Kiss Radio',
+      short: 'Kiss',
+      slogan: '...be happy!',
       stream: 'https://icecast4.play.cz/kiss128.mp3',
-      now: 'https://radia.cz/api/v1/radio/radio-kiss/songs/now.json',
+      now: radia('radio-kiss'),
     },
     rock: {
       name: 'Rock Radio',
+      short: 'Rock',
+      slogan: 'Rock je slušná muzika',
       // The bot uses the http:// address; a page served over https needs this one.
       stream: 'https://ice.abradio.cz/rockradio128.mp3',
-      now: 'https://radia.cz/api/v1/radio/rock-radio/songs/now.json',
+      now: radia('rock-radio'),
     },
     beat: {
       name: 'Radio Beat',
+      short: 'Beat',
+      slogan: 'První bigbít u nás',
       stream: 'https://icecast3.play.cz/radiobeat128.mp3',
-      now: 'https://radia.cz/api/v1/radio/radio-beat/songs/now.json',
+      now: radia('radio-beat'),
+    },
+    frekvence1: {
+      name: 'Frekvence 1',
+      short: 'F1',
+      slogan: 'Zapni rádio, vypni starosti',
+      stream: 'https://ice.actve.net/fm-frekvence1-128',
+      triton: 'FREKVENCE1',
+    },
+    heart: {
+      name: 'Heart London',
+      short: 'Heart',
+      slogan: 'Turn up the feel good!',
+      stream: 'https://media-ssl.musicradio.com/HeartLondonMP3',
+    },
+    capital: {
+      name: 'Capital London',
+      short: 'Capital',
+      slogan: 'The UK’s No.1 Hit Music Station',
+      stream: 'https://media-ssl.musicradio.com/CapitalMP3',
+    },
+    paradise: {
+      name: 'Radio Paradise',
+      short: 'Paradise',
+      slogan: 'Human curated radio',
+      stream: 'https://stream.radioparadise.com/mp3-128',
     },
   };
+  const KEYS = Object.keys(STATIONS);
   // About as often as the bot checks.
   const SONG_EVERY = 20000;
 
@@ -45,11 +82,31 @@
     media();
   }
 
-  // What's on air right now, or null when radia.cz doesn't say (talk shows, ads, a hiccup).
+  // Triton's <nowplaying-info>: the latest track, unless it's over 20 minutes old (the bot's rule too).
+  async function fromTriton(mount) {
+    const response = await fetch(
+      'https://np.tritondigital.com/public/nowplaying?mountName=' + mount + '&numberToFetch=1&eventType=track',
+      { cache: 'no-store' }
+    );
+    if (!response.ok) return null;
+    const xml = new DOMParser().parseFromString(await response.text(), 'text/xml');
+    const info = xml.querySelector('nowplaying-info');
+    if (!info) return null;
+    const started = Number(info.getAttribute('timestamp')) * 1000;
+    if (!started || Date.now() - started > 20 * 60 * 1000) return null;
+    const prop = (name) => (info.querySelector('property[name="' + name + '"]')?.textContent || '').trim();
+    const title = prop('cue_title');
+    return title ? { artist: prop('track_artist_name'), title, cover: '' } : null;
+  }
+
+  // What's on air right now, or null when nobody says (talk shows, ads, a hiccup, or no feed at all).
   async function nowPlaying(key) {
-    if (!STATIONS[key]) return null;
+    const station = STATIONS[key];
+    if (!station) return null;
     try {
-      const response = await fetch(STATIONS[key].now, { cache: 'no-store' });
+      if (station.triton) return await fromTriton(station.triton);
+      if (!station.now) return null;
+      const response = await fetch(station.now, { cache: 'no-store' });
       if (!response.ok) return null;
       const data = await response.json();
       if (!data || !data.song) return null;
@@ -145,6 +202,7 @@
 
   window.dzbanekRadio = {
     stations: STATIONS,
+    keys: KEYS,
     play,
     stop,
     toggle,

@@ -46,7 +46,7 @@
       },
     },
     footer: {
-      note: 'A free Discord bot for music, Czech radio and game deals.',
+      note: 'A free Discord bot for music, live radio and game deals.',
       updated: 'Last updated',
       label: 'Footer',
       explore: 'Pages',
@@ -55,15 +55,13 @@
       signed: 'Built with ☕ & 🍪 by Sunka',
     },
     meta: {
-      homeTitle: 'Dzbanek: Discord bot for music, Czech radio and game deals',
-      homeDescription:
-        'Dzbanek plays music, streams Czech radio, and posts Steam deals and Epic freebies to your Discord server. Free, no premium tier.',
+      homeTitle: 'Dzbanek: Discord bot for music, live radio and game deals',
+      homeDescription: 'Dzbanek plays music, streams Czech and London radio, and posts Steam deals and Epic freebies to your Discord server. Free, no premium tier.',
       commandsTitle: 'Commands · Dzbanek',
       commandsDescription:
         'The main slash commands, plus what every button on the cards does. You can try them right on the page.',
       radioTitle: 'Radio · Dzbanek',
-      radioDescription:
-        'Kiss, Rock Radio, and Radio Beat in your voice channel. Save songs you like with Catch, and vote on Friday’s Radio Night.',
+      radioDescription: 'Seven live stations in your voice channel, from Kiss and Radio Beat to Capital London and Radio Paradise. Save songs you like with Catch, and vote on Friday’s Radio Night.',
       setupTitle: 'Setup · Dzbanek',
       setupDescription:
         'Pick where Dzbanek posts, see which channel names it finds on its own, and check what permissions it needs.',
@@ -76,7 +74,7 @@
       alt: 'A ceramic pitcher, chocolate chip cookies, and a steaming mug on a wooden kitchen counter at night.',
       kicker: 'Free Discord bot',
       title: 'Every Discord server has a kitchen',
-      lead: 'Dzbanek keeps yours going. It plays your music, streams Czech radio, posts Steam deals every morning and gives new people a cookie.',
+      lead: 'Dzbanek keeps yours going. It plays your music, streams live radio, posts Steam deals every morning and gives new people a cookie.',
       secondary: 'Try the commands',
       scroll: 'Scroll down',
     },
@@ -129,8 +127,8 @@
     },
     radioHome: {
       kicker: 'Radio',
-      title: 'Kiss, Rock Radio and Radio Beat, live',
-      body: '/radio play joins your voice channel and streams Kiss, Rock Radio, or Radio Beat. The card shows what’s on and updates when the song changes. Hear something good? Hit Catch to save it, then Play to queue it from YouTube.',
+      title: 'Seven stations, live',
+      body: '/radio play joins your voice channel and streams one of seven stations: Kiss, Rock Radio, Radio Beat and Frekvence 1 from Czechia, Heart and Capital from London, and Radio Paradise from California. The card shows what’s on and updates when the song changes. Hear something good? Hit Catch to save it, then Play to queue it from YouTube.',
       more: 'More about radio',
     },
     hours: {
@@ -181,7 +179,7 @@
       s2t: 'Pick some channels',
       s2b: 'Optional. Admins can run /setup to choose where deals, welcome messages, and the Kitchen Board go. Channels with obvious names get found on their own.',
       s3t: 'Play something',
-      s3b: 'Hop into voice and run /play, or /radio play for Kiss, Rock, or Beat.',
+      s3b: 'Hop into voice and run /play, or /radio play and pick a station.',
     },
     server: {
       title: 'Straight from my server',
@@ -208,7 +206,7 @@
       q3: 'Why can’t music and radio play at the same time?',
       a3: 'Discord gives a bot one voice connection per server, so music and radio take turns.',
       q4: 'Is anything on this site live?',
-      a4: 'The clock and the radio. The radio plays the real stations, and the song info comes from radia.cz, same as in the bot. The bot itself has no public API, so the Discord cards here are examples.',
+      a4: 'The clock and the radio. The radio plays the real stations, and the song info comes from radia.cz and Triton, same as in the bot. Heart, Capital and Radio Paradise only name the song inside the stream, which a web page can’t read, so here they show their slogan. The bot itself has no public API, so the Discord cards here are examples.',
       q5: 'Can I host it myself?',
       a5: 'Sure. It’s a Node.js app that needs FFmpeg and Deno, and it runs fine on a home PC or a VPS. The repo has the full setup guide.',
     },
@@ -231,6 +229,7 @@
       c10: 'When a YouTube song can’t play, the bot says why instead of skipping it quietly.',
       c11: 'The welcome and goodbye cards @mention the member.',
       c12: 'The Kitchen Board has an In voice card: everyone in every call, live, even when the bot isn’t in one.',
+      c13: 'Four new stations: Frekvence 1, Heart London, Capital London and Radio Paradise. The Friday vote has a button for each of the seven.',
     },
     changes: {
       title: 'What’s new',
@@ -264,7 +263,7 @@
       queue: 'Shows what’s coming up, one page at a time.',
       stop: 'Stops the music, clears the queue, deletes the Now Playing card, and leaves.',
       remove: 'Removes one song from the queue. Position 1 is the next song.',
-      radio: 'play, stop, night, and night-off. Pick Kiss, Rock, or Beat.',
+      radio: 'play, stop, night, and night-off. Pick one of seven stations.',
       setup: 'Sets which channels get deals, welcome messages, Wishlist Radar, and the Kitchen Board. Needs Manage Server.',
       groupQuiz: 'Kitchen Quiz',
       gMusic: 'Music',
@@ -333,11 +332,15 @@
       again: 'Starts another quiz from the podium.',
     },
     radio: {
-      title: 'Czech radio in your voice channel',
+      title: 'Live radio in your voice channel',
       lead: '/radio play joins your voice channel and starts streaming. The card takes on the station’s color and updates when the song changes (it checks about every 20 seconds). It won’t leave just because the chat has gone quiet.',
       kiss: 'Pop hits. Song info comes from radia.cz, or from the stream itself.',
       rock: 'Rock. Song info comes from radia.cz, or from the stream.',
       beat: 'Classic rock. Song info comes from Beat’s own “Právě v éteru” list first, then radia.cz, then the stream. During a show you might see the show’s name instead.',
+      frekvence1: 'Czech and international hits. The stream doesn’t name the song, so the bot reads it from Triton’s public feed.',
+      heart: 'Feel-good pop from London. Heart often leaves the song name blank, so the card may show only the station, and Catch waits until a title comes through.',
+      capital: 'Chart hits from London. Like Heart, it often leaves the song name blank.',
+      paradise: 'Rock, indie, world and electronic from California, picked by people instead of an algorithm. The song and its album cover come from the stream.',
       catchTitle: 'Catch a song, play it later',
       catchBody:
         'Hear something you like? Catch saves the artist and title. The reply comes with a Play button that finds the song on YouTube and adds it to the queue. The Kitchen Board shows the server’s latest catch.',
@@ -347,7 +350,7 @@
       during: 'While voting',
       nightBody:
         '/radio night sets up a Friday radio night (you need Manage Server). Pick a backup station and a voice channel, or just join one. /radio night-off cancels it.',
-      t1: 'The Kitchen Board shows Kiss, Rock, and Beat buttons. Everyone gets one vote and can change it.',
+      t1: 'The Kitchen Board shows a vote button for each of the seven stations. Everyone gets one vote and can change it.',
       t2: 'The winner starts playing in the channel you picked. If it’s a tie, it plays the station you scheduled, then the last one that played, then Beat.',
       t3: 'The board shows the votes as they come in. After 20:00 it goes back to normal.',
       note: 'Switching stations keeps the same voice connection and replaces the old card. With /setup idle-radio (on by default), when the music queue runs out and people are still in the channel, the last station starts playing.',
@@ -369,6 +372,10 @@
       kiss: 'Listen to Kiss Radio',
       rock: 'Listen to Rock Radio',
       beat: 'Listen to Radio Beat',
+      frekvence1: 'Listen to Frekvence 1',
+      heart: 'Listen to Heart London',
+      capital: 'Listen to Capital London',
+      paradise: 'Listen to Radio Paradise',
     },
     vote: {
       note: 'Example vote. Your clicks don’t go anywhere.',

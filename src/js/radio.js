@@ -4,8 +4,9 @@
  * Vote result lines stay in English, the way the bot posts them.
  */
 (function () {
-  const NAMES = { kiss: 'Kiss Radio', rock: 'Rock Radio', beat: 'Radio Beat' };
-  const KEYS = Object.keys(NAMES);
+  // The station list lives in listen.js, in the bot's /radio order.
+  const STATIONS = (window.dzbanekRadio && window.dzbanekRadio.stations) || {};
+  const name = (key) => (STATIONS[key] ? STATIONS[key].name : key);
 
   // Arrow keys move through a role="radiogroup", the selection follows focus.
   function radioGroup(buttons, attr, onPick) {
@@ -37,10 +38,12 @@
 
   const tuner = document.querySelector('[data-tuner]');
   if (tuner) {
-    const POSITION = { kiss: '18%', rock: '50%', beat: '82%' };
     const presets = Array.from(tuner.querySelectorAll('[data-station]'));
     const cards = Array.from(tuner.querySelectorAll('[data-station-card]'));
     const labels = Array.from(tuner.querySelectorAll('.tuner-label[data-for]'));
+    // The needle stops under each station's label on the dial.
+    const POSITION = {};
+    labels.forEach((label) => (POSITION[label.dataset.for] = label.style.getPropertyValue('--pos')));
     const listen = tuner.querySelector('[data-tuner-listen]');
     const listenLabel = tuner.querySelector('[data-tuner-listen-label]');
     const nowLine = tuner.querySelector('[data-tuner-now]');
@@ -90,13 +93,13 @@
       tuner.dataset.state = info.state;
       listen.setAttribute('aria-pressed', String(on));
       listenLabel.textContent = on ? say('tuner.stop', 'Stop') : say('tuner.listen', 'Listen live');
-      const name = info.station ? NAMES[info.station] : '';
+      const station = info.station ? name(info.station) : '';
       if (info.state === 'tuning') nowLine.textContent = say('radioLive.tuning', 'Tuning in…');
       else if (info.state === 'error') nowLine.textContent = say('radioLive.error', 'The station isn’t answering');
       else if (info.state === 'on')
         nowLine.textContent = info.song
-          ? say('tuner.nowOn', 'Now on {{station}}:').replace('{{station}}', name) + ' ' + info.song.artist + ' – ' + info.song.title
-          : say('radioLive.onAir', 'On air') + ' · ' + name;
+          ? say('tuner.nowOn', 'Now on {{station}}:').replace('{{station}}', station) + ' ' + info.song.artist + ' – ' + info.song.title
+          : say('radioLive.onAir', 'On air') + ' · ' + station;
       else nowLine.textContent = say('tuner.note', 'The real station, live. It’s the same stream the bot plays in Discord.');
     }
 
@@ -131,9 +134,11 @@
   const vote = document.querySelector('[data-vote]');
   if (!vote) return;
 
-  // A few neighbours already voted. Kiss and Beat are level, so your vote decides.
-  const SEED = { kiss: 2, rock: 1, beat: 2 };
   const rows = Array.from(vote.querySelectorAll('[data-tally]'));
+  const KEYS = rows.map((row) => row.getAttribute('data-tally'));
+  // A few neighbours already voted (the counts in the HTML). Kiss and Beat are level, so your vote decides.
+  const SEED = {};
+  rows.forEach((row) => (SEED[row.getAttribute('data-tally')] = Number(row.querySelector('.tally-count').textContent) || 0));
   const voteButtons = Array.from(vote.querySelectorAll('[data-vote-for]'));
   const schedButtons = Array.from(vote.querySelectorAll('[data-sched]'));
   const closeButton = vote.querySelector('[data-vote-close]');
@@ -159,7 +164,7 @@
   }
 
   function list(keys) {
-    const names = keys.map((key) => NAMES[key]);
+    const names = keys.map(name);
     return names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0];
   }
 
@@ -184,8 +189,8 @@
       const { key, leaders, top } = winner(tally);
       resultText.textContent =
         leaders.length === 1
-          ? '🏆 ' + NAMES[key] + ' wins with ' + top + ' votes. It starts now in 🔊 Kitchen.'
-          : '🤝 ' + list(leaders) + ' tied at ' + top + '. The scheduled station, ' + NAMES[key] + ', starts now in 🔊 Kitchen.';
+          ? '🏆 ' + name(key) + ' wins with ' + top + ' votes. It starts now in 🔊 Kitchen.'
+          : '🤝 ' + list(leaders) + ' tied at ' + top + '. The scheduled station, ' + name(key) + ', starts now in 🔊 Kitchen.';
     }
   }
 
