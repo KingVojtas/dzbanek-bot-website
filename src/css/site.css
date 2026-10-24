@@ -3151,13 +3151,75 @@ html.theme-light .chip-vp {
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
 }
 
-/* board */
+/* board: four Components V2 cards in one message */
+
+.board {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 32rem;
+  margin-top: 0.4rem;
+}
+
+.board .dc-embed {
+  margin-top: 0;
+  --bar: #c4783a;
+  color: var(--dc-text);
+  font-size: 0.88rem;
+}
 
 .board .dc-embed-title {
   font-family: var(--serif);
   font-size: 1.25rem;
   font-weight: 560;
   letter-spacing: -0.02em;
+}
+
+.board-wide {
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
+/* Discord's -# subtext and ### heading */
+.board-sub {
+  margin-top: 0.2rem;
+  color: var(--dc-muted);
+  font-size: 0.76rem;
+}
+
+.board-sub .live-dot {
+  display: inline-block;
+  margin-right: 0.15rem;
+  vertical-align: 0.05em;
+}
+
+.board-h3 {
+  margin-top: 0.15rem;
+  color: var(--dc-title);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.board-link {
+  color: var(--dc-link);
+}
+
+.board-kicker {
+  margin-top: 0.55rem;
+  font-weight: 600;
+}
+
+.board-room {
+  margin-top: 0.5rem;
+}
+
+.board-names {
+  color: var(--dc-text-2);
+}
+
+.board-sep {
+  margin: 0.75rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--dc-line);
 }
 
 /* door: the bot's join and leave cards */

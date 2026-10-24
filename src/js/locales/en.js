@@ -156,24 +156,14 @@
     board: {
       kicker: 'Kitchen Board',
       title: 'One message that edits itself',
-      body: '/setup kitchen posts a single message and keeps editing it instead of posting new ones. It shows what’s playing, who’s in voice, the top Steam deal, the current Epic freebie, how many people joined today, and Radio Night if one’s coming up.',
+      body: '/setup kitchen posts one message with four cards and keeps editing it instead of posting new ones: what’s playing, who’s in voice, the top Steam deal with the Epic freebie, and a last card with the latest caught song, how many people joined today, and Radio Night.',
       sunday:
         'Every Sunday at 18:00 you also get a postcard with the songs people caught that week, plus Friday’s vote results if anyone voted.',
+      private:
+        'The In voice card lists every call in the server, even when the bot isn’t in one, with who’s muted, deafened, streaming, or on camera. A call shows only if everyone who can read the board can see that channel, so private calls stay private.',
       presence: 'The bot’s Discord status takes turns with three lines, each for twenty minutes: Purifying the source, Analyzing bacteria levels and Pouring fresh drops.',
       example: 'Example, not live',
       edited: '(edited)',
-      live: 'Live · Radio Beat',
-      track: 'První bigbít u nás',
-      listenersLabel: 'In voice',
-      listeners: '3',
-      steamLabel: 'Steam',
-      steam: 'Top Very Positive sale',
-      epicLabel: 'Epic',
-      epic: 'Free this week',
-      joinsLabel: 'Joined today',
-      joins: '2',
-      nightLabel: 'Radio Night',
-      night: 'Friday 20:00',
     },
     welcome: {
       title: 'Hi and bye',
@@ -240,6 +230,7 @@
       c9: 'Steam deals: genres like “Card & Board Game” show properly, and a sale that ends today shows its time instead of a countdown.',
       c10: 'When a YouTube song can’t play, the bot says why instead of skipping it quietly.',
       c11: 'The welcome and goodbye cards @mention the member.',
+      c12: 'The Kitchen Board has an In voice card: everyone in every call, live, even when the bot isn’t in one.',
     },
     changes: {
       title: 'What’s new',

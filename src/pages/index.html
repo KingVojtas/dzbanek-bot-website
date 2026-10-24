@@ -357,8 +357,9 @@
     <div data-reveal>
       <p class="kicker" data-i18n="board.kicker">Kitchen Board</p>
       <h2 data-i18n="board.title">One message that edits itself</h2>
-      <p class="lead" data-i18n="board.body">/setup kitchen posts a single message and keeps editing it instead of posting new ones. It shows what’s playing, who’s in voice, the top Steam deal, the current Epic freebie, how many people joined today, and Radio Night if one’s coming up.</p>
+      <p class="lead" data-i18n="board.body">/setup kitchen posts one message with four cards and keeps editing it instead of posting new ones: what’s playing, who’s in voice, the top Steam deal with the Epic freebie, and a last card with the latest caught song, how many people joined today, and Radio Night.</p>
       <ul class="ticks">
+        <li data-i18n="board.private">The In voice card lists every call in the server, even when the bot isn’t in one, with who’s muted, deafened, streaming, or on camera. A call shows only if everyone who can read the board can see that channel, so private calls stay private.</li>
         <li data-i18n="board.sunday">Every Sunday at 18:00 you also get a postcard with the songs people caught that week, plus Friday’s vote results if anyone voted.</li>
         <li data-i18n="board.presence">The bot’s Discord status takes turns with three lines, each for twenty minutes: Purifying the source, Analyzing bacteria levels and Pouring fresh drops.</li>
       </ul>
@@ -370,19 +371,50 @@
           <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
           <div class="dc-body">
             <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time"><span data-i18n="board.edited">(edited)</span></span></p>
-            <div class="dc-embed board" style="--bar: var(--beat)">
-              <div class="dc-embed-main">
-                <p class="dc-embed-author"><span class="live-dot" aria-hidden="true"></span> <span data-i18n="board.live">Live · Radio Beat</span></p>
-                <p class="dc-embed-title" data-i18n="board.track">První bigbít u nás</p>
-                <dl class="dc-fields">
-                  <div><dt data-i18n="board.listenersLabel">In voice</dt><dd data-i18n="board.listeners">3</dd></div>
-                  <div><dt data-i18n="board.joinsLabel">Joined today</dt><dd data-i18n="board.joins">2</dd></div>
-                  <div><dt data-i18n="board.steamLabel">Steam</dt><dd data-i18n="board.steam">Top Very Positive sale</dd></div>
-                  <div><dt data-i18n="board.epicLabel">Epic</dt><dd data-i18n="board.epic">Free this week</dd></div>
-                  <div class="wide"><dt data-i18n="board.nightLabel">Radio Night</dt><dd><span data-i18n="board.night">Friday 20:00</span> <span class="dc-muted" data-clock="night-in"></span></dd></div>
-                </dl>
+            <!-- The four cards from src/kitchen/display.ts in the bot: stereo, In voice, the Pantry, the room. -->
+            <div class="board">
+              <div class="dc-embed" style="--bar: var(--beat)">
+                <div class="dc-embed-main">
+                  <p class="board-sub"><span class="live-dot" aria-hidden="true"></span> LIVE · <span class="board-link">Radio Beat</span> · <i>První bigbít u nás</i></p>
+                  <p class="dc-embed-title">Noční tramvaj</p>
+                  <p class="dc-embed-desc"><b>Plechová kuchyně</b><br />🎧 <b>Kitchen</b> · 3 listening</p>
+                </div>
+                <img class="dc-embed-thumb" src="assets/avatar.jpg" alt="" width="80" height="80" loading="lazy" decoding="async" />
+                <div class="dc-row board-wide"><span class="dc-btn dc-btn-green">🍪 Catch</span><span class="dc-btn dc-btn-red">⏹️ Stop</span><span class="dc-btn">🌐 Website</span></div>
               </div>
-              <img class="dc-embed-thumb" src="assets/avatar.jpg" alt="" width="80" height="80" loading="lazy" decoding="async" />
+              <div class="dc-embed">
+                <div class="dc-embed-main">
+                  <p class="board-h3">🔊 In voice · 6 people</p>
+                  <p class="board-room">🎧 <b>Kitchen</b> · 3 people · started <span class="dc-ts">42 minutes ago</span></p>
+                  <p class="board-names">Sunka · Nova 🔇 · Milo 🔴</p>
+                  <p class="board-room">🔊 <b>Gaming corner</b> · 2 people · started <span class="dc-ts">2 hours ago</span></p>
+                  <p class="board-names">Ondra 📹 · Lucie 🔕</p>
+                  <p class="board-room">💤 <b>AFK</b> · 1 person</p>
+                  <p class="board-names">Tom 🔇</p>
+                  <p class="board-sub">🔴 streaming · 📹 camera · 🔇 muted · 🔕 deafened</p>
+                </div>
+              </div>
+              <div class="dc-embed">
+                <div class="dc-embed-main">
+                  <p class="board-h3">🛒 The Pantry</p>
+                  <p class="board-sub">Kitchen Board · the best deal today and this week’s freebie</p>
+                  <p class="board-sub board-kicker">💸 STEAM DEAL OF THE DAY</p>
+                  <p class="board-h3 board-link">Hollow Lantern</p>
+                  <p class="deal-price"><span class="disc">−80%</span> <s>19,99€</s> → <b>3,99€</b> · you save 16,00€</p>
+                  <p class="board-sub">👍 Very Positive · 94% of 12K · ⏳ ends <span class="dc-ts">in 3 days</span> · +9 more in <span class="dc-mention">#steam-deals</span></p>
+                  <hr class="board-sep" />
+                  <p class="board-sub board-kicker">🎁 FREE ON EPIC THIS WEEK</p>
+                  <p class="board-h3 board-link">Starbound Atlas</p>
+                  <p class="deal-price"><span class="free-tag">🆓 FREE</span> <s>$19.99</s> · ⏳ ends <span class="dc-ts">in 6 days</span></p>
+                  <p class="board-sub">next up: Moss &amp; Mortar <span class="dc-ts">in 6 days</span> · <span class="dc-mention">#epic-free</span></p>
+                </div>
+              </div>
+              <div class="dc-embed">
+                <div class="dc-embed-main">
+                  <p>🍪 <b>2</b> cookies out of the jar today</p>
+                  <p>🌙 <b>Radio Night</b> · Friday 20:00 · Radio Beat in 🔊 <b>Kitchen</b> <span class="dc-muted" data-clock="night-in"></span></p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -587,6 +619,7 @@
     <div class="receipt">
       <p class="receipt-head">DZBANEK · <span data-i18n="changelog.slip">kitchen log</span></p>
       <ol class="receipt-list">
+        <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c12">The Kitchen Board has an In voice card: everyone in every call, live, even when the bot isn’t in one.</span></li>
         <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c9">Steam deals: genres like “Card & Board Game” show properly, and a sale that ends today shows its time instead of a countdown.</span></li>
         <li><time datetime="2026-10-23">23. 10. 2026</time><span data-i18n="changelog.c10">When a YouTube song can’t play, the bot says why instead of skipping it quietly.</span></li>
         <li><time datetime="2026-10-23">23. 10. 2026</time><span data-i18n="changelog.c11">The welcome and goodbye cards @mention the member.</span></li>

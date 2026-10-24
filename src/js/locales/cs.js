@@ -157,24 +157,14 @@
     board: {
       kicker: 'Kitchen Board',
       title: 'Jedna zpráva, která se sama přepisuje',
-      body: '/setup kitchen pošle jedinou zprávu a místo posílání nových ji pak upravuje. Ukazuje, co hraje, kdo je ve voice, nejlepší slevu na Steamu, aktuální hru zdarma z Epicu, kolik lidí se dnes připojilo a Radio Night, když se nějaká blíží.',
+      body: '/setup kitchen pošle jednu zprávu se čtyřmi kartami a místo posílání nových ji pak upravuje: co hraje, kdo je ve voice, nejlepší slevu na Steamu s hrou zdarma z Epicu a poslední kartu s naposledy ulovenou písničkou, počtem dnešních příchozích a Radio Night.',
       sunday:
         'Každou neděli v 18:00 přijde ještě pohlednice s písničkami, které lidi za týden ulovili, a s výsledkem pátečního hlasování, pokud někdo hlasoval.',
+      private:
+        'Karta In voice ukazuje všechny hovory na serveru, i když v žádném bot není, i s tím, kdo má ztlumený mikrofon nebo zvuk, kdo streamuje a kdo má zapnutou kameru. Hovor se ukáže jen tehdy, když jeho kanál vidí všichni, kdo vidí tabuli, takže soukromé hovory zůstanou soukromé.',
       presence: 'Status bota na Discordu se střídá mezi třemi řádky, každý na dvacet minut: Purifying the source, Analyzing bacteria levels a Pouring fresh drops.',
       example: 'Ukázka, nic živého',
       edited: '(upraveno)',
-      live: 'Živě · Radio Beat',
-      track: 'První bigbít u nás',
-      listenersLabel: 'Ve voice',
-      listeners: '3',
-      steamLabel: 'Steam',
-      steam: 'Nejlepší sleva s Very Positive',
-      epicLabel: 'Epic',
-      epic: 'Tento týden zdarma',
-      joinsLabel: 'Dnes se připojili',
-      joins: '2',
-      nightLabel: 'Radio Night',
-      night: 'Pátek 20:00',
     },
     welcome: {
       title: 'Ahoj a čau',
@@ -241,6 +231,7 @@
       c9: 'Slevy ze Steamu: žánry jako „Card & Board Game“ se ukazují správně a sleva, která končí dnes, ukáže čas místo odpočtu.',
       c10: 'Když skladba z YouTube nejde přehrát, bot napíše proč, místo aby ji potichu přeskočil.',
       c11: 'Uvítací a rozlučkové karty člena @označí.',
+      c12: 'Kitchen Board má kartu In voice: všichni ze všech hovorů, živě, i když v žádném bot není.',
     },
     changes: {
       title: 'Novinky',
