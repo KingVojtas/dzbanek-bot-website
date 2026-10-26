@@ -205,6 +205,8 @@ function changesLog(commits) {
 
 const commits = await botCommits();
 const changes = changesLog(commits);
+// How many of them the letter on the home page counts; empty when the list did not load.
+const changeCount = commits.filter((commit) => !QUIET.test(commit.subject)).length || '';
 
 // css/site.css?v=1a2b3c4d: a returning visitor gets the new file right after a deploy, not a cached mix.
 const versions = new Map();
@@ -222,7 +224,7 @@ const versioned = (html) =>
     versions.has(path) ? `${start}${path}?v=${versions.get(path)}"` : whole
   );
 
-const shared = { invite, github, ogImage, updated, updatedIso, changes };
+const shared = { invite, github, ogImage, updated, updatedIso, changes, changeCount };
 const pages = (await readdir(join(src, 'pages'))).filter((name) => name.endsWith('.html'));
 
 // English at the root, Czech under cs/. 404.html is one page for both; i18n.js switches it.

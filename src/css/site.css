@@ -3337,52 +3337,178 @@ html.theme-light .chip-vp {
   margin-top: 0.5rem;
 }
 
-/* The author's note: who makes it and why, between two printed rules. */
-.author {
+/* why Dzbanek exists: the afterword, a letter set in the serif beside a short chronicle */
+
+.letter-split {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
   align-items: start;
-  gap: clamp(1.5rem, 4vw, 3rem);
-  margin-top: clamp(3rem, 6vw, 4.5rem);
-  padding: clamp(1.75rem, 4vw, 2.75rem) 0;
-  border-block: 3px double var(--rule-strong);
+  gap: clamp(2rem, 5vw, 4.5rem);
 }
 
-.author-photo img {
-  width: clamp(5.5rem, 10vw, 8rem);
+.letter-body {
+  max-width: 40rem;
+  margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.letter-body p {
+  margin-top: 1.1rem;
+  color: var(--cream-soft);
+  font: 400 clamp(1.08rem, 1.35vw, 1.18rem) / 1.72 var(--serif);
+}
+
+.letter-body .letter-lede {
+  margin-top: 0;
+  color: var(--cream);
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  line-height: 1.5;
+}
+
+/* A drop cap, the way a chapter opens in a printed book. */
+.letter-lede::first-letter {
+  float: left;
+  margin: 0.06em 0.1em 0 0;
+  color: var(--accent-text);
+  font-size: 3.2em;
+  font-weight: 600;
+  line-height: 0.82;
+}
+
+/* Signed by hand, next to the pitcher. */
+.letter-sign {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 1.75rem;
+  color: var(--accent-text);
+  font: 700 2.3rem/1 var(--hand);
+}
+
+.letter-name {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.letter-name small {
+  color: var(--muted);
+  font: 500 0.82rem/1.2 var(--sans);
+  letter-spacing: 0.02em;
+}
+
+.letter-sign img {
+  width: 3.4rem;
   aspect-ratio: 1;
   border-radius: 50%;
   object-fit: cover;
   box-shadow:
     0 0 0 1px var(--rule-strong),
-    0 0 0 7px color-mix(in srgb, var(--clay) 12%, transparent);
+    0 0 0 5px color-mix(in srgb, var(--clay) 12%, transparent);
 }
 
-.author-title {
+/* The chronicle: what happened when, behind a column rule. */
+.chronicle {
+  padding-left: clamp(1.25rem, 3vw, 2rem);
+  border-left: 1px solid var(--rule-strong);
+}
+
+.chronicle-title {
   color: var(--accent-text);
   font: 700 0.72rem/1.2 var(--sans);
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
-.author-quote {
-  max-width: 46rem;
-  margin-top: 0.9rem;
-  color: var(--cream);
-  font: italic 400 clamp(1.3rem, 2.2vw, 1.75rem) / 1.4 var(--serif);
+/* A timeline: clay dots on one rule, oldest at the top, the newest one filled. */
+.chronicle-list {
+  position: relative;
+  display: grid;
+  gap: 1.1rem;
+  margin: 1.1rem 0 0;
+  padding: 0 0 0 1.5rem;
+  list-style: none;
 }
 
-.author-text > p:not(.author-quote):not(.author-sign) {
-  max-width: 40rem;
-  margin-top: 1rem;
-  color: var(--muted);
+.chronicle-list::before {
+  content: "";
+  position: absolute;
+  left: 0.3rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 1px;
+  background: var(--rule-strong);
 }
 
-/* A sign-off, written rather than typed. */
-.author-sign {
-  margin-top: 0.6rem;
+.chronicle-list li {
+  position: relative;
+  color: var(--cream-soft);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.chronicle-list li::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 0.3rem;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--clay);
+}
+
+.chronicle-list li.is-new::before {
+  background: var(--clay);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--clay) 22%, transparent);
+}
+
+.chronicle-list time {
   color: var(--accent-text);
-  font: 700 2.1rem/1 var(--hand);
+  font: 600 0.78rem/1.4 var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.chronicle-list li > span:last-child {
+  display: block;
+  margin-top: 0.1rem;
+}
+
+.chronicle-new,
+.fm-new {
+  margin-left: 0.35rem;
+  padding: 0 0.35rem;
+  border: 1px solid currentColor;
+  border-radius: 0.2rem;
+  color: #7dcea0;
+  font: 700 0.6rem/1.5 var(--sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  vertical-align: 1px;
+}
+
+html.theme-light .chronicle-new,
+html.theme-light .fm-new {
+  color: #2f7a3f;
+}
+
+.chronicle-count {
+  margin-top: 1.1rem;
+}
+
+.chronicle-count b {
+  font-variant-numeric: tabular-nums;
+}
+
+/* No number when the list didn't load at build time. */
+.chronicle-count b:empty {
+  display: none;
+}
+
+.chronicle-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
 }
 
 /* what's cooking: a slip from the kitchen printer */
@@ -5121,6 +5247,30 @@ html.js .station:not(.is-tuned) .eq i {
   font-size: 0.88rem;
 }
 
+/* Kitchen FM, last in the list: nothing to tune, so what it is goes under the name instead. */
+html.js .station-fm {
+  cursor: default;
+}
+
+.station-mic {
+  align-self: center;
+  color: var(--accent-text);
+}
+
+.station-only {
+  color: var(--muted);
+  font: 500 0.75rem var(--mono);
+  white-space: nowrap;
+}
+
+.station-desc {
+  grid-column: 2 / -1;
+  margin: 0.35rem 0 0;
+  color: var(--cream-soft);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 /* radio: catch flow */
 
 .flow {
@@ -5756,12 +5906,19 @@ html.js [data-reveal-group].is-in > * {
   .split.reverse,
   .split.lean,
   .radio-head,
+  .letter-split,
   .night-split,
   .faq-split,
   .demo-intro,
   .method,
   .changelog-split {
     grid-template-columns: 1fr;
+  }
+
+  .chronicle {
+    padding: 1.5rem 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--rule-strong);
   }
 
   .split.reverse > :first-child {
@@ -6042,7 +6199,8 @@ html.js [data-reveal-group].is-in > * {
     display: none;
   }
 
-  .station-link {
+  .station-link,
+  .station-only {
     grid-column: 2;
     margin-top: 0.2rem;
   }
@@ -6050,10 +6208,6 @@ html.js [data-reveal-group].is-in > * {
   .gallery {
     grid-template-columns: minmax(0, 1fr);
     max-width: 26rem;
-  }
-
-  .author {
-    grid-template-columns: minmax(0, 1fr);
   }
 
   .receipt-list li,

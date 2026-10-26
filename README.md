@@ -10,9 +10,9 @@ Four static pages and a 404, one stylesheet, vanilla JavaScript. No framework an
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The kitchen as a cookbook: a title page with the hero ad, then the contents beside numbered chapters (music; a radio on the kitchen counter that plays the real stations, under a cabinet light in the tuned station’s colour; deals with small clocks set to their posting times; the Kitchen Board; welcomes; setting it up, with a note from me; real server screenshots that open full size; FAQ; the changelog), and the invite on the back cover |
+| `index.html` | The kitchen as a cookbook: a title page with the hero ad, then the contents beside numbered chapters (music; a radio on the kitchen counter that plays the real stations, under a cabinet light in the tuned station’s colour; deals with small clocks set to their posting times; the Kitchen Board; welcomes; setting it up; real server screenshots that open full size; FAQ; the changelog; and why Dzbanek exists, a letter from me beside a chronicle of both bot versions), and the invite on the back cover |
 | `commands.html` | A pretend `#kitchen` channel you can type `/` into (every command, a three-round Kitchen Quiz, and the card buttons), then the full command menu, grouped like the bot's `/help` |
-| `radio.html` | A tuner that plays all seven stations live (Kiss, Rock Radio, Radio Beat, Frekvence 1, Heart London, Capital London, Radio Paradise), what each one has on air, Catch → Play, and a Friday Radio Night vote you can click |
+| `radio.html` | A tuner that plays all seven stations live (Kiss, Rock Radio, Radio Beat, Frekvence 1, Heart London, Capital London, Radio Paradise), what each one has on air, Kitchen FM (the bot’s own station, described under them; it has no stream to play here), Catch → Play, and a Friday Radio Night vote you can click |
 | `setup.html` | Channel setup, auto-detected channel names, permissions, Server Members intent |
 | `changes.html` | Every bot commit as one long kitchen-log receipt, printed by the build |
 | `404.html` | The empty shelf. GitHub Pages serves it for missing paths |
@@ -81,7 +81,7 @@ The top of `scripts/build.mjs` is the single list of public links: `SITE_URL` (w
 
 After building, `scripts/check.mjs` checks `dist/` and fails the build (and so the deploy) when a string is in one locale file and not the other, a page or script uses a key `en.js` doesn’t have, or a link points at a file or `#id` that isn’t there. It warns when the bot has a change newer than the home page’s “What’s cooking”. Run it alone with `node scripts/check.mjs`. The build also adds `?v=` and a short hash of the file to every CSS and JS link, so a deploy reaches returning visitors at once.
 
-Pages are HTML comments plus the unique markup. The build fills `{{invite}}`, `{{github}}` and `{{changes}}` and wraps each page in the shared chrome. Script order on every page: `theme-boot.js` in `<head>`, then both locales, `i18n.js`, `listen.js`, `site.js`, `theme.js`, `reveal.js`, `clock.js`. A page can load its own scripts after those with a comment:
+Pages are HTML comments plus the unique markup. The build fills `{{invite}}`, `{{github}}`, `{{changes}}` and `{{changeCount}}` (how many changes the letter counts) and wraps each page in the shared chrome. Script order on every page: `theme-boot.js` in `<head>`, then both locales, `i18n.js`, `listen.js`, `site.js`, `theme.js`, `reveal.js`, `clock.js`. A page can load its own scripts after those with a comment:
 
 ```html
 <!-- scripts: discord-demo.js -->

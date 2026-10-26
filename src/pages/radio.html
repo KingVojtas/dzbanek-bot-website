@@ -49,7 +49,8 @@
         </div>
       </div>
 
-      <!-- The seven stations by name, like the index at the back of a cookbook. A click tunes the dial (radio.js). -->
+      <!-- The seven stations by name, like the index at the back of a cookbook. A click tunes the dial (radio.js).
+           Kitchen FM comes last: the bot makes it from each server's own songs, so there is no stream to tune here. -->
       <ol class="stations" data-reveal-group>
         <li class="station" id="kiss" data-station-card="kiss" style="--accent: var(--kiss)">
           <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
@@ -99,6 +100,13 @@
           <span class="station-dots" aria-hidden="true"></span>
           <a class="station-link" href="https://radioparadise.com/" target="_blank" rel="noopener noreferrer">radioparadise.com <svg width="14" height="14" aria-hidden="true"><use href="#i-external" /></svg></a>
           <p class="station-now" data-station-now hidden></p>
+        </li>
+        <li class="station station-fm" id="kitchen-fm">
+          <svg class="station-mic" width="18" height="18" aria-hidden="true"><use href="#i-mic" /></svg>
+          <p class="station-name">Kitchen FM <span class="fm-new" data-i18n="changes.new">New</span></p>
+          <span class="station-dots" aria-hidden="true"></span>
+          <span class="station-only" data-i18n="radio.fmOnly">only in Discord</span>
+          <p class="station-desc" data-i18n="radio.fmDesc">The kitchen’s own station: the songs your server has played or caught, ten of one genre and then the next, with a few new finds from similar artists. Before each set a DJ says what’s coming and who brought it in.</p>
         </li>
       </ol>
     </div>
