@@ -69,10 +69,11 @@ const t = (lang, key) => lookup(lang, key) ?? lookup('en', key);
 
 // What i18n.js apply() does in the browser, done once here so the Czech copy is Czech before any script runs.
 // data-i18n replaces an element's text, so it only goes on elements that hold nothing but text.
+// Tag names can be camelCase, like SVG's <textPath>.
 function translate(html, lang, file) {
   let done = 0;
   html = html.replace(
-    /(<([a-z][a-z0-9]*)\b[^>]*?\sdata-i18n="([^"]+)"[^>]*>)([^<]*)(<\/\2>)/g,
+    /(<([a-z][a-zA-Z0-9]*)\b[^>]*?\sdata-i18n="([^"]+)"[^>]*>)([^<]*)(<\/\2>)/g,
     (whole, open, _tag, key, _text, close) => {
       done += 1;
       const value = t(lang, key);

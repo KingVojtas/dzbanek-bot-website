@@ -132,6 +132,8 @@
       body: 'Půl minuty s /radio play: živá karta každé stanice, Catch a páteční hlasování.',
       caption: '31 sekund, se zvukem. Písničky a lidi jsou vymyšlení, stanice jsou skutečné.',
       label: 'Reklama na rádio Dzbanku: všech sedm stanic na Discordu',
+      watch: 'Pustit se zvukem · 31 s ·',
+      play: 'Pustit reklamu na rádio se zvukem',
     },
     radioHome: {
       kicker: 'Rádio',

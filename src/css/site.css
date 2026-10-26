@@ -172,6 +172,15 @@
   --header-space: 4.3rem;
   /* Chalk dust on the chalkboard. */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .4 0 0 0 0 .3 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Subway tiles for the kitchen wall: grout and glaze only, so the colour under them (--wall) sets the theme. */
+  --tiles: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='.16'/%3E%3Cstop offset='.4' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='.1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g)'%3E%3Crect x='2' y='2' width='62' height='30' rx='1.5'/%3E%3Crect x='66' y='2' width='62' height='30' rx='1.5'/%3E%3Crect x='-30' y='34' width='62' height='30' rx='1.5'/%3E%3Crect x='34' y='34' width='62' height='30' rx='1.5'/%3E%3Crect x='98' y='34' width='62' height='30' rx='1.5'/%3E%3C/g%3E%3Cpath d='M0 1H128M0 33H128M1 0V32M65 0V32M33 32V64M97 32V64' stroke='%23000' stroke-opacity='.16' stroke-width='2'/%3E%3C/svg%3E");
+  --wall: #3a332c;
+  --wall-light: rgba(255, 196, 119, 0.22);
+  /* The fridge: retro sage enamel, a dark gasket between the doors. */
+  --enamel: #46503f;
+  --enamel-seam: #161a14;
+  --enamel-ink: #f6f0e6;
+  --enamel-muted: #d5dccb;
   --wrap: 76rem;
   color-scheme: dark;
   interpolate-size: allow-keywords;
@@ -194,6 +203,12 @@ html.theme-light {
   --ev-epic: #2a1c12;
   --ev-postcard: #c26a3c;
   --ev-night: #c99a00;
+  --wall: #eee4d3;
+  --wall-light: rgba(255, 190, 100, 0.3);
+  --enamel: #c4d0bb;
+  --enamel-seam: #7d8a75;
+  --enamel-ink: #1f2a1c;
+  --enamel-muted: #3d4a38;
 
   --dc-bg: #fffdf9;
   --dc-rail: #e6ddd1;
@@ -1075,6 +1090,15 @@ html:not(.theme-light) .icon-moon {
 
 .split.reverse > :first-child {
   order: 2;
+}
+
+/* Words beside a much taller example ride along with it instead of leaving a hole underneath. */
+@media (min-width: 981px) {
+  .stick {
+    position: sticky;
+    top: calc(var(--header-space) + 2rem);
+    align-self: start;
+  }
 }
 
 .clock-chip {
@@ -2093,7 +2117,9 @@ html.film-soon .hero:not([data-film]) .hero-scroll,
 }
 
 .film-sticker::before,
-.film-sticker::after {
+.film-sticker::after,
+.radio-film-sticker::before,
+.radio-film-sticker::after {
   content: "";
   position: absolute;
   inset: 30%;
@@ -2103,7 +2129,8 @@ html.film-soon .hero:not([data-film]) .hero-scroll,
   pointer-events: none;
 }
 
-.film-sticker::after {
+.film-sticker::after,
+.radio-film-sticker::after {
   animation-delay: 1.5s;
 }
 
@@ -2146,7 +2173,9 @@ html.film-soon .hero:not([data-film]) .hero-scroll,
 }
 
 .film-sticker:hover .film-play,
-.film-sticker:focus-visible .film-play {
+.film-sticker:focus-visible .film-play,
+.radio-film-play:hover .film-play,
+.radio-film-play:focus-visible .film-play {
   transform: scale(1.1);
 }
 
@@ -2596,6 +2625,45 @@ html:not(.js) .kradio-hint {
 }
 
 /* schedule: the chalkboard and the wall clock */
+
+/* The kitchen wall they hang on: subway tiles, a cabinet above with its light on, the counter below. */
+.section.wall {
+  position: relative;
+  margin-block: clamp(1rem, 2.5vw, 2rem);
+  padding-block: clamp(4.25rem, 8vw, 6.5rem) clamp(4rem, 7.5vw, 6rem);
+  background:
+    radial-gradient(70% 85% at 50% 0%, var(--wall-light), transparent 70%),
+    linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.18)),
+    var(--tiles) center top / 160px 80px,
+    var(--wall);
+}
+
+/* The underside of the cabinet, with the strip light glowing along its edge. */
+.section.wall::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1.1rem;
+  background:
+    linear-gradient(180deg, transparent calc(100% - 3px), rgba(255, 214, 160, 0.85) calc(100% - 3px)) center / min(var(--wrap), 80%) 100% no-repeat,
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 13px),
+    linear-gradient(180deg, #4a2f1b, #2a190e);
+  box-shadow: 0 6px 24px 2px rgba(255, 190, 110, 0.18);
+}
+
+/* The front edge of the counter. */
+.section.wall::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 0.85rem;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0 2px, transparent 2px 11px),
+    linear-gradient(180deg, #9a6a42, #6a4426 55%, #3a2414);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 220, 180, 0.3),
+    0 12px 24px -8px rgba(0, 0, 0, 0.45);
+}
 
 .hours-split {
   display: grid;
@@ -3279,6 +3347,103 @@ html.theme-light .chip-vp {
   color: #fff;
   font-size: 2rem;
   font-weight: 700;
+}
+
+/* the fridge: the to-do list and the note on the freezer door, the photos on the big door */
+
+.fridge {
+  display: grid;
+  gap: 5px;
+  width: min(var(--wrap), calc(100% - 2.5rem));
+  margin: clamp(1.5rem, 3vw, 2.5rem) auto;
+  border-radius: 2.4rem;
+  background: var(--enamel-seam);
+  box-shadow: var(--shadow-lg);
+}
+
+.fridge-door {
+  position: relative;
+  padding: clamp(2.75rem, 5vw, 4rem) clamp(1.5rem, 4.5vw, 4rem) clamp(2.75rem, 5vw, 4rem) clamp(3rem, 6vw, 5.5rem);
+  background:
+    linear-gradient(105deg, rgba(255, 255, 255, 0.08), transparent 45%),
+    radial-gradient(90% 70% at 50% 0%, rgba(255, 196, 119, 0.12), transparent 70%),
+    var(--enamel);
+  color: var(--enamel-ink);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -14px 22px -14px rgba(0, 0, 0, 0.35);
+}
+
+.fridge-door:first-child {
+  border-radius: 2.4rem 2.4rem 0.6rem 0.6rem;
+}
+
+.fridge-door:last-child {
+  border-radius: 0.6rem 0.6rem 2.4rem 2.4rem;
+}
+
+/* Chrome handles by the seam, like a fridge with the freezer on top. */
+.fridge-door::before {
+  content: "";
+  position: absolute;
+  left: clamp(1rem, 2.2vw, 1.6rem);
+  width: 0.75rem;
+  height: clamp(6rem, 12vw, 9rem);
+  border-radius: 0.5rem;
+  background: linear-gradient(90deg, #6d6f70, #f4f4f2 35%, #c9cbcb 55%, #7b7d7e);
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.35);
+}
+
+.fridge-door:first-child::before {
+  bottom: 2rem;
+}
+
+.fridge-door:last-child::before {
+  top: 2rem;
+}
+
+.fridge-door .section-head h2 {
+  color: var(--enamel-ink);
+}
+
+.fridge-door .lead {
+  color: var(--enamel-muted);
+}
+
+/* On the fridge the photos hang on magnets instead of tape. */
+.fridge .snap::before {
+  top: -0.6rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: -0.75rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.75), var(--magnet) 45%, color-mix(in srgb, var(--magnet) 65%, #000));
+  box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.45);
+  rotate: 0deg;
+}
+
+.fridge .snap:nth-child(6n + 1) {
+  --magnet: var(--clay);
+}
+
+.fridge .snap:nth-child(6n + 2) {
+  --magnet: var(--beat);
+}
+
+.fridge .snap:nth-child(6n + 3) {
+  --magnet: var(--capital);
+}
+
+.fridge .snap:nth-child(6n + 4) {
+  --magnet: var(--heart);
+}
+
+.fridge .snap:nth-child(6n + 5) {
+  --magnet: #f3ece0;
+}
+
+.fridge .snap:nth-child(6n + 6) {
+  --magnet: var(--paradise);
 }
 
 /* setting it up: a to-do list on the fridge, and a note beside it */
@@ -4754,20 +4919,29 @@ html:not(.js) .kbd-hint {
   text-align: center;
 }
 
+/* Columns, not a grid: the cards are very different heights, so they stack instead of leaving holes. */
 .btn-legend {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-  gap: 1rem;
-  align-items: start;
+  columns: 3 18rem;
+  column-gap: 1rem;
 }
 
 .btn-group {
+  break-inside: avoid;
+  margin-bottom: 1rem;
   padding: 1.3rem 1.4rem 0.6rem;
   border-radius: 1.4rem;
   border: 1px solid var(--dc-line);
   background: var(--dc-bg);
   color: var(--dc-text);
   box-shadow: var(--shadow);
+}
+
+/* Three across, balancing alone would leave the last column empty: Now Playing gets the first,
+   Radio the second, and the two short cards share the third. */
+@media (min-width: 981px) {
+  .btn-group:nth-child(-n + 2) {
+    break-after: column;
+  }
 }
 
 .btn-group h3 {
@@ -5027,14 +5201,18 @@ html:not(.js) .tuner-listen {
   box-shadow: 0 0 10px var(--accent), 0 0 2px #fff inset;
 }
 
+/* Wrapping flex rather than a grid, so a short last row sits in the middle instead of leaving a gap. */
 .stations {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
 }
 
 .station {
   position: relative;
+  flex: 0 1 calc(25% - 0.75rem);
+  min-width: min(100%, 15rem);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -5986,10 +6164,13 @@ html.js [data-reveal-group].is-in > * {
   }
 
   .menu-cards,
-  .stations,
   .channel-groups,
   .recipe-list {
     grid-template-columns: 1fr;
+  }
+
+  .station {
+    flex-basis: 100%;
   }
 
   .cmd-menu {
@@ -6124,6 +6305,27 @@ html.js [data-reveal-group].is-in > * {
     columns: 1;
     max-width: 24rem;
     margin-inline: auto;
+  }
+
+  .fridge {
+    width: calc(100% - 1.25rem);
+    border-radius: 1.6rem;
+  }
+
+  .fridge-door {
+    padding-inline: 1.15rem;
+  }
+
+  .fridge-door:first-child {
+    border-radius: 1.6rem 1.6rem 0.5rem 0.5rem;
+  }
+
+  .fridge-door:last-child {
+    border-radius: 0.5rem 0.5rem 1.6rem 1.6rem;
+  }
+
+  .fridge-door::before {
+    display: none;
   }
 
   .receipt-list li,
@@ -6396,6 +6598,32 @@ html.js [data-reveal-group].is-in > * {
 
 .split .radio-film {
   margin: 0;
+}
+
+.radio-film-frame {
+  position: relative;
+}
+
+/* Until the first play the whole poster is the play button, with the hero's sticker in the middle. */
+.radio-film-play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 1rem;
+  background: radial-gradient(closest-side, rgba(18, 12, 8, 0.05), rgba(18, 12, 8, 0.45));
+  color: #f6f0e6;
+  cursor: pointer;
+}
+
+.radio-film-sticker {
+  position: relative;
+  width: clamp(6.5rem, 11vw, 8.5rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(18, 12, 8, 0.82) 60%, rgba(18, 12, 8, 0.4) 71%, transparent 72%);
 }
 
 .radio-film video {

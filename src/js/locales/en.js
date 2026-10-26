@@ -131,6 +131,8 @@
       body: 'Half a minute of /radio play: every station’s live card, Catch, and the Friday vote.',
       caption: '31 seconds, with sound. The songs and people are made up; the stations are real.',
       label: 'The Dzbanek radio ad: all seven stations in Discord',
+      watch: 'Watch with sound · 31 s ·',
+      play: 'Watch the radio ad with sound',
     },
     radioHome: {
       kicker: 'Radio',

@@ -146,12 +146,25 @@
       <h2 data-i18n="radioHome.title">Seven stations, live</h2>
       <p class="lead" data-i18n="radioHome.body">/radio play joins your voice channel and streams one of seven stations: Kiss, Rock Radio, Radio Beat and Frekvence 1 from Czechia, Heart and Capital from London, and Radio Paradise from California. The card shows what’s on and updates when the song changes. Hear something good? Hit Catch to save it, then Play to queue it from YouTube.</p>
       <figure class="radio-film">
-        <video data-radio-film controls preload="none" playsinline width="1280" height="720" poster="assets/ad/dzbanek-radio-poster.jpg" aria-label="The Dzbanek radio ad: all seven stations in Discord" data-i18n-aria="radioFilm.label">
-          <source src="assets/ad/dzbanek-radio-720.mp4" type="video/mp4" media="(max-width: 900px)" />
-          <source src="assets/ad/dzbanek-radio-1080.mp4" type="video/mp4" />
-          <track kind="captions" srclang="en" label="English" src="assets/ad/radio-captions-en.vtt" />
-          <track kind="captions" srclang="cs" label="Čeština" src="assets/ad/radio-captions-cs.vtt" />
-        </video>
+        <div class="radio-film-frame">
+          <video data-radio-film controls preload="none" playsinline width="1280" height="720" poster="assets/ad/dzbanek-radio-poster.jpg" aria-label="The Dzbanek radio ad: all seven stations in Discord" data-i18n-aria="radioFilm.label">
+            <source src="assets/ad/dzbanek-radio-720.mp4" type="video/mp4" media="(max-width: 900px)" />
+            <source src="assets/ad/dzbanek-radio-1080.mp4" type="video/mp4" />
+            <track kind="captions" srclang="en" label="English" src="assets/ad/radio-captions-en.vtt" />
+            <track kind="captions" srclang="cs" label="Čeština" src="assets/ad/radio-captions-cs.vtt" />
+          </video>
+          <button type="button" class="radio-film-play" data-radio-film-play hidden aria-label="Watch the radio ad with sound" data-i18n-aria="radioFilm.play">
+            <span class="radio-film-sticker" aria-hidden="true">
+              <span class="film-ring" aria-hidden="true">
+                <svg viewBox="0 0 100 100">
+                  <defs><path id="radio-ring-path" d="M50 50m-39 0a39 39 0 1 1 78 0a39 39 0 1 1 -78 0" /></defs>
+                  <text><textPath href="#radio-ring-path" textLength="243" lengthAdjust="spacing" data-i18n="radioFilm.watch">Watch with sound · 31 s ·</textPath></text>
+                </svg>
+              </span>
+              <span class="film-play" aria-hidden="true"><svg width="26" height="26"><use href="#i-play" /></svg></span>
+            </span>
+          </button>
+        </div>
         <figcaption data-i18n="radioFilm.caption">31 seconds, with sound. The songs and people are made up; the stations are real.</figcaption>
       </figure>
       <p class="note"><a class="link-arrow" href="radio.html"><span data-i18n="radioHome.more">More about radio</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
@@ -193,7 +206,8 @@
   </div>
 </section>
 
-<section class="section" id="hours">
+<!-- The kitchen wall: subway tiles under the cabinet lights, with the chalkboard and the clock hung on it. -->
+<section class="section wall" id="hours">
   <div class="wrap hours-split">
     <div data-reveal>
       <h2 class="h-small" data-i18n="hours.title">What it posts, and when</h2>
@@ -254,16 +268,16 @@
           <text class="dial-hour big" x="45.0" y="120.0">18</text>
           <text class="dial-hour" x="65.6" y="65.6">21</text>
           <text class="dial-brand" x="120" y="88" data-i18n="clock.prague">Prague</text>
-          <rect class="dial-window" x="97" y="139" width="46" height="18" rx="3" />
-          <text class="dial-time" x="120" y="148.5" data-clock="time">--:--</text>
+          <rect class="dial-window" x="97" y="147" width="46" height="18" rx="3" />
+          <text class="dial-time" x="120" y="156.5" data-clock="time">--:--</text>
           <g class="dial-mark" style="--dot: var(--ev-steam)" transform="rotate(53.25 120 120)"><circle cx="120" cy="24" r="6.5" /></g>
           <g class="dial-mark" style="--dot: var(--ev-epic)" transform="rotate(180 120 120)"><circle cx="120" cy="24" r="6.5" /></g>
           <g class="dial-mark" style="--dot: var(--ev-epic)" transform="rotate(255 120 120)"><circle cx="120" cy="24" r="6.5" /></g>
           <g class="dial-mark weekly" style="--dot: var(--ev-postcard)" transform="rotate(270 120 120)"><circle cx="120" cy="24" r="5.5" /></g>
           <g class="dial-mark weekly" style="--dot: var(--ev-night)" transform="rotate(300 120 120)"><circle cx="120" cy="24" r="5.5" /></g>
           <g class="dial-needle" data-clock-needle>
-            <path class="dial-hand" d="M116.6 140 L118.9 36 L120 29 L121.1 36 L123.4 140 Z" />
-            <circle class="dial-hand" cx="120" cy="146" r="6" />
+            <path class="dial-hand" d="M116.6 134 L118.9 36 L120 29 L121.1 36 L123.4 134 Z" />
+            <circle class="dial-hand" cx="120" cy="137" r="5" />
           </g>
           <circle class="dial-hub" cx="120" cy="120" r="7.5" />
           <circle class="dial-pin" cx="120" cy="120" r="2" />
@@ -372,7 +386,7 @@
 
 <section class="section" id="kitchen">
   <div class="wrap split reverse">
-    <div data-reveal>
+    <div class="stick" data-reveal>
       <p class="kicker" data-i18n="board.kicker">Kitchen Board</p>
       <h2 data-i18n="board.title">One message that edits itself</h2>
       <p class="lead" data-i18n="board.body">/setup kitchen posts one message with four cards and keeps editing it instead of posting new ones: what’s playing, who’s in voice, the top Steam deal with the Epic freebie, and a last card with the latest caught song, how many people joined today, and Radio Night.</p>
@@ -499,8 +513,10 @@
   </div>
 </section>
 
-<section class="section" id="start">
-  <div class="wrap papers">
+<!-- The fridge: the to-do list and the note on the freezer door, the photos on the big door. -->
+<div class="fridge">
+<section class="section fridge-door" id="start">
+  <div class="papers">
     <!-- A to-do list stuck to the fridge. -->
     <div class="todo" data-reveal>
       <h2 class="todo-title" data-i18n="steps.title">Setting it up</h2>
@@ -529,13 +545,13 @@
   </div>
 </section>
 
-<section class="section" id="server">
-  <div class="wrap">
+<section class="section fridge-door" id="server">
+  <div>
     <div class="section-head" data-reveal>
       <h2 class="h-small" data-i18n="server.title">Straight from my server</h2>
       <p class="lead" data-i18n="server.lead">Real screenshots from our Discord, taken in October 2026. Not mock-ups. Other people’s names are blurred.</p>
     </div>
-    <!-- Instant photos taped up by the fridge. -->
+    <!-- Instant photos held on the fridge door with magnets. -->
     <ul class="snaps" data-reveal-group>
       <li class="snap">
         <a href="assets/server/kitchen-board-oct.jpg" target="_blank" rel="noopener">
@@ -594,6 +610,7 @@
     </ul>
   </div>
 </section>
+</div>
 
 <section class="section" id="faq">
   <div class="wrap faq-split">
@@ -627,7 +644,7 @@
 
 <section class="section" id="changelog">
   <div class="wrap changelog-split">
-    <div data-reveal>
+    <div class="stick" data-reveal>
       <h2 class="h-small" data-i18n="changelog.title">What’s cooking</h2>
       <p class="lead" data-i18n="changelog.lead">The latest changes to the bot.</p>
       <p class="note"><a class="link-arrow" href="changes.html"><span data-i18n="changelog.all">Every change, day by day</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>

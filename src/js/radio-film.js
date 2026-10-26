@@ -1,7 +1,8 @@
 /**
  * The radio ad (assets/ad/dzbanek-radio-*.mp4) on the home page's radio section and on radio.html.
- * An ordinary video with controls. Captions follow the page language, and it shares the room
- * with the live radio and the hero ad: whichever starts with sound, the others go quiet.
+ * An ordinary video with controls, under a play sticker until it first plays. Captions follow
+ * the page language, and it shares the room with the live radio and the hero ad: whichever
+ * starts with sound, the others go quiet.
  */
 (function () {
   const films = Array.from(document.querySelectorAll('video[data-radio-film]'));
@@ -14,8 +15,27 @@
     });
   }
 
+  // The round "Watch with sound" sticker covers the poster until the first play; the browser's
+  // own controls come back then. Without scripts the video simply keeps its controls.
+  function cover(video) {
+    const frame = video.closest('.radio-film-frame');
+    const button = frame && frame.querySelector('[data-radio-film-play]');
+    if (!button) return;
+    video.controls = false;
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      video.controls = true;
+      video.play().catch(() => {});
+    });
+    video.addEventListener('play', () => {
+      button.hidden = true;
+      video.controls = true;
+    });
+  }
+
   films.forEach((video) => {
     captions(video);
+    cover(video);
     video.addEventListener('play', () => {
       if (video.muted) return;
       document.dispatchEvent(new CustomEvent('dzbanek:film-sound', { detail: { source: video } }));
