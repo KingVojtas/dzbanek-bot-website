@@ -9,7 +9,6 @@
  * [data-clock="night-in"]   how long until Friday Radio Night
  * [data-clock-in="steam"]   how long until the next event with that id
  * [data-clock-face="epic"]  a small clock set to one time (data-at, minutes); the next of its id gets .is-next
- * [data-clock-needle]       the 24-hour dial needle
  * [data-clock-event]        footer rows; the next one gets .is-next
  * [data-phase]              radio timeline rows; the current one gets .is-now on Fridays
  */
@@ -121,11 +120,6 @@
     document.querySelectorAll('[data-clock-face]').forEach((face) => {
       const soon = nextOf(now, face.getAttribute('data-clock-face'));
       face.classList.toggle('is-next', Boolean(soon) && soon.at === Number(face.getAttribute('data-at')));
-    });
-
-    const angle = ((now.minutes + now.seconds / 60) / DAY) * 360;
-    document.querySelectorAll('[data-clock-needle]').forEach((needle) => {
-      needle.style.setProperty('--angle', angle.toFixed(2) + 'deg');
     });
 
     let phase = null;

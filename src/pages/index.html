@@ -90,7 +90,6 @@
     <li class="is-foreword"><a href="#menu"><span data-i18n="facts.label">Good to know</span></a></li>
     <li><a href="#music"><span data-i18n="book.music">Music</span></a></li>
     <li><a href="#radio"><span data-i18n="radioHome.kicker">Radio</span></a></li>
-    <li><a href="#hours"><span data-i18n="book.hours">Schedule</span></a></li>
     <li><a href="#deals"><span data-i18n="book.deals">Deals</span></a></li>
     <li><a href="#kitchen"><span data-i18n="board.kicker">Kitchen Board</span></a></li>
     <li><a href="#welcome"><span data-i18n="welcome.title">Hi and bye</span></a></li>
@@ -171,159 +170,76 @@
 
 <section class="section chapter" id="radio">
   <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
-  <div class="wrap radio-split">
-    <div class="section-head" data-reveal>
+  <div class="wrap radio-head">
+    <div data-reveal>
       <h2 data-i18n="radioHome.title">Seven stations, live</h2>
       <p class="lead" data-i18n="radioHome.body">/radio play joins your voice channel and streams one of seven stations: Kiss, Rock Radio, Radio Beat and Frekvence 1 from Czechia, Heart and Capital from London, and Radio Paradise from California. The card shows what’s on and updates when the song changes. Hear something good? Hit Catch to save it, then Play to queue it from YouTube.</p>
-      <figure class="radio-film plate">
-        <div class="radio-film-frame">
-          <video data-radio-film controls preload="none" playsinline width="1280" height="720" poster="assets/ad/dzbanek-radio-poster.jpg" aria-label="The Dzbanek radio ad: all seven stations in Discord" data-i18n-aria="radioFilm.label">
-            <source src="assets/ad/dzbanek-radio-720.mp4" type="video/mp4" media="(max-width: 900px)" />
-            <source src="assets/ad/dzbanek-radio-1080.mp4" type="video/mp4" />
-            <track kind="captions" srclang="en" label="English" src="assets/ad/radio-captions-en.vtt" />
-            <track kind="captions" srclang="cs" label="Čeština" src="assets/ad/radio-captions-cs.vtt" />
-          </video>
-          <button type="button" class="radio-film-play" data-radio-film-play hidden aria-label="Watch the radio ad with sound" data-i18n-aria="radioFilm.play">
-            <span class="radio-film-sticker" aria-hidden="true">
-              <span class="film-ring" aria-hidden="true">
-                <svg viewBox="0 0 100 100">
-                  <defs><path id="radio-ring-path" d="M50 50m-39 0a39 39 0 1 1 78 0a39 39 0 1 1 -78 0" /></defs>
-                  <text><textPath href="#radio-ring-path" textLength="243" lengthAdjust="spacing" data-i18n="radioFilm.watch">Watch with sound · 31 s ·</textPath></text>
-                </svg>
-              </span>
-              <span class="film-play" aria-hidden="true"><svg width="26" height="26"><use href="#i-play" /></svg></span>
-            </span>
-          </button>
-        </div>
-        <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="radioFilm.caption">31 seconds, with sound. The songs and people are made up; the stations are real.</span></figcaption>
-      </figure>
       <p class="note"><a class="link-arrow" href="radio.html"><span data-i18n="radioHome.more">More about radio</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
     </div>
+    <figure class="radio-film plate" data-reveal>
+      <div class="radio-film-frame">
+        <video data-radio-film controls preload="none" playsinline width="1280" height="720" poster="assets/ad/dzbanek-radio-poster.jpg" aria-label="The Dzbanek radio ad: all seven stations in Discord" data-i18n-aria="radioFilm.label">
+          <source src="assets/ad/dzbanek-radio-720.mp4" type="video/mp4" media="(max-width: 900px)" />
+          <source src="assets/ad/dzbanek-radio-1080.mp4" type="video/mp4" />
+          <track kind="captions" srclang="en" label="English" src="assets/ad/radio-captions-en.vtt" />
+          <track kind="captions" srclang="cs" label="Čeština" src="assets/ad/radio-captions-cs.vtt" />
+        </video>
+        <button type="button" class="radio-film-play" data-radio-film-play hidden aria-label="Watch the radio ad with sound" data-i18n-aria="radioFilm.play">
+          <span class="radio-film-sticker" aria-hidden="true">
+            <span class="film-ring" aria-hidden="true">
+              <svg viewBox="0 0 100 100">
+                <defs><path id="radio-ring-path" d="M50 50m-39 0a39 39 0 1 1 78 0a39 39 0 1 1 -78 0" /></defs>
+                <text><textPath href="#radio-ring-path" textLength="243" lengthAdjust="spacing" data-i18n="radioFilm.watch">Watch with sound · 31 s ·</textPath></text>
+              </svg>
+            </span>
+            <span class="film-play" aria-hidden="true"><svg width="26" height="26"><use href="#i-play" /></svg></span>
+          </span>
+        </button>
+      </div>
+      <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="radioFilm.caption">31 seconds, with sound. The songs and people are made up; the stations are real.</span></figcaption>
+    </figure>
+  </div>
 
-    <!-- The old radio on the kitchen shelf. Pointing at a key tunes the dial; pressing it plays that station live. -->
-    <div class="shelf-radio" data-reveal>
-      <div class="kradio" data-kradio style="--tuned: var(--beat); --needle: 36%; --knob: -23deg">
-        <div class="kradio-grille" aria-hidden="true"><span class="kradio-badge">Dzbanek</span></div>
-        <div class="kradio-panel">
-          <div class="kradio-window" aria-hidden="true">
-            <div class="kradio-scale">
-              <span class="kradio-label" style="--pos: 8%" data-for="kiss">KISS</span>
-              <span class="kradio-label is-low" style="--pos: 22%" data-for="rock">ROCK</span>
-              <span class="kradio-label is-on" style="--pos: 36%" data-for="beat">BEAT</span>
-              <span class="kradio-label is-low" style="--pos: 50%" data-for="frekvence1">F1</span>
-              <span class="kradio-label" style="--pos: 64%" data-for="heart">HEART</span>
-              <span class="kradio-label is-low" style="--pos: 78%" data-for="capital">CAPITAL</span>
-              <span class="kradio-label" style="--pos: 92%" data-for="paradise">PARADISE</span>
-              <span class="kradio-needle"></span>
-            </div>
-            <p class="kradio-onair"><span class="kradio-lamp"></span><span class="kradio-text" data-kradio-slogan>První bigbít u nás</span></p>
+  <!-- The radio on the kitchen counter, under the cabinet light, which takes the tuned station's colour.
+       Pointing at a key tunes the dial; pressing it plays that station live (site.js). -->
+  <figure class="wrap plate radio-corner shelf-radio" data-reveal>
+    <div class="radio-scene" data-kradio style="--tuned: var(--beat); --needle: 36%; --knob: -23deg">
+      <span class="radio-glow" aria-hidden="true"></span>
+      <div class="kradio">
+        <div class="kradio-window" aria-hidden="true">
+          <div class="kradio-scale">
+            <span class="kradio-label" style="--pos: 8%" data-for="kiss">KISS</span>
+            <span class="kradio-label is-low" style="--pos: 22%" data-for="rock">ROCK</span>
+            <span class="kradio-label is-on" style="--pos: 36%" data-for="beat">BEAT</span>
+            <span class="kradio-label is-low" style="--pos: 50%" data-for="frekvence1">F1</span>
+            <span class="kradio-label" style="--pos: 64%" data-for="heart">HEART</span>
+            <span class="kradio-label is-low" style="--pos: 78%" data-for="capital">CAPITAL</span>
+            <span class="kradio-label" style="--pos: 92%" data-for="paradise">PARADISE</span>
+            <span class="kradio-needle"></span>
           </div>
-          <div class="kradio-keys">
-            <button type="button" class="kradio-key" data-key="kiss" aria-pressed="false" aria-label="Listen to Kiss Radio" data-i18n-aria="radioLive.kiss" data-slogan="...be happy!" style="--accent: var(--kiss)">Kiss</button>
-            <button type="button" class="kradio-key" data-key="rock" aria-pressed="false" aria-label="Listen to Rock Radio" data-i18n-aria="radioLive.rock" data-slogan="Rock je slušná muzika" style="--accent: var(--rock)">Rock</button>
-            <button type="button" class="kradio-key is-on" data-key="beat" aria-pressed="false" aria-label="Listen to Radio Beat" data-i18n-aria="radioLive.beat" data-slogan="První bigbít u nás" style="--accent: var(--beat)">Beat</button>
-            <button type="button" class="kradio-key" data-key="frekvence1" aria-pressed="false" aria-label="Listen to Frekvence 1" data-i18n-aria="radioLive.frekvence1" data-slogan="Zapni rádio, vypni starosti" style="--accent: var(--frekvence1)">F1</button>
-            <button type="button" class="kradio-key" data-key="heart" aria-pressed="false" aria-label="Listen to Heart London" data-i18n-aria="radioLive.heart" data-slogan="Turn up the feel good!" style="--accent: var(--heart)">Heart</button>
-            <button type="button" class="kradio-key" data-key="capital" aria-pressed="false" aria-label="Listen to Capital London" data-i18n-aria="radioLive.capital" data-slogan="The UK’s No.1 Hit Music Station" style="--accent: var(--capital)">Capital</button>
-            <button type="button" class="kradio-key" data-key="paradise" aria-pressed="false" aria-label="Listen to Radio Paradise" data-i18n-aria="radioLive.paradise" data-slogan="Human curated radio" style="--accent: var(--paradise)">Paradise</button>
-          </div>
-          <div class="kradio-knobs" aria-hidden="true"><span class="kradio-knob"></span><span class="kradio-knob kradio-tune"></span></div>
+          <p class="kradio-onair"><span class="kradio-lamp"></span><span class="kradio-text" data-kradio-slogan>Radio Beat</span></p>
+        </div>
+        <div class="kradio-body" aria-hidden="true">
+          <div class="kradio-grille"><span class="kradio-badge">Dzbanek</span></div>
+          <div class="kradio-knobs"><span class="kradio-knob"></span><span class="kradio-knob kradio-tune"></span></div>
+        </div>
+        <div class="kradio-keys">
+          <button type="button" class="kradio-key" data-key="kiss" aria-pressed="false" aria-label="Listen to Kiss Radio" data-i18n-aria="radioLive.kiss" style="--accent: var(--kiss)">Kiss</button>
+          <button type="button" class="kradio-key" data-key="rock" aria-pressed="false" aria-label="Listen to Rock Radio" data-i18n-aria="radioLive.rock" style="--accent: var(--rock)">Rock</button>
+          <button type="button" class="kradio-key is-on" data-key="beat" aria-pressed="false" aria-label="Listen to Radio Beat" data-i18n-aria="radioLive.beat" style="--accent: var(--beat)">Beat</button>
+          <button type="button" class="kradio-key" data-key="frekvence1" aria-pressed="false" aria-label="Listen to Frekvence 1" data-i18n-aria="radioLive.frekvence1" style="--accent: var(--frekvence1)">F1</button>
+          <button type="button" class="kradio-key" data-key="heart" aria-pressed="false" aria-label="Listen to Heart London" data-i18n-aria="radioLive.heart" style="--accent: var(--heart)">Heart</button>
+          <button type="button" class="kradio-key" data-key="capital" aria-pressed="false" aria-label="Listen to Capital London" data-i18n-aria="radioLive.capital" style="--accent: var(--capital)">Capital</button>
+          <button type="button" class="kradio-key" data-key="paradise" aria-pressed="false" aria-label="Listen to Radio Paradise" data-i18n-aria="radioLive.paradise" style="--accent: var(--paradise)">Paradise</button>
         </div>
       </div>
-      <div class="kradio-shelf" aria-hidden="true"></div>
-      <p class="kradio-hint" data-kradio-hint aria-live="polite"><span data-i18n="radioLive.hint">Press a key to listen live. Press it again to stop.</span></p>
     </div>
-  </div>
-</section>
-
-<section class="section chapter" id="hours">
-  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
-  <!-- The kitchen wall: subway tiles under the cabinet lights, with the chalkboard and the clock hung on it. -->
-  <div class="wall">
-  <div class="wrap hours-split">
-    <div data-reveal>
-      <h2 class="h-small" data-i18n="hours.title">What it posts, and when</h2>
-      <p class="lead" data-i18n="hours.body">Everything scheduled runs on Prague time. The clock shows what time it is in Prague right now.</p>
-      <!-- The chalkboard by the kitchen door. -->
-      <div class="chalkboard">
-        <div class="chalkboard-slate">
-          <p class="chalk-title" data-i18n="hours.board">Same time every week</p>
-          <ul class="legend">
-            <li style="--dot: var(--ev-steam)"><strong>03:33</strong><span data-i18n="hours.steam">Steam deals, every day</span></li>
-            <li style="--dot: var(--ev-epic)"><strong>12:00 · 17:00</strong><span data-i18n="hours.epic">Epic freebies check, every day</span></li>
-            <li style="--dot: var(--ev-postcard)" class="is-weekly"><strong>18:00</strong><span data-i18n="hours.postcard">Sunday postcard with the songs people caught</span></li>
-            <li style="--dot: var(--ev-night)" class="is-weekly"><strong>20:00</strong><span data-i18n="hours.night">Friday Radio Night, if one’s scheduled. Voting opens at 12:00</span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="dial-wrap" data-reveal>
-      <!-- An enamel kitchen wall clock with a 24-hour face. -->
-      <div class="dial">
-        <svg viewBox="0 0 240 240" role="img" aria-labelledby="dial-label">
-          <title id="dial-label" data-i18n="hours.dialLabel">A 24-hour clock showing when the bot posts</title>
-          <defs>
-            <linearGradient id="dial-rim" x1="0.15" y1="0" x2="0.85" y2="1">
-              <stop offset="0" stop-color="#f7f2ea" />
-              <stop offset="0.35" stop-color="#b9b1a4" />
-              <stop offset="0.6" stop-color="#766d61" />
-              <stop offset="1" stop-color="#d8d0c2" />
-            </linearGradient>
-            <radialGradient id="dial-enamel" cx="0.45" cy="0.4" r="0.65">
-              <stop offset="0" stop-color="#fdf9f1" />
-              <stop offset="0.75" stop-color="#f1e8d6" />
-              <stop offset="1" stop-color="#e2d6bf" />
-            </radialGradient>
-            <radialGradient id="dial-cap" cx="0.35" cy="0.3" r="0.8">
-              <stop offset="0" stop-color="#f6d9a8" />
-              <stop offset="0.6" stop-color="#b8843f" />
-              <stop offset="1" stop-color="#6e4a1e" />
-            </radialGradient>
-            <linearGradient id="dial-glare" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#fff" stop-opacity="0.55" />
-              <stop offset="1" stop-color="#fff" stop-opacity="0" />
-            </linearGradient>
-          </defs>
-          <circle class="dial-rim" cx="120" cy="120" r="116" />
-          <circle class="dial-rim-edge" cx="120" cy="120" r="107" />
-          <circle class="dial-face" cx="120" cy="120" r="104" />
-          <path class="dial-night" d="M120 120 L29.93 68 A104 104 0 0 1 224 120 Z" />
-          <circle class="dial-ticks" cx="120" cy="120" r="97" pathLength="960" />
-          <circle class="dial-ticks hour" cx="120" cy="120" r="96" pathLength="240" />
-          <circle class="dial-ticks major" cx="120" cy="120" r="95" pathLength="240" />
-          <text class="dial-hour big" x="120.0" y="45.0">00</text>
-          <text class="dial-hour" x="174.4" y="65.6">03</text>
-          <text class="dial-hour big" x="195.0" y="120.0">06</text>
-          <text class="dial-hour" x="174.4" y="174.4">09</text>
-          <text class="dial-hour big" x="120.0" y="195.0">12</text>
-          <text class="dial-hour" x="65.6" y="174.4">15</text>
-          <text class="dial-hour big" x="45.0" y="120.0">18</text>
-          <text class="dial-hour" x="65.6" y="65.6">21</text>
-          <text class="dial-brand" x="120" y="88" data-i18n="clock.prague">Prague</text>
-          <rect class="dial-window" x="97" y="147" width="46" height="18" rx="3" />
-          <text class="dial-time" x="120" y="156.5" data-clock="time">--:--</text>
-          <g class="dial-mark" style="--dot: var(--ev-steam)" transform="rotate(53.25 120 120)"><circle cx="120" cy="24" r="6.5" /></g>
-          <g class="dial-mark" style="--dot: var(--ev-epic)" transform="rotate(180 120 120)"><circle cx="120" cy="24" r="6.5" /></g>
-          <g class="dial-mark" style="--dot: var(--ev-epic)" transform="rotate(255 120 120)"><circle cx="120" cy="24" r="6.5" /></g>
-          <g class="dial-mark weekly" style="--dot: var(--ev-postcard)" transform="rotate(270 120 120)"><circle cx="120" cy="24" r="5.5" /></g>
-          <g class="dial-mark weekly" style="--dot: var(--ev-night)" transform="rotate(300 120 120)"><circle cx="120" cy="24" r="5.5" /></g>
-          <g class="dial-needle" data-clock-needle>
-            <path class="dial-hand" d="M116.6 134 L118.9 36 L120 29 L121.1 36 L123.4 134 Z" />
-            <circle class="dial-hand" cx="120" cy="137" r="5" />
-          </g>
-          <circle class="dial-hub" cx="120" cy="120" r="7.5" />
-          <circle class="dial-pin" cx="120" cy="120" r="2" />
-          <path class="dial-glass" d="M38 104 A84 84 0 0 1 146 36 A96 96 0 0 0 38 104 Z" />
-        </svg>
-      </div>
-      <!-- A note tucked under the clock. -->
-      <p class="dial-next">
-        <span data-i18n="clock.next">Next:</span> <strong data-clock="next-name">—</strong>
-        <span class="dial-next-in" data-clock="next-in"></span>
-      </p>
-    </div>
-  </div>
-  </div>
+    <figcaption class="plate-caption radio-caption">
+      <span class="fig-no" data-i18n="book.fig">Fig.</span>
+      <span class="kradio-hint" data-kradio-hint aria-live="polite"><span data-i18n="radioLive.hint">Press a key to listen live. Press it again to stop.</span></span>
+      <span class="radio-night"><span data-i18n="radioHome.night">Friday Radio Night, if one’s scheduled. Voting opens at 12:00</span> <strong data-clock="night-in"></strong></span>
+    </figcaption>
+  </figure>
 </section>
 
 <section class="section chapter" id="deals">
@@ -556,106 +472,121 @@
   </div>
 </section>
 
-<!-- The fridge: the to-do list and the note on the freezer door, the photos on the big door. -->
-<div class="fridge">
-<section class="section chapter fridge-door" id="start">
+<section class="section chapter" id="start">
   <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
-  <div class="papers">
-    <!-- A to-do list stuck to the fridge. -->
-    <div class="todo" data-reveal>
-      <h2 class="todo-title" data-i18n="steps.title">Setting it up</h2>
-      <ol class="todo-list">
-        <li class="is-done">
-          <strong data-i18n="steps.s1t">Invite it</strong>
-          <span data-i18n="steps.s1b">Click Add to Server and accept the permissions. Music works right away if you’re in a voice channel.</span>
-        </li>
-        <li>
-          <strong data-i18n="steps.s2t">Pick some channels</strong>
-          <span data-i18n="steps.s2b">Optional. Admins can run /setup to choose where deals, welcome messages, and the Kitchen Board go. Channels with obvious names get found on their own.</span>
-        </li>
-        <li>
-          <strong data-i18n="steps.s3t">Play something</strong>
-          <span data-i18n="steps.s3b">Hop into voice and run /play, or /radio play and pick a station.</span>
-        </li>
-      </ol>
-    </div>
-    <!-- A note from the person who makes it. -->
-    <aside class="letter" data-reveal aria-labelledby="letter-title">
-      <h2 class="letter-title" id="letter-title" data-i18n="about.title">Why Dzbanek exists</h2>
-      <p data-i18n="about.p1">I made Dzbanek for our own Discord server. We wanted one bot for music instead of three, the Czech radio we listen to anyway, and a heads-up when a good game gets cheap.</p>
-      <p data-i18n="about.p2">It’s free and it’ll stay that way. If something breaks or you miss a feature, tell me on GitHub.</p>
-      <p class="letter-sign">Sunka</p>
+  <div class="wrap">
+    <h2 data-reveal data-i18n="steps.title">Setting it up</h2>
+    <!-- The method, set out like the steps of a recipe. -->
+    <ol class="method" data-reveal-group>
+      <li>
+        <h3 data-i18n="steps.s1t">Invite it</h3>
+        <p data-i18n="steps.s1b">Click Add to Server and accept the permissions. Music works right away if you’re in a voice channel.</p>
+        <a class="btn btn-clay btn-sm" href="{{invite}}" data-invite target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Server</a>
+      </li>
+      <li>
+        <h3 data-i18n="steps.s2t">Pick some channels</h3>
+        <p data-i18n="steps.s2b">Optional. Admins can run /setup to choose where deals, welcome messages, and the Kitchen Board go. Channels with obvious names get found on their own.</p>
+      </li>
+      <li>
+        <h3 data-i18n="steps.s3t">Play something</h3>
+        <p data-i18n="steps.s3b">Hop into voice and run /play, or /radio play and pick a station.</p>
+      </li>
+    </ol>
+
+    <!-- A note from the person who makes it, like the author's page in a cookbook. -->
+    <aside class="author" data-reveal aria-labelledby="letter-title">
+      <picture class="author-photo">
+        <source type="image/webp" srcset="assets/avatar-large.webp" />
+        <img src="assets/avatar-large.jpg" alt="" width="435" height="435" loading="lazy" decoding="async" />
+      </picture>
+      <div class="author-text">
+        <h3 class="author-title" id="letter-title" data-i18n="about.title">Why Dzbanek exists</h3>
+        <p class="author-quote" data-i18n="about.p1">I made Dzbanek for our own Discord server. We wanted one bot for music instead of three, the Czech radio we listen to anyway, and a heads-up when a good game gets cheap.</p>
+        <p data-i18n="about.p2">It’s free and it’ll stay that way. If something breaks or you miss a feature, tell me on GitHub.</p>
+        <p class="author-sign">Sunka</p>
+      </div>
     </aside>
   </div>
 </section>
 
-<section class="section chapter fridge-door" id="server">
+<section class="section chapter" id="server">
   <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
-  <div>
+  <div class="wrap">
     <div class="section-head" data-reveal>
-      <h2 class="h-small" data-i18n="server.title">Straight from my server</h2>
+      <h2 data-i18n="server.title">Straight from my server</h2>
       <p class="lead" data-i18n="server.lead">Real screenshots from our Discord, taken in October 2026. Not mock-ups. Other people’s names are blurred.</p>
     </div>
-    <!-- Instant photos held on the fridge door with magnets. -->
-    <ul class="snaps" data-reveal-group>
-      <li class="snap">
-        <a href="assets/server/kitchen-board-oct.jpg" target="_blank" rel="noopener">
-          <picture>
-            <source type="image/webp" srcset="assets/server/kitchen-board-oct.webp" />
-            <img src="assets/server/kitchen-board-oct.jpg" alt="The Kitchen Board in Discord: the kitchen photo with “The stereo is off and the kettle is warm”, and The Pantry below it with the Steam deal of the day (HITMAN World of Assassination, −90%) and Sker Ritual free on Epic." data-i18n-alt="server.boardAlt" width="458" height="734" loading="lazy" decoding="async" />
-          </picture>
-        </a>
-        <p class="snap-caption" data-i18n="server.board">The Kitchen Board, with the pantry under it</p>
+    <!-- The real screenshots, set as plates. Each one opens full size over the page (site.js). -->
+    <ul class="gallery" data-reveal-group>
+      <li>
+        <figure class="plate">
+          <a class="gallery-shot" href="assets/server/kitchen-board-oct.jpg" target="_blank" rel="noopener" data-zoom>
+            <picture>
+              <source type="image/webp" srcset="assets/server/kitchen-board-oct.webp" />
+              <img src="assets/server/kitchen-board-oct.jpg" alt="The Kitchen Board in Discord: the kitchen photo with “The stereo is off and the kettle is warm”, and The Pantry below it with the Steam deal of the day (HITMAN World of Assassination, −90%) and Sker Ritual free on Epic." data-i18n-alt="server.boardAlt" width="458" height="734" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+          <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="server.board">The Kitchen Board, with the pantry under it</span></figcaption>
+        </figure>
       </li>
-      <li class="snap">
-        <a href="assets/server/now-playing-oct.jpg" target="_blank" rel="noopener">
-          <picture>
-            <source type="image/webp" srcset="assets/server/now-playing-oct.webp" />
-            <img src="assets/server/now-playing-oct.jpg" alt="A Now Playing card for Kansas, Carry on Wayward Son, with the time, volume, and Pause, Skip, Stop, Loop, Shuffle, Previous, volume and Queue buttons. The requester’s name is blurred." data-i18n-alt="server.nowplayingAlt" width="470" height="455" loading="lazy" decoding="async" />
-          </picture>
-        </a>
-        <p class="snap-caption" data-i18n="server.nowplaying">Now Playing, with every button</p>
+      <li>
+        <figure class="plate">
+          <a class="gallery-shot" href="assets/server/now-playing-oct.jpg" target="_blank" rel="noopener" data-zoom>
+            <picture>
+              <source type="image/webp" srcset="assets/server/now-playing-oct.webp" />
+              <img src="assets/server/now-playing-oct.jpg" alt="A Now Playing card for Kansas, Carry on Wayward Son, with the time, volume, and Pause, Skip, Stop, Loop, Shuffle, Previous, volume and Queue buttons. The requester’s name is blurred." data-i18n-alt="server.nowplayingAlt" width="470" height="455" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+          <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="server.nowplaying">Now Playing, with every button</span></figcaption>
+        </figure>
       </li>
-      <li class="snap">
-        <a href="assets/server/rock-radio-oct.jpg" target="_blank" rel="noopener">
-          <picture>
-            <source type="image/webp" srcset="assets/server/rock-radio-oct.webp" />
-            <img src="assets/server/rock-radio-oct.jpg" alt="A live Rock Radio card playing Home Sweet Home by Mötley Crüe, with Website, Catch and Stop buttons. The member’s name is blurred." data-i18n-alt="server.rockAlt" width="444" height="507" loading="lazy" decoding="async" />
-          </picture>
-        </a>
-        <p class="snap-caption" data-i18n="server.rock">Rock Radio, live in voice</p>
+      <li>
+        <figure class="plate">
+          <a class="gallery-shot" href="assets/server/rock-radio-oct.jpg" target="_blank" rel="noopener" data-zoom>
+            <picture>
+              <source type="image/webp" srcset="assets/server/rock-radio-oct.webp" />
+              <img src="assets/server/rock-radio-oct.jpg" alt="A live Rock Radio card playing Home Sweet Home by Mötley Crüe, with Website, Catch and Stop buttons. The member’s name is blurred." data-i18n-alt="server.rockAlt" width="444" height="507" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+          <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="server.rock">Rock Radio, live in voice</span></figcaption>
+        </figure>
       </li>
-      <li class="snap">
-        <a href="assets/server/steam-deals-oct.jpg" target="_blank" rel="noopener">
-          <picture>
-            <source type="image/webp" srcset="assets/server/steam-deals-oct.webp" />
-            <img src="assets/server/steam-deals-oct.jpg" alt="The top of the 03:33 Steam deals post: HITMAN World of Assassination, Shadow Tactics and The Walking Dead, each at −90%, with descriptions and when the sale ends." data-i18n-alt="server.steamAlt" width="464" height="560" loading="lazy" decoding="async" />
-          </picture>
-        </a>
-        <p class="snap-caption" data-i18n="server.steam">The 03:33 Steam deals, first three of ten</p>
+      <li>
+        <figure class="plate">
+          <a class="gallery-shot" href="assets/server/steam-deals-oct.jpg" target="_blank" rel="noopener" data-zoom>
+            <picture>
+              <source type="image/webp" srcset="assets/server/steam-deals-oct.webp" />
+              <img src="assets/server/steam-deals-oct.jpg" alt="The top of the 03:33 Steam deals post: HITMAN World of Assassination, Shadow Tactics and The Walking Dead, each at −90%, with descriptions and when the sale ends." data-i18n-alt="server.steamAlt" width="464" height="560" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+          <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="server.steam">The 03:33 Steam deals, first three of ten</span></figcaption>
+        </figure>
       </li>
-      <li class="snap">
-        <a href="assets/server/epic-free-oct.jpg" target="_blank" rel="noopener">
-          <picture>
-            <source type="image/webp" srcset="assets/server/epic-free-oct.webp" />
-            <img src="assets/server/epic-free-oct.jpg" alt="An Epic Free Games post: Sker Ritual and Home free now, worth $29.98 together, with Claim buttons, and Sorry We’re Closed coming next." data-i18n-alt="server.epicAlt" width="454" height="1050" loading="lazy" decoding="async" />
-          </picture>
-        </a>
-        <p class="snap-caption" data-i18n="server.epic">Epic freebies, and what’s next</p>
+      <li>
+        <figure class="plate">
+          <a class="gallery-shot" href="assets/server/epic-free-oct.jpg" target="_blank" rel="noopener" data-zoom>
+            <picture>
+              <source type="image/webp" srcset="assets/server/epic-free-oct.webp" />
+              <img src="assets/server/epic-free-oct.jpg" alt="An Epic Free Games post: Sker Ritual and Home free now, worth $29.98 together, with Claim buttons, and Sorry We’re Closed coming next." data-i18n-alt="server.epicAlt" width="454" height="1050" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+          <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="server.epic">Epic freebies, and what’s next</span></figcaption>
+        </figure>
       </li>
-      <li class="snap">
-        <a href="assets/server/wishlist-radar-oct.jpg" target="_blank" rel="noopener">
-          <picture>
-            <source type="image/webp" srcset="assets/server/wishlist-radar-oct.webp" />
-            <img src="assets/server/wishlist-radar-oct.jpg" alt="A Wishlist Radar message telling a member that RuneScape: Dragonwilds is 30% off. The member’s name is blurred." data-i18n-alt="server.wishlistAlt" width="456" height="208" loading="lazy" decoding="async" />
-          </picture>
-        </a>
-        <p class="snap-caption" data-i18n="server.wishlist">Wishlist Radar pings someone</p>
+      <li>
+        <figure class="plate">
+          <a class="gallery-shot is-wide" href="assets/server/wishlist-radar-oct.jpg" target="_blank" rel="noopener" data-zoom>
+            <picture>
+              <source type="image/webp" srcset="assets/server/wishlist-radar-oct.webp" />
+              <img src="assets/server/wishlist-radar-oct.jpg" alt="A Wishlist Radar message telling a member that RuneScape: Dragonwilds is 30% off. The member’s name is blurred." data-i18n-alt="server.wishlistAlt" width="456" height="208" loading="lazy" decoding="async" />
+            </picture>
+          </a>
+          <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="server.wishlist">Wishlist Radar pings someone</span></figcaption>
+        </figure>
       </li>
     </ul>
   </div>
 </section>
-</div>
 
 <section class="section chapter" id="faq">
   <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>

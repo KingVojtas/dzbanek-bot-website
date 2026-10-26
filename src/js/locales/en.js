@@ -24,8 +24,8 @@
       chapter: 'Chapter',
       fig: 'Fig.',
       music: 'Music',
-      hours: 'Schedule',
       deals: 'Deals',
+      close: 'Close',
     },
     theme: {
       label: 'Color theme',
@@ -39,7 +39,6 @@
     clock: {
       open: 'Right now',
       inPrague: 'in Prague',
-      prague: 'Prague',
       next: 'Next:',
       now: 'Now',
       today: 'Today at {{time}}',
@@ -148,16 +147,7 @@
       title: 'Seven stations, live',
       body: '/radio play joins your voice channel and streams one of seven stations: Kiss, Rock Radio, Radio Beat and Frekvence 1 from Czechia, Heart and Capital from London, and Radio Paradise from California. The card shows what’s on and updates when the song changes. Hear something good? Hit Catch to save it, then Play to queue it from YouTube.',
       more: 'More about radio',
-    },
-    hours: {
-      title: 'What it posts, and when',
-      body: 'Everything scheduled runs on Prague time. The clock shows what time it is in Prague right now.',
-      board: 'Same time every week',
-      steam: 'Steam deals, every day',
-      epic: 'Epic freebies check, every day',
-      postcard: 'Sunday postcard with the songs people caught',
       night: 'Friday Radio Night, if one’s scheduled. Voting opens at 12:00',
-      dialLabel: 'A 24-hour clock showing when the bot posts',
     },
     deals: {
       title: 'Cheap games every morning, free ones from Epic',
@@ -352,13 +342,6 @@
     radio: {
       title: 'Live radio in your voice channel',
       lead: '/radio play joins your voice channel and starts streaming. The card takes on the station’s color and updates when the song changes (it checks about every 20 seconds). It won’t leave just because the chat has gone quiet.',
-      kiss: 'Pop hits. Song info comes from radia.cz, or from the stream itself.',
-      rock: 'Rock. Song info comes from radia.cz, or from the stream.',
-      beat: 'Classic rock. Song info comes from Beat’s own “Právě v éteru” list first, then radia.cz, then the stream. During a show you might see the show’s name instead.',
-      frekvence1: 'Czech and international hits. The stream doesn’t name the song, so the bot reads it from Triton’s public feed.',
-      heart: 'Feel-good pop from London. In Discord the song name comes from the stream, which Heart often leaves blank, so the card may show only the station and Catch waits for a title. This page reads it from Global’s own feed.',
-      capital: 'Chart hits from London. Like Heart, its stream often leaves the song name blank in Discord; this page reads it from Global’s feed.',
-      paradise: 'Rock, indie, world and electronic from California, picked by people instead of an algorithm. The song and its album cover come from the stream.',
       catchTitle: 'Catch a song, play it later',
       catchBody: 'Hear something you like? Catch saves the artist and title and says so in the channel, with a Play button only you can press: it finds the song on YouTube and adds it to the queue. The Kitchen Board shows the server’s latest catch. While a station names only its show, Catch waits for a song.',
       onlyCatcher: 'Only the person who caught it can press Play.',

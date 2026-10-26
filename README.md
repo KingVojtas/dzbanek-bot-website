@@ -10,7 +10,7 @@ Four static pages and a 404, one stylesheet, vanilla JavaScript. No framework an
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The kitchen as a cookbook: a title page with the hero ad, then the contents beside numbered chapters (music, a shelf radio that plays the real stations, the Prague kitchen-hours dial, deals with small clocks set to their posting times, the Kitchen Board, welcomes, setting it up, FAQ, the changelog), and the invite on the back cover |
+| `index.html` | The kitchen as a cookbook: a title page with the hero ad, then the contents beside numbered chapters (music; a radio on the kitchen counter that plays the real stations, under a cabinet light in the tuned station’s colour; deals with small clocks set to their posting times; the Kitchen Board; welcomes; setting it up, with a note from me; real server screenshots that open full size; FAQ; the changelog), and the invite on the back cover |
 | `commands.html` | A pretend `#kitchen` channel you can type `/` into (every command, a three-round Kitchen Quiz, and the card buttons), then the full command menu, grouped like the bot's `/help` |
 | `radio.html` | A tuner that plays all seven stations live (Kiss, Rock Radio, Radio Beat, Frekvence 1, Heart London, Capital London, Radio Paradise), what each one has on air, Catch → Play, and a Friday Radio Night vote you can click |
 | `setup.html` | Channel setup, auto-detected channel names, permissions, Server Members intent |
@@ -66,7 +66,7 @@ src/js/i18n.js         EN / CS strings for what scripts draw, the language switc
 src/js/theme-boot.js   the right language copy and the theme before first paint, adds html.js, and html.film-soon when the ad will autoplay
 src/js/theme.js        localStorage dzbanek_theme
 src/js/listen.js       the live stations: one player for the page, song info from radia.cz
-src/js/site.js         year, menu, nav pill, the shelf radio, copy buttons, command filter
+src/js/site.js         year, menu, nav pill, the home radio, screenshot zoom, copy buttons, command filter
 src/js/reveal.js       scroll reveals ([data-reveal], [data-reveal-group])
 src/js/clock.js        Europe/Prague clock, the next scheduled event, and the small clocks by the deals
 src/js/contents.js     the home page contents: marks the chapter you are reading

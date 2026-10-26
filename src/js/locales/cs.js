@@ -24,8 +24,8 @@
       chapter: 'Kapitola',
       fig: 'Obr.',
       music: 'Hudba',
-      hours: 'Rozvrh',
       deals: 'Slevy',
+      close: 'Zavřít',
     },
     theme: {
       label: 'Barevný režim',
@@ -39,7 +39,6 @@
     clock: {
       open: 'Teď je',
       inPrague: 'v Praze',
-      prague: 'Praha',
       next: 'Další:',
       now: 'Teď',
       today: 'Dnes v {{time}}',
@@ -148,16 +147,7 @@
       title: 'Sedm stanic, živě',
       body: '/radio play se připojí do tvého hlasového kanálu a pustí jednu ze sedmi stanic: Kiss, Rock Radio, Radio Beat a Frekvenci 1 z Česka, Heart a Capital z Londýna a Radio Paradise z Kalifornie. Karta ukazuje, co zrovna hraje, a aktualizuje se, když se písnička změní. Hraje něco dobrého? Zmáčkni Catch a ulož si to, pak Play a pustíš si to z YouTube.',
       more: 'Víc o rádiu',
-    },
-    hours: {
-      title: 'Co kdy posílá',
-      body: 'Všechno naplánované jede podle pražského času. Hodiny ukazují, kolik je teď v Praze.',
-      board: 'Každý týden stejně',
-      steam: 'Slevy na Steamu, každý den',
-      epic: 'Kontrola her zdarma z Epicu, každý den',
-      postcard: 'Nedělní pohlednice s písničkami, které lidi ulovili',
       night: 'Páteční Radio Night, když je naplánovaná. Hlasuje se od 12:00',
-      dialLabel: '24hodinové hodiny s časy, kdy bot něco posílá',
     },
     deals: {
       title: 'Každé ráno levné hry, z Epicu i zadarmo',
@@ -352,13 +342,6 @@
     radio: {
       title: 'Živá rádia ve tvém hlasovém kanálu',
       lead: '/radio play se připojí do tvého hlasového kanálu a začne hrát. Karta převezme barvu stanice a aktualizuje se, když se změní písnička (kontroluje zhruba každých 20 sekund). Neodpojí se jen proto, že v chatu chvíli nikdo nepíše.',
-      kiss: 'Popové hity. Info o písničce bere z radia.cz, nebo přímo ze streamu.',
-      rock: 'Rock. Info o písničce bere z radia.cz, nebo ze streamu.',
-      beat: 'Klasický rock. Info o písničce bere nejdřív z Beatova „Právě v éteru“, pak z radia.cz, pak ze streamu. Během pořadu můžeš místo toho vidět název pořadu.',
-      frekvence1: 'České i zahraniční hity. Stream písničku nejmenuje, takže ji bot čte z veřejného feedu Tritonu.',
-      heart: 'Pohodový pop z Londýna. Na Discordu jde název písničky ze streamu, který ho Heart často neposílá, takže karta může ukázat jen stanici a Catch počká na název. Tahle stránka ho čte z vlastního feedu Globalu.',
-      capital: 'Hity z hitparád z Londýna. Stejně jako Heart jeho stream na Discordu název písničky často neposílá; tahle stránka ho čte z feedu Globalu.',
-      paradise: 'Rock, indie, world a elektronika z Kalifornie, vybírají je lidi, ne algoritmus. Písnička i obal alba jdou přímo ze streamu.',
       catchTitle: 'Ulov písničku, pusť si ji později',
       catchBody: 'Hraje něco, co se ti líbí? Catch uloží interpreta a název a oznámí to v kanálu, s tlačítkem Play, které můžeš zmáčknout jen ty: najde písničku na YouTube a přidá ji do fronty. Kitchen Board ukazuje poslední úlovek na serveru. Když stanice hlásí jen pořad, Catch počká na písničku.',
       onlyCatcher: 'Play může zmáčknout jen ten, kdo písničku ulovil.',

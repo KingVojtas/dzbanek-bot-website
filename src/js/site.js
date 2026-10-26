@@ -1,5 +1,5 @@
 /**
- * Year, mobile nav, current page, nav pill, copy-to-clipboard.
+ * Year, mobile nav, current page, nav pill, the shelf radio, screenshot zoom, copy-to-clipboard.
  */
 (function () {
   const year = document.getElementById('year');
@@ -170,6 +170,8 @@
     const hint = shelfRadio.closest('.shelf-radio').querySelector('[data-kradio-hint]');
     const radio = window.dzbanekRadio;
     let playing = null;
+    // The glass shows the tuned station's name until a song comes in.
+    const stationName = (key) => (radio && radio.stations[key.dataset.key] ? radio.stations[key.dataset.key].name : key.textContent);
 
     const tune = (station) => {
       shelfRadio.style.setProperty('--tuned', 'var(--' + station + ')');
@@ -178,7 +180,7 @@
       keys.forEach((key) => {
         const on = key.dataset.key === station;
         key.classList.toggle('is-on', on);
-        if (on && slogan && !playing) slogan.textContent = key.dataset.slogan;
+        if (on && slogan && !playing) slogan.textContent = stationName(key);
       });
       labels.forEach((label) => label.classList.toggle('is-on', label.dataset.for === station));
     };
@@ -209,12 +211,43 @@
         else if (state === 'on') slogan.textContent = song ? song.artist + ' – ' + song.title : say('radioLive.onAir', 'On air');
         else {
           const tuned = keys.find((key) => key.classList.contains('is-on'));
-          if (tuned) slogan.textContent = tuned.dataset.slogan;
+          if (tuned) slogan.textContent = stationName(tuned);
         }
       };
       radio.onChange(show);
       window.addEventListener('dzbanek:lang', () => show(last));
     }
+  }
+
+  /* ---- home: a screenshot opens full size over the page; without scripts the link opens the file ---- */
+
+  const zoomLinks = document.querySelectorAll('[data-zoom]');
+  if (zoomLinks.length && typeof HTMLDialogElement === 'function') {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'zoom';
+    dialog.innerHTML =
+      '<form method="dialog"><button type="submit" class="icon-btn zoom-close"><svg width="18" height="18" aria-hidden="true"><use href="#i-close" /></svg></button></form><img alt="" />';
+    document.body.appendChild(dialog);
+    const image = dialog.querySelector('img');
+    const closeButton = dialog.querySelector('button');
+
+    zoomLinks.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        // A new tab or window still gets the plain file.
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+        event.preventDefault();
+        const thumb = link.querySelector('img');
+        image.src = link.href;
+        image.alt = thumb ? thumb.alt : '';
+        closeButton.setAttribute('aria-label', (window.t && window.t('book.close')) || 'Close');
+        dialog.showModal();
+        dialog.scrollTop = 0;
+      });
+    });
+    // A click on the dark around the picture closes it too.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
   }
 
   /* ---- toast + copy ---- */

@@ -135,10 +135,6 @@
   --heart: #e2003b;
   --capital: #1472f5;
   --paradise: #4a8f78;
-  --ev-steam: #66c0f4;
-  --ev-epic: #f6f0e6;
-  --ev-postcard: #e9a27d;
-  --ev-night: #f5c400;
 
   --dc-bg: #2a221d;
   --dc-rail: #191310;
@@ -171,20 +167,12 @@
   --serif: "Fraunces", Georgia, serif;
   --sans: "Outfit", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
-  /* Handwriting: the chalkboard and the sign-off. */
+  /* Handwriting: the sign-offs. */
   --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
   --header-space: 4rem;
-  /* Chalk dust on the chalkboard. */
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .4 0 0 0 0 .3 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  /* Subway tiles for the kitchen wall: grout and glaze only, so the colour under them (--wall) sets the theme. */
+  /* Subway tiles behind the radio: grout and glaze only, so the colour under them (--wall) sets the theme. */
   --tiles: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='.16'/%3E%3Cstop offset='.4' stop-color='%23fff' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='.1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='url(%23g)'%3E%3Crect x='2' y='2' width='62' height='30' rx='1.5'/%3E%3Crect x='66' y='2' width='62' height='30' rx='1.5'/%3E%3Crect x='-30' y='34' width='62' height='30' rx='1.5'/%3E%3Crect x='34' y='34' width='62' height='30' rx='1.5'/%3E%3Crect x='98' y='34' width='62' height='30' rx='1.5'/%3E%3C/g%3E%3Cpath d='M0 1H128M0 33H128M1 0V32M65 0V32M33 32V64M97 32V64' stroke='%23000' stroke-opacity='.16' stroke-width='2'/%3E%3C/svg%3E");
   --wall: #3a332c;
-  --wall-light: rgba(255, 196, 119, 0.22);
-  /* The fridge: retro sage enamel, a dark gasket between the doors. */
-  --enamel: #46503f;
-  --enamel-seam: #161a14;
-  --enamel-ink: #f6f0e6;
-  --enamel-muted: #d5dccb;
   /* One page width for every page, so the running head, the content and the colophon share their edges. */
   --wrap: 84rem;
   --gutter: 2rem;
@@ -209,16 +197,7 @@ html.theme-light {
   --rule-strong: rgba(169, 82, 26, 0.45);
   --shadow: 0 16px 40px -14px rgba(80, 48, 20, 0.18);
   --shadow-lg: 0 40px 80px -36px rgba(80, 48, 20, 0.35);
-  --ev-steam: #2a7fb8;
-  --ev-epic: #2a1c12;
-  --ev-postcard: #c26a3c;
-  --ev-night: #c99a00;
   --wall: #eee4d3;
-  --wall-light: rgba(255, 190, 100, 0.3);
-  --enamel: #c4d0bb;
-  --enamel-seam: #7d8a75;
-  --enamel-ink: #1f2a1c;
-  --enamel-muted: #3d4a38;
 
   --dc-bg: #fffdf9;
   --dc-rail: #e6ddd1;
@@ -1173,11 +1152,7 @@ html:not(.theme-light) .icon-moon {
 
 html:not(.js) [data-clock-chip],
 html:not(.js) .footer-sub,
-html:not(.js) .clock-chip.solid,
-html:not(.js) .dial-next,
-html:not(.js) .dial-needle,
-html:not(.js) .dial-time,
-html:not(.js) .dial-window {
+html:not(.js) .clock-chip.solid {
   display: none;
 }
 
@@ -2242,8 +2217,7 @@ html.film-soon .hero:not([data-film]) .hero-shade,
 }
 
 /* Inside the book the column sets the width, not the page. */
-.chapters .wrap,
-.chapters .fridge {
+.chapters .wrap {
   width: auto;
 }
 
@@ -2394,146 +2368,202 @@ html.film-soon .hero:not([data-film]) .hero-shade,
   font-size: 0.97rem;
 }
 
-/* home radio: an old walnut set on the kitchen shelf */
+/* home radio: a walnut set on the kitchen counter, under the cabinet light */
 
-.radio-split {
+.radio-head {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: end;
 }
 
-.radio-split .section-head {
-  margin-bottom: 0;
+.radio-head .radio-film {
+  margin: 0;
 }
 
-.radio-split .note {
-  margin-top: 1.25rem;
+.radio-corner {
+  margin-top: clamp(2rem, 4vw, 3rem);
 }
 
-.shelf-radio {
+/* The corner of the kitchen: subway tiles, the cabinet above with its strip light, the counter below.
+   --tuned is a registered colour (top of the file), so the light fades from one station to the next. */
+.radio-scene {
   position: relative;
-  padding: 0 clamp(0rem, 2vw, 1.5rem);
+  isolation: isolate;
+  padding: clamp(4.5rem, 8vw, 6.5rem) clamp(1rem, 4vw, 3rem) 2.75rem;
+  border-radius: 0.9rem;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.3)),
+    var(--tiles) center top / 150px 75px,
+    var(--wall);
+  box-shadow:
+    0 0 0 1px var(--rule),
+    var(--shadow-lg);
+  transition: --tuned 0.7s var(--ease);
 }
 
-/* --tuned is a registered color (see the top of the file), so it can fade between stations. */
+/* The underside of the cabinet, and its strip light in the station's colour. */
+.radio-scene::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 auto;
+  height: 1.35rem;
+  background:
+    linear-gradient(180deg, transparent calc(100% - 3px), color-mix(in srgb, var(--tuned) 45%, #ffe2b8) calc(100% - 3px)) center / 78% 100% no-repeat,
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 13px),
+    linear-gradient(180deg, #4a2f1b, #2a190e);
+}
+
+/* The light it throws down the tiles, brighter while a station plays. */
+.radio-glow {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(62% 72% at 50% 0%, color-mix(in srgb, var(--tuned) 55%, #ffc477), transparent 72%),
+    radial-gradient(100% 42% at 50% 0%, color-mix(in srgb, var(--tuned) 40%, transparent), transparent 80%);
+  mix-blend-mode: screen;
+  opacity: 0.58;
+  pointer-events: none;
+  transition: opacity 0.8s var(--ease);
+}
+
+html.theme-light .radio-glow {
+  mix-blend-mode: multiply;
+  opacity: 0.34;
+}
+
+[data-kradio][data-state="on"] .radio-glow {
+  opacity: 0.78;
+  animation: glow-breathe 5s ease-in-out infinite alternate;
+}
+
+html.theme-light [data-kradio][data-state="on"] .radio-glow {
+  opacity: 0.55;
+}
+
+/* The counter: its top catches the light, its front edge is in shadow. */
+.radio-scene::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0;
+  height: 2.75rem;
+  background:
+    linear-gradient(180deg, rgba(255, 220, 180, 0.3), transparent 3px),
+    radial-gradient(40% 120% at 50% 0%, color-mix(in srgb, var(--tuned) 22%, transparent), transparent 70%),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0 2px, transparent 2px 11px, rgba(255, 230, 200, 0.04) 11px 12px, transparent 12px 31px),
+    linear-gradient(180deg, #a37548 0 38%, #7a4f2c 38% 44%, #5e3a1f 44%, #3a2414);
+  box-shadow: 0 -10px 24px -10px rgba(0, 0, 0, 0.45);
+}
+
+/* The set itself: book-matched walnut with a brass trim. */
 .kradio {
   position: relative;
+  z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr);
-  gap: 1rem;
-  padding: 1.15rem 1.2rem 1.25rem;
-  border-radius: 2.4rem 2.4rem 1.2rem 1.2rem;
+  gap: 0.85rem;
+  width: min(100%, 46rem);
+  margin-inline: auto;
+  padding: 1.1rem 1.15rem 1.15rem;
+  border-radius: 1.9rem 1.9rem 1rem 1rem;
   background:
-    linear-gradient(180deg, rgba(255, 222, 186, 0.2), transparent 16%),
-    repeating-linear-gradient(98deg, rgba(0, 0, 0, 0.11) 0 3px, transparent 3px 11px, rgba(255, 255, 255, 0.04) 11px 13px, transparent 13px 29px),
-    linear-gradient(160deg, #7d4c2b, #5b331a 60%, #48270f);
+    linear-gradient(180deg, rgba(255, 226, 190, 0.22), transparent 14%),
+    repeating-linear-gradient(97deg, rgba(0, 0, 0, 0.1) 0 3px, transparent 3px 12px, rgba(255, 255, 255, 0.035) 12px 14px, transparent 14px 31px),
+    radial-gradient(120% 80% at 30% 20%, #8a5532, transparent 60%),
+    linear-gradient(165deg, #7a4626, #55301a 55%, #3d200d);
   box-shadow:
-    inset 0 2px 0 rgba(255, 226, 192, 0.28),
-    inset 0 -8px 14px rgba(0, 0, 0, 0.35),
-    0 26px 30px -20px rgba(0, 0, 0, 0.75);
-  transition: --tuned 0.6s var(--ease);
+    inset 0 0 0 1.5px rgba(222, 180, 110, 0.55),
+    inset 0 0 0 4px #3a1f0d,
+    inset 0 -10px 18px rgba(0, 0, 0, 0.35),
+    0 28px 30px -18px rgba(0, 0, 0, 0.8),
+    0 -6px 90px -20px color-mix(in srgb, var(--tuned) 30%, transparent);
+  transition: box-shadow 0.8s var(--ease);
 }
 
-/* Feet. */
+[data-kradio][data-state="on"] .kradio {
+  box-shadow:
+    inset 0 0 0 1.5px rgba(222, 180, 110, 0.55),
+    inset 0 0 0 4px #3a1f0d,
+    inset 0 -10px 18px rgba(0, 0, 0, 0.35),
+    0 28px 30px -18px rgba(0, 0, 0, 0.8),
+    0 -6px 120px -10px color-mix(in srgb, var(--tuned) 55%, transparent);
+}
+
+/* Feet, standing on the counter. */
 .kradio::before,
 .kradio::after {
   content: "";
   position: absolute;
-  bottom: -0.5rem;
-  width: 2.6rem;
-  height: 0.55rem;
+  bottom: -0.45rem;
+  width: 2.8rem;
+  height: 0.5rem;
   border-radius: 0 0 0.45rem 0.45rem;
-  background: #2a170b;
+  background: linear-gradient(180deg, #2a170b, #160b04);
 }
 
 .kradio::before {
-  left: 13%;
+  left: 12%;
 }
 
 .kradio::after {
-  right: 13%;
+  right: 12%;
 }
 
-/* Speaker cloth behind three wooden slats. */
-.kradio-grille {
-  position: relative;
-  display: grid;
-  align-items: end;
-  justify-items: center;
-  min-height: 12rem;
-  padding-bottom: 0.9rem;
-  border-radius: 1.4rem 1.4rem 0.7rem 0.7rem;
-  background:
-    linear-gradient(90deg, transparent 23%, #5e361c 23% 27%, transparent 27% 48%, #5e361c 48% 52%, transparent 52% 73%, #5e361c 73% 77%, transparent 77%),
-    repeating-linear-gradient(0deg, rgba(70, 46, 22, 0.3) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, rgba(70, 46, 22, 0.24) 0 1px, transparent 1px 3px),
-    radial-gradient(circle at 40% 35%, #dcc69c, #b89c6f);
-  box-shadow:
-    inset 0 0 0 3px #4a2a13,
-    inset 0 8px 16px rgba(0, 0, 0, 0.35);
-}
-
-.kradio-badge {
-  padding: 0.2rem 0.75rem 0.25rem;
-  border-radius: 0.3rem;
-  background: linear-gradient(180deg, #f3d9a4, #b98a45 60%, #8a6127);
-  color: #3a2410;
-  font: italic 600 0.95rem/1 var(--serif);
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 245, 220, 0.6);
-}
-
-.kradio-panel {
-  display: grid;
-  align-content: space-between;
-  gap: 0.85rem;
-}
-
-/* The dial glass, lit from behind in the tuned station's colour. */
+/* The dial glass across the top, lit from behind in the tuned station's colour. */
 .kradio-window {
-  padding: 0.7rem 0.85rem 0.7rem;
-  border-radius: 0.8rem;
+  position: relative;
+  overflow: hidden;
+  padding: 0.8rem 1.1rem 0.7rem;
+  border-radius: 1.15rem 1.15rem 0.6rem 0.6rem;
   background:
-    radial-gradient(120% 130% at 50% 0%, color-mix(in srgb, var(--tuned) 38%, #ffcf7a) 0%, rgba(45, 22, 6, 0) 72%),
-    linear-gradient(180deg, #2b1a0d, #170d05);
+    radial-gradient(120% 140% at 50% 0%, color-mix(in srgb, var(--tuned) 40%, #ffcf7a) 0%, rgba(45, 22, 6, 0) 70%),
+    linear-gradient(180deg, #2b1a0d, #160c04);
   box-shadow:
     inset 0 0 0 2px #c9a46a,
     inset 0 0 0 4px #3a2412,
-    inset 0 8px 16px rgba(0, 0, 0, 0.55);
+    inset 0 8px 18px rgba(0, 0, 0, 0.6);
+}
+
+/* Glare on the glass. */
+.kradio-window::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 55%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), transparent);
+  pointer-events: none;
 }
 
 .kradio-scale {
   position: relative;
-  height: 3.1rem;
+  height: 2.5rem;
   background:
-    repeating-linear-gradient(90deg, rgba(255, 238, 205, 0.75) 0 1px, transparent 1px 25%) left bottom / 100% 0.95rem no-repeat,
-    repeating-linear-gradient(90deg, rgba(255, 238, 205, 0.45) 0 1px, transparent 1px 7px) left bottom / 100% 0.5rem no-repeat;
+    repeating-linear-gradient(90deg, rgba(255, 238, 205, 0.7) 0 1px, transparent 1px 12.5%) left bottom / 100% 0.9rem no-repeat,
+    repeating-linear-gradient(90deg, rgba(255, 238, 205, 0.38) 0 1px, transparent 1px 6px) left bottom / 100% 0.45rem no-repeat;
 }
 
 .kradio-label {
   position: absolute;
-  top: 0.15rem;
+  top: 0.1rem;
   left: var(--pos);
   translate: -50% 0;
-  color: rgba(255, 238, 205, 0.5);
-  font: 600 0.62rem/1 var(--mono);
+  color: rgba(255, 238, 205, 0.48);
+  font: 600 0.68rem/1 var(--mono);
   letter-spacing: 0.12em;
   white-space: nowrap;
   transition: color 0.4s var(--ease), text-shadow 0.4s var(--ease);
 }
 
-.kradio-label.is-low {
-  top: 1.05rem;
-}
-
 .kradio-label.is-on {
   color: #fff6e2;
-  text-shadow: 0 0 8px color-mix(in srgb, var(--tuned) 80%, #fff);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--tuned) 85%, #fff);
 }
 
 .kradio-needle {
   position: absolute;
-  top: 0;
+  top: -0.2rem;
   bottom: -0.1rem;
   left: var(--needle);
   width: 2px;
@@ -2544,15 +2574,18 @@ html.film-soon .hero:not([data-film]) .hero-shade,
   transition: left 0.75s var(--spring);
 }
 
+/* What's on: the station's name, or the song while it plays. */
 .kradio-onair {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   min-width: 0;
   min-height: 1.5em;
   margin: 0.55rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(201, 164, 106, 0.22);
   color: #ffe9c4;
-  font: italic 500 1.05rem/1.2 var(--serif);
+  font: italic 500 1.12rem/1.2 var(--serif);
 }
 
 .kradio-lamp {
@@ -2565,17 +2598,17 @@ html.film-soon .hero:not([data-film]) .hero-shade,
   transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 
-.kradio[data-state="tuning"] .kradio-lamp,
-.kradio[data-state="on"] .kradio-lamp {
+[data-kradio][data-state="tuning"] .kradio-lamp,
+[data-kradio][data-state="on"] .kradio-lamp {
   background: var(--tuned);
   box-shadow: 0 0 8px var(--tuned);
 }
 
-.kradio[data-state="tuning"] .kradio-lamp {
+[data-kradio][data-state="tuning"] .kradio-lamp {
   animation: lamp-blink 0.8s steps(2, jump-none) infinite;
 }
 
-.kradio[data-state="error"] .kradio-lamp {
+[data-kradio][data-state="error"] .kradio-lamp {
   background: #c0392b;
 }
 
@@ -2587,63 +2620,57 @@ html.film-soon .hero:not([data-film]) .hero-shade,
   text-overflow: ellipsis;
 }
 
-/* Ivory piano keys; the tuned one stays pressed down. */
-.kradio-keys {
+/* Speaker cloth behind three brass bars, and the two knobs beside it. */
+.kradio-body {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.4rem;
-  padding: 0.4rem 0.4rem 0.55rem;
-  border-radius: 0.55rem;
-  background: #24140a;
-  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6);
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
 }
 
-.kradio-key {
+.kradio-grille {
   display: grid;
   place-items: center;
-  height: 2.5rem;
-  padding: 0 0.2rem;
-  border: 0;
-  border-radius: 0.25rem 0.25rem 0.45rem 0.45rem;
-  border-top: 3px solid var(--accent);
-  cursor: pointer;
-  background: linear-gradient(180deg, #fbf6ea, #e2d5bc);
-  color: #3b2a1d;
-  font: 600 0.8rem/1 var(--sans);
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  box-shadow: 0 5px 0 #b3a281, 0 7px 8px rgba(0, 0, 0, 0.45);
-  transition: translate 0.15s var(--ease), box-shadow 0.15s var(--ease), background 0.2s var(--ease);
+  min-height: 7.5rem;
+  border-radius: 0.8rem;
+  background:
+    linear-gradient(180deg, transparent calc(25% - 1px), rgba(214, 170, 98, 0.6) calc(25% - 1px) 25%, transparent 25% calc(50% - 1px), rgba(214, 170, 98, 0.6) calc(50% - 1px) 50%, transparent 50% calc(75% - 1px), rgba(214, 170, 98, 0.6) calc(75% - 1px) 75%, transparent 75%),
+    repeating-linear-gradient(45deg, rgba(70, 46, 22, 0.22) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(-45deg, rgba(70, 46, 22, 0.22) 0 1px, transparent 1px 3px),
+    radial-gradient(circle at 40% 35%, #dcc69c, #b39566);
+  box-shadow:
+    inset 0 0 0 3px #4a2a13,
+    inset 0 8px 16px rgba(0, 0, 0, 0.35);
 }
 
-.kradio-key:hover,
-.kradio-key:focus-visible,
-.kradio-key[aria-pressed="true"] {
-  translate: 0 4px;
-  background: linear-gradient(180deg, #efe6d3, #d6c7aa);
-  box-shadow: 0 1px 0 #b3a281, 0 2px 3px rgba(0, 0, 0, 0.45);
-}
-
-.kradio-key:focus-visible {
-  outline: 2px solid #ffe9c4;
-  outline-offset: 3px;
+.kradio-badge {
+  padding: 0.25rem 0.85rem 0.3rem;
+  border-radius: 0.3rem;
+  background: linear-gradient(180deg, #f3d9a4, #b98a45 60%, #8a6127);
+  color: #3a2410;
+  font: italic 600 1rem/1 var(--serif);
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 245, 220, 0.6);
 }
 
 .kradio-knobs {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 0.35rem;
+  display: grid;
+  gap: 0.75rem;
+  padding-inline: 0.2rem;
 }
 
 .kradio-knob {
   position: relative;
-  width: 2.7rem;
+  width: 2.9rem;
   aspect-ratio: 1;
   border-radius: 50%;
   background:
     repeating-conic-gradient(rgba(0, 0, 0, 0.16) 0 4deg, transparent 4deg 12deg),
     radial-gradient(circle at 35% 30%, #fbf6ea, #cfc1a6 60%, #9a8a6f);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5), inset 0 -2px 3px rgba(0, 0, 0, 0.25);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.5),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.25);
 }
 
 .kradio-knob::after {
@@ -2652,7 +2679,7 @@ html.film-soon .hero:not([data-film]) .hero-shade,
   left: 50%;
   top: 0.3rem;
   width: 2px;
-  height: 0.75rem;
+  height: 0.8rem;
   margin-left: -1px;
   border-radius: 1px;
   background: #4a3524;
@@ -2664,13 +2691,62 @@ html.film-soon .hero:not([data-film]) .hero-shade,
   transition: rotate 0.75s var(--spring);
 }
 
+/* Ivory piano keys along the front; the tuned one stays pressed down. */
+.kradio-keys {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.35rem;
+  padding: 0.4rem 0.4rem 0.6rem;
+  border-radius: 0.6rem;
+  background: #24140a;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6);
+}
+
+.kradio-key {
+  display: grid;
+  place-items: center;
+  height: 2.6rem;
+  padding: 0 0.2rem;
+  border: 0;
+  border-top: 3px solid var(--accent);
+  border-radius: 0.25rem 0.25rem 0.45rem 0.45rem;
+  cursor: pointer;
+  background: linear-gradient(180deg, #fbf6ea, #e2d5bc);
+  color: #3b2a1d;
+  font: 600 0.8rem/1 var(--sans);
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 5px 0 #b3a281,
+    0 7px 8px rgba(0, 0, 0, 0.45);
+  transition: translate 0.15s var(--ease), box-shadow 0.15s var(--ease), background 0.2s var(--ease);
+}
+
+.kradio-key:hover,
+.kradio-key:focus-visible,
+.kradio-key[aria-pressed="true"] {
+  translate: 0 4px;
+  background: linear-gradient(180deg, #efe6d3, #d6c7aa);
+  box-shadow:
+    0 1px 0 #b3a281,
+    0 2px 3px rgba(0, 0, 0, 0.45);
+}
+
+.kradio-key:focus-visible {
+  outline: 2px solid #ffe9c4;
+  outline-offset: 3px;
+}
+
+/* Under the plate: the hint on the left, Friday's Radio Night on the right. */
+.radio-caption {
+  flex-wrap: wrap;
+}
+
 .kradio-hint {
-  display: flex;
+  display: inline-flex;
+  flex: 1 1 14rem;
   align-items: center;
   gap: 0.5rem;
-  margin: 1rem 0 0;
-  color: var(--muted);
-  font-size: 0.92rem;
+  min-width: 0;
 }
 
 .kradio-hint::before {
@@ -2691,22 +2767,13 @@ html:not(.js) .kradio-hint {
   display: none;
 }
 
-/* The shelf it stands on. */
-.kradio-shelf {
-  height: 0.85rem;
-  margin: 0.35rem calc(-1 * clamp(0rem, 2vw, 1.5rem)) 0;
-  border-radius: 0.2rem;
-  background:
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 13px, rgba(255, 255, 255, 0.05) 13px 14px, transparent 14px 31px),
-    linear-gradient(180deg, #9a6d46, #6e4628);
-  box-shadow: 0 16px 20px -12px rgba(0, 0, 0, 0.7);
+.radio-night {
+  margin-left: auto;
 }
 
-.slogan {
-  font-family: var(--serif);
-  font-style: italic;
-  color: var(--muted);
-  font-size: 1.1rem;
+.radio-night strong {
+  color: var(--accent-text);
+  font-weight: 600;
 }
 
 .eq {
@@ -2744,317 +2811,6 @@ html:not(.js) .kradio-hint {
 .eq i:nth-child(5) {
   animation-duration: 1.2s;
   animation-delay: -0.45s;
-}
-
-/* schedule: the chalkboard and the wall clock */
-
-/* The kitchen wall they hang on, as a plate in the chapter: subway tiles, a cabinet above with its light on, the counter below. */
-.wall {
-  position: relative;
-  padding: clamp(4rem, 7.5vw, 6rem) clamp(1.25rem, 4vw, 3.25rem) clamp(3.75rem, 7vw, 5.5rem);
-  border-radius: 0.9rem;
-  overflow: hidden;
-  box-shadow: 0 0 0 1px var(--rule);
-  background:
-    radial-gradient(70% 85% at 50% 0%, var(--wall-light), transparent 70%),
-    linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.18)),
-    var(--tiles) center top / 160px 80px,
-    var(--wall);
-}
-
-/* The underside of the cabinet, with the strip light glowing along its edge. */
-.wall::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 1.1rem;
-  background:
-    linear-gradient(180deg, transparent calc(100% - 3px), rgba(255, 214, 160, 0.85) calc(100% - 3px)) center / min(var(--wrap), 80%) 100% no-repeat,
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 13px),
-    linear-gradient(180deg, #4a2f1b, #2a190e);
-  box-shadow: 0 6px 24px 2px rgba(255, 190, 110, 0.18);
-}
-
-/* The front edge of the counter. */
-.wall::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0;
-  height: 0.85rem;
-  background:
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0 2px, transparent 2px 11px),
-    linear-gradient(180deg, #9a6a42, #6a4426 55%, #3a2414);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 220, 180, 0.3),
-    0 12px 24px -8px rgba(0, 0, 0, 0.45);
-}
-
-.hours-split {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: center;
-}
-
-/* A slate board in a wooden frame. Both stay the same in light and dark: they're objects. */
-.chalkboard {
-  --ev-steam: #9dd6f8;
-  --ev-epic: #f4f0e8;
-  --ev-postcard: #f3b593;
-  --ev-night: #f6d65a;
-  position: relative;
-  margin-top: 1.9rem;
-  padding: 0.7rem 0.7rem 1.15rem;
-  border-radius: 0.5rem;
-  background:
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 2px, transparent 2px 9px, rgba(255, 255, 255, 0.04) 9px 10px, transparent 10px 23px),
-    linear-gradient(180deg, #8a6140, #6b4529 55%, #57381f);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 230, 200, 0.25),
-    0 22px 34px -20px rgba(0, 0, 0, 0.75);
-  rotate: -0.6deg;
-}
-
-/* A stub of chalk on the ledge. */
-.chalkboard::after {
-  content: "";
-  position: absolute;
-  right: 18%;
-  bottom: 0.32rem;
-  width: 2.1rem;
-  height: 0.5rem;
-  border-radius: 0.2rem 0.3rem 0.3rem 0.2rem;
-  background: linear-gradient(180deg, #fbf8f1, #d9d3c6);
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.35);
-  rotate: -4deg;
-}
-
-.chalkboard-slate {
-  padding: 1.25rem 1.4rem 1rem;
-  border-radius: 0.2rem;
-  background:
-    radial-gradient(60% 45% at 28% 30%, rgba(255, 255, 255, 0.07), transparent 70%),
-    radial-gradient(45% 35% at 78% 72%, rgba(255, 255, 255, 0.05), transparent 70%),
-    var(--grain),
-    #262c27;
-  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.55);
-  color: #ece8df;
-  font-family: var(--hand);
-}
-
-.chalk-title {
-  margin: 0 0 0.35rem;
-  font-size: 1.75rem;
-  font-weight: 700;
-  line-height: 1.1;
-  text-decoration: underline wavy rgba(236, 232, 223, 0.45) 1px;
-  text-underline-offset: 0.35rem;
-  text-shadow: 0 0 1px rgba(255, 255, 255, 0.35);
-}
-
-.legend {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.legend li {
-  display: grid;
-  grid-template-columns: 0.8rem 7.9rem 1fr;
-  align-items: baseline;
-  gap: 0.7rem;
-  padding: 0.45rem 0;
-  border-top: 1px dashed rgba(236, 232, 223, 0.16);
-  font-size: 1.3rem;
-  line-height: 1.2;
-  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
-}
-
-.legend li:first-child {
-  border-top: 0;
-}
-
-/* A chalk dot: filled for daily things, a ring for weekly ones. */
-.legend li::before {
-  content: "";
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50% 45% 55% 48%;
-  background: var(--dot);
-  opacity: 0.9;
-  translate: 0 0.05rem;
-}
-
-.legend li.is-weekly::before {
-  background: transparent;
-  box-shadow: inset 0 0 0 2px var(--dot);
-}
-
-.legend strong {
-  color: var(--dot);
-  font-weight: 700;
-  font-size: 1.45rem;
-}
-
-/* The wall clock. */
-.dial-wrap {
-  display: grid;
-  justify-items: center;
-}
-
-.dial {
-  --ev-steam: #2a7fb8;
-  --ev-epic: #3b2a1d;
-  --ev-postcard: #c4683a;
-  --ev-night: #c99a00;
-  position: relative;
-  width: min(100%, 26rem);
-  aspect-ratio: 1;
-  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.45)) drop-shadow(0 3px 4px rgba(0, 0, 0, 0.3));
-}
-
-.dial svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.dial-rim {
-  fill: url(#dial-rim);
-}
-
-.dial-rim-edge {
-  fill: #5c544a;
-}
-
-.dial-face {
-  fill: url(#dial-enamel);
-}
-
-.dial-night {
-  fill: rgba(44, 56, 84, 0.1);
-}
-
-.dial-ticks {
-  fill: none;
-  stroke: #2b2119;
-  stroke-width: 3;
-  stroke-dasharray: 0.5 9.5;
-  stroke-dashoffset: 0.25;
-  opacity: 0.55;
-}
-
-.dial-ticks.hour {
-  stroke-width: 6;
-  stroke-dasharray: 1 9;
-  stroke-dashoffset: 0.5;
-  opacity: 0.85;
-}
-
-.dial-ticks.major {
-  stroke-width: 9;
-  stroke-dasharray: 2.4 57.6;
-  stroke-dashoffset: 1.2;
-  opacity: 1;
-}
-
-.dial-hour {
-  fill: #2b2119;
-  font: 500 10px var(--serif);
-  text-anchor: middle;
-  dominant-baseline: central;
-}
-
-.dial-hour.big {
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.dial-brand {
-  fill: #6b5a4b;
-  font: italic 500 9px var(--serif);
-  letter-spacing: 0.08em;
-  text-anchor: middle;
-  dominant-baseline: central;
-}
-
-.dial-window {
-  fill: #e7dcc7;
-  stroke: rgba(43, 33, 25, 0.35);
-  stroke-width: 0.8;
-}
-
-.dial-time {
-  fill: #2b2119;
-  font: 600 10px var(--mono);
-  text-anchor: middle;
-  dominant-baseline: central;
-}
-
-.dial-mark circle {
-  fill: var(--dot);
-  stroke: #f6efe2;
-  stroke-width: 2.5;
-}
-
-.dial-mark.weekly circle {
-  fill: #f6efe2;
-  stroke: var(--dot);
-  stroke-width: 2.5;
-}
-
-.dial-needle {
-  transform-box: view-box;
-  transform-origin: 120px 120px;
-  transform: rotate(var(--angle, 0deg));
-  transition: transform 1.2s var(--spring);
-}
-
-.dial-hand {
-  fill: #231a13;
-}
-
-.dial-hub {
-  fill: url(#dial-cap);
-}
-
-.dial-pin {
-  fill: #3a2a1a;
-}
-
-/* Glare on the glass. */
-.dial-glass {
-  fill: url(#dial-glare);
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-/* The next thing, on a scrap of paper tucked under the clock. */
-.dial-next {
-  position: relative;
-  margin-top: -0.4rem;
-  padding: 0.55rem 1rem 0.6rem;
-  background: #f4ecdc;
-  color: #3b2a1d;
-  font-family: var(--hand);
-  font-size: 1.3rem;
-  line-height: 1.15;
-  text-align: center;
-  box-shadow: 0 8px 14px -8px rgba(0, 0, 0, 0.55);
-  rotate: 2.5deg;
-}
-
-.dial-next strong {
-  color: #231a13;
-  font-weight: 700;
-}
-
-.dial-next-in {
-  display: block;
-  color: #b4572a;
-  font-weight: 700;
 }
 
 /* deals */
@@ -3541,254 +3297,92 @@ html.theme-light .chip-vp {
   font-weight: 700;
 }
 
-/* the fridge: the to-do list and the note on the freezer door, the photos on the big door */
+/* setting it up: the method, numbered like the steps of a recipe */
 
-.fridge {
+.method {
   display: grid;
-  gap: 5px;
-  width: min(var(--wrap), 100% - 2 * var(--gutter));
-  margin: clamp(1.5rem, 3vw, 2.5rem) auto;
-  border-radius: 2.4rem;
-  background: var(--enamel-seam);
-  box-shadow: var(--shadow-lg);
-}
-
-.fridge-door {
-  position: relative;
-  padding: clamp(2.75rem, 5vw, 4rem) clamp(1.5rem, 4.5vw, 4rem) clamp(2.75rem, 5vw, 4rem) clamp(3rem, 6vw, 5.5rem);
-  background:
-    linear-gradient(105deg, rgba(255, 255, 255, 0.08), transparent 45%),
-    radial-gradient(90% 70% at 50% 0%, rgba(255, 196, 119, 0.12), transparent 70%),
-    var(--enamel);
-  color: var(--enamel-ink);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    inset 0 -14px 22px -14px rgba(0, 0, 0, 0.35);
-}
-
-.fridge-door:first-child {
-  border-radius: 2.4rem 2.4rem 0.6rem 0.6rem;
-}
-
-.fridge-door:last-child {
-  border-radius: 0.6rem 0.6rem 2.4rem 2.4rem;
-}
-
-/* Chrome handles by the seam, like a fridge with the freezer on top. */
-.fridge-door::before {
-  content: "";
-  position: absolute;
-  left: clamp(1rem, 2.2vw, 1.6rem);
-  width: 0.75rem;
-  height: clamp(6rem, 12vw, 9rem);
-  border-radius: 0.5rem;
-  background: linear-gradient(90deg, #6d6f70, #f4f4f2 35%, #c9cbcb 55%, #7b7d7e);
-  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.35);
-}
-
-.fridge-door:first-child::before {
-  bottom: 2rem;
-}
-
-.fridge-door:last-child::before {
-  top: 2rem;
-}
-
-.fridge-door .section-head h2 {
-  color: var(--enamel-ink);
-}
-
-/* The chapter line on the door, like a label stuck on the enamel. */
-.fridge-door .chapter-no {
-  color: var(--enamel-ink);
-}
-
-.fridge-door .chapter-no::after {
-  background: color-mix(in srgb, var(--enamel-ink) 28%, transparent);
-}
-
-.fridge-door .lead {
-  color: var(--enamel-muted);
-}
-
-/* On the fridge the photos hang on magnets instead of tape. */
-.fridge .snap::before {
-  top: -0.6rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-left: -0.75rem;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.75), var(--magnet) 45%, color-mix(in srgb, var(--magnet) 65%, #000));
-  box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.45);
-  rotate: 0deg;
-}
-
-.fridge .snap:nth-child(6n + 1) {
-  --magnet: var(--clay);
-}
-
-.fridge .snap:nth-child(6n + 2) {
-  --magnet: var(--beat);
-}
-
-.fridge .snap:nth-child(6n + 3) {
-  --magnet: var(--capital);
-}
-
-.fridge .snap:nth-child(6n + 4) {
-  --magnet: var(--heart);
-}
-
-.fridge .snap:nth-child(6n + 5) {
-  --magnet: #f3ece0;
-}
-
-.fridge .snap:nth-child(6n + 6) {
-  --magnet: var(--paradise);
-}
-
-/* setting it up: a to-do list on the fridge, and a note beside it */
-
-.papers {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  align-items: start;
-  gap: clamp(2rem, 5vw, 4.5rem);
-}
-
-.todo,
-.letter {
-  --paper: #f6efe2;
-  --paper-ink: #2c2219;
-  position: relative;
-  padding: 2rem clamp(1.4rem, 3vw, 2.2rem) 1.8rem;
-  border-radius: 0.2rem;
-  background: var(--paper);
-  color: var(--paper-ink);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 18px 30px -18px rgba(0, 0, 0, 0.6);
-}
-
-/* Lined paper, held on by a magnet. */
-.todo {
-  rotate: -1.2deg;
-  background:
-    linear-gradient(90deg, transparent 2.6rem, rgba(201, 82, 62, 0.35) 2.6rem 2.7rem, transparent 2.7rem),
-    repeating-linear-gradient(180deg, transparent 0 1.95rem, rgba(70, 110, 160, 0.18) 1.95rem 2rem),
-    var(--paper);
-}
-
-.todo::before {
-  content: "";
-  position: absolute;
-  top: -0.7rem;
-  left: 50%;
-  width: 1.6rem;
-  height: 1.6rem;
-  margin-left: -0.8rem;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #f6c79f, var(--clay) 55%, var(--clay-deep));
-  box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.45);
-}
-
-.todo-title,
-.letter-title {
-  font-family: var(--hand);
-  font-size: clamp(2rem, 3.4vw, 2.5rem);
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1;
-}
-
-.todo-title {
-  padding-left: 1.6rem;
-}
-
-.todo-list {
-  display: grid;
-  gap: 1.1rem;
-  margin: 1.4rem 0 0;
-  padding: 0 0 0 1.6rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem clamp(1.5rem, 3vw, 2.5rem);
+  margin: clamp(1.75rem, 3.5vw, 2.5rem) 0 0;
+  padding: 0;
   list-style: none;
+  counter-reset: step;
 }
 
-.todo-list li {
-  position: relative;
-  padding-left: 2.1rem;
+.method li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule-strong);
+  counter-increment: step;
 }
 
-/* A box drawn in pen; the first one is already ticked. */
-.todo-list li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.2rem;
-  width: 1.15rem;
-  height: 1.15rem;
-  border: 2px solid var(--paper-ink);
-  border-radius: 0.2rem 0.35rem 0.15rem 0.3rem;
-  rotate: -3deg;
+.method li::before {
+  content: counter(step);
+  color: var(--accent-text);
+  font: italic 500 3.2rem/0.9 var(--serif);
 }
 
-.todo-list li.is-done::after {
-  content: "✓";
-  position: absolute;
-  left: 0.1rem;
-  top: -0.55rem;
-  color: #b8452a;
-  font: 700 1.9rem/1 var(--hand);
-  rotate: 8deg;
+.method h3 {
+  font-size: 1.45rem;
 }
 
-.todo-list strong {
-  display: block;
-  font: 700 1.55rem/1.1 var(--hand);
+.method p {
+  color: var(--muted);
 }
 
-.todo-list li.is-done strong {
-  text-decoration: line-through;
-  text-decoration-color: rgba(184, 69, 42, 0.7);
-  text-decoration-thickness: 2px;
+.method .btn {
+  margin-top: 0.5rem;
 }
 
-.todo-list span {
-  display: block;
-  margin-top: 0.25rem;
-  color: #5b4a3c;
-  font-size: 0.97rem;
-  line-height: 1.55;
+/* The author's note: who makes it and why, between two printed rules. */
+.author {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding: clamp(1.75rem, 4vw, 2.75rem) 0;
+  border-block: 3px double var(--rule-strong);
 }
 
-/* The note: plain paper, a strip of tape, signed by hand. */
-.letter {
-  margin-top: 2.5rem;
-  rotate: 1.4deg;
+.author-photo img {
+  width: clamp(5.5rem, 10vw, 8rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow:
+    0 0 0 1px var(--rule-strong),
+    0 0 0 7px color-mix(in srgb, var(--clay) 12%, transparent);
 }
 
-.letter::before {
-  content: "";
-  position: absolute;
-  top: -0.75rem;
-  left: 1.8rem;
-  width: 5rem;
-  height: 1.5rem;
-  background: rgba(240, 228, 200, 0.55);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-  rotate: -5deg;
+.author-title {
+  color: var(--accent-text);
+  font: 700 0.72rem/1.2 var(--sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
-.letter p {
+.author-quote {
+  max-width: 46rem;
   margin-top: 0.9rem;
-  color: #3d3026;
-  font-size: 1.02rem;
-  line-height: 1.6;
+  color: var(--cream);
+  font: italic 400 clamp(1.3rem, 2.2vw, 1.75rem) / 1.4 var(--serif);
 }
 
-.letter .letter-sign {
+.author-text > p:not(.author-quote):not(.author-sign) {
+  max-width: 40rem;
+  margin-top: 1rem;
+  color: var(--muted);
+}
+
+/* A sign-off, written rather than typed. */
+.author-sign {
   margin-top: 0.6rem;
+  color: var(--accent-text);
   font: 700 2.1rem/1 var(--hand);
-  color: #b8452a;
-  text-align: right;
-  rotate: -4deg;
 }
 
 /* what's cooking: a slip from the kitchen printer */
@@ -3976,88 +3570,102 @@ html.theme-light .receipt-wrap {
   text-align: center;
 }
 
-/* straight from the server: instant photos taped up by the fridge */
+/* straight from the server: the real screenshots, set as numbered plates */
 
-.snaps {
-  columns: 3;
-  column-gap: 2rem;
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem 1.5rem;
   margin: 0;
-  padding: 1rem 0 0;
+  padding: 0;
   list-style: none;
 }
 
-/* inline-block keeps each photo, tape and all, in one piece; a block would leave its tape at the bottom of the previous column. */
-.snap {
-  --tilt: -1.5deg;
+/* Every frame the same shape, showing the top of the screenshot; the whole one opens on a click. */
+.gallery-shot {
   position: relative;
-  display: inline-block;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 0.7rem;
+  background: #2b2d31;
+  box-shadow:
+    0 0 0 1px var(--rule),
+    0 18px 30px -20px rgba(0, 0, 0, 0.6);
+}
+
+.gallery-shot img {
   width: 100%;
-  break-inside: avoid;
-  margin-bottom: 2.6rem;
-  padding: 0.65rem 0.65rem 0;
-  background: #fbf8f1;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 18px 28px -18px rgba(0, 0, 0, 0.7);
-  rotate: var(--tilt);
-  transition: rotate 0.5s var(--spring), transform 0.5s var(--spring);
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.6s var(--ease);
 }
 
-.snap:nth-child(2) {
-  --tilt: 1.2deg;
+/* A wide, short screenshot sits whole in the frame instead of being cropped. */
+.gallery-shot.is-wide img {
+  padding: 1rem;
+  object-fit: contain;
+  object-position: center;
 }
 
-.snap:nth-child(3) {
-  --tilt: -0.6deg;
-}
-
-.snap:nth-child(4) {
-  --tilt: 1.8deg;
-}
-
-.snap:nth-child(5) {
-  --tilt: -1deg;
-}
-
-.snap:nth-child(6) {
-  --tilt: 0.8deg;
-}
-
-/* A strip of tape across the top. */
-.snap::before {
+/* The bottom fades a little, so a cropped screenshot reads as "there's more". */
+.gallery-shot::after {
   content: "";
   position: absolute;
-  z-index: 1;
-  top: -0.7rem;
-  left: 50%;
-  width: 4.5rem;
-  height: 1.4rem;
-  margin-left: -2.25rem;
-  background: rgba(240, 228, 200, 0.6);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-  rotate: -3deg;
+  inset: 55% 0 0;
+  background: linear-gradient(180deg, transparent, rgba(18, 12, 8, 0.45));
+  pointer-events: none;
 }
 
-.snap a {
-  display: block;
-}
-
-.snap img {
-  width: 100%;
-  height: auto;
-  border-radius: 2px;
-}
-
-.snap-caption {
-  padding: 0.55rem 0.2rem 0.8rem;
-  color: #3d3026;
-  font: 700 1.3rem/1.1 var(--hand);
-  text-align: center;
+.gallery-shot.is-wide::after {
+  display: none;
 }
 
 @media (hover: hover) {
-  .snap:hover {
-    rotate: 0deg;
-    transform: translateY(-4px);
+  .gallery-shot:hover img {
+    transform: scale(1.03);
   }
+}
+
+/* The full screenshot over the page (site.js). */
+.zoom {
+  width: auto;
+  max-width: min(94vw, 40rem);
+  max-height: 92vh;
+  padding: 0;
+  border: 0;
+  border-radius: 0.9rem;
+  background: #2b2d31;
+  box-shadow: var(--shadow-lg);
+  overflow: auto;
+}
+
+.zoom::backdrop {
+  background: rgba(10, 6, 4, 0.84);
+}
+
+.zoom img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Rides along at the top while a tall screenshot scrolls. */
+.zoom form {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  height: 0;
+}
+
+.zoom-close {
+  margin: 0.6rem;
+  background: rgba(18, 12, 8, 0.8);
+  color: #f6f0e6;
+  border-color: rgba(246, 240, 230, 0.3);
 }
 
 /* faq */
@@ -5227,7 +4835,9 @@ html:not(.js) .kbd-hint {
     linear-gradient(180deg, #6b4428, #4a2e1b 55%, #3a2414);
   border: 1px solid rgba(0, 0, 0, 0.35);
   box-shadow:
-    inset 0 1px 0 rgba(255, 220, 180, 0.22),
+    inset 0 0 0 1.5px rgba(222, 180, 110, 0.5),
+    inset 0 0 0 4px #3a1f0d,
+    inset 0 2px 0 4px rgba(255, 220, 180, 0.12),
     var(--shadow-lg);
 }
 
@@ -5241,7 +4851,10 @@ html:not(.js) .tuner {
   border-radius: 1rem;
   overflow: hidden;
   background: radial-gradient(60% 120% at var(--needle, 36%) 100%, color-mix(in srgb, var(--tuned) 22%, transparent), transparent 70%), linear-gradient(180deg, #1d150f, #0e0906);
-  box-shadow: inset 0 3px 14px rgba(0, 0, 0, 0.7), inset 0 0 0 1px rgba(255, 220, 180, 0.08);
+  box-shadow:
+    inset 0 0 0 2px #c9a46a,
+    inset 0 0 0 4px #3a2412,
+    inset 0 3px 14px rgba(0, 0, 0, 0.7);
   transition: background-position 0.9s var(--ease);
 }
 
@@ -5424,134 +5037,88 @@ html:not(.js) .tuner-listen {
   box-shadow: 0 0 10px var(--accent), 0 0 2px #fff inset;
 }
 
-/* Wrapping flex rather than a grid, so a short last row sits in the middle instead of leaving a gap. */
+/* The seven stations by name, in two columns like the index of a cookbook. The tuned one is lit. */
 .stations {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
+  columns: 2 22rem;
+  column-gap: clamp(2rem, 5vw, 4rem);
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
 }
 
 .station {
-  position: relative;
-  flex: 0 1 calc(25% - 0.75rem);
-  min-width: min(100%, 15rem);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1.5rem 1.4rem 1.6rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--line);
-  background:
-    radial-gradient(120% 70% at 0% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
-    var(--ink-2);
-  box-shadow: 0 16px 26px -18px rgba(0, 0, 0, 0.7);
+  display: grid;
+  grid-template-columns: 1.25rem auto minmax(1.5rem, 1fr) auto;
+  align-items: baseline;
+  column-gap: 0.75rem;
+  break-inside: avoid;
+  padding: 1rem 0.25rem;
+  border-bottom: 1px solid var(--rule);
   scroll-margin-top: 7rem;
-  transition: opacity 0.5s var(--ease), transform 0.5s var(--spring), border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
 }
 
 html.js .station {
   cursor: pointer;
 }
 
-.station-name {
-  margin: 1rem 0 0;
-  color: color-mix(in srgb, var(--accent) 75%, var(--cream));
-  font: 600 0.8rem/1 var(--mono);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.station .eq {
+  align-self: center;
+  gap: 2px;
+  height: 1rem;
 }
 
-.station .slogan {
-  font-size: 1.4rem;
-  color: var(--cream);
-}
-
-.station p:not(.station-name):not(.slogan):not(.station-now) {
-  color: var(--muted);
-}
-
-.station .link-arrow {
-  margin-top: auto;
-  padding-top: 0.5rem;
-}
-
-.station.is-tuned {
-  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
-  box-shadow: 0 30px 60px -28px color-mix(in srgb, var(--accent) 70%, transparent);
-  transform: translateY(-6px);
-}
-
-/* Kiss: a die-cut sticker. */
-.station-sticker {
-  border: 5px solid #f3ece2;
-  border-radius: 1.8rem 1.8rem 1.8rem 0.5rem;
-  rotate: -1.6deg;
-}
-
-/* Rock: a gig ticket, with a tear-off stub at the bottom. */
-.station-ticket {
-  --stub: 3.6rem;
-  margin-top: 1.5rem;
-  padding-bottom: 1.15rem;
-  border-radius: 0.35rem;
-  rotate: 1deg;
-  -webkit-mask:
-    radial-gradient(circle at 0 calc(100% - var(--stub)), transparent 0.7rem, #000 0.75rem) left / 51% 100% no-repeat,
-    radial-gradient(circle at 100% calc(100% - var(--stub)), transparent 0.7rem, #000 0.75rem) right / 51% 100% no-repeat;
-  mask:
-    radial-gradient(circle at 0 calc(100% - var(--stub)), transparent 0.7rem, #000 0.75rem) left / 51% 100% no-repeat,
-    radial-gradient(circle at 100% calc(100% - var(--stub)), transparent 0.7rem, #000 0.75rem) right / 51% 100% no-repeat;
-}
-
-.station-ticket::after {
-  content: "";
-  position: absolute;
-  left: 1.1rem;
-  right: 1.1rem;
-  bottom: var(--stub);
-  border-top: 2px dashed color-mix(in srgb, var(--accent) 45%, transparent);
-}
-
-/* Beat: a paper tag on a string. */
-.station-tag {
-  margin-top: 0.6rem;
-  padding-top: 2.2rem;
-  border-radius: 0.4rem 0.4rem 1.4rem 0.4rem;
-  rotate: -0.7deg;
-}
-
-.station-tag::before {
-  content: "";
-  position: absolute;
-  top: 0.9rem;
-  right: 1.3rem;
-  width: 0.85rem;
-  height: 0.85rem;
-  border-radius: 50%;
-  background: var(--ink);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
-}
-
-.station-tag::after {
-  content: "";
-  position: absolute;
-  top: -1.5rem;
-  right: 1.55rem;
-  width: 2px;
-  height: 2.8rem;
-  border-radius: 1px;
-  background: #b9a58a;
-  rotate: 14deg;
-  transform-origin: bottom;
-}
-
-.station.is-dim {
-  opacity: 0.6;
+.station .eq i {
+  width: 3px;
 }
 
 html.js .station:not(.is-tuned) .eq i {
   animation-play-state: paused;
+}
+
+.station-name {
+  margin: 0;
+  color: var(--cream);
+  font: 500 clamp(1.2rem, 1.8vw, 1.4rem) / 1.2 var(--serif);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: color 0.4s var(--ease);
+}
+
+.station.is-tuned .station-name {
+  color: color-mix(in srgb, var(--accent) 65%, var(--cream));
+}
+
+/* Dot leaders from the name to the station's site. */
+.station-dots {
+  min-width: 1.5rem;
+  border-bottom: 2px dotted var(--rule-strong);
+  translate: 0 -0.3rem;
+}
+
+.station-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--muted);
+  font: 500 0.75rem var(--mono);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.3s var(--ease);
+}
+
+.station-link:hover {
+  color: var(--accent-text);
+}
+
+/* What it's playing right now, under the name (radio.js). */
+.station .station-now {
+  grid-column: 2 / -1;
+  margin-top: 0.35rem;
+  padding-top: 0;
+  border-top: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
 }
 
 /* radio: catch flow */
@@ -5830,72 +5397,53 @@ html:not(.js) .vote-controls {
 
 /* setup */
 
+/* Where things go: a reference sheet in a double frame, the commands in clay with their jobs beside them. */
 .recipe {
-  position: relative;
-  max-width: 62rem;
-  padding: 1.6rem clamp(1.4rem, 4vw, 2.8rem) 2rem;
-  border-radius: 0.2rem;
-  background:
-    linear-gradient(180deg, transparent 4.6rem, rgba(201, 82, 62, 0.45) 4.6rem 4.7rem, transparent 4.7rem),
-    #f7f1e6;
-  color: #2a1f16;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 22px 36px -22px rgba(0, 0, 0, 0.65);
-  rotate: 0.4deg;
-}
-
-/* Taped down at two corners. */
-.recipe::before,
-.recipe::after {
-  content: "";
-  position: absolute;
-  top: -0.7rem;
-  width: 5.5rem;
-  height: 1.5rem;
-  background: rgba(240, 228, 200, 0.55);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-}
-
-.recipe::before {
-  left: -1.2rem;
-  rotate: -28deg;
-}
-
-.recipe::after {
-  right: -1.2rem;
-  rotate: 24deg;
+  padding: clamp(1.5rem, 3.5vw, 2.5rem) clamp(1.25rem, 4vw, 2.75rem);
+  border: 1px solid var(--rule-strong);
+  border-radius: 0.9rem;
+  outline: 1px solid var(--rule);
+  outline-offset: -0.55rem;
+  background: color-mix(in srgb, var(--ink-2) 70%, transparent);
 }
 
 .recipe-title {
-  font: 700 clamp(2rem, 3.4vw, 2.5rem) / 1.1 var(--hand);
-  letter-spacing: 0;
+  font-size: clamp(1.65rem, 2.8vw, 2.25rem);
+  letter-spacing: -0.02em;
 }
 
 .recipe-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 3rem;
-  margin: 1.4rem 0 0;
+  gap: 0 clamp(2rem, 5vw, 4rem);
+  margin: 1.25rem 0 0;
 }
 
 .recipe-list > div {
-  padding: 0.85rem 0;
-  border-bottom: 1px solid rgba(70, 110, 160, 0.22);
+  display: grid;
+  grid-template-columns: minmax(9.5rem, auto) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.25rem 1.25rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
 }
 
 .recipe-list dt code {
-  color: #9a4416;
-  font-size: 1rem;
-  font-weight: 700;
+  color: var(--accent-text);
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
-.recipe-list .is-key dt code {
-  padding: 0 0.15rem;
-  background: linear-gradient(180deg, transparent 50%, rgba(255, 208, 70, 0.75) 50% 92%, transparent 92%);
+/* The one that never gets picked on its own: a clay rule in the margin. */
+.recipe-list .is-key {
+  margin-left: -0.9rem;
+  padding-left: 0.9rem;
+  box-shadow: inset 3px 0 0 var(--clay);
 }
 
 .recipe-list dd {
-  margin: 0.25rem 0 0;
-  color: #5b4a3c;
+  margin: 0;
+  color: var(--muted);
   font-size: 0.95rem;
 }
 
@@ -5907,7 +5455,7 @@ html:not(.js) .vote-controls {
 
 .channel-group {
   padding: 1.2rem 1.25rem 1.35rem;
-  border-radius: 1.25rem;
+  border-radius: 0.9rem;
   border: 1px solid var(--dc-line);
   background: var(--dc-bg);
   color: var(--dc-text);
@@ -5961,7 +5509,7 @@ html:not(.js) .vote-controls {
 
 .perm-panel {
   padding: 0.4rem 1.4rem;
-  border-radius: 1.4rem;
+  border-radius: 0.9rem;
   border: 1px solid var(--dc-line);
   background: var(--dc-bg);
   color: var(--dc-text);
@@ -6027,12 +5575,11 @@ html:not(.js) .vote-controls {
   grid-template-columns: auto 1fr;
   gap: clamp(1.25rem, 3vw, 2rem);
   padding: clamp(1.75rem, 4vw, 3rem);
-  border-radius: 1.9rem;
-  border: 1px solid var(--line);
-  background:
-    radial-gradient(500px 220px at 0% 0%, rgba(224, 138, 69, 0.2), transparent 70%),
-    var(--panel);
-  box-shadow: var(--shadow-lg);
+  border-radius: 0.9rem;
+  border: 1px solid var(--rule-strong);
+  outline: 1px solid var(--rule);
+  outline-offset: -0.55rem;
+  background: color-mix(in srgb, var(--ink-2) 70%, transparent);
 }
 
 .intent-icon {
@@ -6134,8 +5681,8 @@ html.js [data-reveal-group].is-in > * {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .snaps {
-    columns: 2;
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .dc-client {
@@ -6208,19 +5755,13 @@ html.js [data-reveal-group].is-in > * {
   .split,
   .split.reverse,
   .split.lean,
-  .radio-split,
-  .hours-split,
+  .radio-head,
   .night-split,
   .faq-split,
   .demo-intro,
-  .papers,
+  .method,
   .changelog-split {
     grid-template-columns: 1fr;
-  }
-
-  .letter {
-    max-width: 36rem;
-    margin-top: 0.5rem;
   }
 
   .split.reverse > :first-child {
@@ -6240,10 +5781,6 @@ html.js [data-reveal-group].is-in > * {
   .deal {
     grid-row: auto;
     grid-template-rows: none;
-  }
-
-  .dial {
-    width: min(100%, 24rem);
   }
 }
 
@@ -6343,34 +5880,20 @@ html.js [data-reveal-group].is-in > * {
     grid-template-columns: 1fr;
   }
 
-  .station {
-    flex-basis: 100%;
-  }
-
   .cmd-menu {
     columns: 1;
   }
 
-  .cmd-menu,
-  .recipe {
+  .cmd-menu {
     rotate: 0deg;
   }
 
-  .station-ticket,
-  .station-tag {
-    margin-top: 0;
+  .recipe-list > div {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .menu-card:nth-child(n) {
     margin-top: 0;
-  }
-
-  .legend li {
-    grid-template-columns: 0.75rem 1fr;
-  }
-
-  .legend li span {
-    grid-column: 2;
   }
 
   .cta {
@@ -6489,33 +6012,48 @@ html.js [data-reveal-group].is-in > * {
   }
 }
 
-/* Narrow phones: the speaker goes on top of the dial, like a portable set. */
+/* The radio on a phone: two rows of names on the glass, two rows of keys. */
+@media (max-width: 700px) {
+  .kradio-scale {
+    height: 3.1rem;
+  }
+
+  .kradio-label.is-low {
+    top: 1rem;
+  }
+
+  .kradio-keys {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .radio-night {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+}
+
+/* Narrow phones. */
 @media (max-width: 560px) {
-  .snaps {
-    columns: 1;
-    max-width: 24rem;
-    margin-inline: auto;
+  .station {
+    grid-template-columns: 1.25rem minmax(0, 1fr);
   }
 
-  .fridge {
-    width: calc(100% - 1.25rem);
-    border-radius: 1.6rem;
-  }
-
-  .fridge-door {
-    padding-inline: 1.15rem;
-  }
-
-  .fridge-door:first-child {
-    border-radius: 1.6rem 1.6rem 0.5rem 0.5rem;
-  }
-
-  .fridge-door:last-child {
-    border-radius: 0.5rem 0.5rem 1.6rem 1.6rem;
-  }
-
-  .fridge-door::before {
+  .station-dots {
     display: none;
+  }
+
+  .station-link {
+    grid-column: 2;
+    margin-top: 0.2rem;
+  }
+
+  .gallery {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 26rem;
+  }
+
+  .author {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .receipt-list li,
@@ -6557,17 +6095,20 @@ html.js [data-reveal-group].is-in > * {
   }
 
   .kradio {
-    grid-template-columns: 1fr;
-    border-radius: 1.8rem 1.8rem 1rem 1rem;
+    padding: 0.85rem 0.8rem 0.9rem;
+    border-radius: 1.4rem 1.4rem 0.8rem 0.8rem;
   }
 
   .kradio-grille {
-    min-height: 6.5rem;
-    padding-bottom: 0.6rem;
+    min-height: 4.5rem;
   }
 
-  .legend li {
-    font-size: 1.2rem;
+  .kradio-knob {
+    width: 2.3rem;
+  }
+
+  .kradio-onair {
+    font-size: 1rem;
   }
 }
 
@@ -6684,6 +6225,15 @@ html.js [data-reveal-group].is-in > * {
   to {
     opacity: 0;
     transform: scale(3);
+  }
+}
+
+@keyframes glow-breathe {
+  from {
+    opacity: 0.62;
+  }
+  to {
+    opacity: 0.85;
   }
 }
 
