@@ -26,11 +26,11 @@ Then copy the two MP4s and both `.vtt` files into `assets/ad/`, and put the chap
 
 ## The radio ad
 
-`radio/` holds a second, 31-second ad about the seven stations, for the radio section on the home page and on `radio.html`. It is built the same way, from its own folder, and shares `ad.css` (the Discord window, the kitchen and the end card) with the main ad:
+`radio/` holds a second, 46-second ad about the seven stations and Kitchen FM, for the radio section on the home page and on `radio.html`. It is built the same way, from its own folder, and shares `ad.css` (the Discord window, the kitchen and the end card) with the main ad:
 
 ```bash
 cd radio
-python ../tools/tts.py lines.json vo open    # and czech, world, song, night, end
+python ../tools/tts.py lines.json vo open    # and czech, world, song, night, fm, dj, end
 node ../tools/timeline.mjs .
 node ../cs-captions.mjs
 node ../tools/render.mjs . cues
@@ -40,7 +40,7 @@ node ../tools/render.mjs . video video-120.mp4 120
 node ../tools/encode.mjs . 0 dzbanek-radio   # dzbanek-radio-1080.mp4, dzbanek-radio-720.mp4
 ```
 
-Then copy the two MP4s to `assets/ad/`, the captions as `radio-captions-en.vtt` and `radio-captions-cs.vtt`, and a frame as `dzbanek-radio-poster.jpg`. A line in `lines.json` can set its own `lead` and `tail`, and `synth.mjs` brings the drums in with the second scene and out on the last one.
+Then copy the two MP4s to `assets/ad/`, the captions as `radio-captions-en.vtt` and `radio-captions-cs.vtt`, and a frame as `dzbanek-radio-poster.jpg`. A line in `lines.json` can set its own `lead` and `tail`, its own `voice` and `rate` (the DJ is a second voice), `fx: "speaker"` to sound like it comes through the voice channel, and a `tag` put before its captions (🎙️ for the DJ). `synth.mjs` brings the drums in with the second scene and out on the last one.
 
 ## Rules the ad keeps
 

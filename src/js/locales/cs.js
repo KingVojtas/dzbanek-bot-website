@@ -135,11 +135,11 @@
       note: 'Jen ukázka, nic tu nehraje.',
     },
     radioFilm: {
-      title: 'Všech sedm na Discordu',
-      body: 'Půl minuty s /radio play: živá karta každé stanice, Catch a páteční hlasování.',
-      caption: '31 sekund, se zvukem. Písničky a lidi jsou vymyšlení, stanice jsou skutečné.',
-      label: 'Reklama na rádio Dzbanku: všech sedm stanic na Discordu',
-      watch: 'Pustit se zvukem · 31 s ·',
+      title: 'Všech sedm a Kitchen FM',
+      body: '46 sekund s /radio play: živá karta každé stanice, Catch, páteční hlasování a Kitchen FM s DJem.',
+      caption: '46 sekund, se zvukem. Písničky a lidi jsou vymyšlení, stanice jsou skutečné.',
+      label: 'Reklama na rádio Dzbanku: všech sedm stanic a Kitchen FM na Discordu',
+      watch: 'Pustit se zvukem · 46 s ·',
       play: 'Pustit reklamu na rádio se zvukem',
     },
     radioHome: {

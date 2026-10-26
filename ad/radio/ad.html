@@ -22,6 +22,19 @@
 .vote .sub { margin-top: 8px; color: var(--muted); font-size: 12px; }
 .vb { display: grid; grid-template-columns: repeat(5, max-content); gap: 8px; margin-top: 10px; }
 .vb .b.lead { background: var(--btn-green); }
+
+/* Kitchen FM: the bot's reply, then the Now Playing card as Kitchen FM draws it (src/core/display/music.ts). */
+.fm-reply .embed { display: block; max-width: 560px; }
+.fm-reply .desc { margin: 0; }
+.fm-reply .small { margin-top: 6px; color: var(--muted); font-size: 12px; }
+.fm-reply .small .cmd { padding: 1px 4px; border-radius: 3px; background: #1e1f22; font: 500 11px "JetBrains Mono", monospace; }
+.fm { max-width: 540px; }
+.fm .ttl { font-size: 18px; }
+.fm .dj { margin-top: 10px; padding: 1px 0 1px 12px; border-left: 4px solid #4e5058; border-radius: 4px; color: var(--text); font-size: 14px; line-height: 1.45; }
+.fm .fields { margin: 12px 0 0; }
+.fm .fields dd code { padding: 1px 4px; border-radius: 3px; background: #1e1f22; font: 500 12px "JetBrains Mono", monospace; }
+.fm .lnk { color: #00a8fc; }
+.fm-art { display: grid; align-content: end; width: 80px; height: 80px; padding: 7px; border-radius: 4px; background: repeating-linear-gradient(-32deg, transparent 0 13px, rgba(255, 196, 119, 0.5) 13px 15px, transparent 15px 26px), linear-gradient(160deg, #3c4d63, #151b26); color: #fff8f1; font: 700 13px/1.05 "Fraunces", serif; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12); }
 </style>
 </head>
 <body>
@@ -72,15 +85,15 @@
     <svg id="cursor" viewBox="0 0 22 30"><path d="M2 2 L2 24 L7.5 18.6 L11.4 27.4 L15 25.8 L11.2 17.2 L19 17.2 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
   </div>
 
-  <div id="end"><div class="row"><img src="../assets/bot-avatar.png" alt=""><p class="name">Dzbanek</p></div><p class="free" id="endfree">Seven live stations &nbsp;·&nbsp; Prague, London &amp; California &nbsp;·&nbsp; /radio play</p><p class="chair" id="endchair">Turn it up.</p><span class="cta" id="endcta">Add to Server</span></div>
+  <div id="end"><div class="row"><img src="../assets/bot-avatar.png" alt=""><p class="name">Dzbanek</p></div><p class="free" id="endfree">Seven live stations &nbsp;·&nbsp; Prague, London &amp; California &nbsp;·&nbsp; Kitchen FM &nbsp;·&nbsp; /radio play</p><p class="chair" id="endchair">Turn it up.</p><span class="cta" id="endcta">Add to Server</span></div>
 </div>
 
 <script>
 /*
  * The radio ad, a function of time like the main one (../ad.html): render(t) puts everything
  * where it belongs at t seconds, and the times come from the voice-over (window.TIMELINE).
- * Stations, names, slogans, colours and vote emoji are the bot's (src/radio/station.ts).
- * The songs and people are made up.
+ * Stations, names, slogans, colours and vote emoji are the bot's (src/radio/station.ts), and so
+ * are Kitchen FM's choice name, reply, card and DJ line. The songs and people are made up.
  */
 const TL = window.TIMELINE;
 const SC = Object.fromEntries(TL.scenes.map((s) => [s.id, s]));
@@ -150,6 +163,8 @@ function post(ch, t, html, sound = 'msg') {
   if (sound && t > 0.5) SFX.push([t, sound]);
   return node;
 }
+// The bot deletes a card at `t` (the radio card, when Kitchen FM takes over).
+const retire = (node, t) => { MSGS.find((m) => m.node === node).until = t; };
 
 post('kitchen', 0, `<div class="msg">${av('tom')}<div><p class="meta">${nm('tom')}${stamp('Today at 21:02')}</p><p class="body">put the radio on? 📻</p></div></div>`, null);
 post('kitchen', 0, `<div class="msg">${av('mara')}<div><p class="meta">${nm('mara')}${stamp('Today at 21:03')}</p><p class="body">something czech first, then london</p></div></div>`, null);
@@ -224,6 +239,54 @@ post('board', 0, `<div class="msg">
   </div></div>`, null);
 [N.more, N.votes, N.last].forEach((at) => SFX.push([at, 'pop']));
 
+/* ---------- Kitchen FM ---------- */
+// Back in #kitchen, Sunka picks the eighth choice. The radio stops and deletes its card, the bot
+// says what's on, and the Now Playing card turns into Kitchen FM. The DJ is the next voice line.
+const FM_CHOICE = 'Kitchen FM: your songs, with a DJ';
+const DJ_LINE = SC.dj.text;
+const F = {
+  click: SC.fm.start - 0.1,
+  slash: SC.fm.start + 0.2,
+  opt: SC.fm.start + 0.65,
+  kit: [W('fm', 'Kitchen') - 0.15, WE('fm', 'FM') - 0.05],
+  enter: WE('fm', 'FM') + 0.2,
+};
+F.reply = F.enter + 0.35;
+F.card = F.reply + 0.55;
+F.talk = [SC.dj.voAt, SC.dj.words.at(-1).e];
+retire(radioMsg, F.reply);
+post('kitchen', F.reply, `<div class="msg fm-reply">
+  <p class="used">${av('sunka')}<b>Sunka</b> used <span class="cmd">/radio play</span></p>${av('bot')}<div>
+  <p class="meta">${nm('bot')}${stamp('Today at 21:08')}</p>
+  <div class="embed" style="--bar:#3ba55d">
+    <p class="desc">🎙️ <b style="color:#f2f3f5">Kitchen FM</b> is on air in <span class="mention">🔊 Radio corner</span>: 48 kitchen songs, plus a few new finds. Ten songs of one genre, then the next. The opener is five, with a DJ between the sets.</p>
+    <p class="small"><span class="cmd">/play</span> requests go first. ⏭️ Skip cuts the DJ short. <span class="cmd">/radio stop</span> ends the show.</p>
+  </div>
+  </div></div>`);
+const fmMsg = post('kitchen', F.card, `<div class="msg fm-msg">
+  ${av('bot')}<div>
+  <p class="meta">${nm('bot')}${stamp('Today at 21:08')}</p>
+  <div class="embed fm" style="--bar:#e08a45">
+    <div>
+      <p class="auth">🎙️ Kitchen FM · Czech rap</p>
+      <p class="ttl link">Tram Lines</p>
+      <p class="desc">by <b>Kapsa</b></p>
+      <div class="bar"><span class="pos">0:00</span><div class="track"><span></span></div><span>3:12</span></div>
+      <p class="dj">🎙️ <i>${DJ_LINE}</i></p>
+      <dl class="fields">
+        <div><dt>Brought in by</dt><dd><span class="mention">@Mara</span></dd></div>
+        <div><dt>Ends</dt><dd>21:11 · in 3 minutes</dd></div>
+        <div><dt>Volume</dt><dd>🔊 100%</dd></div>
+        <div class="wide"><dt>Up next</dt><dd><span class="lnk">Panelák Lights</span> <code>2:58</code></dd></div>
+      </dl>
+      <p class="foot">Kitchen FM on air</p>
+    </div>
+    <span class="fm-art">Tram<br>Lines</span>
+  </div>
+  <div class="btns"><span class="b blurple">⏸️ Pause</span><span class="b">⏭️ Skip</span><span class="b r">⏹️ Stop</span><span class="b">🔁 Loop</span><span class="b">🔀 Shuffle</span></div>
+  </div></div>`);
+SFX.push([F.enter, 'enter']);
+
 /* ---------- members and voice ---------- */
 $('#members').innerHTML = `<p class="cat">Online — 5</p>
   <div class="mem">${av('bot', 'dot')}<div><b>Dzbanek</b> <span class="app">APP</span><small class="mem-status">Pouring fresh drops</small></div></div>
@@ -238,7 +301,9 @@ const vcBot = $('.vc-bot');
 function typed(text, t, a, b) { return text.slice(0, Math.round(text.length * prog(t, a, b))); }
 function keys(text, a, b) { for (let i = 0; i < text.length; i++) SFX.push([a + (b - a) * (i / text.length), 'key']); }
 keys('/radio play', R.slash, R.pick - 0.1);
-const VIEW = [[0, 'kitchen'], [N.click + 0.05, 'board']];
+keys('/radio play', F.slash, F.opt - 0.1);
+keys('Kitchen', ...F.kit);
+const VIEW = [[0, 'kitchen'], [N.click + 0.05, 'board'], [F.click + 0.05, 'kitchen']];
 const currentChannel = (t) => { let ch = 'kitchen'; for (const [at, id] of VIEW) if (t >= at) ch = id; return ch; };
 
 function composer(t) {
@@ -255,6 +320,15 @@ function composer(t) {
     if (t < ON[0][1]) {
       popup = `<p class="ph-head">station</p>` + STATIONS.map((s, i) => `<div class="item ${i === 0 ? 'on' : ''}"><b>${s.choice}</b></div>`).join('');
     }
+  // Later, /radio play again: typing "Kitchen" narrows the eight choices down to Kitchen FM.
+  } else if (t >= F.slash && t < F.opt) {
+    html = '/' + typed('radio play', t, F.slash, F.opt - 0.1) + caret;
+  } else if (t >= F.opt && t < F.enter) {
+    const query = typed('Kitchen', t, ...F.kit);
+    const choices = [...STATIONS.map((s) => s.choice), FM_CHOICE].filter((c) => c.toLowerCase().startsWith(query.toLowerCase()));
+    const picked = t >= F.kit[1];
+    html = `<span class="pill">/radio play</span><span class="opt">station</span><span class="optval">${picked ? FM_CHOICE : query}${caret}</span>`;
+    if (!picked) popup = `<p class="ph-head">station</p>` + choices.map((c, i) => `<div class="item ${i === 0 ? 'on' : ''}"><b>${c}</b></div>`).join('');
   }
   return { html, popup };
 }
@@ -271,7 +345,14 @@ const CAM = [
   [C.play + 0.8, '.caught-msg', ZC],
   [N.click + 0.1, 800, 450, 1.12],
   [N.click + 0.9, '.vote', 1.75],
-  [SC.end.start + 0.05, '.vote', 1.75],
+  [F.click - 0.15, '.vote', 1.75],
+  [F.click + 0.5, 800, 450, 1.12],
+  [F.card + 0.1, 800, 450, 1.12],
+  [F.card + 0.95, '.fm', 1.72],
+  // While the DJ talks, a slow push in on what the DJ says.
+  [F.talk[0], '.fm', 1.72],
+  [F.talk[1] + 0.3, '.fm .dj', 2.05],
+  [SC.end.start + 0.05, '.fm .dj', 2.05],
   [SC.end.start + 0.95, 800, 450, Z0],
   [TL.duration, 800, 450, Z0],
 ];
@@ -307,9 +388,14 @@ const CUR = [
   [N.click, '.chan[data-ch="board"]'],
   [N.click + 0.8, 900, 400],
   [N.mine, '.vb-paradise'],
-  [TL.duration, '.vb-paradise'],
+  [F.click - 0.45, '.vb-paradise'],
+  [F.click, '.chan[data-ch="kitchen"]'],
+  [F.slash - 0.05, ...COMPOSER],
+  [F.enter + 0.4, ...COMPOSER],
+  [F.enter + 1.2, 1180, 640],
+  [TL.duration, 1180, 640],
 ];
-const CLICKS = [R.click, C.catch, C.play, N.click, N.mine];
+const CLICKS = [R.click, C.catch, C.play, N.click, N.mine, F.click];
 CLICKS.forEach((at) => SFX.push([at, 'click']));
 SFX.push([SC.czech.start - 0.2, 'whoosh'], [SC.end.start + 0.2, 'whoosh']);
 function cursorAt(t) {
@@ -373,10 +459,10 @@ function render(t) {
   document.querySelectorAll('.chan[data-ch]').forEach((n) => n.classList.toggle('on', n.dataset.ch === ch));
   $('#chname').textContent = CHANNELS[ch].name;
   $('#chtopic').textContent = CHANNELS[ch].topic;
-  document.querySelector('.chan[data-ch="board"]').classList.toggle('unread', ch !== 'board' && t > SC.song.start);
+  document.querySelector('.chan[data-ch="board"]').classList.toggle('unread', t > SC.song.start && t < N.click);
 
   for (const m of MSGS) {
-    const on = t >= m.t;
+    const on = t >= m.t && !(m.until && t >= m.until);
     m.node.style.display = on ? '' : 'none';
     if (on) {
       const f = out(prog(t, m.t, m.t + 0.18));
@@ -405,7 +491,13 @@ function render(t) {
   const flash = Math.max(1 - (t - switched) / 0.35, fresh ? 1 - (t - SONG.change) / 0.5 : 0);
   card.style.boxShadow = flash > 0 ? `0 0 0 ${2 * flash}px rgba(255,255,255,${0.55 * flash})` : '';
   vcBot.style.display = t >= R.enter + 0.05 ? '' : 'none';
-  vcBot.querySelector('.av').classList.toggle('speak', t >= R.enter && Math.floor(t * 3) % 4 !== 0);
+  // The radio, then a beat of quiet when it stops, the DJ talking, and the song after.
+  const djTalks = t >= F.talk[0] && t <= F.talk[1];
+  const music = (t >= R.enter && t < F.enter) || t > F.talk[1];
+  vcBot.querySelector('.av').classList.toggle('speak', djTalks || (music && Math.floor(t * 3) % 4 !== 0));
+  const songT = Math.max(0, t - F.talk[1] - 0.3);
+  fmMsg.querySelector('.pos').textContent = `0:${String(Math.floor(songT)).padStart(2, '0')}`;
+  fmMsg.querySelector('.track span').style.transform = `scaleX(${songT / 192})`;
   radioMsg.querySelector('.rc-catch').classList.toggle('pressed', Math.abs(t - C.catch) < 0.12);
   catchMsg.querySelector('.play-btn').classList.toggle('pressed', Math.abs(t - C.play) < 0.12);
 

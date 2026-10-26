@@ -27,6 +27,12 @@ const CS = {
   "Every card shows the song on air.": "Každá karta ukazuje písničku, která zrovna hraje.",
   "Hit Catch, and play it later.": "Zmáčkni Catch a pusť si ji později.",
   "And on Fridays, the kitchen votes for Radio Night.": "A v pátek kuchyně hlasuje o Radio Night.",
+  "And one more: Kitchen FM.": "A ještě jedna: Kitchen FM.",
+  "Your own songs, with a DJ.": "Vaše vlastní písničky, s DJem.",
+  // The DJ, as the Czech line book would say it (src/fm/lines/cs.json in the bot).
+  "🎙️ It's 9:08 PM and The Kitchen is open.": "🎙️ Je 21:08 a The Kitchen má vlastní rádio.",
+  "🎙️ For the next few songs it's Czech rap, starting with Tram Lines by Kapsa.": "🎙️ Dalších pár písniček je český rap, začínáme: Tram Lines – Kapsa.",
+  "🎙️ Brought in by Mara.": "🎙️ Vybírá Mara.",
   "Turn it up.": "Dej to nahlas.",
 };
 const en = fs.readFileSync("captions-en.vtt", "utf8");

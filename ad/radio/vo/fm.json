@@ -1,0 +1,136 @@
+{
+  "Metadata": [
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 1063750,
+        "Duration": 1063750,
+        "text": {
+          "Text": "And",
+          "Length": 3,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 2127500,
+        "Duration": 1595830,
+        "text": {
+          "Text": "one",
+          "Length": 3,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 3723330,
+        "Duration": 3989160,
+        "text": {
+          "Text": "more",
+          "Length": 4,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 10239160,
+        "Duration": 3324580,
+        "text": {
+          "Text": "Kitchen",
+          "Length": 7,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 13563750,
+        "Duration": 4122500,
+        "text": {
+          "Text": "FM",
+          "Length": 2,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 21941660,
+        "Duration": 1329580,
+        "text": {
+          "Text": "Your",
+          "Length": 4,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 23404160,
+        "Duration": 1994580,
+        "text": {
+          "Text": "own",
+          "Length": 3,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 25398750,
+        "Duration": 7313750,
+        "text": {
+          "Text": "songs",
+          "Length": 5,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 34441660,
+        "Duration": 1595410,
+        "text": {
+          "Text": "with",
+          "Length": 4,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 36037080,
+        "Duration": 665000,
+        "text": {
+          "Text": "a",
+          "Length": 1,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    },
+    {
+      "Type": "WordBoundary",
+      "Data": {
+        "Offset": 36835000,
+        "Duration": 6515830,
+        "text": {
+          "Text": "DJ",
+          "Length": 2,
+          "BoundaryType": "WordBoundary"
+        }
+      }
+    }
+  ]
+}

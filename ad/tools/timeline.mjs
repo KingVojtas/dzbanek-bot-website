@@ -15,13 +15,15 @@ const scenes = [];
 for (const l of lines) {
   const meta = JSON.parse(fs.readFileSync(path.join(dir, "vo", l.id + ".json"), "utf8")).Metadata;
   const lead = l.lead ?? LEAD[l.id] ?? 0.5;
-  const words = meta.filter((m) => m.Type === "WordBoundary").map((m) => ({
-    w: show(m.Data.text.Text),
-    s: +(t + lead + m.Data.Offset / 1e7).toFixed(3),
-    e: +(t + lead + (m.Data.Offset + m.Data.Duration) / 1e7).toFixed(3),
-  }));
+  // One boundary can hold two words ("9:08 PM"); they share its time, so every word stays its own.
+  const words = meta.filter((m) => m.Type === "WordBoundary").flatMap((m) => {
+    const parts = show(m.Data.text.Text).trim().split(/\s+/);
+    const from = t + lead + m.Data.Offset / 1e7, len = m.Data.Duration / 1e7 / parts.length;
+    return parts.map((w, i) => ({ w, s: +(from + len * i).toFixed(3), e: +(from + len * (i + 1)).toFixed(3) }));
+  });
   const end = words.at(-1).e + (l.tail ?? TAIL[l.id] ?? 0.6);
-  scenes.push({ id: l.id, start: +t.toFixed(3), voAt: +(t + lead).toFixed(3), end: +end.toFixed(3), text: show(l.say), words });
+  // fx: how audio.mjs treats the voice ("speaker": heard through the voice channel). tag: put before its captions.
+  scenes.push({ id: l.id, start: +t.toFixed(3), voAt: +(t + lead).toFixed(3), end: +end.toFixed(3), text: show(l.say), words, fx: l.fx, tag: l.tag });
   t = end;
 }
 const duration = +t.toFixed(3);
@@ -38,7 +40,7 @@ for (const s of scenes) {
     const n = sentence.split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
     const ws = s.words.slice(wi, wi + n);
     wi += n;
-    cues.push({ from: ws[0].s, to: ws.at(-1).e + 0.25, text: written(sentence) });
+    cues.push({ from: ws[0].s, to: ws.at(-1).e + 0.25, text: (s.tag ?? "") + written(sentence) });
   }
 }
 fs.writeFileSync(path.join(dir, "captions-en.vtt"), "WEBVTT\n\n" + cues.map((c) => `${vtt(c.from)} --> ${vtt(c.to)}\n${c.text}\n`).join("\n"));

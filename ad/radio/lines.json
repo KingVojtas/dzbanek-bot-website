@@ -4,5 +4,7 @@
  {"id": "world", "say": "From London, Heart and Capital. And from California, Radio Paradise.", "lead": 0.2, "tail": 0.45},
  {"id": "song", "say": "Every card shows the song on air. Hit Catch, and play it later.", "lead": 0.3, "tail": 0.6},
  {"id": "night", "say": "And on Fridays, the kitchen votes for Radio Night.", "lead": 0.4, "tail": 0.8},
+ {"id": "fm", "say": "And one more: Kitchen FM. Your own songs, with a DJ.", "lead": 0.5, "tail": 0.5},
+ {"id": "dj", "say": "It's 9:08 PM and The Kitchen is open. For the next few songs it's Czech rap, starting with Tram Lines by Kapsa. Brought in by Mara.", "voice": "en-US-EmmaMultilingualNeural", "rate": "+0%", "fx": "speaker", "tag": "🎙️ ", "lead": 0.3, "tail": 0.9},
  {"id": "end", "say": "Dzbahnek. Turn it up.", "lead": 0.5, "tail": 2.4}
 ]

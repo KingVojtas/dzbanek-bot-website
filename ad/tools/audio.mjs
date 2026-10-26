@@ -9,8 +9,10 @@ const D = (tl.duration + 0.5).toFixed(3);
 const ff = (args) => execFileSync("ffmpeg", ["-y", "-hide_banner", "-v", "error", ...args], { encoding: "utf8" });
 
 // Voice: every line at its cue, then a gentle broadcast chain and a hint of room.
+// A line with fx "speaker" (the radio ad's DJ) is heard through the voice channel: narrower and a step back.
+const FX = { speaker: "highpass=f=260,lowpass=f=5200,equalizer=f=1800:t=o:w=1:g=2,volume=-2dB," };
 const ins = tl.scenes.flatMap((s) => ["-i", path.join(dir, "vo", s.id + ".mp3")]);
-const voice = tl.scenes.map((s, i) => `[${i}:a]aresample=48000,adelay=${Math.round(s.voAt * 1000)}:all=1[v${i}]`).join(";")
+const voice = tl.scenes.map((s, i) => `[${i}:a]aresample=48000,${FX[s.fx] ?? ""}adelay=${Math.round(s.voAt * 1000)}:all=1[v${i}]`).join(";")
   + ";" + tl.scenes.map((_, i) => `[v${i}]`).join("") + `amix=inputs=${tl.scenes.length}:normalize=0,apad,atrim=0:${D},`
   + "highpass=f=75,"
   + "equalizer=f=180:t=o:w=1:g=1.5,equalizer=f=3000:t=o:w=1.2:g=1.5,equalizer=f=7200:t=o:w=0.8:g=-3,"
