@@ -18,6 +18,15 @@
       changes: 'Novinky',
     },
     lang: { label: 'Jazyk' },
+    book: {
+      tagline: 'kuchařka pro Discord',
+      contents: 'Obsah',
+      chapter: 'Kapitola',
+      fig: 'Obr.',
+      music: 'Hudba',
+      hours: 'Rozvrh',
+      deals: 'Slevy',
+    },
     theme: {
       label: 'Barevný režim',
       toLight: 'Přepnout na světlý režim',
@@ -77,7 +86,6 @@
       title: 'Každý Discord server má svou kuchyni',
       lead: 'Dzbanek se postará o tu tvoji. Hraje tvoji hudbu, pouští živá rádia, každé ráno pošle slevy ze Steamu a nové lidi přivítá sušenkou.',
       secondary: 'Vyzkoušet příkazy',
-      scroll: 'Dolů',
     },
     film: {
       label: 'Trailer Dzbanka',

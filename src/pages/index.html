@@ -1,9 +1,33 @@
 <!-- title: Dzbanek: Discord bot for music, live radio and game deals -->
 <!-- description: Dzbanek plays music, streams radio from Prague, London and California, and posts Steam deals and Epic freebies to your Discord server. Free, no premium tier. -->
 <!-- page: home -->
-<!-- scripts: film.js radio-film.js -->
+<!-- scripts: film.js radio-film.js contents.js -->
 
+<!-- The title page: what it is, then the photo plate, which is also where the ad plays. -->
 <section class="hero" data-hero>
+  <div class="wrap title-page">
+    <div class="title-top">
+      <p class="kicker" data-i18n="hero.kicker">Free Discord bot</p>
+      <p class="clock-chip" data-clock-chip>
+        <span class="clock-dot" aria-hidden="true"></span>
+        <span data-i18n="clock.open">Right now</span>
+        <span class="clock-sep" aria-hidden="true">·</span>
+        <span><span class="mono" data-clock="time">--:--</span> <span data-i18n="clock.inPrague">in Prague</span></span>
+        <span class="clock-next"><span class="clock-sep" aria-hidden="true">·</span> <span data-i18n="clock.next">Next:</span> <strong data-clock="next-name"></strong> <span data-clock="next-in"></span></span>
+      </p>
+    </div>
+    <div class="hero-copy">
+      <h1 class="hero-title" data-i18n="hero.title">Every Discord server has a kitchen</h1>
+      <div class="title-side">
+        <p class="lead" data-i18n="hero.lead">Dzbanek keeps yours going. It plays your music, streams live radio, posts Steam deals every morning and gives new people a cookie.</p>
+        <div class="hero-actions">
+          <a class="btn btn-clay btn-lg" href="{{invite}}" data-invite target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Server</a>
+          <a class="btn btn-ghost btn-lg" href="commands.html#demo"><span data-i18n="hero.secondary">Try the commands</span> <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <figure class="wrap plate hero-plate">
   <canvas class="film-glow" width="32" height="18" aria-hidden="true"></canvas>
   <div class="hero-stage">
     <div class="hero-scene">
@@ -28,22 +52,6 @@
       <track kind="captions" srclang="en" label="English" src="assets/ad/captions-en.vtt" />
       <track kind="captions" srclang="cs" label="Čeština" src="assets/ad/captions-cs.vtt" />
     </video>
-    <div class="hero-copy">
-      <p class="clock-chip" data-clock-chip>
-        <span class="clock-dot" aria-hidden="true"></span>
-        <span data-i18n="clock.open">Right now</span>
-        <span class="clock-sep" aria-hidden="true">·</span>
-        <span><span class="mono" data-clock="time">--:--</span> <span data-i18n="clock.inPrague">in Prague</span></span>
-        <span class="clock-next"><span class="clock-sep" aria-hidden="true">·</span> <span data-i18n="clock.next">Next:</span> <strong data-clock="next-name"></strong> <span data-clock="next-in"></span></span>
-      </p>
-      <p class="kicker" data-i18n="hero.kicker">Free Discord bot</p>
-      <h1 class="hero-title" data-i18n="hero.title">Every Discord server has a kitchen</h1>
-      <p class="lead" data-i18n="hero.lead">Dzbanek keeps yours going. It plays your music, streams live radio, posts Steam deals every morning and gives new people a cookie.</p>
-      <div class="hero-actions">
-        <a class="btn btn-clay btn-lg" href="{{invite}}" data-invite target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Server</a>
-        <a class="btn btn-ghost btn-lg" href="commands.html#demo"><span data-i18n="hero.secondary">Try the commands</span> <svg width="18" height="18" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
-      </div>
-    </div>
     <button type="button" class="film-sticker" data-film-play aria-label="Watch the trailer with sound">
       <span class="film-ring" aria-hidden="true">
         <svg viewBox="0 0 100 100">
@@ -53,7 +61,6 @@
       </span>
       <span class="film-play" aria-hidden="true"><svg width="26" height="26"><use href="#i-play" /></svg></span>
     </button>
-    <a class="hero-scroll" href="#menu" data-i18n-aria="hero.scroll" aria-label="Scroll down"><span></span></a>
   </div>
   <div class="film-bar" data-film-bar>
     <p class="film-line" aria-hidden="true"><span class="film-now" data-film-now></span><span class="film-caption" data-film-caption></span></p>
@@ -71,11 +78,33 @@
       </button>
     </div>
   </div>
+  <figcaption class="plate-caption" aria-hidden="true"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="hero.alt">A ceramic pitcher, chocolate chip cookies, and a steaming mug on a wooden kitchen counter at night.</span></figcaption>
+  </figure>
 </section>
 
-<section class="section notes" id="menu" aria-labelledby="menu-title">
+<!-- The book: the contents beside the chapters. Chapter and figure numbers are CSS counters. -->
+<div class="book">
+<nav class="contents" aria-labelledby="contents-title" data-contents>
+  <h2 class="contents-title" id="contents-title" data-i18n="book.contents">Contents</h2>
+  <ol class="contents-list">
+    <li class="is-foreword"><a href="#menu"><span data-i18n="facts.label">Good to know</span></a></li>
+    <li><a href="#music"><span data-i18n="book.music">Music</span></a></li>
+    <li><a href="#radio"><span data-i18n="radioHome.kicker">Radio</span></a></li>
+    <li><a href="#hours"><span data-i18n="book.hours">Schedule</span></a></li>
+    <li><a href="#deals"><span data-i18n="book.deals">Deals</span></a></li>
+    <li><a href="#kitchen"><span data-i18n="board.kicker">Kitchen Board</span></a></li>
+    <li><a href="#welcome"><span data-i18n="welcome.title">Hi and bye</span></a></li>
+    <li><a href="#start"><span data-i18n="steps.title">Setting it up</span></a></li>
+    <li><a href="#server"><span data-i18n="server.title">Straight from my server</span></a></li>
+    <li><a href="#faq"><span data-i18n="faq.title">Things people ask me</span></a></li>
+    <li><a href="#changelog"><span data-i18n="changelog.title">What’s cooking</span></a></li>
+  </ol>
+</nav>
+
+<div class="chapters">
+<section class="section chapter foreword notes" id="menu" aria-labelledby="menu-title">
   <div class="wrap">
-    <h2 class="sr-only" id="menu-title" data-i18n="facts.label">Good to know</h2>
+    <h2 class="h-small foreword-title" id="menu-title" data-i18n="facts.label">Good to know</h2>
     <div class="menu-cards" data-reveal-group>
       <article class="menu-card">
         <h3 data-i18n="facts.voiceTitle">One thing at a time</h3>
@@ -97,7 +126,8 @@
   </div>
 </section>
 
-<section class="section" id="music">
+<section class="section chapter" id="music">
+  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div class="wrap split">
     <div data-reveal>
       <h2 data-i18n="music.title">Music from YouTube and Spotify</h2>
@@ -109,8 +139,7 @@
         <li data-i18n="music.b4">Kitchen Quiz: /quiz start plays short clips of songs your kitchen has played, and everyone in voice races to name them</li>
       </ul>
     </div>
-    <div class="dc-stage" data-reveal>
-      <span class="example-tag" data-i18n="player.note">Just an example, not a live player.</span>
+    <figure class="dc-stage plate" data-reveal>
       <div class="dc">
         <div class="dc-msg">
           <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
@@ -135,17 +164,18 @@
           </div>
         </div>
       </div>
-    </div>
+      <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="player.note">Just an example, not a live player.</span></figcaption>
+    </figure>
   </div>
 </section>
 
-<section class="section" id="radio">
+<section class="section chapter" id="radio">
+  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div class="wrap radio-split">
     <div class="section-head" data-reveal>
-      <p class="kicker" data-i18n="radioHome.kicker">Radio</p>
       <h2 data-i18n="radioHome.title">Seven stations, live</h2>
       <p class="lead" data-i18n="radioHome.body">/radio play joins your voice channel and streams one of seven stations: Kiss, Rock Radio, Radio Beat and Frekvence 1 from Czechia, Heart and Capital from London, and Radio Paradise from California. The card shows what’s on and updates when the song changes. Hear something good? Hit Catch to save it, then Play to queue it from YouTube.</p>
-      <figure class="radio-film">
+      <figure class="radio-film plate">
         <div class="radio-film-frame">
           <video data-radio-film controls preload="none" playsinline width="1280" height="720" poster="assets/ad/dzbanek-radio-poster.jpg" aria-label="The Dzbanek radio ad: all seven stations in Discord" data-i18n-aria="radioFilm.label">
             <source src="assets/ad/dzbanek-radio-720.mp4" type="video/mp4" media="(max-width: 900px)" />
@@ -165,7 +195,7 @@
             </span>
           </button>
         </div>
-        <figcaption data-i18n="radioFilm.caption">31 seconds, with sound. The songs and people are made up; the stations are real.</figcaption>
+        <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="radioFilm.caption">31 seconds, with sound. The songs and people are made up; the stations are real.</span></figcaption>
       </figure>
       <p class="note"><a class="link-arrow" href="radio.html"><span data-i18n="radioHome.more">More about radio</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
     </div>
@@ -206,8 +236,10 @@
   </div>
 </section>
 
-<!-- The kitchen wall: subway tiles under the cabinet lights, with the chalkboard and the clock hung on it. -->
-<section class="section wall" id="hours">
+<section class="section chapter" id="hours">
+  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
+  <!-- The kitchen wall: subway tiles under the cabinet lights, with the chalkboard and the clock hung on it. -->
+  <div class="wall">
   <div class="wrap hours-split">
     <div data-reveal>
       <h2 class="h-small" data-i18n="hours.title">What it posts, and when</h2>
@@ -291,16 +323,22 @@
       </p>
     </div>
   </div>
+  </div>
 </section>
 
-<section class="section" id="deals">
+<section class="section chapter" id="deals">
+  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div class="wrap">
     <div class="section-head" data-reveal>
       <h2 data-i18n="deals.title">Cheap games every morning, free ones from Epic</h2>
     </div>
     <div class="deals" data-reveal-group>
       <article class="deal">
-        <p class="deal-when"><svg width="16" height="16" aria-hidden="true"><use href="#i-clock" /></svg><span data-i18n="deals.steamWhen">Every day at 03:33</span></p>
+        <!-- Small kitchen clocks set to the posting time, with how long until the next one. -->
+        <div class="deal-when">
+          <span class="mini-clock" data-clock-face="steam" data-at="213" style="--h: 3; --m: 33" aria-hidden="true"></span>
+          <p><span data-i18n="deals.steamWhen">Every day at 03:33</span><span class="deal-in" data-clock-in="steam"></span></p>
+        </div>
         <h3 data-i18n="deals.steamTitle">Steam daily deals</h3>
         <p class="deal-body" data-i18n="deals.steamBody">Ten games on sale. Very Positive ones go first, biggest discount on top, and regular specials fill any gaps.</p>
         <div class="dc deal-post">
@@ -354,7 +392,11 @@
         </div>
       </article>
       <article class="deal">
-        <p class="deal-when"><svg width="16" height="16" aria-hidden="true"><use href="#i-clock" /></svg><span data-i18n="deals.epicWhen">Checked at 12:00 and 17:00</span></p>
+        <div class="deal-when">
+          <span class="mini-clock" data-clock-face="epic" data-at="720" style="--h: 12; --m: 0" aria-hidden="true"></span>
+          <span class="mini-clock" data-clock-face="epic" data-at="1020" style="--h: 17; --m: 0" aria-hidden="true"></span>
+          <p><span data-i18n="deals.epicWhen">Checked at 12:00 and 17:00</span><span class="deal-in" data-clock-in="epic"></span></p>
+        </div>
         <h3 data-i18n="deals.epicTitle">Epic free games</h3>
         <p class="deal-body" data-i18n="deals.epicBody">Whatever Epic is giving away this week, plus what’s free next. Each game is posted once.</p>
         <div class="dc deal-post">
@@ -380,14 +422,14 @@
         </div>
       </article>
     </div>
-    <p class="note" data-i18n="deals.example">Made-up games. The real post has ten, with the store art.</p>
+    <p class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="deals.example">Made-up games. The real post has ten, with the store art.</span></p>
   </div>
 </section>
 
-<section class="section" id="kitchen">
+<section class="section chapter" id="kitchen">
+  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div class="wrap split reverse">
     <div class="stick" data-reveal>
-      <p class="kicker" data-i18n="board.kicker">Kitchen Board</p>
       <h2 data-i18n="board.title">One message that edits itself</h2>
       <p class="lead" data-i18n="board.body">/setup kitchen posts one message with four cards and keeps editing it instead of posting new ones: what’s playing, who’s in voice, the top Steam deal with the Epic freebie, and a last card with the latest caught song, how many people joined today, and Radio Night.</p>
       <ul class="ticks">
@@ -396,8 +438,7 @@
         <li data-i18n="board.presence">The bot’s Discord status takes turns with three lines, each for twenty minutes: Purifying the source, Analyzing bacteria levels and Pouring fresh drops.</li>
       </ul>
     </div>
-    <div class="dc-stage" data-reveal>
-      <span class="example-tag" data-i18n="board.example">Example, not live</span>
+    <figure class="dc-stage plate" data-reveal>
       <div class="dc">
         <div class="dc-msg">
           <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
@@ -451,11 +492,13 @@
           </div>
         </div>
       </div>
-    </div>
+      <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="board.example">Example, not live</span></figcaption>
+    </figure>
   </div>
 </section>
 
-<section class="section" id="welcome">
+<section class="section chapter" id="welcome">
+  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div class="wrap split lean">
     <div data-reveal>
       <h2 class="h-small" data-i18n="welcome.title">Hi and bye</h2>
@@ -515,7 +558,8 @@
 
 <!-- The fridge: the to-do list and the note on the freezer door, the photos on the big door. -->
 <div class="fridge">
-<section class="section fridge-door" id="start">
+<section class="section chapter fridge-door" id="start">
+  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div class="papers">
     <!-- A to-do list stuck to the fridge. -->
     <div class="todo" data-reveal>
@@ -545,7 +589,8 @@
   </div>
 </section>
 
-<section class="section fridge-door" id="server">
+<section class="section chapter fridge-door" id="server">
+  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div>
     <div class="section-head" data-reveal>
       <h2 class="h-small" data-i18n="server.title">Straight from my server</h2>
@@ -612,7 +657,8 @@
 </section>
 </div>
 
-<section class="section" id="faq">
+<section class="section chapter" id="faq">
+  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div class="wrap faq-split">
     <div class="section-head" data-reveal>
       <h2 class="h-small" data-i18n="faq.title">Things people ask me</h2>
@@ -642,7 +688,8 @@
   </div>
 </section>
 
-<section class="section" id="changelog">
+<section class="section chapter" id="changelog">
+  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div class="wrap changelog-split">
     <div class="stick" data-reveal>
       <h2 class="h-small" data-i18n="changelog.title">What’s cooking</h2>
@@ -669,7 +716,10 @@
     </div>
   </div>
 </section>
+</div>
+</div>
 
+<!-- The back cover. -->
 <section class="cta" data-reveal>
   <div class="cta-photo" aria-hidden="true">
     <picture>

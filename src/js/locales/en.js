@@ -17,6 +17,16 @@
       changes: 'What’s new',
     },
     lang: { label: 'Language' },
+    // The site as a cookbook: the running head, the contents, chapter numbers and figure captions.
+    book: {
+      tagline: 'a cookbook for Discord',
+      contents: 'Contents',
+      chapter: 'Chapter',
+      fig: 'Fig.',
+      music: 'Music',
+      hours: 'Schedule',
+      deals: 'Deals',
+    },
     theme: {
       label: 'Color theme',
       toLight: 'Switch to light mode',
@@ -76,7 +86,6 @@
       title: 'Every Discord server has a kitchen',
       lead: 'Dzbanek keeps yours going. It plays your music, streams live radio, posts Steam deals every morning and gives new people a cookie.',
       secondary: 'Try the commands',
-      scroll: 'Scroll down',
     },
     film: {
       label: 'Dzbanek trailer',

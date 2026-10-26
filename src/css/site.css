@@ -1,5 +1,6 @@
 /* ==========================================================================
-   Dzbanek — night kitchen, lit from under the cabinets.
+   Dzbanek — a cookbook for Discord, open on the counter of a night kitchen.
+   Running head, contents, numbered chapters, captioned plates, a colophon.
    Sections: fonts · tokens · base · chrome · components · discord · pages · motion
    ========================================================================== */
 
@@ -120,6 +121,9 @@
   --wood: #3a2618;
   --line: rgba(246, 240, 230, 0.12);
   --line-strong: rgba(246, 240, 230, 0.22);
+  /* Printed rules: the running head, chapter lines, captions, the colophon. */
+  --rule: rgba(235, 154, 88, 0.22);
+  --rule-strong: rgba(235, 154, 88, 0.42);
   --shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
 
@@ -169,7 +173,7 @@
   --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
   /* Handwriting: the chalkboard and the sign-off. */
   --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
-  --header-space: 4.3rem;
+  --header-space: 4rem;
   /* Chalk dust on the chalkboard. */
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .4 0 0 0 0 .3 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   /* Subway tiles for the kitchen wall: grout and glaze only, so the colour under them (--wall) sets the theme. */
@@ -181,7 +185,11 @@
   --enamel-seam: #161a14;
   --enamel-ink: #f6f0e6;
   --enamel-muted: #d5dccb;
-  --wrap: 76rem;
+  /* One page width for every page, so the running head, the content and the colophon share their edges. */
+  --wrap: 84rem;
+  --gutter: 2rem;
+  /* The contents column beside the chapters on the home page. */
+  --rail: 12.5rem;
   color-scheme: dark;
   interpolate-size: allow-keywords;
 }
@@ -197,6 +205,8 @@ html.theme-light {
   --accent-text: #a9521a;
   --line: rgba(42, 28, 18, 0.12);
   --line-strong: rgba(42, 28, 18, 0.22);
+  --rule: rgba(169, 82, 26, 0.24);
+  --rule-strong: rgba(169, 82, 26, 0.45);
   --shadow: 0 16px 40px -14px rgba(80, 48, 20, 0.18);
   --shadow-lg: 0 40px 80px -36px rgba(80, 48, 20, 0.35);
   --ev-steam: #2a7fb8;
@@ -264,11 +274,12 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow-x: clip;
+  /* The cabinet light falls on the open book from above. */
   background:
-    radial-gradient(1200px 640px at 12% -12%, rgba(224, 138, 69, 0.17), transparent 60%),
-    radial-gradient(900px 520px at 96% 4%, rgba(255, 196, 119, 0.07), transparent 55%),
+    radial-gradient(1400px 620px at 50% -10%, rgba(224, 138, 69, 0.14), transparent 65%),
     var(--ink);
   color: var(--cream);
+  counter-reset: chapter fig;
   font-family: var(--sans);
   font-size: 1.05rem;
   line-height: 1.65;
@@ -277,8 +288,7 @@ body {
 
 html.theme-light body {
   background:
-    radial-gradient(1200px 640px at 12% -12%, rgba(224, 138, 69, 0.14), transparent 60%),
-    radial-gradient(900px 520px at 96% 4%, rgba(255, 196, 119, 0.16), transparent 55%),
+    radial-gradient(1400px 620px at 50% -10%, rgba(255, 196, 119, 0.22), transparent 65%),
     var(--ink);
 }
 
@@ -387,7 +397,7 @@ kbd {
 }
 
 .wrap {
-  width: min(var(--wrap), calc(100% - 2.5rem));
+  width: min(var(--wrap), 100% - 2 * var(--gutter));
   margin-inline: auto;
 }
 
@@ -415,30 +425,24 @@ kbd {
   transform: none;
 }
 
+/* The running head: a printed strip across the top of every page, ruled twice underneath. */
 .site-header {
   position: sticky;
-  top: 0.7rem;
+  top: 0;
   z-index: 40;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  width: min(78rem, calc(100% - 1.25rem));
-  min-height: 3.6rem;
-  margin: 0.7rem auto 0;
-  padding: 0.35rem 0.4rem 0.35rem 0.5rem;
-  background: color-mix(in srgb, var(--ink) 94%, transparent);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  gap: 1rem;
+  min-height: 3.75rem;
+  padding: 0.4rem max(var(--gutter), (100% - var(--wrap)) / 2);
+  background: color-mix(in srgb, var(--ink) 92%, transparent);
+  border-bottom: 3px double var(--rule-strong);
   view-transition-name: site-header;
 }
 
-/* No transition: fading a blurred shadow repaints the header on every frame of the first scroll. */
 /* Solid once content scrolls under it, so headings don't ghost through. */
 .site-header.is-scrolled {
   background: var(--ink);
-  border-color: var(--line-strong);
-  box-shadow: 0 16px 40px -14px rgba(0, 0, 0, 0.55);
 }
 
 .brand {
@@ -452,15 +456,22 @@ kbd {
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 2.3rem;
+  height: 2.3rem;
   border-radius: 50%;
   overflow: hidden;
   background: #5865f2;
-  box-shadow:
-    0 0 0 1px rgba(224, 138, 69, 0.55),
-    0 0 22px rgba(224, 138, 69, 0.28);
+  box-shadow: 0 0 0 1px var(--rule-strong);
   transition: transform 0.6s var(--spring);
+}
+
+/* What the book is, set beside the name like a subtitle. */
+.brand-tagline {
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--rule-strong);
+  color: var(--muted);
+  font: italic 400 1rem/1.2 var(--serif);
+  white-space: nowrap;
 }
 
 .brand-mark img {
@@ -491,10 +502,12 @@ kbd {
 .desk-nav a {
   position: relative;
   z-index: 1;
-  padding: 0.45rem 0.95rem;
-  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
   color: var(--muted);
-  font-weight: 500;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   text-decoration: none;
   transition: color 0.3s var(--ease);
 }
@@ -504,16 +517,15 @@ kbd {
   color: var(--cream);
 }
 
+/* A clay underline that slides to the link you point at (site.js). */
 .nav-pill {
   position: absolute;
-  top: 50%;
+  bottom: 0.1rem;
   left: 0;
   width: 0;
-  height: 2.3rem;
-  translate: 0 -50%;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--clay) 20%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--clay) 32%, transparent);
+  height: 2px;
+  border-radius: 1px;
+  background: var(--clay);
   opacity: 0;
   transition:
     left 0.5s var(--ease),
@@ -536,7 +548,7 @@ kbd {
   display: flex;
   padding: 0.15rem;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 0.55rem;
 }
 
 .lang a,
@@ -555,7 +567,7 @@ kbd {
   text-decoration: none;
   min-width: 2.4rem;
   min-height: 2rem;
-  border-radius: 999px;
+  border-radius: 0.4rem;
   color: var(--muted);
   font-size: 0.85rem;
   font-weight: 600;
@@ -573,7 +585,7 @@ kbd {
   place-items: center;
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 999px;
+  border-radius: 0.55rem;
   border: 1px solid var(--line);
   transition: transform 0.5s var(--spring), background 0.3s var(--ease), border-color 0.3s var(--ease);
 }
@@ -649,7 +661,7 @@ html:not(.theme-light) .icon-moon {
   gap: 0.5rem;
   min-height: 2.85rem;
   padding: 0.65rem 1.25rem;
-  border-radius: 999px;
+  border-radius: 0.6rem;
   border: 1px solid transparent;
   font: 600 1rem/1.2 var(--sans);
   text-decoration: none;
@@ -735,79 +747,91 @@ html:not(.theme-light) .icon-moon {
 
 /* footer */
 
+/* The colophon: the last page of the book, set small and centred under a fleuron. */
 .site-footer {
   margin-top: 3rem;
+  border-top: 3px double var(--rule-strong);
 }
 
-.wood-rule {
-  height: 12px;
-  background:
-    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0 2px, transparent 2px 11px),
-    repeating-linear-gradient(90deg, rgba(255, 220, 180, 0.05) 0 1px, transparent 1px 37px),
-    linear-gradient(180deg, #8a5a35, #5a3820 60%, #3a2414);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 220, 180, 0.25),
-    0 10px 30px -6px rgba(0, 0, 0, 0.35);
-}
-
-.footer-grid {
+.colophon {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 2.5rem 4rem;
-  padding: 3.25rem 0 2.25rem;
+  justify-items: center;
+  gap: 0.85rem;
+  padding: 3rem 0 2.25rem;
+  text-align: center;
 }
 
-.footer-brand p {
-  max-width: 22rem;
-  margin: 1rem 0 1.25rem;
+.colophon .brand-mark {
+  width: 3rem;
+  height: 3rem;
+}
+
+.colophon .brand-name {
+  font-size: 1.6rem;
+}
+
+.colophon-tagline {
+  margin-top: -0.6rem;
+  color: var(--accent-text);
+  font: italic 400 1.05rem/1.3 var(--serif);
+}
+
+.colophon-note {
+  max-width: 26rem;
   color: var(--muted);
 }
 
 /* A sign-off, written rather than typed. */
-.footer-brand .signed {
-  width: fit-content;
-  margin: -0.5rem 0 1.4rem;
+.colophon .signed {
+  margin-top: 0.4rem;
   color: var(--accent-text);
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.15rem;
+  font: 700 1.5rem/1.1 var(--hand);
   rotate: -2deg;
-  transform-origin: left center;
+}
+
+/* A printer's ornament: two rules and a diamond. */
+.fleuron {
+  display: block;
+  width: 9rem;
+  height: 0.9rem;
+  margin-bottom: 0.4rem;
+  background: var(--rule-strong);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 144 14'%3E%3Cpath d='M0 7h56M88 7h56' stroke='%23000' stroke-width='1.2'/%3E%3Cpath d='M72 1l6 6-6 6-6-6z' fill='none' stroke='%23000' stroke-width='1.2'/%3E%3Ccircle cx='72' cy='7' r='1.8'/%3E%3Ccircle cx='61' cy='7' r='1.2'/%3E%3Ccircle cx='83' cy='7' r='1.2'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 144 14'%3E%3Cpath d='M0 7h56M88 7h56' stroke='%23000' stroke-width='1.2'/%3E%3Cpath d='M72 1l6 6-6 6-6-6z' fill='none' stroke='%23000' stroke-width='1.2'/%3E%3Ccircle cx='72' cy='7' r='1.8'/%3E%3Ccircle cx='61' cy='7' r='1.2'/%3E%3Ccircle cx='83' cy='7' r='1.2'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 .footer-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.5rem;
-}
-
-.footer-title {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin: 0 0 0.75rem;
-  font: 600 0.78rem/1.2 var(--sans);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
 }
 
 .footer-nav {
   display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 0;
+  margin: 0.4rem 0 0.5rem;
 }
 
 .footer-nav a {
-  width: fit-content;
+  padding: 0.2rem 0.85rem;
   color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   text-decoration: none;
-  transition: color 0.3s var(--ease), translate 0.3s var(--ease);
+  transition: color 0.3s var(--ease);
+}
+
+.footer-nav a + a {
+  border-left: 1px solid var(--rule);
 }
 
 .footer-nav a:hover {
   color: var(--cream);
-  translate: 3px 0;
 }
 
 .footer-base {
@@ -817,9 +841,9 @@ html:not(.theme-light) .icon-moon {
   align-items: center;
   gap: 0.75rem 1.5rem;
   padding: 1.25rem 0 2rem;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--rule);
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
 }
 
 .to-top {
@@ -1049,16 +1073,16 @@ html:not(.theme-light) .icon-moon {
   color: var(--cream-soft);
 }
 
+/* A short clay rule, like the dashes in a recipe list. */
 .ticks li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.5rem;
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #f6c79f, var(--clay) 60%, var(--clay-deep));
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--clay) 18%, transparent);
+  top: 0.8rem;
+  width: 0.8rem;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--clay);
 }
 
 /* Uneven on purpose: the words get the wider column, and the example drops a little lower. */
@@ -1651,14 +1675,116 @@ button.dc-btn[aria-pressed="true"]:hover {
 
 /* ---------- pages: home ---------- */
 
+/* The title page: the kicker and the clock over a hairline, the title, then the photo plate. */
 .hero {
-  /* Shared by the sticker and the copy, which keeps clear of it. */
-  --sticker-right: clamp(1.25rem, 4vw, 3.5rem);
-  --sticker-size: clamp(7.25rem, 10vw, 9rem);
+  /* Shared by the sticker and the stage it sits on. */
+  --sticker-right: clamp(1rem, 2.6vw, 2.5rem);
+  --sticker-size: clamp(6.5rem, 9vw, 8.5rem);
+  position: relative;
+  padding: clamp(2rem, 4.5vw, 3.75rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.title-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.title-top .kicker {
+  margin: 0;
+}
+
+.hero-copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  align-items: end;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding: clamp(1.5rem, 3.5vw, 2.75rem) 0 clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
+.title-top > *,
+.hero-copy > * {
+  animation: rise-in 0.7s var(--ease) both;
+}
+
+.title-top > :nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.hero-copy > :nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.hero-copy > :nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 7vw, 6.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.title-side .lead {
+  margin-top: 0;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+}
+
+.title-side .hero-actions {
+  margin-top: 1.5rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.hero-actions.center {
+  justify-content: center;
+}
+
+/* A plate: a picture or an example, numbered and captioned like a figure in a book. */
+.plate {
+  margin: 0;
+}
+
+.plate-caption {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  counter-increment: fig;
+}
+
+.fig-no {
+  flex: none;
+  color: var(--accent-text);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fig-no::after {
+  content: " " counter(fig);
+}
+
+/* The photo plate, which is also the frame the ad plays in. */
+.hero-plate {
   position: relative;
   isolation: isolate;
-  margin-top: calc(-1 * var(--header-space));
-  padding: 0.6rem 0.6rem 0;
+  margin-inline: auto;
 }
 
 .hero-stage {
@@ -1666,13 +1792,16 @@ button.dc-btn[aria-pressed="true"]:hover {
   --focus-x: 0.5;
   --focus-y: 0.55;
   position: relative;
-  height: clamp(560px, 94svh, 960px);
-  border-radius: 1.75rem;
+  aspect-ratio: 16 / 9;
+  max-height: calc(100svh - var(--header-space) - 2.5rem);
+  border-radius: 0.9rem;
   overflow: hidden;
   isolation: isolate;
   container-type: size;
   background: #0d0806;
-  box-shadow: var(--shadow-lg);
+  box-shadow:
+    0 0 0 1px var(--rule),
+    var(--shadow-lg);
 }
 
 .hero-scene {
@@ -1690,118 +1819,20 @@ button.dc-btn[aria-pressed="true"]:hover {
   object-fit: cover;
 }
 
+/* Only a soft vignette now: nothing is written over the photo. */
 .hero-shade {
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(10, 6, 4, 0.55) 0%, transparent 18%),
-    linear-gradient(90deg, rgba(10, 6, 4, 0.86) 0%, rgba(10, 6, 4, 0.55) 34%, transparent 62%),
-    linear-gradient(0deg, rgba(10, 6, 4, 0.9) 0%, rgba(10, 6, 4, 0.2) 38%, transparent 55%),
-    radial-gradient(ellipse 75% 70% at 62% 45%, transparent 55%, rgba(10, 6, 4, 0.5) 100%);
-}
-
-.hero-copy {
-  position: absolute;
-  z-index: 3;
-  left: clamp(1.25rem, 5vw, 5rem);
-  right: clamp(1.25rem, 5vw, 5rem);
-  bottom: clamp(2rem, 8cqh, 5.5rem);
-  max-width: 42rem;
-  color: #f6f0e6;
-}
-
-.hero-copy > * {
-  animation: rise-in 0.7s var(--ease) both;
-}
-
-.hero-copy > :nth-child(2) {
-  animation-delay: 0.05s;
-}
-
-.hero-copy > :nth-child(3) {
-  animation-delay: 0.1s;
-}
-
-.hero-copy > :nth-child(4) {
-  animation-delay: 0.15s;
-}
-
-.hero-copy > :nth-child(5) {
-  animation-delay: 0.2s;
-}
-
-.hero-copy .clock-chip {
-  display: flex;
-  width: fit-content;
-  margin-bottom: 1.4rem;
-}
-
-.hero-copy .kicker {
-  display: flex;
-}
-
-.hero-copy .kicker {
-  color: #f2a970;
-}
-
-.hero-title {
-  font-size: clamp(2.9rem, 7.4vw, 6.6rem);
-  line-height: 0.96;
-  letter-spacing: -0.04em;
-  color: #fff8f1;
-  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.45);
-}
-
-.hero-copy .lead {
-  color: rgba(246, 240, 230, 0.86);
-  font-size: clamp(1.1rem, 1.6vw, 1.3rem);
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 2rem;
-}
-
-.hero-actions.center {
-  justify-content: center;
-}
-
-.hero .btn-ghost {
-  background: rgba(20, 14, 10, 0.62);
-  border-color: rgba(246, 240, 230, 0.32);
-  color: #f6f0e6;
-}
-
-.hero-scroll {
-  position: absolute;
-  z-index: 3;
-  right: clamp(1.25rem, 3vw, 2.5rem);
-  bottom: clamp(1.5rem, 4cqh, 2.5rem);
-  width: 1.6rem;
-  height: 2.6rem;
-  border: 1.5px solid rgba(246, 240, 230, 0.4);
-  border-radius: 999px;
-}
-
-.hero-scroll span {
-  position: absolute;
-  left: 50%;
-  top: 0.45rem;
-  width: 4px;
-  height: 8px;
-  margin-left: -2px;
-  border-radius: 4px;
-  background: #f6f0e6;
-  animation: scroll-dot 2s var(--ease) infinite;
+    linear-gradient(0deg, rgba(10, 6, 4, 0.4) 0%, transparent 30%),
+    radial-gradient(ellipse 80% 75% at 50% 50%, transparent 55%, rgba(10, 6, 4, 0.45) 100%);
 }
 
 /*
- * The film: the Dzbanek ad in the hero (film.js sets data-film on .hero).
- * Without scripts none of this shows, and the photo hero stays as it is.
+ * The film: the Dzbanek ad in the photo plate (film.js sets data-film on .hero).
+ * Without scripts none of this shows, and the photo stays as it is.
  * States: idle, starting, playing, paused, done.
  */
 
@@ -1812,8 +1843,6 @@ button.dc-btn[aria-pressed="true"]:hover {
   display: none;
 }
 
-/* When the ad is about to autoplay (html.film-soon, from theme-boot.js) or is loading (starting),
-   the stage already has its shape, so nothing under the hero jumps when it begins. */
 .hero[data-film] .hero-film,
 .hero[data-film] .film-glow,
 html.film-soon .hero .hero-film {
@@ -1849,41 +1878,18 @@ html.film-soon .hero:not([data-film]) .film-bar,
   position: absolute;
   z-index: -1;
   left: 0;
-  top: 8%;
+  top: 5%;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 9;
   border-radius: 3rem;
   opacity: 0;
   pointer-events: none;
   transition: opacity 1.2s var(--ease);
 }
 
-.hero-stage {
-  transition:
-    height 0.9s var(--ease),
-    box-shadow 0.9s var(--ease);
-}
-
 .hero-shade,
-.hero-scene,
-.hero-scroll {
+.hero-scene {
   transition: opacity 0.7s var(--ease);
-}
-
-.hero-copy {
-  transition:
-    opacity 0.5s var(--ease),
-    translate 0.7s var(--ease);
-}
-
-.hero[data-film="playing"] .hero-stage,
-.hero[data-film="starting"] .hero-stage,
-html.film-soon .hero:not([data-film]) .hero-stage,
-.hero[data-film="paused"] .hero-stage {
-  /* 16:9, so the ad's titles on the left and cards on the right are not cut off,
-     and short enough that the deck under it stays on screen. */
-  height: min(calc(100svh - 8.5rem), calc((100vw - 1.2rem) * 0.5625));
-  box-shadow: none;
 }
 
 .hero[data-film="playing"] .hero-film,
@@ -1903,45 +1909,8 @@ html.film-soon .hero:not([data-film]) .film-glow,
 .hero[data-film="playing"] .hero-shade,
 .hero[data-film="starting"] .hero-shade,
 html.film-soon .hero:not([data-film]) .hero-shade,
-.hero[data-film="paused"] .hero-shade,
-.hero[data-film="playing"] .hero-scroll,
-.hero[data-film="starting"] .hero-scroll,
-html.film-soon .hero:not([data-film]) .hero-scroll,
-.hero[data-film="paused"] .hero-scroll {
+.hero[data-film="paused"] .hero-shade {
   opacity: 0;
-}
-
-/* On tablets the copy is wide enough to reach the sticker; stop it short. */
-.hero[data-film] .hero-copy {
-  right: calc(var(--sticker-right) + var(--sticker-size) + 1.5rem);
-}
-
-.hero[data-film="playing"] .hero-copy,
-.hero[data-film="starting"] .hero-copy,
-html.film-soon .hero:not([data-film]) .hero-copy,
-.hero[data-film="paused"] .hero-copy {
-  opacity: 0;
-  translate: 0 1.5rem;
-  pointer-events: none;
-}
-
-/* The title stays for screen readers; the links and the clock leave the tab order. */
-.hero[data-film="playing"] .hero-actions,
-.hero[data-film="starting"] .hero-actions,
-html.film-soon .hero:not([data-film]) .hero-actions,
-.hero[data-film="paused"] .hero-actions,
-.hero[data-film="playing"] .clock-chip,
-.hero[data-film="starting"] .clock-chip,
-html.film-soon .hero:not([data-film]) .clock-chip,
-.hero[data-film="paused"] .clock-chip,
-.hero[data-film="playing"] .hero-scroll,
-.hero[data-film="starting"] .hero-scroll,
-html.film-soon .hero:not([data-film]) .hero-scroll,
-.hero[data-film="paused"] .hero-scroll {
-  visibility: hidden;
-  transition:
-    opacity 0.5s var(--ease),
-    visibility 0s linear 0.5s;
 }
 
 /* The deck sits under the film, so nothing covers the ad's own titles and cards. */
@@ -2179,9 +2148,162 @@ html.film-soon .hero:not([data-film]) .hero-scroll,
   transform: scale(1.1);
 }
 
+/* the book: the contents beside the chapters */
+
+.book {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  width: min(var(--wrap), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
+
+/* The contents ride along on the left while the chapters scroll. */
+.contents {
+  position: sticky;
+  top: calc(var(--header-space) + 1.5rem);
+  align-self: start;
+  max-height: calc(100svh - var(--header-space) - 3rem);
+  overflow-y: auto;
+  padding: clamp(1.75rem, 3.5vw, 2.75rem) 0 1rem;
+  scrollbar-width: thin;
+}
+
+.contents-title {
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--accent-text);
+  font: 700 0.72rem/1.2 var(--sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.contents-list {
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: toc;
+}
+
+.contents-list li {
+  counter-increment: toc;
+  break-inside: avoid;
+}
+
+.contents-list .is-foreword {
+  counter-increment: none;
+}
+
+.contents-list a {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  align-items: baseline;
+  padding: 0.4rem 0 0.4rem 0.9rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.3;
+  text-decoration: none;
+  transition: color 0.25s var(--ease);
+}
+
+.contents-list a::before {
+  content: counter(toc, decimal-leading-zero);
+  color: var(--accent-text);
+  font: italic 500 0.98rem/1 var(--serif);
+}
+
+.contents-list .is-foreword a::before {
+  content: "—";
+}
+
+/* The chapter you're in (contents.js): a clay dot in the margin. */
+.contents-list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-top: -0.2rem;
+  border-radius: 50%;
+  background: var(--clay);
+  scale: 0;
+  transition: scale 0.3s var(--spring);
+}
+
+.contents-list a:hover,
+.contents-list a[aria-current="true"] {
+  color: var(--cream);
+}
+
+.contents-list a[aria-current="true"]::after {
+  scale: 1;
+}
+
+/* Inside the book the column sets the width, not the page. */
+.chapters .wrap,
+.chapters .fridge {
+  width: auto;
+}
+
+.chapter {
+  counter-increment: chapter;
+}
+
+.chapter.foreword {
+  counter-increment: none;
+}
+
+/* The chapter line: a big italic number, a hairline, and the word "Chapter". */
+.chapter-no {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 clamp(1.5rem, 3vw, 2.25rem);
+  color: var(--accent-text);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.chapter-no::before {
+  content: counter(chapter, decimal-leading-zero);
+  font: italic 500 clamp(2.6rem, 4.4vw, 3.5rem)/0.8 var(--serif);
+  letter-spacing: -0.02em;
+}
+
+.chapter-no::after {
+  content: "";
+  flex: 1;
+  order: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.chapter-no span {
+  order: 2;
+}
+
+.foreword-title {
+  margin-bottom: 1.6rem;
+}
+
+.title-top .clock-chip {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+}
+
+.title-top .clock-chip strong {
+  color: var(--cream);
+}
+
 /* menu cards */
 
-/* Notes pinned up right under the photo: each one a little crooked, at its own height. */
+/* Notes pinned up in the foreword: each one a little crooked, at its own height. */
 .section.notes {
   padding-top: clamp(1.75rem, 3.5vw, 2.75rem);
 }
@@ -2626,11 +2748,13 @@ html:not(.js) .kradio-hint {
 
 /* schedule: the chalkboard and the wall clock */
 
-/* The kitchen wall they hang on: subway tiles, a cabinet above with its light on, the counter below. */
-.section.wall {
+/* The kitchen wall they hang on, as a plate in the chapter: subway tiles, a cabinet above with its light on, the counter below. */
+.wall {
   position: relative;
-  margin-block: clamp(1rem, 2.5vw, 2rem);
-  padding-block: clamp(4.25rem, 8vw, 6.5rem) clamp(4rem, 7.5vw, 6rem);
+  padding: clamp(4rem, 7.5vw, 6rem) clamp(1.25rem, 4vw, 3.25rem) clamp(3.75rem, 7vw, 5.5rem);
+  border-radius: 0.9rem;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--rule);
   background:
     radial-gradient(70% 85% at 50% 0%, var(--wall-light), transparent 70%),
     linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.18)),
@@ -2639,7 +2763,7 @@ html:not(.js) .kradio-hint {
 }
 
 /* The underside of the cabinet, with the strip light glowing along its edge. */
-.section.wall::before {
+.wall::before {
   content: "";
   position: absolute;
   inset: 0 0 auto;
@@ -2652,7 +2776,7 @@ html:not(.js) .kradio-hint {
 }
 
 /* The front edge of the counter. */
-.section.wall::after {
+.wall::after {
   content: "";
   position: absolute;
   inset: auto 0 0;
@@ -2950,12 +3074,80 @@ html:not(.js) .kradio-hint {
 }
 
 .deal-when {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.45rem;
-  color: var(--clay);
+  gap: 0.6rem;
+  color: var(--accent-text);
   font-size: 0.85rem;
   font-weight: 600;
+  line-height: 1.35;
+}
+
+.deal-when p {
+  margin-left: 0.25rem;
+}
+
+/* How long until the next post (clock.js), under the time. */
+.deal-in {
+  display: block;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.deal-in:empty {
+  display: none;
+}
+
+/* A small enamel kitchen clock with its hands set to one posting time.
+   Like the wall clock it's an object, so it looks the same in light and dark. */
+.mini-clock {
+  position: relative;
+  flex: none;
+  width: 2.6rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #f6efe2 0 60%, transparent 61%),
+    repeating-conic-gradient(from -2deg, #2b2119 0 4deg, transparent 4deg 30deg),
+    #f6efe2;
+  box-shadow:
+    inset 0 0 0 2px #8e8476,
+    inset 0 0 0 3.5px #f6efe2,
+    0 4px 8px -2px rgba(0, 0, 0, 0.45);
+  transition: box-shadow 0.4s var(--ease);
+}
+
+.mini-clock::before,
+.mini-clock::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: #231a13;
+  transform-origin: 50% 100%;
+}
+
+/* The hour hand moves on with the minutes, as on a real clock. */
+.mini-clock::before {
+  height: 26%;
+  rotate: calc(var(--h) * 30deg + var(--m) * 0.5deg);
+}
+
+.mini-clock::after {
+  height: 36%;
+  rotate: calc(var(--m) * 6deg);
+}
+
+/* The next of its kind (clock.js) gets a clay ring. */
+.mini-clock.is-next {
+  box-shadow:
+    inset 0 0 0 2px #8e8476,
+    inset 0 0 0 3.5px #f6efe2,
+    0 0 0 2px var(--clay),
+    0 4px 8px -2px rgba(0, 0, 0, 0.45);
 }
 
 .deal-body {
@@ -3354,7 +3546,7 @@ html.theme-light .chip-vp {
 .fridge {
   display: grid;
   gap: 5px;
-  width: min(var(--wrap), calc(100% - 2.5rem));
+  width: min(var(--wrap), 100% - 2 * var(--gutter));
   margin: clamp(1.5rem, 3vw, 2.5rem) auto;
   border-radius: 2.4rem;
   background: var(--enamel-seam);
@@ -3404,6 +3596,15 @@ html.theme-light .chip-vp {
 
 .fridge-door .section-head h2 {
   color: var(--enamel-ink);
+}
+
+/* The chapter line on the door, like a label stuck on the enamel. */
+.fridge-door .chapter-no {
+  color: var(--enamel-ink);
+}
+
+.fridge-door .chapter-no::after {
+  background: color-mix(in srgb, var(--enamel-ink) 28%, transparent);
 }
 
 .fridge-door .lead {
@@ -3927,18 +4128,20 @@ html.theme-light .receipt-wrap {
   color: var(--accent-text);
 }
 
-/* cta */
+/* cta: the back cover, framed twice like a cloth binding */
 
 .cta {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
   gap: clamp(1.75rem, 5vw, 4rem);
-  width: min(var(--wrap), calc(100% - 2.5rem));
+  width: min(var(--wrap), 100% - 2 * var(--gutter));
   margin: 2rem auto 3rem;
   padding: clamp(2rem, 5vw, 4rem);
-  border-radius: 2.2rem;
-  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  border: 1px solid var(--rule-strong);
+  outline: 1px solid var(--rule);
+  outline-offset: -0.65rem;
   background:
     radial-gradient(600px 260px at 15% 50%, rgba(224, 138, 69, 0.26), transparent 70%),
     radial-gradient(500px 200px at 100% 0%, rgba(255, 196, 119, 0.1), transparent 70%),
@@ -3972,13 +4175,33 @@ html.theme-light .receipt-wrap {
 
 /* ---------- pages: inner ---------- */
 
+/* Each inner page opens like a part of the book: its name over a hairline, then the title. */
 .page-hero {
   position: relative;
-  padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(2rem, 4vw, 3rem);
+  padding: clamp(2rem, 4.5vw, 3.75rem) 0 clamp(2rem, 4vw, 3rem);
+}
+
+.page-hero .title-top {
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+}
+
+.title-tag {
+  color: var(--muted);
+  font: italic 400 1rem/1.2 var(--serif);
 }
 
 .page-hero .lead {
   font-size: 1.2rem;
+}
+
+/* Inner pages: a printed rule over every section after the first. */
+body:not([data-page="home"]) .section:not(.flush-top) {
+  padding-top: 0;
+}
+
+body:not([data-page="home"]) .section:not(.flush-top) > .wrap:first-of-type {
+  padding-top: clamp(2.75rem, 5.5vw, 4.25rem);
+  border-top: 1px solid var(--rule);
 }
 
 .page-hero .wrap > * {
@@ -5837,6 +6060,10 @@ html:not(.js) .vote-controls {
   margin-inline: auto;
 }
 
+.lost .fleuron {
+  margin-bottom: 1.25rem;
+}
+
 .lost-mug {
   position: relative;
   width: 11rem;
@@ -5876,6 +6103,32 @@ html.js [data-reveal-group].is-in > * {
 
 /* ---------- responsive ---------- */
 
+@media (max-width: 1240px) {
+  .brand-tagline {
+    display: none;
+  }
+}
+
+/* Too narrow for a margin: the contents become a page of their own, after the title page. */
+@media (max-width: 1200px) {
+  .book {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .contents {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding: 1rem 0 0;
+  }
+
+  .contents-list {
+    columns: 3 13rem;
+    column-gap: 2.5rem;
+  }
+}
+
 @media (max-width: 1100px) {
   .menu-cards {
     grid-template-columns: repeat(2, 1fr);
@@ -5906,7 +6159,7 @@ html.js [data-reveal-group].is-in > * {
   .mobile-menu {
     position: fixed;
     z-index: 39;
-    top: calc(var(--header-space) + 0.5rem);
+    top: calc(var(--header-space) + 0.35rem);
     left: 0.65rem;
     right: 0.65rem;
     display: flex;
@@ -5915,7 +6168,7 @@ html.js [data-reveal-group].is-in > * {
     max-height: calc(100svh - 6.4rem);
     padding: 0.6rem;
     overflow: auto;
-    border-radius: 1.4rem;
+    border-radius: 0.9rem;
     border: 1px solid var(--line);
     background: var(--ink-2);
     box-shadow: var(--shadow-lg);
@@ -5933,7 +6186,7 @@ html.js [data-reveal-group].is-in > * {
     align-items: center;
     justify-content: space-between;
     padding: 0.9rem 1rem;
-    border-radius: 0.9rem;
+    border-radius: 0.6rem;
     font-size: 1.15rem;
     font-weight: 500;
     text-decoration: none;
@@ -5951,6 +6204,7 @@ html.js [data-reveal-group].is-in > * {
     background: color-mix(in srgb, var(--clay) 18%, transparent);
   }
 
+  .hero-copy,
   .split,
   .split.reverse,
   .split.lean,
@@ -6031,90 +6285,25 @@ html.js [data-reveal-group].is-in > * {
   }
 
   .hero {
-    --sticker-right: 1rem;
-    --sticker-size: 6.5rem;
+    --sticker-right: 0.75rem;
+    --sticker-size: 5.5rem;
   }
 
-  /* Phones: the copy is in the flow, so the stage grows to fit it rather than
-     pushing the title up under the header and the sticker. */
+  /* Phones: a taller crop of the photo, and 16:9 again once the ad plays. */
   .hero-stage {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: auto;
-    min-height: clamp(540px, 88svh, 760px);
-    container-type: normal;
-    border-radius: 1.4rem;
-  }
-
-  .hero-stage {
-    --focus-x: 0.74;
-  }
-
-  /* The stage is always taller than 16:9 here, so the scene is just full height. */
-  .hero-scene {
-    left: calc(100% * var(--focus-x));
-    top: 0;
-    width: auto;
-    height: 100%;
-    translate: calc(-100% * var(--focus-x)) 0;
-  }
-
-  .hero-copy {
-    position: relative;
-    inset: auto;
-    margin: calc(var(--header-space) + 1.25rem) clamp(1.25rem, 5vw, 5rem) clamp(2rem, 8svh, 5.5rem);
-  }
-
-  /* The sticker sits above the copy here. */
-  .hero[data-film] .hero-copy {
-    right: auto;
-    margin-top: calc(var(--header-space) + 0.75rem + var(--sticker-size) + 1.25rem);
-  }
-
-  /* Phones: 16:9 is short in portrait, so the stage keeps its height and the film sits in it whole. */
-  .hero-film {
-    object-fit: contain;
+    aspect-ratio: 4 / 3;
+    border-radius: 0.7rem;
   }
 
   .hero[data-film="playing"] .hero-stage,
   .hero[data-film="starting"] .hero-stage,
   html.film-soon .hero:not([data-film]) .hero-stage,
   .hero[data-film="paused"] .hero-stage {
-    min-height: 0;
-    height: min(clamp(540px, 88svh, 760px), calc(100svh - 6.5rem));
+    aspect-ratio: 16 / 9;
   }
 
-  /* The copy is hidden while the film plays; out of the flow, it lets the stage
-     fit the screen again, so the deck stays clear of the sticky invite. */
-  .hero[data-film="playing"] .hero-copy,
-  .hero[data-film="starting"] .hero-copy,
-  html.film-soon .hero:not([data-film]) .hero-copy,
-  .hero[data-film="paused"] .hero-copy {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  .hero[data-film="playing"] .hero-scene,
-  .hero[data-film="starting"] .hero-scene,
-  html.film-soon .hero:not([data-film]) .hero-scene,
-  .hero[data-film="paused"] .hero-scene {
-    opacity: 0.32;
-  }
-
-  .film-glow {
-    top: 4%;
-  }
-
-  /* Here the film leaves room above and below it, so the deck can sit inside the stage. */
-  .film-bar {
-    position: absolute;
-    left: 1.35rem;
-    right: 1.35rem;
+  .film-sticker {
     bottom: 0.75rem;
-    margin: 0;
   }
 
   .film-line {
@@ -6137,21 +6326,6 @@ html.js [data-reveal-group].is-in > * {
   }
 
   .film-skip span {
-    display: none;
-  }
-
-  .film-sticker {
-    top: calc(var(--header-space) + 0.75rem);
-    bottom: auto;
-  }
-
-  .hero-shade {
-    background:
-      linear-gradient(180deg, rgba(10, 6, 4, 0.55) 0%, transparent 18%),
-      linear-gradient(0deg, rgba(10, 6, 4, 0.95) 0%, rgba(10, 6, 4, 0.7) 40%, transparent 70%);
-  }
-
-  .hero-scroll {
     display: none;
   }
 
@@ -6211,10 +6385,6 @@ html.js [data-reveal-group].is-in > * {
 
   .cta .hero-actions {
     justify-content: center;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
   }
 
   .intent {
@@ -6294,8 +6464,28 @@ html.js [data-reveal-group].is-in > * {
     justify-content: center;
   }
 
-  .wrap {
-    width: calc(100% - 2rem);
+  :root {
+    --gutter: 1rem;
+  }
+
+  .contents-list {
+    columns: 2;
+    column-gap: 1rem;
+  }
+
+  .contents-list a {
+    grid-template-columns: 1.7rem minmax(0, 1fr);
+    padding-left: 0.7rem;
+    font-size: 0.88rem;
+  }
+
+  /* Wrapped onto two lines, a rule would start the second one. */
+  .footer-nav {
+    gap: 0.35rem 0.25rem;
+  }
+
+  .footer-nav a + a {
+    border-left: 0;
   }
 }
 
@@ -6447,20 +6637,6 @@ html.js [data-reveal-group].is-in > * {
   to {
     opacity: 1;
     translate: 0 0;
-  }
-}
-
-@keyframes scroll-dot {
-  0% {
-    opacity: 0;
-    translate: 0 0;
-  }
-  30% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    translate: 0 14px;
   }
 }
 
