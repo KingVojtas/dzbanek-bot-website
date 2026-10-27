@@ -376,8 +376,8 @@
       </label>
     </div>
     <div class="ref-sub" data-reveal>
-      <p class="lead" data-i18n="commands.refLead">All 30 of them, grouped the way /help groups them. Search, or jump to a shelf.</p>
-      <nav class="cmd-jump" aria-label="Command groups" data-i18n-aria="commands.jump"><a href="#cmd-gMusic"><span data-i18n="commands.gMusic">Music</span> <b>8</b></a><a href="#cmd-gRadio"><span data-i18n="commands.gRadio">Radio</span> <b>5</b></a><a href="#cmd-gSteam"><span data-i18n="commands.gSteam">Steam wishlist</span> <b>3</b></a><a href="#cmd-gQuiz"><span data-i18n="commands.gQuiz">Kitchen Quiz</span> <b>2</b></a><a href="#cmd-gSetup"><span data-i18n="commands.gSetup">Kitchen & setup</span> <b>9</b></a><a href="#cmd-gRooms"><span data-i18n="commands.gRooms">Rooms</span> <b>2</b></a><a href="#cmd-gHelp"><span data-i18n="commands.gHelp">Help</span> <b>1</b></a></nav>
+      <p class="lead" data-i18n="commands.refLead">All 31 of them, grouped the way /help groups them. Search, or jump to a shelf.</p>
+      <nav class="cmd-jump" aria-label="Command groups" data-i18n-aria="commands.jump"><a href="#cmd-gMusic"><span data-i18n="commands.gMusic">Music</span> <b>8</b></a><a href="#cmd-gRadio"><span data-i18n="commands.gRadio">Radio</span> <b>5</b></a><a href="#cmd-gSteam"><span data-i18n="commands.gSteam">Steam wishlist</span> <b>3</b></a><a href="#cmd-gQuiz"><span data-i18n="commands.gQuiz">Kitchen Quiz</span> <b>2</b></a><a href="#cmd-gSetup"><span data-i18n="commands.gSetup">Kitchen & setup</span> <b>10</b></a><a href="#cmd-gRooms"><span data-i18n="commands.gRooms">Rooms</span> <b>2</b></a><a href="#cmd-gHelp"><span data-i18n="commands.gHelp">Help</span> <b>1</b></a></nav>
     </div>
     <!-- Printed like a café menu, grouped the way the bot's /help groups them.
          Commands with subcommands list each one on its own line, with its options. -->
@@ -459,7 +459,7 @@
         </article>
       </section>
       <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gSetup">
-        <h3 class="cmd-group-title" id="cmd-gSetup"><span data-i18n="commands.gSetup">Kitchen & setup</span> <span class="cmd-count">9</span></h3>
+        <h3 class="cmd-group-title" id="cmd-gSetup"><span data-i18n="commands.gSetup">Kitchen & setup</span> <span class="cmd-count">10</span></h3>
         <article class="cmd-item" id="setup" data-cmd>
           <header><code class="cmd-name">/setup</code> <span class="cmd-need" data-i18n="commands.needManage">Manage Server</span><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/setup status"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
           <p data-i18n="commands.setup">Sets which channels get deals, welcome messages, Wishlist Radar, and the Kitchen Board. wrapped-preview shows this month’s Kitchen Wrapped so far, only to you. Needs Manage Server.</p>
@@ -479,7 +479,7 @@
         <h3 class="cmd-group-title" id="cmd-gHelp"><span data-i18n="commands.gHelp">Help</span> <span class="cmd-count">1</span></h3>
         <article class="cmd-item" id="help" data-cmd>
           <header><code class="cmd-name">/help</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/help"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-          <p data-i18n="commands.help">Shows every command on one card. Add a command’s name to get just that one, with all its options.</p>
+          <p data-i18n="commands.help">Shows every command on one card, explains the kitchen words, and has buttons to add Dzbanek or open this site. Add a command’s name to get just that one, with all its options.</p>
           <ul class="opts"><li><code>command</code></li></ul>
         </article>
       </section>
@@ -509,10 +509,10 @@
         </dl>
       </div>
       <div class="btn-group">
-        <h3>Kitchen FM</h3>
+        <h3 data-i18n="commands.groupQueue">/queue</h3>
         <dl>
-          <div><dt><span class="dc-btn is-hot">🔥 4</span></dt><dd data-i18n="buttons.fire">Keeps a new find in the kitchen and brings a kitchen song back more often. The number is how many 🔥 the song has.</dd></div>
-          <div><dt><span class="dc-btn">👎</span></dt><dd data-i18n="buttons.nope">Drops a new find for good and rests a song people are tired of. One of the two per person per song; press it again to take it back.</dd></div>
+          <div><dt><span class="dc-btn">◀️ Prev</span></dt><dd data-i18n="buttons.prev">Previous page of the queue.</dd></div>
+          <div><dt><span class="dc-btn">▶️ Next</span></dt><dd data-i18n="buttons.next">Next page of the queue.</dd></div>
         </dl>
       </div>
       <div class="btn-group">
@@ -525,10 +525,10 @@
         </dl>
       </div>
       <div class="btn-group">
-        <h3 data-i18n="commands.groupQueue">/queue</h3>
+        <h3>Kitchen FM</h3>
         <dl>
-          <div><dt><span class="dc-btn">◀️ Prev</span></dt><dd data-i18n="buttons.prev">Previous page of the queue.</dd></div>
-          <div><dt><span class="dc-btn">▶️ Next</span></dt><dd data-i18n="buttons.next">Next page of the queue.</dd></div>
+          <div><dt><span class="dc-btn is-hot">🔥 4</span></dt><dd data-i18n="buttons.fire">Keeps a new find in the kitchen and brings a kitchen song back more often. The number is how many 🔥 the song has.</dd></div>
+          <div><dt><span class="dc-btn">👎</span></dt><dd data-i18n="buttons.nope">Drops a new find for good and rests a song people are tired of. One of the two per person per song; press it again to take it back.</dd></div>
         </dl>
       </div>
       <div class="btn-group">
@@ -536,10 +536,12 @@
         <dl>
           <div><dt><span class="dc-btn dc-btn-green">▶️ Start now</span> <span class="dc-btn">Cancel</span></dt><dd data-i18n="buttons.start">Starts the quiz before its countdown runs out, or calls it off. Anyone in the quiz’s voice channel can press them.</dd></div>
           <div><dt><span class="dc-btn">A · …</span></dt><dd data-i18n="buttons.answer">Your guess. Four songs, one is playing. You have 20 seconds.</dd></div>
-          <div><dt><span class="dc-btn">🔁 Play again</span></dt><dd data-i18n="buttons.again">Starts another quiz from the podium.</dd></div>
+          <div><dt><span class="dc-btn dc-btn-blurple">🔁 Play again</span></dt><dd data-i18n="buttons.again">Starts another quiz from the podium.</dd></div>
         </dl>
       </div>
     </div>
     <p class="note" data-reveal><a class="link-arrow" href="radio.html"><span data-i18n="nav.radio">Radio</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a> <a class="link-arrow" href="setup.html"><span data-i18n="nav.setup">Setup</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
   </div>
 </section>
+
+{{backCover}}

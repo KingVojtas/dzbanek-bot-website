@@ -786,6 +786,11 @@ html:not(.theme-light) .icon-moon {
   gap: 0.5rem;
 }
 
+/* A page that ends on the back cover already has both buttons right above. */
+body:has(.cta) .footer-actions {
+  display: none;
+}
+
 .footer-nav {
   display: flex;
   flex-wrap: wrap;
@@ -970,6 +975,11 @@ html:not(.theme-light) .icon-moon {
 
 .link-arrow + .link-arrow {
   margin-left: 1.25rem;
+}
+
+/* In a row of links the gap already spaces them, and a wrapped one starts at the left edge. */
+.radio-links .link-arrow + .link-arrow {
+  margin-left: 0;
 }
 
 .link-arrow svg {
@@ -1425,6 +1435,15 @@ button.dc-btn:active {
   border-radius: 0.25rem;
   background: var(--dc-code, rgba(0, 0, 0, 0.25));
   font-size: 0.78rem;
+}
+
+/* The kitchen words: one per line, smaller than the commands above them. */
+.dc-help-words p + p {
+  margin-top: 0.2rem;
+}
+
+.dc-help-words p:not(.dc-help-title) {
+  font-size: 0.8rem;
 }
 
 .dc-btn-red,
@@ -5366,9 +5385,10 @@ html:not(.js) .kbd-hint {
 }
 
 /* Three across, balancing alone would leave the last column empty: Now Playing gets the first,
-   Radio the second, and the two short cards share the third. */
+   /queue and Radio the second, and Kitchen FM and the quiz the third. */
 @media (min-width: 981px) {
-  .btn-group:nth-child(-n + 2) {
+  .btn-group:nth-child(1),
+  .btn-group:nth-child(3) {
     break-after: column;
   }
 }
@@ -6855,9 +6875,31 @@ html.js [data-reveal-group].is-in > * {
     margin-top: 0.2rem;
   }
 
+  /* On a phone the screenshots sit in a row you swipe through, the next one peeking in at the edge,
+     instead of six tall frames one under another. */
   .gallery {
-    grid-template-columns: minmax(0, 1fr);
-    max-width: 26rem;
+    display: flex;
+    gap: 0.9rem;
+    margin-inline: calc(-1 * var(--gutter));
+    padding: 0 var(--gutter) 0.5rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery > li {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+
+  .gallery > li:has(.is-wide) {
+    align-self: start;
   }
 
   .receipt-list li,
@@ -6952,6 +6994,77 @@ html.js [data-reveal-group].is-in > * {
 
   .tally-line {
     font-size: 0.64rem;
+  }
+}
+
+/* ---------- touch: room for a thumb ---------- */
+
+/* About 44px for anything a finger presses on its own. Lists and pills get it as real padding;
+   lone links get an invisible margin around them, so the page doesn't move. */
+@media (pointer: coarse) {
+  .contents-list a {
+    padding-block: 0.7rem;
+  }
+
+  .footer-nav {
+    gap: 0;
+  }
+
+  .footer-nav a {
+    padding-block: 0.8rem;
+  }
+
+  .to-top,
+  .link-btn {
+    padding-block: 0.65rem;
+  }
+
+  .lang a {
+    min-height: 2.5rem;
+  }
+
+  .btn-sm,
+  .chip,
+  .cmd-jump a,
+  .log-filter button {
+    min-height: 2.75rem;
+  }
+
+  .dc-send {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .copy {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+  }
+
+  .seg button,
+  .dc-mchans .dc-ch {
+    min-height: 2.5rem;
+  }
+
+  .radio-links {
+    row-gap: 1.1rem;
+  }
+
+  .link-arrow,
+  .station-link,
+  .log-sha {
+    position: relative;
+  }
+
+  .link-arrow::after,
+  .station-link::after,
+  .log-sha::after {
+    content: "";
+    position: absolute;
+    inset: -0.5rem -0.25rem;
+  }
+
+  .log-sha::after {
+    inset-block: -0.3rem;
   }
 }
 

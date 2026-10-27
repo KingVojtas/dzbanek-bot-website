@@ -15,7 +15,7 @@
 
 <section class="section flush-top" id="server-data">
   <div class="wrap privacy-grid">
-    <!-- Everything in the bot's database (prisma/schema.prisma in the bot repo), as a pantry list. -->
+    <!-- Everything in the bot's database (prisma/schema.prisma in the bot repo), and the line its log keeps when it joins or leaves a server (src/events/guildJoin.ts), as a pantry list. -->
     <div class="recipe" data-reveal>
       <h2 class="recipe-title" data-i18n="privacy.serverTitle">For each server</h2>
       <dl class="recipe-list">
@@ -27,6 +27,7 @@
         <div><dt data-i18n="privacy.quizT">Quiz scores</dt><dd data-i18n="privacy.quiz">Points, right answers, and rounds for each player, for the podium, the week’s champion, and Kitchen Wrapped.</dd></div>
         <div><dt data-i18n="privacy.reactionsT">🔥 and 👎</dt><dd data-i18n="privacy.reactions">Who reacted to which song on Kitchen FM, so the station knows what to play more and what to leave out. The 🔥 song of the week and the Chef of the week are counted from them too.</dd></div>
         <div><dt data-i18n="privacy.dealsT">Deals already posted</dt><dd data-i18n="privacy.deals">Which Steam and Epic games each server has already seen, so nothing gets posted twice.</dd></div>
+        <div><dt data-i18n="privacy.joinsT">Joins and leaves</dt><dd data-i18n="privacy.joins">When Dzbanek is added to a server or removed from one, its log notes the server’s name, ID, and member count. Nothing about the people in it.</dd></div>
       </dl>
     </div>
     <div class="privacy-side">
@@ -50,7 +51,7 @@
       <div class="recipe" data-reveal>
         <h2 class="recipe-title" data-i18n="privacy.sharedTitle">Who else sees some of it</h2>
         <dl class="recipe-list">
-          <div><dt data-i18n="privacy.claudeT">Claude, by Anthropic</dt><dd data-i18n="privacy.claude">When Kitchen FM can’t build a set from its genre blocks and Claude is switched on for the bot, the DJ asks Claude to plan one. That sends the server’s name, the time, the names of the people listening and of newcomers, and the songs with who brought them in.</dd></div>
+          <div><dt data-i18n="privacy.claudeT">Claude, by Anthropic</dt><dd data-i18n="privacy.claude">When Kitchen FM can’t build a set from its genre blocks and Claude is switched on for the bot, the DJ asks Claude to plan one. That sends the server’s name, the time, the names of the people listening and of newcomers, and the songs with who brought them in. At most 20 sets per server a day.</dd></div>
           <div><dt data-i18n="privacy.voiceT">Microsoft</dt><dd data-i18n="privacy.voice">The DJ’s lines are turned into speech by Microsoft Edge’s read-aloud service. A line can hold names and a dedication.</dd></div>
           <div><dt data-i18n="privacy.searchT">YouTube and Spotify</dt><dd data-i18n="privacy.search">What you ask /play for, so the song can be found. Deezer gets an artist and a title, and MusicBrainz an artist’s name, for genres and similar artists.</dd></div>
           <div><dt data-i18n="privacy.steamUseT">Steam</dt><dd data-i18n="privacy.steamUse">Your Steam ID, when Wishlist Radar reads your public wishlist.</dd></div>
@@ -81,6 +82,7 @@
         <h2 data-i18n="privacy.removeTitle">Want something gone?</h2>
         <p class="lead" data-i18n="privacy.removeBody">/steam unlink removes your Steam link on the spot. For anything else, write to me on GitHub and I’ll clear it. Nothing here is sold, and nobody gets it beyond the services above.</p>
         <p class="note"><a class="link-arrow" href="{{github}}/issues" target="_blank" rel="noopener noreferrer"><span data-i18n="about.write">Tell me on GitHub</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-external" /></svg></a></p>
+        <p class="note privacy-date" data-i18n="privacy.updated">This page last changed on 27 October 2026. If the bot starts keeping something new, it’ll be added here.</p>
       </div>
     </div>
   </div>

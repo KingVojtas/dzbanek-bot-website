@@ -25,11 +25,13 @@ English is in the HTML. Czech is in `src/js/locales/cs.js`, and the build writes
 
 The radio plays the stations' public streams, the same ones the bot uses, in the bot's `/radio` order (`src/radio/station.ts` in the bot repo; Rock Radio needs its `https://` address here). `src/js/listen.js` holds the one list of stations; the radio page, the shelf radio and the vote read their names from it and their dial positions from the labels in the HTML, so a new station means a line there, its markup on `radio.html` and the home page, a `--key` colour in `site.css`, and its strings in both locales. Nothing plays until someone presses a key, and the ad mutes itself when the radio starts, and the other way round. The song titles come from radia.cz, which only answers `https://` pages, so on a local `http://` server those stations play but show no titles. Frekvence 1's come from Triton's public feed, Heart's and Capital's from Global's now-playing socket (`wss://metadata.musicradio.com/v2/now-playing`, the station's `heraldId` from globalplayer.com), and Radio Paradise's from the first metadata block of its own stream. Those three answer anywhere.
 
-"What's cooking" on the home page is the changelog. To add a change, put a new `<li>` at the top of the list in `src/pages/index.html` with the next free `changelog.cN` key, and add that key to both locale files.
+"What's cooking" on the home page is a short slip with the four newest changes; every change is on `changes.html`. To add one, put a new `<li>` at the top of the list in `src/pages/index.html` with the next free `changelog.cN` key, add that key to both locale files, and take the bottom `<li>` and its key out.
 
 The site reads like a cookbook: a running head across the top of every page, a title page, and a colophon at the bottom. On the home page every `<section class="chapter">` takes its number from a CSS counter, and every caption with `class="plate-caption"` takes its figure number the same way, so moving or adding a section renumbers everything. A new chapter also needs a line in the contents (`.contents` in `src/pages/index.html`), which `src/js/contents.js` highlights while you read that chapter. The inner pages open with the same title-page head and put a printed rule over each section after the first.
 
 The home hero plays the 59-second Dzbanek ad (`src/js/film.js`). Its first frame is `kitchen-hero.jpg` and so is its last, so the photo seems to start moving and the ad hands back to the hero without a jump. On the first visit of a browser session it starts muted, since browsers only allow sound after a click; "Turn on sound" restarts it with the voice-over and captions. It skips the autoplay for `prefers-reduced-motion` and data saver, and the round sticker plays it with sound. `assets/ad/` holds a 1080p and a 720p H.264 encode (phones get the 720p) and EN / CS captions. `og:video` on the home page points at the 720p file, so a pasted link plays the ad in Discord. The ad's source, and how to rebuild it, is in `ad/` (see `ad/README.md`). The radio section on the home page and on `radio.html` also has a 46-second radio ad about the seven stations and Kitchen FM (`assets/ad/dzbanek-radio-*.mp4`, `src/js/radio-film.js`): an ordinary video with controls, with captions in the page language. Whichever plays with sound, the live radio, the hero ad or the radio ad, the others go quiet. Its source is `ad/radio/`.
+
+A pasted link to an inner page shows that page's own picture: its title beside a real piece of it (the demo's Now Playing card, the tuner, the receipt…), in English (`assets/og/<page>.jpg`) and Czech (`<page>-cs.jpg`), with `og.<page>` from the locales as its alt text. The build uses one when it's there and the kitchen photo otherwise. `node scripts/share-images.mjs` makes them again from a fresh `dist/` (it needs the ad tools' puppeteer-core and Chrome), so run it after a page's title or that piece of it changes.
 
 `scripts/build.mjs` stitches `src/partials/` and `src/pages/` into `dist/`. That folder is what you open, and what GitHub Pages publishes.
 
@@ -61,7 +63,7 @@ This website does not start the bot.
 ## Code breakdown
 
 ```
-src/partials/          head, header, footer, icons (inline SVG sprite)
+src/partials/          head, header, footer, icons (inline SVG sprite), back-cover (the invite that ends a page)
 src/pages/             page content only
 src/css/site.css       the cookbook in wood, cream, and clay: fonts, tokens, running head, chapters, plates, Discord cards, pages, motion
 src/js/i18n.js         EN / CS strings for what scripts draw, the language switch, localStorage dzbanek_lang
@@ -72,19 +74,20 @@ src/js/site.js         year, menu, nav pill, the home radio, screenshot zoom, co
 src/js/reveal.js       scroll reveals ([data-reveal], [data-reveal-group])
 src/js/clock.js        Europe/Prague clock, the next scheduled event, and the small clocks by the deals
 src/js/contents.js     the home page contents: marks the chapter you are reading
-src/js/discord-demo.js the pretend Discord server on commands.html: #kitchen takes commands, the other channels show the bot's posts
+src/js/discord-demo.js the pretend Discord server on commands.html: #kitchen takes commands (the first time it scrolls into view, it types /play by itself, unless motion is reduced or someone got there first), the other channels show the bot's posts
 src/js/radio.js        tuner, on-air lines and Radio Night vote on radio.html
 src/js/changes.js      the New / Better / Fix filter on changes.html
 src/js/film.js         the hero ad on index.html: autoplay, sound, chapters, captions, glow
 scripts/build.mjs
+scripts/share-images.mjs the share pictures in assets/og/, made from dist/
 dist/             generated, not committed
 ```
 
 The top of `scripts/build.mjs` is the single list of public links: `SITE_URL` (where the site is served), the invite URL, and the GitHub URL. `SITE_URL` sets the canonical link, `og:url`, `og:image`, the `hreflang` links, `sitemap.xml`, the home page’s JSON-LD, and the asset paths in `404.html`, which GitHub Pages serves at any missing path.
 
-After building, `scripts/check.mjs` checks `dist/` and fails the build (and so the deploy) when a string is in one locale file and not the other, a page or script uses a key `en.js` doesn’t have, or a link points at a file or `#id` that isn’t there. It warns when the bot has a change newer than the home page’s “What’s cooking”. Run it alone with `node scripts/check.mjs`. The build also adds `?v=` and a short hash of the file to every CSS and JS link, so a deploy reaches returning visitors at once.
+After building, `scripts/check.mjs` checks `dist/` and fails the build (and so the deploy) when a string is in one locale file and not the other, a page or script uses a key `en.js` doesn’t have, a link points at a file or `#id` that isn’t there, or the command counts on `commands.html` (each shelf, the “All N of them”, and the demo’s menu) don’t add up. It warns when the bot has a change newer than the home page’s “What’s cooking”. Run it alone with `node scripts/check.mjs`. The build also adds `?v=` and a short hash of the file to every CSS and JS link, so a deploy reaches returning visitors at once.
 
-Pages are HTML comments plus the unique markup. The build fills `{{invite}}`, `{{github}}`, `{{changes}}` and `{{changeCount}}` (how many changes the letter counts) and wraps each page in the shared chrome. Script order on every page: `theme-boot.js` in `<head>`, then both locales, `i18n.js`, `listen.js`, `site.js`, `theme.js`, `reveal.js`, `clock.js`. A page can load its own scripts after those with a comment:
+Pages are HTML comments plus the unique markup. The build fills `{{invite}}`, `{{github}}`, `{{changes}}`, `{{changeCount}}` (how many changes the letter counts) and `{{backCover}}` (the invite from `src/partials/back-cover.html`, which the home page, Commands, Radio, and Setup end on; the footer drops its own two buttons on those pages) and wraps each page in the shared chrome. Script order on every page: `theme-boot.js` in `<head>`, then both locales, `i18n.js`, `listen.js`, `site.js`, `theme.js`, `reveal.js`, `clock.js`. A page can load its own scripts after those with a comment:
 
 ```html
 <!-- scripts: discord-demo.js -->
@@ -94,7 +97,7 @@ Everything respects `prefers-reduced-motion`, and with JavaScript off the pages 
 
 ## Deployment and hosting
 
-`.github/workflows/pages.yml` runs on a push to `main`, and every morning so `changes.html` picks up new bot commits. The build reads them from the GitHub API (with the workflow's token), falls back to a `Dzbanek-bot 2.0` clone next to this repo, and links to GitHub if neither works. Housekeeping commits (README, Prettier, the deploy skill) are left out by `QUIET` in the build:
+`.github/workflows/pages.yml` runs on a push to `main`, and every morning so `changes.html` picks up new bot commits. The build reads them from the GitHub API (with the workflow's token), falls back to a `Dzbanek-bot 2.0` clone next to this repo, and links to GitHub if neither works. Housekeeping commits (README, Prettier, the deploy skill, the app directory listing, chores only the owner sees) are left out by `QUIET` in the build:
 
 ```yaml
 - run: node scripts/build.mjs

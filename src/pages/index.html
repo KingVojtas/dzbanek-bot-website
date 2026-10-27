@@ -547,7 +547,7 @@
     <ol class="method" data-reveal-group>
       <li>
         <h3 data-i18n="steps.s1t">Invite it</h3>
-        <p data-i18n="steps.s1b">Click Add to Server and accept the permissions. Music works right away if you’re in a voice channel.</p>
+        <p data-i18n="steps.s1b">Click Add to Server and accept the permissions. Dzbanek says hi with a card of things to try first, and music works right away if you’re in a voice channel.</p>
         <a class="btn btn-clay btn-sm" href="{{invite}}" data-invite target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Server</a>
       </li>
       <li>
@@ -644,7 +644,7 @@
 <section class="section chapter" id="faq">
   <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div class="wrap faq-split">
-    <div class="section-head" data-reveal>
+    <div class="section-head stick" data-reveal>
       <h2 class="h-small" data-i18n="faq.title">Things people ask me</h2>
     </div>
     <div class="faq" data-reveal-group>
@@ -670,7 +670,7 @@
       </details>
       <details>
         <summary><span data-i18n="faq.q6">Is the Kitchen FM DJ an AI?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-        <p data-i18n="faq.a6">No. Its lines come from a book written ahead of time, and the bot only fills in the time, the genre, the song, and who brought it in. The voice is Microsoft Edge’s free read-aloud voice.</p>
+        <p data-i18n="faq.a6">Not unless Claude is switched on for the bot. Its lines come from a book written ahead of time, and the bot fills in the time, the genre, the song, and who brought it in. With Claude on, when the station can’t build a set from its genre blocks, Claude, an AI, plans that set and writes the line before it. The voice is Microsoft Edge’s free read-aloud voice.</p>
       </details>
       <details>
         <summary><span data-i18n="faq.q7">What does the bot remember about me?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
@@ -688,7 +688,7 @@
       <p class="lead" data-i18n="changelog.lead">The latest changes to the bot.</p>
       <p class="note"><a class="link-arrow" href="changes.html"><span data-i18n="changelog.all">Every change, day by day</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
     </div>
-    <!-- An order slip from the kitchen printer. New entries go on top. -->
+    <!-- An order slip from the kitchen printer: the four newest changes. A new one goes on top and the bottom one comes off. -->
     <div class="receipt-wrap" data-reveal>
     <div class="receipt">
       <p class="receipt-head">DZBANEK · <span data-i18n="changelog.slip">kitchen log</span></p>
@@ -697,15 +697,6 @@
         <li><time datetime="2026-10-27">27. 10. 2026</time><span data-i18n="changelog.c15">Dedications on Kitchen FM: /radio dedicate sends the DJ a short message to read on air, and 🔥 or 👎 on the card decides which new finds stay.</span></li>
         <li><time datetime="2026-10-26">26. 10. 2026</time><span data-i18n="changelog.c14">Kitchen FM, the kitchen’s own station on /radio play: your server’s songs a genre at a time, with a DJ between the sets.</span></li>
         <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c13">Four new stations: Frekvence 1, Heart London, Capital London and Radio Paradise. The Friday vote has a button for each of the seven.</span></li>
-        <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c12">The Kitchen Board has an In voice card: everyone in every call, live, even when the bot isn’t in one.</span></li>
-        <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c9">Steam deals: genres like “Card & Board Game” show properly, and a sale that ends today shows its time instead of a countdown.</span></li>
-        <li><time datetime="2026-10-23">23. 10. 2026</time><span data-i18n="changelog.c10">When a YouTube song can’t play, the bot says why instead of skipping it quietly.</span></li>
-        <li><time datetime="2026-10-23">23. 10. 2026</time><span data-i18n="changelog.c11">The welcome and goodbye cards @mention the member.</span></li>
-        <li><time datetime="2026-10-22">22. 10. 2026</time><span data-i18n="changelog.c1">Kitchen Quiz: /quiz start plays songs your kitchen has played before, and everyone in voice guesses the title.</span></li>
-        <li><time datetime="2026-10-22">22. 10. 2026</time><span data-i18n="changelog.c2">Wishlist Radar: link your Steam profile with /steam link and get pinged when a game on your wishlist goes on sale.</span></li>
-        <li><time datetime="2026-10-22">22. 10. 2026</time><span data-i18n="changelog.c3">Cleaner Steam deals: one line per game, a short description, and no games whose sale has already ended.</span></li>
-        <li><time datetime="2026-10-21">21. 10. 2026</time><span data-i18n="changelog.c4">/help, /volume, and a Previous button on the Now Playing card.</span></li>
-        <li><time datetime="2026-10-21">21. 10. 2026</time><span data-i18n="changelog.c5">Songs start sooner, and Spotify playlists start playing while the rest is still loading.</span></li>
       </ol>
     </div>
     </div>
@@ -763,20 +754,4 @@
 </div>
 </div>
 
-<!-- The back cover. -->
-<section class="cta" data-reveal>
-  <div class="cta-photo" aria-hidden="true">
-    <picture>
-      <source type="image/webp" srcset="assets/avatar-large.webp" />
-      <img src="assets/avatar-large.jpg" alt="" width="435" height="435" loading="lazy" decoding="async" />
-    </picture>
-  </div>
-  <div class="cta-copy">
-    <h2 data-i18n="cta.title">Want it on your server?</h2>
-    <p class="lead" data-i18n="cta.body">Invite the public bot, or grab the code on GitHub and run your own.</p>
-    <div class="hero-actions">
-      <a class="btn btn-clay btn-lg" href="{{invite}}" data-invite target="_blank" rel="noopener noreferrer" data-i18n="nav.invite">Add to Server</a>
-      <a class="btn btn-ghost btn-lg" href="{{github}}" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" aria-hidden="true"><use href="#i-github" /></svg> GitHub</a>
-    </div>
-  </div>
-</section>
+{{backCover}}

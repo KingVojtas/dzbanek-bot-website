@@ -3,6 +3,7 @@
  * Usage: node scripts/build.mjs
  */
 import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
@@ -20,6 +21,11 @@ const invite =
   'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3263568&scope=bot%20applications.commands';
 const github = 'https://github.com/KingVojtas/dzbanek-bot-2.0';
 const ogImage = new URL('assets/kitchen-hero.jpg', SITE_URL).href;
+// An inner page shares its own picture (assets/og/<page>.jpg, from scripts/share-images.mjs) when there is one.
+function shareImage(page, lang) {
+  const file = `assets/og/${page}${lang === 'cs' ? '-cs' : ''}.jpg`;
+  return existsSync(join(root, file)) ? new URL(file, SITE_URL).href : null;
+}
 // The home page carries the ad, so a pasted link can play it in Discord.
 const ogVideo = new URL('assets/ad/dzbanek-ad-720.mp4', SITE_URL).href;
 
@@ -104,6 +110,8 @@ const head = await readFile(join(src, 'partials', 'head.html'), 'utf8');
 const header = await readFile(join(src, 'partials', 'header.html'), 'utf8');
 const footer = await readFile(join(src, 'partials', 'footer.html'), 'utf8');
 const icons = await readFile(join(src, 'partials', 'icons.html'), 'utf8');
+// The invite at the end of the home page, Commands, Radio, and Setup. A page puts {{backCover}} where it goes.
+const backCover = fill(await readFile(join(src, 'partials', 'back-cover.html'), 'utf8'), { invite, github }).trim();
 
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
@@ -125,8 +133,10 @@ const updated = dotted(updatedIso);
 
 // changes.html: the bot's commit history, from GitHub, or from a clone next to this repo when offline.
 const BOT_REPO = 'KingVojtas/dzbanek-bot-2.0';
-// Housekeeping commits that mean nothing to someone using the bot: tooling, tests, and moving code between files.
-const QUIET = /deploy skill|prettier|readme|prisma|fingerprint|layout key|initial commit|unit tests|split the card builders/i;
+// Housekeeping commits that mean nothing to someone using the bot: tooling, tests, moving code between files,
+// the app directory listing, and chores only the owner sees.
+const QUIET =
+  /deploy skill|prettier|readme|prisma|fingerprint|layout key|initial commit|unit tests|split the card builders|in the listing|dm the owner|update yt-dlp/i;
 const pragueDay = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Prague' });
 
 async function botCommits() {
@@ -227,7 +237,7 @@ const versioned = (html) =>
     versions.has(path) ? `${start}${path}?v=${versions.get(path)}"` : whole
   );
 
-const shared = { invite, github, ogImage, updated, updatedIso, changes, changeCount };
+const shared = { invite, github, ogImage, updated, updatedIso, changes, changeCount, backCover };
 const pages = (await readdir(join(src, 'pages'))).filter((name) => name.endsWith('.html'));
 
 // English at the root, Czech under cs/. 404.html is one page for both; i18n.js switches it.
@@ -306,8 +316,10 @@ for (const file of pages) {
       currentCs: ` aria-current="${lang === 'cs'}"`,
     };
     const htmlAttrs = missing ? '' : ` data-href-en="${href.en}" data-href-cs="${href.cs}"`;
+    const ownImage = shareImage(page, lang);
     const headFill = {
       ...shared,
+      ogImage: ownImage || ogImage,
       title: escapeHtml(title),
       description: escapeHtml(description),
       canonical,
@@ -315,7 +327,7 @@ for (const file of pages) {
       video,
       locale: LANGS[lang].locale,
       localeAlt: LANGS[other].locale,
-      imageAlt: escapeHtml(t(lang, 'hero.alt') || ''),
+      imageAlt: escapeHtml((ownImage && t(lang, `og.${page}`)) || t(lang, 'hero.alt') || ''),
       jsonLd: file === 'index.html' ? jsonLd(lang, description) : '',
     };
     let html = `<!DOCTYPE html>

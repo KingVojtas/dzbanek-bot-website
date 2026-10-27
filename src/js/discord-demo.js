@@ -101,7 +101,8 @@
   // Where /setup points each feature in this fake server.
   const FEATURE_CHANNELS = { steam: 'steam-deals', epic: 'epic-free', welcome: 'welcome', goodbye: 'welcome', kitchen: 'kitchen', wishlist: 'wishlist-radar' };
 
-  const LOOP_LABELS = ['Loop', 'Repeat', 'Queue'];
+  // The bot's own button faces (src/core/display/music.ts): Loop off, Repeat this song, Queue on repeat.
+  const LOOP_LABELS = ['🔁 Loop', '🔂 Repeat', '🔁 Queue'];
 
   let state;
   function fresh() {
@@ -127,6 +128,8 @@
     };
   }
   state = fresh();
+  // Set once someone uses the demo, so the first look (at the bottom) never types over them.
+  let touched = false;
 
   const timers = new Set();
   function later(fn, ms) {
@@ -249,8 +252,8 @@
     );
   }
 
-  function button(label, onClick, { red = false, blurple = false, disabled = false } = {}) {
-    const style = red ? ' dc-btn-red' : blurple ? ' dc-btn-blurple' : '';
+  function button(label, onClick, { red = false, blurple = false, green = false, disabled = false } = {}) {
+    const style = red ? ' dc-btn-red' : blurple ? ' dc-btn-blurple' : green ? ' dc-btn-green' : '';
     return h('button', { type: 'button', class: 'dc-btn' + style, disabled, onclick: onClick, text: label });
   }
 
@@ -306,11 +309,11 @@
     const loopBtn = button(LOOP_LABELS[state.loop], () => {
       state.loop = (state.loop + 1) % LOOP_LABELS.length;
       loopBtn.textContent = LOOP_LABELS[state.loop];
-      loopBtn.classList.toggle('is-on', state.loop > 0);
+      loopBtn.classList.toggle('dc-btn-green', state.loop > 0);
     });
-    loopBtn.classList.toggle('is-on', state.loop > 0);
+    loopBtn.classList.toggle('dc-btn-green', state.loop > 0);
 
-    const pauseBtn = button(state.paused ? 'Resume' : 'Pause', () => togglePause());
+    const pauseBtn = button(state.paused ? '▶️ Resume' : '⏸️ Pause', () => togglePause(), { blurple: !state.paused, green: state.paused });
     pauseBtn.setAttribute('data-pause', '');
     const volume = (step) => () => setVolume(state.volume + step);
 
@@ -332,10 +335,10 @@
       }),
       row(
         pauseBtn,
-        button('Skip', skip),
-        button('Stop', () => stopAll('⏹️ Stopped. The queue is cleared and I’ve left the channel.'), { red: true }),
+        button('⏭️ Skip', skip),
+        button('⏹️ Stop', () => stopAll('⏹️ Stopped. The queue is cleared and I’ve left the channel.'), { red: true }),
         loopBtn,
-        button('Shuffle', shuffle)
+        button('🔀 Shuffle', shuffle)
       ),
       row(
         button('⏮️ Previous', previous, { disabled: !state.history.length }),
@@ -372,7 +375,11 @@
     if (!state.track) return false;
     state.paused = !state.paused;
     const pauseBtn = state.card && state.card.querySelector('[data-pause]');
-    if (pauseBtn) pauseBtn.textContent = state.paused ? 'Resume' : 'Pause';
+    if (pauseBtn) {
+      pauseBtn.textContent = state.paused ? '▶️ Resume' : '⏸️ Pause';
+      pauseBtn.classList.toggle('dc-btn-blurple', !state.paused);
+      pauseBtn.classList.toggle('dc-btn-green', state.paused);
+    }
     if (state.card) state.card.classList.toggle('paused', state.paused);
     return true;
   }
@@ -569,8 +576,10 @@
     const pause = button(fm.paused ? '▶️ Resume' : '⏸️ Pause', () => {
       fm.paused = !fm.paused;
       pause.textContent = fm.paused ? '▶️ Resume' : '⏸️ Pause';
+      pause.classList.toggle('dc-btn-blurple', !fm.paused);
+      pause.classList.toggle('dc-btn-green', fm.paused);
       card.classList.toggle('paused', fm.paused);
-    }, { blurple: true });
+    }, { blurple: !fm.paused, green: fm.paused });
     const card = botMessage(
       embed({
         bar: 'var(--clay)',
@@ -713,7 +722,7 @@
           title: quiz.score ? '🥇 you · ' + quiz.score + ' points' : 'Nobody scored this time',
           desc: 'In a real server everyone in voice plays at once. A right answer is worth 100 points, up to 50 more for speed, and a bonus every third one in a row.',
         }),
-        row(button('Play again', () => run('/quiz start')))
+        row(button('🔁 Play again', () => run('/quiz start'), { blurple: true }))
       )
     );
   }
@@ -1043,17 +1052,35 @@
         ['🚪 Rooms · Admin', ['/textroom', '/voiceroom']],
         ['❓ Help', ['/help']],
       ];
+      // The kitchen words the bot's /help explains for anyone new (src/commands/help.ts).
+      const words = [
+        ['Kitchen', 'your server. Dzbanek calls every server a kitchen.'],
+        ['Kitchen Board', 'one live card in a channel you pick with /setup kitchen: what’s playing, today’s deals, the latest catch.'],
+        ['Kitchen FM', 'your server’s own station, made from the songs you /play and catch, with a DJ between sets.'],
+        ['🍪 Catch', 'the button on a radio card that saves the song on air, so you can play it later.'],
+        ['Radio Night', 'a Friday vote for a station. The winner plays at 20:00 Prague time.'],
+        ['Chef of the week', 'whoever brought the songs the kitchen 🔥 most that week.'],
+        ['Kitchen Wrapped', 'last month in songs, posted on the 1st.'],
+      ];
+      const invite = document.querySelector('a[data-invite]')?.getAttribute('href') || '#';
       reply(() =>
         botMessage(
           embed({
             bar: '#c4783a',
             author: '🍪 What’s cooking',
-            desc: 'Dzbanek plays YouTube and Spotify, streams live radio from Prague, London and California, posts Steam deals and Epic freebies, pings you when your Steam wishlist goes on sale, and keeps the Kitchen Board up to date.',
-            children: groups.map(([title, names]) =>
-              h('div', { class: 'dc-help-group' }, h('p', { class: 'dc-help-title', text: title }), h('p', { class: 'dc-help-cmds' }, names.map((name) => h('code', { text: name }))))
-            ),
-            footer: 'Pause, skip, previous, volume, loop and shuffle are buttons on the Now Playing card too.',
-          })
+            desc: 'Dzbanek streams seven live radio stations from Prague, London and California, and runs Kitchen FM, your server’s own station with a DJ. It also plays YouTube and Spotify, hosts a song quiz, posts Steam deals and Epic freebies, pings you when your Steam wishlist goes on sale, and keeps the Kitchen Board up to date.',
+            children: [
+              groups.map(([title, names]) =>
+                h('div', { class: 'dc-help-group' }, h('p', { class: 'dc-help-title', text: title }), h('p', { class: 'dc-help-cmds' }, names.map((name) => h('code', { text: name }))))
+              ),
+              h('div', { class: 'dc-help-group dc-help-words' }, h('p', { class: 'dc-help-title', text: '🍪 Kitchen words' }), words.map(([word, meaning]) => h('p', {}, strong(word), ' · ' + meaning))),
+            ],
+            footer: 'Pause, skip, previous, volume, loop and shuffle also live as buttons on the Now Playing card.',
+          }),
+          row(
+            h('a', { class: 'dc-btn', href: invite, target: '_blank', rel: 'noopener noreferrer', text: '➕ Add to a server' }),
+            h('a', { class: 'dc-btn', href: 'index.html', text: '🌐 Website' })
+          )
         )
       );
     },
@@ -1256,6 +1283,7 @@
   let parent = null;
 
   function openWith(value) {
+    touched = true;
     if (channel !== 'kitchen') showChannel('kitchen');
     input.value = value;
     input.focus({ preventScroll: true });
@@ -1421,4 +1449,49 @@
   window.addEventListener('dzbanek:lang', () => {
     if (!suggest.hidden) refresh();
   });
+
+  /* ---------- the first look ---------- */
+
+  // The first time the channel comes into view, "you" type /play, so a card is playing before anyone has to ask.
+  // Not with reduced motion, and never once someone has used the box, a chip, a channel, or the reset.
+  let typed = '';
+  const takeOver = () => {
+    if (touched) return;
+    touched = true;
+    if (typed && input.value === typed) {
+      input.value = '';
+      closeMenu();
+    }
+  };
+  input.addEventListener('focus', takeOver);
+  document.querySelectorAll('[data-demo-run], [data-demo-reset], [data-demo-channel]').forEach((el) => el.addEventListener('click', takeOver));
+
+  function typeOut(command) {
+    if (touched || channel !== 'kitchen') return;
+    if (typed.length < command.length) {
+      typed = command.slice(0, typed.length + 1);
+      input.value = typed;
+      refresh();
+      later(() => typeOut(command), 120);
+    } else {
+      later(() => {
+        if (touched) return;
+        touched = true;
+        run(command);
+      }, 500);
+    }
+  }
+
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!calm && 'IntersectionObserver' in window) {
+    const watch = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        watch.disconnect();
+        later(() => typeOut('/play'), 800);
+      },
+      { threshold: 0.6 }
+    );
+    watch.observe(root);
+  }
 })();

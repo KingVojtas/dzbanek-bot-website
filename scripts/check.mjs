@@ -4,7 +4,8 @@
  * Usage on its own: node scripts/check.mjs
  *
  * Errors: a string in one locale but not the other, a data-i18n key or a
- * script's string key with no English, a link to a file or #id that isn't there.
+ * script's string key with no English, a link to a file or #id that isn't there, command
+ * counts on commands.html that don't add up.
  * Warning: the bot has a newer change than the home page's "What's cooking".
  */
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
@@ -97,6 +98,26 @@ export function check({ root, dist, siteUrl, newestBotDate }) {
         errors.push(`${rel(file)} links to ${url}, but there's no id="${hash}"`);
       }
     }
+  }
+
+  // The command counts on commands.html: each shelf button matches its shelf, they add up to the
+  // "All N of them" in both languages, and to the demo's menu, which lists every command.
+  const commandsPage = join(dist, 'commands.html');
+  if (existsSync(commandsPage)) {
+    const html = readFileSync(commandsPage, 'utf8');
+    const shelves = new Map([...html.matchAll(/id="(cmd-g\w+)">[\s\S]*?<span class="cmd-count">(\d+)<\/span>/g)].map((m) => [m[1], Number(m[2])]));
+    for (const [, id, count] of html.matchAll(/<a href="#(cmd-g\w+)">[\s\S]*?<b>(\d+)<\/b><\/a>/g)) {
+      if (shelves.get(id) !== Number(count)) errors.push(`commands.html: the ${id} button says ${count}, its shelf says ${shelves.get(id)}`);
+    }
+    const total = [...shelves.values()].reduce((sum, count) => sum + count, 0);
+    for (const lang of ['en', 'cs']) {
+      const said = Number(locales[lang].commands?.refLead?.match(/\d+/)?.[0]);
+      if (said !== total) errors.push(`${lang}.js commands.refLead says ${said} commands, the shelves add up to ${total}`);
+    }
+    const demo = readFileSync(join(src, 'js', 'discord-demo.js'), 'utf8');
+    const menu = demo.slice(demo.indexOf('const COMMANDS = ['), demo.indexOf('];', demo.indexOf('const COMMANDS = [')));
+    const inDemo = menu.match(/\{ name: '/g)?.length ?? 0;
+    if (inDemo !== total) errors.push(`The demo's menu has ${inDemo} commands, the shelves on commands.html add up to ${total}`);
   }
 
   // The home page's "What's cooking" should mention the bot's latest change.
