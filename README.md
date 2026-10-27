@@ -6,16 +6,17 @@ The bot has no website API. This site does not show live stats, and it does not 
 
 ## Project overview
 
-Six pages and a 404, one stylesheet, vanilla JavaScript. No framework and no `npm install` for the site itself.
+Seven pages and a 404, one stylesheet, vanilla JavaScript. No framework and no `npm install` for the site itself.
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The kitchen as a cookbook: a title page with the hero ad, then the contents beside numbered chapters (music; a radio on the kitchen counter that plays the real stations, under a cabinet light in the tuned station’s colour; deals with small clocks set to their posting times; the Kitchen Board; welcomes; setting it up; real server screenshots that open full size; FAQ; the changelog; and why I made Dzbanek, a stamped letter from me beside a chronicle of both bot versions), and the invite on the back cover |
-| `commands.html` | A pretend `#kitchen` channel you can type `/` into (every command, Kitchen FM with 🔥 / 👎 and `/radio dedicate`, a three-round Kitchen Quiz, and the card buttons), then the full command menu, grouped like the bot's `/help`, with a tab per group and every subcommand on its own line |
+| `index.html` | The kitchen as a cookbook: a title page with the hero ad, then the contents beside numbered chapters (music; a radio on the kitchen counter that plays the real stations, under a cabinet light in the tuned station’s colour; deals with small clocks set to their posting times; the Kitchen Board with its chef of the week; Kitchen Wrapped, the card the bot posts on the 1st; welcomes; setting it up; real server screenshots that open full size; FAQ; the changelog; and why I made Dzbanek, a stamped letter from me beside a chronicle of both bot versions), and the invite on the back cover |
+| `commands.html` | A pretend `#kitchen` channel you can type `/` into (every command, Kitchen FM with 🔥 / 👎 and `/radio dedicate`, a three-round Kitchen Quiz, `/setup wrapped-preview` made from what you played there, and the card buttons), then the full command menu, grouped like the bot's `/help`, with a tab per group and every subcommand on its own line |
 | `radio.html` | A tuner that plays all seven stations live (Kiss, Rock Radio, Radio Beat, Frekvence 1, Heart London, Capital London, Radio Paradise), what each one has on air, Kitchen FM (the bot’s own station, listed under them and explained in its own section with a dedication on its card; it has no stream to play here), Catch → Play, and a Friday Radio Night vote you can click |
 | `setup.html` | Channel setup, auto-detected channel names, permissions, Server Members intent |
 | `changes.html` | The big new things as cards, then every bot commit as one long kitchen-log receipt, printed by the build, with buttons that keep only New, Better, or Fix |
-| `privacy.html` | What the bot keeps per server and per person, what it never keeps, what this site stores, and how to have something removed |
+| `privacy.html` | What the bot keeps per server and per person (its tables in `prisma/schema.prisma` in the bot repo, the play log included), what it never keeps, what this site stores, and how to have something removed |
+| `terms.html` | The house rules: the terms of use Discord asks a verified bot to link, next to the privacy page |
 | `404.html` | The empty shelf. GitHub Pages serves it for missing paths |
 
 Every card, the demo channel, and the vote are examples that run in the browser tab. The clock is the only live thing, and it is the browser's own Europe/Prague time.
@@ -32,7 +33,7 @@ The home hero plays the 59-second Dzbanek ad (`src/js/film.js`). Its first frame
 
 `scripts/build.mjs` stitches `src/partials/` and `src/pages/` into `dist/`. That folder is what you open, and what GitHub Pages publishes.
 
-The invite uses application id `923262419923513445` and permission bitfield `3173456` (Connect, Speak, View Channel, Send Messages, Embed Links, Manage Messages, Add Reactions, and Manage Channels for `/textroom` and `/voiceroom`).
+The invite uses application id `923262419923513445` and permission bitfield `3263568` (Connect, Speak, View Channel, Send Messages, Embed Links, Attach Files, Read Message History, Add Reactions, and Manage Channels for `/textroom` and `/voiceroom`), the same as the bot's `INSTALL_PERMISSIONS` in `src/core/links.ts` and the install link in the Developer Portal.
 
 ## Local setup
 

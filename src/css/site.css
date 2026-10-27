@@ -211,7 +211,7 @@ html.theme-light {
   --dc-line: rgba(42, 28, 18, 0.1);
   --dc-text: #2e2622;
   --dc-text-2: #4a3f38;
-  --dc-muted: #7a6d64;
+  --dc-muted: #6c5f56;
   --dc-title: #1f1712;
   --dc-name: #a9521a;
   --dc-btn: #7c706a;
@@ -3269,6 +3269,37 @@ html.theme-light .chip-vp {
   border-top: 1px solid var(--dc-line);
 }
 
+/* Kitchen Wrapped: the kitchen photo, Discord's ## title, then a ### section for each number. */
+.wrapped-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 7;
+  margin-bottom: 0.7rem;
+  border-radius: 0.4rem;
+  object-fit: cover;
+}
+
+.wrapped-h2 {
+  color: var(--dc-title);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.wrapped .board-h3 {
+  margin-top: 0.75rem;
+}
+
+.wrapped p:not([class]) {
+  margin-top: 0.15rem;
+  line-height: 1.5;
+}
+
+.wrapped-end {
+  margin-top: 0.8rem;
+}
+
 /* door: the bot's join and leave cards */
 
 .door {
@@ -4018,11 +4049,19 @@ html.theme-light .receipt-wrap {
   transition: transform 0.6s var(--ease);
 }
 
-/* A wide, short screenshot sits whole in the frame instead of being cropped. */
+/* A wide, short screenshot gets a frame its own shape, and sits on the same line as its
+   neighbours' captions, like a small plate at the foot of a page. */
+.gallery-shot.is-wide {
+  aspect-ratio: auto;
+}
+
 .gallery-shot.is-wide img {
-  padding: 1rem;
-  object-fit: contain;
-  object-position: center;
+  height: auto;
+  padding: 0.75rem;
+}
+
+.gallery > li:has(.is-wide) {
+  align-self: end;
 }
 
 /* The bottom fades a little, so a cropped screenshot reads as "there's more". */
@@ -4311,9 +4350,10 @@ body:not([data-page="home"]) .section:not(.flush-top) > .wrap:first-of-type {
   font-weight: 700;
 }
 
+/* Deep clay, so the white letters stay readable (5.4:1). */
 .dc-guild.is-active {
   border-radius: 1rem;
-  background: var(--clay);
+  background: #a9521a;
 }
 
 .dc-guild.is-active::before {
@@ -4594,6 +4634,11 @@ a.dc-btn:hover {
 .dc-call strong {
   color: #23a55a;
   font-size: 0.82rem;
+}
+
+/* Discord's green is too light to read on paper; a deeper one keeps 5:1. */
+html.theme-light .dc-call strong {
+  color: #17733f;
 }
 
 .dc-call small {
@@ -5063,8 +5108,10 @@ html:not(.js) .kbd-hint {
   rotate: -0.35deg;
 }
 
+/* minmax(0, …) so a long command line wraps instead of pushing the shelf past the paper. */
 .cmd-group {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.5rem;
   margin-bottom: 2.2rem;
 }
@@ -5099,8 +5146,9 @@ html:not(.js) .kbd-hint {
 
 .cmd-item header {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.6rem;
+  gap: 0.4rem 0.6rem;
 }
 
 .cmd-dots {
@@ -6038,6 +6086,48 @@ html:not(.js) .vote-controls {
   font-weight: 600;
 }
 
+/* The /setup sheet: two columns of commands, each with its descriptions lined up. */
+@media (min-width: 761px) {
+  .setup-sheet {
+    grid-template-columns: max-content minmax(0, 1fr) max-content minmax(0, 1fr);
+  }
+
+  .setup-sheet > div {
+    grid-column: span 2;
+    grid-template-columns: subgrid;
+  }
+}
+
+/* The house rules: the same recipe card as the pantry, one rule a row. */
+.terms .recipe {
+  max-width: 62rem;
+}
+
+.terms .recipe-list {
+  grid-template-columns: 1fr;
+  margin-top: 0;
+}
+
+.terms .recipe-list dt {
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+/* One label column for the whole list, as wide as its longest label, so every row lines up. */
+@media (min-width: 761px) {
+  .privacy-grid > .recipe .recipe-list,
+  .terms .recipe-list {
+    grid-template-columns: max-content minmax(0, 1fr);
+    column-gap: 1.25rem;
+  }
+
+  .privacy-grid > .recipe .recipe-list > div,
+  .terms .recipe-list > div {
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+  }
+}
+
 .privacy-side {
   display: grid;
   gap: clamp(1.5rem, 3vw, 2.25rem);
@@ -6824,6 +6914,20 @@ html.js [data-reveal-group].is-in > * {
   .kradio-onair {
     font-size: 1rem;
   }
+
+  /* The copy buttons keep their icon on a phone; the word stays for screen readers. */
+  .cmd-menu .copy {
+    padding-inline: 0.6rem;
+  }
+
+  .cmd-menu .copy span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 420px) {
@@ -6839,6 +6943,15 @@ html.js [data-reveal-group].is-in > * {
 @media (max-width: 359px) {
   .brand-name {
     display: none;
+  }
+
+  /* The vote's bars are monospace, so they get smaller instead of running past the card. */
+  .tally li {
+    gap: 0.3rem;
+  }
+
+  .tally-line {
+    font-size: 0.64rem;
   }
 }
 

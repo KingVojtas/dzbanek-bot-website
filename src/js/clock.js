@@ -4,6 +4,7 @@
  *
  * [data-clock="time"]       Prague HH:MM
  * [data-clock="stamp"]      "Today at HH:MM" in the viewer's own time, like Discord
+ * [data-clock-ends="3"]     HH:MM that many minutes from now, in the viewer's own time
  * [data-clock="next-name"]  the next event's name
  * [data-clock="next-in"]    how long until it
  * [data-clock="night-in"]   how long until Friday Radio Night
@@ -102,6 +103,12 @@
       '[data-clock="stamp"]',
       text('clock.today', 'Today at {{time}}', { time: pad(local.getHours()) + ':' + pad(local.getMinutes()) })
     );
+    // A song's "Ends" field, so it agrees with the message's own time.
+    document.querySelectorAll('[data-clock-ends]').forEach((el) => {
+      const at = new Date(local.getTime() + Number(el.getAttribute('data-clock-ends')) * 60000);
+      const value = pad(at.getHours()) + ':' + pad(at.getMinutes());
+      if (el.textContent !== value) el.textContent = value;
+    });
 
     if (next) {
       setAll('[data-clock="next-name"]', text('clock.ev.' + next.id, next.id));

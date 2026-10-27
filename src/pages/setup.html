@@ -18,16 +18,17 @@
     <!-- Where each /setup command sends things, as a reference sheet. -->
     <div class="recipe" data-reveal>
       <h2 class="recipe-title" data-i18n="setup.cardTitle">Where things go</h2>
-      <dl class="recipe-list">
+      <dl class="recipe-list setup-sheet">
         <div><dt><code>/setup steam</code></dt><dd data-i18n="setup.steam">Where the daily Steam deals go.</dd></div>
         <div><dt><code>/setup epic</code></dt><dd data-i18n="setup.epic">Where Epic free games go.</dd></div>
         <div><dt><code>/setup welcome</code></dt><dd data-i18n="setup.welcome">Where welcome messages go.</dd></div>
         <div><dt><code>/setup goodbye</code></dt><dd data-i18n="setup.goodbye">Where goodbye messages go.</dd></div>
-        <div class="is-key"><dt><code>/setup kitchen</code></dt><dd data-i18n="setup.kitchen">Where the Kitchen Board lives. This one never gets picked automatically.</dd></div>
+        <div class="is-key"><dt><code>/setup kitchen</code></dt><dd data-i18n="setup.kitchen">Where the Kitchen Board lives, and where the Sunday postcard and Kitchen Wrapped go. This one never gets picked automatically.</dd></div>
         <div><dt><code>/setup wishlist</code></dt><dd data-i18n="setup.wishlist">Where Wishlist Radar pings people about their sales.</dd></div>
         <div><dt><code>/setup idle-radio</code></dt><dd data-i18n="setup.idle">On by default. When the music queue ends, it switches to the last radio station instead of leaving. Set it to off if you’d rather it leave.</dd></div>
         <div><dt><code>/setup status</code></dt><dd data-i18n="setup.status">Shows this server’s channels, Radio Night, and idle radio settings.</dd></div>
         <div><dt><code>/setup disable</code></dt><dd data-i18n="setup.disable">Turns off Steam, Epic, welcome, goodbye, the Kitchen Board, Radio Night, or idle radio.</dd></div>
+        <div><dt><code>/setup wrapped-preview</code></dt><dd data-i18n="setup.wrapped">This month’s Kitchen Wrapped so far, only for you.</dd></div>
       </dl>
     </div>
   </div>
@@ -65,9 +66,9 @@
   <div class="wrap split top">
     <div data-reveal>
       <h2 data-i18n="setup.permTitle">What it asks for</h2>
-      <p class="lead" data-i18n="setup.permLead">No admin rights. The invite asks for exactly these permissions (bitfield 3173456).</p>
-      <p class="bitfield mono" aria-label="Bitfield 3173456">3173456</p>
-      <p class="note" data-i18n="setup.manage">Manage Messages is only used to delete the bot’s own old Now Playing card and deal posts. It never touches anyone else’s messages.</p>
+      <p class="lead" data-i18n="setup.permLead">No admin rights. The invite asks for exactly these permissions (bitfield 3263568).</p>
+      <p class="bitfield mono" aria-label="Bitfield 3263568">3263568</p>
+      <p class="note" data-i18n="setup.history">Attach Files is for the pictures on the Kitchen Board, the Sunday postcard, and Kitchen Wrapped. Read Message History lets it find its own board and deal posts again after a restart; it only looks for its own.</p>
       <p class="note" data-i18n="setup.manageChannels">Manage Channels is only for /textroom and /voiceroom, which only admins can run. Without it, everything else still works.</p>
     </div>
     <div class="perm-panel" data-reveal>
@@ -77,11 +78,15 @@
       </div>
       <div class="perm-group">
         <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-tag" /></svg> <span data-i18n="setup.permDeals">Steam / Epic</span></h3>
-        <ul class="perms"><li>View Channel</li><li>Send Messages</li><li>Embed Links</li><li>Manage Messages</li><li>Add Reactions</li></ul>
+        <ul class="perms"><li>View Channel</li><li>Send Messages</li><li>Embed Links</li><li>Read Message History</li><li>Add Reactions</li></ul>
       </div>
       <div class="perm-group">
         <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-door" /></svg> <span data-i18n="setup.permGreet">Welcome / goodbye</span></h3>
-        <ul class="perms"><li>View Channel</li><li>Send Messages</li></ul>
+        <ul class="perms"><li>View Channel</li><li>Send Messages</li><li>Embed Links</li></ul>
+      </div>
+      <div class="perm-group">
+        <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-board" /></svg> <span data-i18n="board.kicker">Kitchen Board</span></h3>
+        <ul class="perms"><li>View Channel</li><li>Send Messages</li><li>Attach Files</li><li>Read Message History</li></ul>
       </div>
       <div class="perm-group">
         <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-hash" /></svg> <span data-i18n="setup.permRooms">Rooms</span></h3>
@@ -89,7 +94,7 @@
       </div>
       <div class="perm-group off">
         <h3><svg width="18" height="18" aria-hidden="true"><use href="#i-shield" /></svg> <span data-i18n="setup.permNot">Doesn’t ask for</span></h3>
-        <ul class="perms"><li>Administrator</li></ul>
+        <ul class="perms"><li>Administrator</li><li>Manage Messages</li></ul>
       </div>
     </div>
   </div>

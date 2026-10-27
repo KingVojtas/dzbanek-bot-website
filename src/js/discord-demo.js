@@ -70,6 +70,7 @@
     { name: 'setup kitchen', desc: 'Pick where the Kitchen Board hangs' },
     { name: 'setup wishlist', desc: 'Pick where Wishlist Radar pings people' },
     { name: 'setup idle-radio', desc: 'Fade into radio when the queue ends' },
+    { name: 'setup wrapped-preview', desc: 'Kitchen Wrapped for this month so far' },
     { name: 'setup disable', args: '[feature]', desc: 'Stop posting something in this server', choices: 'features' },
     { name: 'textroom', args: '[name]', desc: 'Open a text room (admins)', free: true },
     { name: 'voiceroom', args: '[name]', desc: 'Open a voice room (admins)', free: true },
@@ -120,6 +121,7 @@
       thinking: 0,
       volume: 100,
       history: [], // songs already played, for Previous
+      plays: [], // every song that started, for /setup wrapped-preview
       linked: false, // Wishlist Radar
       quiz: null, // { round, score, card, timer }
     };
@@ -350,6 +352,7 @@
   function startTrack(title) {
     retire(state.card);
     state.track = { title, length: lengthOf(title), elapsed: 0 };
+    state.plays.push(title);
     state.paused = false;
     state.card = append(nowPlaying());
     clearInterval(ticker);
@@ -1033,11 +1036,12 @@
     help() {
       const groups = [
         ['🎵 Music', ['/play', '/queue', '/nowplaying', '/skip', '/pause', '/volume', '/remove', '/stop']],
-        ['📻 Radio', ['/radio play', '/radio stop', '/radio night', '/radio night-off']],
+        ['📻 Radio', ['/radio play', '/radio stop', '/radio night', '/radio night-off', '/radio dedicate']],
         ['🎯 Steam wishlist', ['/steam link', '/steam wishlist', '/steam unlink']],
         ['🎧 Kitchen Quiz', ['/quiz start', '/quiz stop']],
-        ['🍪 Kitchen & setup · Manage Server', ['/setup steam', '/setup epic', '/setup welcome', '/setup goodbye', '/setup kitchen', '/setup wishlist', '/setup idle-radio', '/setup status', '/setup disable']],
+        ['🍪 Kitchen & setup · Manage Server', ['/setup steam', '/setup epic', '/setup welcome', '/setup goodbye', '/setup kitchen', '/setup wishlist', '/setup idle-radio', '/setup status', '/setup disable', '/setup wrapped-preview']],
         ['🚪 Rooms · Admin', ['/textroom', '/voiceroom']],
+        ['❓ Help', ['/help']],
       ];
       reply(() =>
         botMessage(
@@ -1076,6 +1080,38 @@
           })
         )
       );
+    },
+
+    // The real one counts this month from the bot's play log; this one counts what you played here.
+    'setup wrapped-preview'() {
+      const now = new Date();
+      const month = now.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+      const lines = [h('p', { class: 'wrapped-h2', text: '🎁 Kitchen Wrapped · ' + month })];
+      const plays = state.plays;
+      if (!plays.length) {
+        lines.push(h('p', {}, h('i', { text: 'A quiet month. Nobody played a song, so there is nothing to wrap.' })));
+      } else {
+        if (now.getDate() > 1) lines.push(h('p', { class: 'board-sub', text: 'since ' + now.toLocaleString('en-GB', { day: 'numeric', month: 'long' }) }));
+        const minutes = Math.round(plays.reduce((sum, title) => sum + lengthOf(title), 0) / 60);
+        const length = minutes < 60 ? (minutes === 1 ? '1 minute' : minutes + ' minutes') : Math.round(minutes / 60) === 1 ? '1 hour' : Math.round(minutes / 60) + ' hours';
+        const songs = plays.length === 1 ? '1 song' : plays.length + ' songs';
+        lines.push(h('p', { class: 'board-h3', text: '🎵 What we played' }), h('p', {}, strong(songs), ' · ', strong(length), ' of music'));
+        const counts = new Map();
+        plays.forEach((title) => counts.set(title, (counts.get(title) || 0) + 1));
+        const top = [...counts].sort((a, b) => b[1] - a[1]).slice(0, 5);
+        const medal = (i) => ['🥇', '🥈', '🥉'][i] || i + 1 + '.';
+        lines.push(
+          h('p', { class: 'board-h3', text: '🔝 On repeat' }),
+          h('p', {}, top.map(([title, n], i) => [i ? h('br') : null, medal(i) + ' ', strong(title), ' · ' + (n === 1 ? '1 play' : n + ' plays')])),
+          h('p', { class: 'board-h3', text: '🍪 Brought the most' }),
+          h('p', {}, '🥇 ', strong('you'), ' · ' + songs)
+        );
+      }
+      // A quiet month gets no sign-off, like the bot's.
+      if (plays.length) lines.push(h('p', { class: 'board-sub wrapped-end', text: '🍪 See you next month' }));
+      const card = embed({ bar: '#c4783a', children: lines });
+      card.classList.add('wrapped');
+      reply(() => botMessage(h('p', { class: 'dc-ephemeral', text: ui('radio.onlyYou', 'Only you can see this') }), card));
     },
 
     'setup kitchen'() {

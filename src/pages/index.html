@@ -92,12 +92,13 @@
     <li><a href="#radio"><span data-i18n="radioHome.kicker">Radio</span></a></li>
     <li><a href="#deals"><span data-i18n="book.deals">Deals</span></a></li>
     <li><a href="#kitchen"><span data-i18n="board.kicker">Kitchen Board</span></a></li>
+    <li><a href="#wrapped"><span data-i18n="wrapped.kicker">Kitchen Wrapped</span></a></li>
     <li><a href="#welcome"><span data-i18n="welcome.title">Hi and bye</span></a></li>
     <li><a href="#start"><span data-i18n="steps.title">Setting it up</span></a></li>
     <li><a href="#server"><span data-i18n="server.title">Straight from my server</span></a></li>
     <li><a href="#faq"><span data-i18n="faq.title">Things people ask me</span></a></li>
     <li><a href="#changelog"><span data-i18n="changelog.title">What’s cooking</span></a></li>
-    <li><a href="#about"><span data-i18n="about.title">Why Dzbanek exists</span></a></li>
+    <li><a href="#about"><span data-i18n="about.title">Why I made Dzbanek</span></a></li>
   </ol>
 </nav>
 
@@ -133,7 +134,7 @@
       <h2 data-i18n="music.title">Music from YouTube and Spotify</h2>
       <p class="lead" data-i18n="music.body">Paste a YouTube link, a Spotify track or playlist, or just type a song name. Spotify links get matched on YouTube, since that’s where the audio comes from. The Now Playing card shows the cover, the progress, and the controls, and the old card disappears when the next song starts, so your channel doesn’t fill up with junk.</p>
       <ul class="ticks">
-        <li data-i18n="music.b1">Pause, skip, shuffle, and loop are right on the card</li>
+        <li data-i18n="music.b1">Pause, skip, loop, shuffle, the song before, and the volume are right on the card</li>
         <li data-i18n="music.b2">Up to 100 songs in the queue. /remove takes one out</li>
         <li data-i18n="music.b3">Queue ran out but people are still hanging around? After two minutes it switches to the last radio station</li>
         <li data-i18n="music.b4">Kitchen Quiz: /quiz start plays short clips of songs your kitchen has played, and everyone in voice races to name them</li>
@@ -147,20 +148,22 @@
             <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><time class="dc-time" data-clock="stamp">Today at 21:14</time></p>
             <div class="dc-embed" style="--bar: var(--clay)">
               <div class="dc-embed-main">
-                <p class="dc-embed-author"><svg width="16" height="16" aria-hidden="true"><use href="#i-speaker" /></svg> <span data-i18n="player.state">Now Playing</span></p>
-                <p class="dc-embed-title" data-i18n="player.title">A song from the queue</p>
-                <p class="dc-embed-desc"><span data-i18n="player.requested">Requested by</span> <span class="dc-mention">@you</span> · <span data-i18n="player.source">YouTube</span></p>
+                <p class="dc-embed-author">🔊 Now Playing · YouTube</p>
+                <p class="dc-embed-title dc-link">Late Night Kettle</p>
+                <p class="dc-embed-desc">by <b>The Saucepans</b></p>
                 <div class="dc-progress"><span class="mono">1:42</span><div class="progress"><span></span></div><span class="mono">3:20</span></div>
+                <dl class="dc-fields">
+                  <div><dt>Requested by</dt><dd><span class="dc-mention">@you</span></dd></div>
+                  <div><dt>Ends</dt><dd><time data-clock-ends="2">21:16</time> · <span class="dc-ts">in 2 minutes</span></dd></div>
+                  <div><dt>Volume</dt><dd>🔊 100%</dd></div>
+                  <div class="wide"><dt>Up next</dt><dd><span class="dc-link">Crumbs on the Counter</span> <code>3:41</code> · and 2 more</dd></div>
+                </dl>
+                <p class="dc-embed-footer">3 up next</p>
               </div>
               <div class="dc-embed-thumb vinyl" aria-hidden="true"><span></span></div>
             </div>
-            <div class="dc-row">
-              <span class="dc-btn">Pause</span>
-              <span class="dc-btn">Skip</span>
-              <span class="dc-btn dc-btn-red">Stop</span>
-              <span class="dc-btn">Loop</span>
-              <span class="dc-btn">Shuffle</span>
-            </div>
+            <div class="dc-row"><span class="dc-btn dc-btn-blurple">⏸️ Pause</span><span class="dc-btn">⏭️ Skip</span><span class="dc-btn dc-btn-red">⏹️ Stop</span><span class="dc-btn">🔁 Loop</span><span class="dc-btn">🔀 Shuffle</span></div>
+            <div class="dc-row"><span class="dc-btn">⏮️ Previous</span><span class="dc-btn">🔉</span><span class="dc-btn">🔊</span><span class="dc-btn">📜 Queue</span></div>
           </div>
         </div>
       </div>
@@ -349,10 +352,10 @@
   <div class="wrap split reverse">
     <div class="stick" data-reveal>
       <h2 data-i18n="board.title">One message that edits itself</h2>
-      <p class="lead" data-i18n="board.body">/setup kitchen posts one message with four cards and keeps editing it instead of posting new ones: what’s playing, who’s in voice, the top Steam deal with the Epic freebie, and a last card with the latest caught song, how many people joined today, and Radio Night.</p>
+      <p class="lead" data-i18n="board.body">/setup kitchen posts one message and keeps editing it instead of posting new ones: what’s playing, who’s in voice, the top Steam deal with the Epic freebie, and a card with the latest caught song, how many people joined today, Radio Night, and who’s chef of the week so far. A small thank-you always sits at the bottom.</p>
       <ul class="ticks">
         <li data-i18n="board.private">The In voice card lists every call in the server, even when the bot isn’t in one, with who’s muted, deafened, streaming, or on camera. A call shows only if everyone who can read the board can see that channel, so private calls stay private.</li>
-        <li data-i18n="board.sunday">Every Sunday at 18:00 you also get a postcard with the songs people caught that week, plus Friday’s vote results if anyone voted.</li>
+        <li data-i18n="board.sunday">Every Sunday at 18:00 a postcard sums up the week: the songs people caught, Friday’s vote if anyone voted, the quiz champion, the Chef of the week, and the 🔥 song of the week.</li>
         <li data-i18n="board.presence">The bot’s Discord status takes turns with three lines, each for twenty minutes: Purifying the source, Analyzing bacteria levels and Pouring fresh drops.</li>
       </ul>
     </div>
@@ -362,7 +365,7 @@
           <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
           <div class="dc-body">
             <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time"><span data-i18n="board.edited">(edited)</span></span></p>
-            <!-- The four cards from src/kitchen/display.ts in the bot: stereo, In voice, the Pantry, the room. -->
+            <!-- The cards from src/kitchen/display.ts in the bot: stereo, In voice, the Pantry, the room, and the thank-you. -->
             <div class="board">
               <div class="dc-embed" style="--bar: var(--beat)">
                 <div class="dc-embed-main">
@@ -404,6 +407,12 @@
                 <div class="dc-embed-main">
                   <p>🍪 <b>2</b> cookies out of the jar today</p>
                   <p>🌙 <b>Radio Night</b> · Friday 20:00 · Radio Beat in 🔊 <b>Kitchen</b> <span class="dc-muted" data-clock="night-in"></span></p>
+                  <p>👑 <b>Nova</b> is chef of the week so far · 23 pts</p>
+                </div>
+              </div>
+              <div class="dc-embed">
+                <div class="dc-embed-main">
+                  <p>💛 Thanks to <b>Sunka</b></p>
                 </div>
               </div>
             </div>
@@ -415,10 +424,66 @@
   </div>
 </section>
 
+<section class="section chapter" id="wrapped">
+  <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
+  <div class="wrap split">
+    <div class="stick" data-reveal>
+      <h2 data-i18n="wrapped.title">Last month, in one card</h2>
+      <p class="lead" data-i18n="wrapped.body">On the 1st at 18:00, the Kitchen Board’s channel gets Kitchen Wrapped: how many songs and hours, what was on repeat, who brought the most, the favourite genre, the 🔥 song, the quiz champion, the station people caught most, and the new finds a 🔥 kept.</p>
+      <ul class="ticks">
+        <li data-i18n="wrapped.year">On 1 January, the whole year comes right after December’s card.</li>
+        <li data-i18n="wrapped.preview">/setup wrapped-preview shows this month so far, only to you.</li>
+        <li data-i18n="wrapped.chef">Chef of the week: 3 points for each 🔥 someone else gives a song you brought, 2 for each catch, 1 for each different song you play or dedicate, and 5 for the quiz champion. The board shows who’s ahead, and Sunday’s postcard crowns them.</li>
+      </ul>
+    </div>
+    <figure class="dc-stage plate" data-reveal>
+      <div class="dc">
+        <div class="dc-msg">
+          <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+          <div class="dc-body">
+            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time">18:00</span></p>
+            <!-- buildKitchenWrappedDisplay in src/kitchen/wrapped.ts in the bot: the kitchen photo, then a ### section for each thing it has numbers for. -->
+            <div class="board">
+              <div class="dc-embed wrapped">
+                <div class="dc-embed-main">
+                  <picture class="wrapped-art">
+                    <source type="image/webp" srcset="assets/kitchen-hero.webp" />
+                    <img src="assets/kitchen-hero.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async" />
+                  </picture>
+                  <p class="wrapped-h2">🎁 Kitchen Wrapped · October 2026</p>
+                  <p class="board-h3">🎵 What we played</p>
+                  <p><b>412 songs</b> · <b>23 hours</b> of music</p>
+                  <p class="board-h3">🔝 On repeat</p>
+                  <p>🥇 <b>Sušenky na lince</b> — MC Plech · 14 plays<br />🥈 <b>Late Night Kettle</b> — The Saucepans · 11 plays<br />🥉 <b>Noční tramvaj</b> — Plechová kuchyně · 9 plays<br />4. <b>Highway Sermon</b> — Iron Orchard · 7 plays<br />5. <b>Crumbs on the Counter</b> — The Saucepans · 6 plays</p>
+                  <p class="board-h3">🍪 Brought the most</p>
+                  <p>🥇 <b>Nova</b> · 96 songs<br />🥈 <b>Milo</b> · 71 songs<br />🥉 <b>Sunka</b> · 58 songs</p>
+                  <p class="board-h3">🎧 Favourite genre</p>
+                  <p><b>Czech rap</b> · 31% of plays with a genre</p>
+                  <p class="board-h3">🔥 The fire song</p>
+                  <p><b>Sušenky na lince</b> — MC Plech · 9 🔥</p>
+                  <p class="board-h3">🎧 Kitchen Quiz</p>
+                  <p>🏆 <b>Milo</b> · 4,120 points over 6 games</p>
+                  <p class="board-h3">📻 Caught most</p>
+                  <p><b>Radio Beat</b> · 23 catches</p>
+                  <p class="board-h3">✨ New finds that stayed</p>
+                  <p><b>5 new finds stayed</b> in the kitchen</p>
+                  <p class="board-sub"><b>Tin Roof Waltz</b> — Iron Orchard · <b>Paprika</b> — MC Plech · <b>Pantry Lights</b> — The Saucepans</p>
+                  <p class="board-sub wrapped-end">🍪 See you next month</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="wrapped.caption">Example, not live; the songs and people are made up.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
 <section class="section chapter" id="welcome">
   <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div class="wrap split lean">
-    <div data-reveal>
+    <div class="stick" data-reveal>
       <h2 class="h-small" data-i18n="welcome.title">Hi and bye</h2>
       <p class="lead" data-i18n="welcome.body">When someone joins, Dzbanek greets them with a card, and when they leave, it says goodbye. Pick the channels with /setup welcome and /setup goodbye. The cards are in English and look like this:</p>
       <ul class="ticks">
@@ -589,7 +654,7 @@
       </details>
       <details>
         <summary><span data-i18n="faq.q2">Does it need admin rights?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-        <p data-i18n="faq.a2">No. It asks for Connect, Speak, View Channel, Send Messages, Embed Links, Manage Messages, Add Reactions, and Manage Channels, and that’s it. Manage Messages only deletes its own old cards, and Manage Channels is only for /textroom and /voiceroom, which only admins can run.</p>
+        <p data-i18n="faq.a2">No. It asks for Connect, Speak, View Channel, Send Messages, Embed Links, Attach Files, Read Message History, Add Reactions, and Manage Channels, and that’s it. Manage Channels is only for /textroom and /voiceroom, which only admins can run.</p>
       </details>
       <details>
         <summary><span data-i18n="faq.q3">Why can’t music and radio play at the same time?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
@@ -609,7 +674,7 @@
       </details>
       <details>
         <summary><span data-i18n="faq.q7">What does the bot remember about me?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-        <p><span data-i18n="faq.a7">Only what its features need: the songs you play, your catches, votes and quiz scores, and your Steam profile if you link it. Nothing is sold or shared.</span> <a class="link-arrow" href="privacy.html"><span data-i18n="faq.a7link">The whole list</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
+        <p><span data-i18n="faq.a7">Only what its features need: the songs you play, your catches, your 🔥 and 👎, votes and quiz scores, and your Steam profile if you link it. Nothing is sold, and the few outside services that see some of it are on the list.</span> <a class="link-arrow" href="privacy.html"><span data-i18n="faq.a7link">The whole list</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
       </details>
     </div>
   </div>
@@ -628,6 +693,7 @@
     <div class="receipt">
       <p class="receipt-head">DZBANEK · <span data-i18n="changelog.slip">kitchen log</span></p>
       <ol class="receipt-list">
+        <li><time datetime="2026-10-27">27. 10. 2026</time><span data-i18n="changelog.c16">Kitchen Wrapped: on the 1st, last month in one card. Sunday’s postcard now also crowns the Chef of the week and the 🔥 song of the week.</span></li>
         <li><time datetime="2026-10-27">27. 10. 2026</time><span data-i18n="changelog.c15">Dedications on Kitchen FM: /radio dedicate sends the DJ a short message to read on air, and 🔥 or 👎 on the card decides which new finds stay.</span></li>
         <li><time datetime="2026-10-26">26. 10. 2026</time><span data-i18n="changelog.c14">Kitchen FM, the kitchen’s own station on /radio play: your server’s songs a genre at a time, with a DJ between the sets.</span></li>
         <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c13">Four new stations: Frekvence 1, Heart London, Capital London and Radio Paradise. The Friday vote has a button for each of the seven.</span></li>
@@ -665,7 +731,7 @@
         <p class="letter-hello" data-i18n="about.hello">Dear kitchen,</p>
         <p class="letter-lede" data-i18n="about.p1">I made Dzbanek for our own Discord server. We wanted one bot for music instead of three, the Czech radio we listen to anyway, and a heads-up when a good game gets cheap.</p>
         <p data-i18n="about.first">The first version went up in June 2026 with music, RSS news and Steam deals. In September I wrote it again from scratch, and the bot turned into a kitchen: a cookie for everyone who joins, a Kitchen Board that edits itself, and radio playing on the counter.</p>
-        <p data-i18n="about.second">These days I mostly work on Kitchen FM, the kitchen’s own station. A DJ talks between the sets and knows who brought each song in. Now you can send it a dedication too, and a 🔥 keeps a new find in the kitchen for good.</p>
+        <p data-i18n="about.second">These days I mostly work on Kitchen FM, the kitchen’s own station. A DJ talks between the sets and knows who brought each song in. Now you can send it a dedication too, and a 🔥 keeps a new find in the kitchen for good. On the 1st, Kitchen Wrapped tells you how the month sounded.</p>
         <p data-i18n="about.p2">It’s free and it’ll stay that way. If something breaks or you miss a feature, tell me on GitHub.</p>
       </div>
       <div class="letter-sign">
@@ -684,7 +750,7 @@
           <li><time datetime="2026-10-22">22. 10. 2026</time><span data-i18n="about.c7">Kitchen Quiz and Wishlist Radar</span></li>
           <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="about.c5">Frekvence 1, Heart, Capital and Radio Paradise</span></li>
           <li><time datetime="2026-10-26">26. 10. 2026</time><span data-i18n="about.c6">Kitchen FM, with a DJ</span></li>
-          <li class="is-new"><time datetime="2026-10-27">27. 10. 2026</time> <span class="chronicle-new" data-i18n="changes.new">New</span><span data-i18n="about.c8">Dedications, and 🔥 or 👎 for each song</span></li>
+          <li class="is-new"><time datetime="2026-10-27">27. 10. 2026</time> <span class="chronicle-new" data-i18n="changes.new">New</span><span data-i18n="about.c8">Dedications, 🔥 or 👎, and Kitchen Wrapped</span></li>
       </ol>
       <p class="chronicle-count"><a class="link-arrow" href="changes.html"><b>{{changeCount}}</b> <span data-i18n="about.changes">changes to Dzbanek 2.0 so far</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
       <p class="chronicle-links">

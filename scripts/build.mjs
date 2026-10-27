@@ -17,7 +17,7 @@ const dist = join(root, 'dist');
 // Where the site is served. Canonical links, og:url, og:image, and the 404 page's asset paths come from it.
 const SITE_URL = 'https://kingvojtas.github.io/dzbanek-bot-website/';
 const invite =
-  'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173456&scope=bot%20applications.commands';
+  'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3263568&scope=bot%20applications.commands';
 const github = 'https://github.com/KingVojtas/dzbanek-bot-2.0';
 const ogImage = new URL('assets/kitchen-hero.jpg', SITE_URL).href;
 // The home page carries the ad, so a pasted link can play it in Discord.
@@ -171,8 +171,11 @@ async function botCommits() {
 const escapeHtml = (text) =>
   text.replace(/[&<>"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[char]);
 
-function kindOf(subject) {
-  if (/^add\b/i.test(subject)) return ['new', 'New'];
+// New things whose note doesn't start with "Add": Kitchen FM's dedications and 🔥/👎, and Kitchen Wrapped.
+const ALSO_NEW = new Set(['c23b9db', 'f3c8625']);
+
+function kindOf({ subject, sha }) {
+  if (/^add\b/i.test(subject) || ALSO_NEW.has(sha.slice(0, 7))) return ['new', 'New'];
   if (/\bfix(es|ed)?\b|unescape/i.test(subject)) return ['fix', 'Fix'];
   return ['tweak', 'Better'];
 }
@@ -190,7 +193,7 @@ function changesLog(commits) {
   }
   const blocks = [...days].map(([date, list]) => {
     const rows = list.map((commit) => {
-      const [kind, label] = kindOf(commit.subject);
+      const [kind, label] = kindOf(commit);
       const text = escapeHtml(commit.subject.replace(/\.$/, ''));
       const sha = commit.sha.slice(0, 7);
       return `<li><span class="log-kind is-${kind}" data-i18n="changes.${kind}">${label}</span><span class="log-text">${text}</span><a class="log-sha" href="${github}/commit/${commit.sha}" target="_blank" rel="noopener noreferrer" aria-label="Commit ${sha} on GitHub">${sha}</a></li>`;

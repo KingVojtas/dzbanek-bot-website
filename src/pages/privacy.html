@@ -9,7 +9,7 @@
       <p class="title-tag" data-i18n="book.tagline">a cookbook for Discord</p>
     </div>
     <h1 data-i18n="privacy.title">What Dzbanek remembers</h1>
-    <p class="lead" data-i18n="privacy.lead">The bot keeps a small pantry for each server, so the Kitchen Board, Kitchen FM, the quiz, and the deals work. Here’s everything on its shelves, what each thing is for, and how to clear it.</p>
+    <p class="lead" data-i18n="privacy.lead">The bot keeps a small pantry for each server, in one database on my own computer, so the Kitchen Board, Kitchen FM, the quiz, Kitchen Wrapped, and the deals work. Here’s everything on its shelves, what each thing is for, who else sees some of it, and how to clear it.</p>
   </div>
 </header>
 
@@ -21,10 +21,11 @@
       <dl class="recipe-list">
         <div><dt data-i18n="privacy.settingsT">Settings</dt><dd data-i18n="privacy.settings">The channels you picked with /setup, Radio Night, idle radio, and the last station that played, so a restart can put it back on.</dd></div>
         <div><dt data-i18n="privacy.playsT">Songs played</dt><dd data-i18n="privacy.plays">The link, title, length, and who asked for each /play. Kitchen FM, the quiz, and the “brought in by” lines are made from it.</dd></div>
+        <div><dt data-i18n="privacy.logT">Play log</dt><dd data-i18n="privacy.log">Every song that starts: its title, link, and length, who brought it in, and whether it was a /play, a dedication, or Kitchen FM’s pick. Kitchen Wrapped and the Chef of the week are counted from it. Entries older than 400 days are deleted every night.</dd></div>
         <div><dt data-i18n="privacy.catchesT">Catches</dt><dd data-i18n="privacy.catches">The song, the station, the cover, and who caught it. The Kitchen Board and the Sunday postcard show them.</dd></div>
         <div><dt data-i18n="privacy.votesT">Radio Night votes</dt><dd data-i18n="privacy.votes">Who voted for which station that Friday. You can change your vote until 20:00.</dd></div>
-        <div><dt data-i18n="privacy.quizT">Quiz scores</dt><dd data-i18n="privacy.quiz">Points, right answers, and rounds for each player, for the podium and the week’s champion.</dd></div>
-        <div><dt data-i18n="privacy.reactionsT">🔥 and 👎</dt><dd data-i18n="privacy.reactions">Who reacted to which song on Kitchen FM, so the station knows what to play more and what to leave out.</dd></div>
+        <div><dt data-i18n="privacy.quizT">Quiz scores</dt><dd data-i18n="privacy.quiz">Points, right answers, and rounds for each player, for the podium, the week’s champion, and Kitchen Wrapped.</dd></div>
+        <div><dt data-i18n="privacy.reactionsT">🔥 and 👎</dt><dd data-i18n="privacy.reactions">Who reacted to which song on Kitchen FM, so the station knows what to play more and what to leave out. The 🔥 song of the week and the Chef of the week are counted from them too.</dd></div>
         <div><dt data-i18n="privacy.dealsT">Deals already posted</dt><dd data-i18n="privacy.deals">Which Steam and Epic games each server has already seen, so nothing gets posted twice.</dd></div>
       </dl>
     </div>
@@ -38,11 +39,22 @@
       <div class="recipe privacy-not" data-reveal>
         <h2 class="recipe-title" data-i18n="privacy.notTitle">Never kept</h2>
         <ul class="privacy-list">
-          <li data-i18n="privacy.not1">Your messages. The bot doesn’t have the permission to read chat at all.</li>
+          <li data-i18n="privacy.not1">Your messages. The bot doesn’t ask Discord for message content, so it can’t read what people write.</li>
           <li data-i18n="privacy.not2">Your voice. It only plays audio and never records anything.</li>
-          <li data-i18n="privacy.not3">Dedications. They wait in memory until the DJ reads them, and anything unread is gone when the show ends.</li>
+          <li data-i18n="privacy.not3">Dedications. They wait in memory until the DJ reads them on air, and anything unread is gone when the show ends.</li>
           <li data-i18n="privacy.not4">Who’s in voice. The In voice card shows it live and doesn’t save it.</li>
+          <li data-i18n="privacy.not5">Your name. It saves your Discord ID; names come from Discord when a card shows them.</li>
         </ul>
+      </div>
+      <!-- The outside services that get personal bits: src/fm/writer.ts (Claude), src/fm/voice.ts (Edge), the music lookups, and Wishlist Radar. -->
+      <div class="recipe" data-reveal>
+        <h2 class="recipe-title" data-i18n="privacy.sharedTitle">Who else sees some of it</h2>
+        <dl class="recipe-list">
+          <div><dt data-i18n="privacy.claudeT">Claude, by Anthropic</dt><dd data-i18n="privacy.claude">When Kitchen FM can’t build a set from its genre blocks, the DJ asks Claude to plan one. That sends the server’s name, the time, the names of the people listening and of newcomers, and the songs with who brought them in.</dd></div>
+          <div><dt data-i18n="privacy.voiceT">Microsoft</dt><dd data-i18n="privacy.voice">The DJ’s lines are turned into speech by Microsoft Edge’s read-aloud service. A line can hold names and a dedication.</dd></div>
+          <div><dt data-i18n="privacy.searchT">YouTube and Spotify</dt><dd data-i18n="privacy.search">What you ask /play for, so the song can be found. Deezer gets an artist and a title, and MusicBrainz an artist’s name, for genres and similar artists.</dd></div>
+          <div><dt data-i18n="privacy.steamUseT">Steam</dt><dd data-i18n="privacy.steamUse">Your Steam ID, when Wishlist Radar reads your public wishlist.</dd></div>
+        </dl>
       </div>
     </div>
   </div>
@@ -67,7 +79,7 @@
       <span class="intent-icon"><svg width="28" height="28" aria-hidden="true"><use href="#i-shield" /></svg></span>
       <div>
         <h2 data-i18n="privacy.removeTitle">Want something gone?</h2>
-        <p class="lead" data-i18n="privacy.removeBody">/steam unlink removes your Steam link on the spot. For anything else, write to me on GitHub and I’ll clear it. Nothing here is sold or shared with anyone.</p>
+        <p class="lead" data-i18n="privacy.removeBody">/steam unlink removes your Steam link on the spot. For anything else, write to me on GitHub and I’ll clear it. Nothing here is sold, and nobody gets it beyond the services above.</p>
         <p class="note"><a class="link-arrow" href="{{github}}/issues" target="_blank" rel="noopener noreferrer"><span data-i18n="about.write">Tell me on GitHub</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-external" /></svg></a></p>
       </div>
     </div>
