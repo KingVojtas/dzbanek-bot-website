@@ -1,5 +1,5 @@
 <!-- title: Radio · Dzbanek -->
-<!-- description: Seven live stations in your voice channel, from Kiss and Radio Beat to Capital London and Radio Paradise. Save songs you like with Catch, and vote on Friday’s Radio Night. -->
+<!-- description: Seven live stations in your voice channel, from Kiss and Radio Beat to Capital London and Radio Paradise, plus Kitchen FM, your server’s own station with a DJ who reads dedications. Save songs with Catch, and vote on Friday’s Radio Night. -->
 <!-- page: radio -->
 <!-- scripts: radio.js radio-film.js -->
 
@@ -112,6 +112,80 @@
     </div>
   </section>
 </div>
+
+<!-- Kitchen FM: the bot's own station. The card is its Now Playing card while the show is on
+     (buildNowPlayingDisplay in src/core/display/music.ts), here reading out a dedication. -->
+<section class="section" id="fm" aria-labelledby="fm-title">
+  <div class="wrap split">
+    <div data-reveal>
+      <p class="fm-kicker"><svg width="18" height="18" aria-hidden="true"><use href="#i-mic" /></svg> <span data-i18n="fm.kicker">Only in Discord</span></p>
+      <h2 id="fm-title" data-i18n="fm.title">Kitchen FM, your server’s own station</h2>
+      <p class="lead" data-i18n="fm.lead">Pick Kitchen FM in /radio play and the bot plays the songs your server has played or caught, a genre at a time. Before each set a DJ says the time, the genre, the first song, and who brought it in.</p>
+      <ul class="fm-points" data-reveal-group>
+        <li>
+          <span class="fm-icon" aria-hidden="true">🎚️</span>
+          <div><h3 data-i18n="fm.blocksT">Genre blocks</h3><p data-i18n="fm.blocks">It learns what your kitchen likes from /play and plays ten songs of one genre before moving on. Your favourite comes around most.</p></div>
+        </li>
+        <li>
+          <span class="fm-icon" aria-hidden="true">🧭</span>
+          <div><h3 data-i18n="fm.findsT">New finds</h3><p data-i18n="fm.finds">From the second set on, it slips in songs by similar artists that nobody in your kitchen has played yet.</p></div>
+        </li>
+        <li>
+          <span class="fm-icon" aria-hidden="true">💌</span>
+          <div><h3 data-i18n="fm.dedicateT">Dedications</h3><p data-i18n="fm.dedicate">/radio dedicate sends up to 120 characters, for someone if you like. The DJ reads it before the next song, or before a song you name.</p></div>
+        </li>
+        <li>
+          <span class="fm-icon" aria-hidden="true">🔥</span>
+          <div><h3 data-i18n="fm.reactT">🔥 and 👎</h3><p data-i18n="fm.react">Everyone in the channel gets one per song. 🔥 keeps a new find and brings a kitchen song back more often. 👎 drops a find for good and rests a song people are tired of.</p></div>
+        </li>
+      </ul>
+      <p class="note" data-i18n="fm.note">It needs at least three songs in the kitchen. /play requests still go first, and ⏭️ Skip cuts the DJ short.</p>
+    </div>
+    <figure class="dc-stage plate" data-reveal>
+      <div class="dc">
+        <div class="dc-msg">
+          <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+          <div class="dc-body">
+            <p class="dc-used"><span class="mini-you" aria-hidden="true"></span><b>Milo</b> used <b>/radio dedicate</b></p>
+            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><time class="dc-time" data-clock="stamp">Today at 21:14</time></p>
+            <div class="dc-embed" style="--bar: var(--dc-green)">
+              <div class="dc-embed-main">
+                <p class="dc-embed-desc">💌 Milo’s dedication for Nova is in. The DJ reads it before the next song.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dc-msg">
+          <img class="dc-avatar" src="assets/avatar.jpg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+          <div class="dc-body">
+            <p class="dc-meta"><strong class="dc-name">Dzbanek</strong><span class="dc-tag">APP</span><span class="dc-time"><span data-i18n="board.edited">(edited)</span></span></p>
+            <div class="dc-embed" style="--bar: var(--clay)">
+              <div class="dc-embed-main">
+                <p class="dc-embed-author">🎙️ Kitchen FM · Czech rap</p>
+                <p class="dc-embed-title">Sušenky na lince</p>
+                <p class="dc-embed-desc">by <b>MC Plech</b></p>
+                <div class="dc-progress"><span class="mono">0:12</span><div class="progress"><span style="width: 6%"></span></div><span class="mono">3:05</span></div>
+                <p class="dc-quote">🎙️ <i>A message from Milo for Nova: “Happy birthday, the cookies are on me.” Here’s Sušenky na lince.</i></p>
+                <dl class="dc-fields">
+                  <div><dt>Brought in by</dt><dd><span class="dc-mention">@Nova</span></dd></div>
+                  <div><dt>Ends</dt><dd>21:17 · <span class="dc-ts">in 3 minutes</span></dd></div>
+                  <div><dt>Volume</dt><dd>🔊 100%</dd></div>
+                  <div class="wide"><dt>Up next</dt><dd>🎙️ Kitchen FM picks one. <code>/play</code> to request.</dd></div>
+                </dl>
+                <p class="dc-embed-footer">Kitchen FM on air</p>
+              </div>
+              <div class="dc-embed-thumb vinyl" aria-hidden="true"><span></span></div>
+            </div>
+            <div class="dc-row"><span class="dc-btn dc-btn-blurple">⏸️ Pause</span><span class="dc-btn">⏭️ Skip</span><span class="dc-btn dc-btn-red">⏹️ Stop</span><span class="dc-btn">🔁 Loop</span><span class="dc-btn">🔀 Shuffle</span></div>
+            <div class="dc-row"><span class="dc-btn">⏮️ Previous</span><span class="dc-btn">🔉</span><span class="dc-btn">🔊</span><span class="dc-btn">📜 Queue</span></div>
+            <div class="dc-row"><span class="dc-btn is-hot">🔥 4</span><span class="dc-btn">👎</span></div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="plate-caption"><span class="fig-no" data-i18n="book.fig">Fig.</span> <span data-i18n="fm.caption">A dedication on air. Example, not live; the song is made up.</span></figcaption>
+    </figure>
+  </div>
+</section>
 
 <section class="section" id="film" aria-labelledby="film-title">
   <div class="wrap split">

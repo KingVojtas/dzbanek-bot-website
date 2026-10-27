@@ -17,7 +17,7 @@ const dist = join(root, 'dist');
 // Where the site is served. Canonical links, og:url, og:image, and the 404 page's asset paths come from it.
 const SITE_URL = 'https://kingvojtas.github.io/dzbanek-bot-website/';
 const invite =
-  'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173440&scope=bot%20applications.commands';
+  'https://discord.com/oauth2/authorize?client_id=923262419923513445&permissions=3173456&scope=bot%20applications.commands';
 const github = 'https://github.com/KingVojtas/dzbanek-bot-2.0';
 const ogImage = new URL('assets/kitchen-hero.jpg', SITE_URL).href;
 // The home page carries the ad, so a pasted link can play it in Discord.
@@ -125,8 +125,8 @@ const updated = dotted(updatedIso);
 
 // changes.html: the bot's commit history, from GitHub, or from a clone next to this repo when offline.
 const BOT_REPO = 'KingVojtas/dzbanek-bot-2.0';
-// Housekeeping commits that mean nothing to someone using the bot.
-const QUIET = /deploy skill|prettier|readme|prisma|fingerprint|layout key|initial commit/i;
+// Housekeeping commits that mean nothing to someone using the bot: tooling, tests, and moving code between files.
+const QUIET = /deploy skill|prettier|readme|prisma|fingerprint|layout key|initial commit|unit tests|split the card builders/i;
 const pragueDay = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Prague' });
 
 async function botCommits() {

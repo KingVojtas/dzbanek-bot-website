@@ -56,6 +56,7 @@
     { name: 'radio stop', desc: 'Turn the radio off' },
     { name: 'radio night', desc: 'Put Friday Radio Night on the calendar' },
     { name: 'radio night-off', desc: 'Take Radio Night off the calendar' },
+    { name: 'radio dedicate', args: '[message]', desc: 'Send the Kitchen FM DJ a message to read on air', free: true },
     { name: 'steam link', args: '[profile]', desc: 'Let Wishlist Radar watch your wishlist', free: true },
     { name: 'steam wishlist', desc: 'Your wishlist with prices, sales first' },
     { name: 'steam unlink', desc: 'Stop watching your wishlist' },
@@ -78,7 +79,9 @@
   const CHOICES = {
     stations: {
       head: ['demo.station', 'Station'],
-      items: Object.keys(STATIONS).map((key) => ({ key, name: STATIONS[key].name, desc: STATIONS[key].slogan, color: STATIONS[key].color })),
+      items: Object.keys(STATIONS)
+        .map((key) => ({ key, name: STATIONS[key].name, desc: STATIONS[key].slogan, color: STATIONS[key].color }))
+        .concat({ key: 'fm', name: 'Kitchen FM', desc: 'Your songs, with a DJ', color: 'var(--clay)' }),
     },
     features: {
       head: ['demo.feature', 'Feature'],
@@ -108,6 +111,8 @@
       loop: 0,
       card: null,
       radio: null, // { key, card, song }
+      fm: null, // Kitchen FM: { index, line, mine, paused, dedication, card }
+      fmAfter: false, // a /play request cut in, and Kitchen FM carries on after it
       lastStation: 'beat',
       night: false,
       idle: true,
@@ -401,6 +406,11 @@
     retire(state.card);
     state.card = null;
     state.track = null;
+    if (state.fmAfter) {
+      state.fmAfter = false;
+      later(() => startFm(true), 600);
+      return;
+    }
     if (!state.idle) {
       append(botMessage(text('👋 The queue is done. See you next time.')));
       return;
@@ -444,9 +454,11 @@
   }
 
   function stopAll(message) {
-    const had = state.track || state.radio;
+    const had = state.track || state.radio || state.fm;
     stopMusic();
     stopRadio();
+    stopFm();
+    state.fmAfter = false;
     if (message && had) append(botMessage(text(message)));
   }
 
@@ -494,6 +506,8 @@
       stopMusic();
       if (!quiet) append(botMessage(text('🎶 Music handed the speaker to the radio.')));
     }
+    stopFm();
+    state.fmAfter = false;
     if (state.radio) retire(state.radio.card);
     const made = radioCard(key);
     state.radio = { key, card: append(made.card), index: 0 };
@@ -514,6 +528,105 @@
     clearInterval(radioTimer);
     retire(state.radio.card);
     state.radio = null;
+    return true;
+  }
+
+  /* ---------- Kitchen FM ---------- */
+
+  // The kitchen's own station (src/fm in the bot): the kitchen's songs a genre at a time, the DJ talking
+  // before each set, a dedication read before the next song, and 🔥 / 👎 once per person per song.
+  const FM_SET = [
+    { title: 'Sušenky na lince', artist: 'MC Plech', by: 'Nova', fires: 3, length: 185 },
+    { title: 'Plechový beat', artist: 'Dvě lžíce', find: true, fires: 0, length: 212 },
+    { title: 'Večerní linka', artist: 'Rohlík & Máslo', by: 'Milo', fires: 2, length: 198 },
+  ];
+
+  function djOpener(song) {
+    const hour = new Date().getHours();
+    const time = (hour % 12 || 12) + (hour < 12 ? ' AM' : ' PM');
+    return 'It’s ' + time + ' and The Kitchen is open. For the next few songs it’s Czech rap, starting with ' + song.title + ' by ' + song.artist + '. Brought in by ' + song.by + '.';
+  }
+
+  function fmCard() {
+    const fm = state.fm;
+    const song = FM_SET[fm.index];
+    const fire = button('', () => react('fire'));
+    const nope = button('👎', () => react('nope'));
+    function paint() {
+      fire.textContent = '🔥 ' + (song.fires + (fm.mine === 'fire' ? 1 : 0));
+      fire.classList.toggle('is-hot', fm.mine === 'fire');
+      nope.classList.toggle('is-on', fm.mine === 'nope');
+    }
+    // Press again to take it back, or the other one to switch.
+    function react(kind) {
+      fm.mine = fm.mine === kind ? null : kind;
+      paint();
+    }
+    paint();
+    const pause = button(fm.paused ? '▶️ Resume' : '⏸️ Pause', () => {
+      fm.paused = !fm.paused;
+      pause.textContent = fm.paused ? '▶️ Resume' : '⏸️ Pause';
+      card.classList.toggle('paused', fm.paused);
+    }, { blurple: true });
+    const card = botMessage(
+      embed({
+        bar: 'var(--clay)',
+        author: '🎙️ Kitchen FM · Czech rap' + (song.find ? ' · new find' : ''),
+        title: song.title,
+        desc: ['by ', strong(song.artist)],
+        children: [
+          h('div', { class: 'dc-progress' }, h('span', { class: 'mono', text: '0:00' }), h('div', { class: 'progress manual' }, h('span')), h('span', { class: 'mono', text: clock(song.length) })),
+          fm.line && h('p', { class: 'dc-quote' }, '🎙️ ', h('i', { text: fm.line })),
+          fields([
+            ['Brought in by', song.by ? h('span', { class: 'dc-mention', text: '@' + song.by }) : '🧭 A new find'],
+            ['Volume', '🔊 ' + state.volume + '%'],
+            ['Up next', '🎙️ Kitchen FM picks one. /play to request.', true],
+          ]),
+        ],
+        footer: 'Kitchen FM on air',
+        thumb: h('div', { class: 'dc-embed-thumb vinyl', 'aria-hidden': 'true' }, h('span')),
+      }),
+      row(
+        pause,
+        button('⏭️ Skip', () => fmNext()),
+        button('⏹️ Stop', () => {
+          if (stopFm()) append(botMessage(text('⏹️ Kitchen FM is off the air. See you next show.')));
+        }, { red: true })
+      ),
+      row(fire, nope)
+    );
+    return card;
+  }
+
+  function startFm(quiet) {
+    if (state.track) {
+      stopMusic();
+      if (!quiet) append(botMessage(text('🎶 Music handed the speaker to Kitchen FM.')));
+    }
+    stopRadio();
+    retire(state.fm && state.fm.card);
+    state.fm = { index: 0, line: djOpener(FM_SET[0]), mine: null, paused: false, dedication: null, card: null };
+    state.fm.card = append(fmCard());
+  }
+
+  // The next song: a waiting dedication is read before it; the DJ opens each new set.
+  function fmNext() {
+    const fm = state.fm;
+    if (!fm) return;
+    fm.index = (fm.index + 1) % FM_SET.length;
+    const song = FM_SET[fm.index];
+    fm.line = fm.dedication ? 'A message from you: “' + fm.dedication + '”. Here’s ' + song.title + '.' : fm.index === 0 ? djOpener(song) : null;
+    fm.dedication = null;
+    fm.mine = null;
+    fm.paused = false;
+    retire(fm.card);
+    fm.card = append(fmCard());
+  }
+
+  function stopFm() {
+    if (!state.fm) return false;
+    retire(state.fm.card);
+    state.fm = null;
     return true;
   }
 
@@ -616,6 +729,11 @@
           stopRadio();
           append(botMessage(text('📻 The radio handed the speaker to the music.')));
         }
+        if (state.fm) {
+          stopFm();
+          state.fmAfter = true;
+          append(botMessage(text('🎙️ Requests go first. Kitchen FM carries on after this one.')));
+        }
         if (!state.track) {
           startTrack(tracks.shift());
           state.queue.push(...tracks);
@@ -679,7 +797,7 @@
 
     stop() {
       reply(() => {
-        if (!state.track && !state.radio) return botMessage(...onlyYou('Nothing is playing.'));
+        if (!state.track && !state.radio && !state.fm) return botMessage(...onlyYou('Nothing is playing.'));
         stopAll();
         return botMessage(text('⏹️ Stopped. The queue is cleared and I’ve left the channel.'));
       });
@@ -703,13 +821,37 @@
         return false;
       }
       reply(() => {
-        startRadio(key);
+        if (key === 'fm') startFm();
+        else startRadio(key);
         return null;
       });
     },
 
     'radio stop'() {
-      reply(() => (stopRadio() ? botMessage(text('📻 Radio off.')) : botMessage(...onlyYou('The radio isn’t on.'))));
+      reply(() => {
+        // It ends the show, also while a /play request has cut in.
+        if (stopFm() || state.fmAfter) {
+          state.fmAfter = false;
+          return botMessage(text('⏹️ Kitchen FM is off the air. See you next show.'));
+        }
+        return stopRadio() ? botMessage(text('📻 Radio off.')) : botMessage(...onlyYou('The radio isn’t on.'));
+      });
+    },
+
+    'radio dedicate'(rest) {
+      const message = rest.replace(/^message:\s*/i, '').trim().slice(0, 120);
+      if (!message) {
+        openWith('/radio dedicate ');
+        return false;
+      }
+      reply(() => {
+        if (!state.fm) return botMessage(...onlyYou('Kitchen FM isn’t on. Start it with ', h('code', { text: '/radio play station:Kitchen FM' }), '.'));
+        if (state.fm.dedication) return botMessage(...onlyYou('Your dedication is already waiting. The DJ reads it before the next song.'));
+        state.fm.dedication = message;
+        // The DJ reads it before the next song, which comes a little sooner here than in Discord.
+        later(fmNext, 2600);
+        return botMessage(embed({ bar: 'var(--dc-green)', desc: '💌 Your dedication is in. The DJ reads it before the next song.' }));
+      });
     },
 
     'radio night'() {
@@ -811,9 +953,11 @@
     'quiz start'() {
       reply(() => {
         if (state.quiz) return botMessage(...onlyYou('A quiz is already running. ', h('code', { text: '/quiz stop' }), ' ends it.'));
-        if (state.track || state.radio) {
+        if (state.track || state.radio || state.fm) {
           stopMusic();
           stopRadio();
+          stopFm();
+          state.fmAfter = false;
           append(botMessage(text('🎧 Music and radio step aside while the quiz runs.')));
         }
         state.quiz = { round: 0, score: 0, card: null, timer: 0 };
@@ -962,6 +1106,7 @@
 
   function pickStation(rest) {
     const value = rest.toLowerCase();
+    if (/\bfm\b|kitchen/.test(value)) return 'fm';
     return Object.keys(STATIONS).find((key) => value && (value.includes(key) || STATIONS[key].name.toLowerCase().startsWith(value)));
   }
 
@@ -1009,7 +1154,7 @@
   // Dzbanek sits in the Lounge while it plays something, with the green ring while sound comes out.
   const voiceBot = document.querySelector('[data-demo-voice-bot]');
   function voice() {
-    const busy = Boolean(state.track || state.radio || state.quiz);
+    const busy = Boolean(state.track || state.radio || state.fm || state.quiz);
     voiceBot.hidden = !busy;
     voiceBot.classList.toggle('is-speaking', busy && !(state.track && state.paused));
   }

@@ -1,6 +1,7 @@
 <!-- title: What’s new · Dzbanek -->
-<!-- description: Every change to the bot, straight from its commit history on GitHub. The newest is on top. -->
+<!-- description: The biggest new things in the bot, then every change straight from its commit history on GitHub. The newest is on top. -->
 <!-- page: changes -->
+<!-- scripts: changes.js -->
 
 <header class="page-hero">
   <div class="wrap">
@@ -10,12 +11,74 @@
     </div>
     <h1 data-i18n="changes.title">What’s new</h1>
     <p class="lead" data-i18n="changes.lead">Every change to the bot, straight from its commit history on GitHub. The newest is on top, and the list refreshes every day.</p>
-    <p class="note" data-i18n="changes.note">These are the notes I write for each change, so they’re in English.</p>
   </div>
 </header>
 
-<section class="section flush-top" aria-labelledby="log-head">
+<!-- The big ones: what you'd notice in Discord, newest first. The first card is the newest. -->
+<section class="section flush-top" aria-labelledby="highlights-title">
   <div class="wrap">
+    <div class="highlights-head" data-reveal>
+      <h2 class="h-small" id="highlights-title" data-i18n="changes.highlights">The big ones</h2>
+      <p class="note" data-i18n="changes.highlightsLead">What you’ll notice in Discord. The whole log is under them.</p>
+    </div>
+    <ol class="highlights" data-reveal-group>
+      <li class="highlight is-featured">
+        <a href="radio.html#fm">
+          <span class="highlight-top"><span class="highlight-icon" aria-hidden="true">💌</span><time datetime="2026-10-27">27. 10. 2026</time><span class="chronicle-new" data-i18n="changes.newest">Newest</span></span>
+          <h3 data-i18n="changes.h1t">Dedications, and 🔥 or 👎</h3>
+          <p data-i18n="changes.h1">/radio dedicate gets your message read on Kitchen FM, before the next song or one you name. And one tap on the card decides whether a new find stays in the kitchen.</p>
+          <span class="highlight-more"><span data-i18n="changes.look">Take a look</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></span>
+        </a>
+      </li>
+      <li class="highlight">
+        <a href="radio.html#fm">
+          <span class="highlight-top"><span class="highlight-icon" aria-hidden="true">🎙️</span><time datetime="2026-10-26">26. 10. 2026</time></span>
+          <h3 data-i18n="changes.h2t">Kitchen FM</h3>
+          <p data-i18n="changes.h2">Your server’s own station: its songs a genre at a time, with a DJ who says who brought each one in.</p>
+          <span class="highlight-more"><span data-i18n="changes.look">Take a look</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></span>
+        </a>
+      </li>
+      <li class="highlight">
+        <a href="radio.html">
+          <span class="highlight-top"><span class="highlight-icon" aria-hidden="true">📻</span><time datetime="2026-10-24">24. 10. 2026</time></span>
+          <h3 data-i18n="changes.h3t">Seven stations</h3>
+          <p data-i18n="changes.h3">Frekvence 1, Heart London, Capital London and Radio Paradise joined Kiss, Rock Radio and Radio Beat.</p>
+          <span class="highlight-more"><span data-i18n="changes.look">Take a look</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></span>
+        </a>
+      </li>
+      <li class="highlight">
+        <a href="commands.html#quiz">
+          <span class="highlight-top"><span class="highlight-icon" aria-hidden="true">🎧</span><time datetime="2026-10-22">22. 10. 2026</time></span>
+          <h3 data-i18n="changes.h4t">Kitchen Quiz</h3>
+          <p data-i18n="changes.h4">Name that tune in voice, with clips of songs your kitchen has played.</p>
+          <span class="highlight-more"><span data-i18n="changes.look">Take a look</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></span>
+        </a>
+      </li>
+      <li class="highlight">
+        <a href="commands.html#steam">
+          <span class="highlight-top"><span class="highlight-icon" aria-hidden="true">🎯</span><time datetime="2026-10-22">22. 10. 2026</time></span>
+          <h3 data-i18n="changes.h5t">Wishlist Radar</h3>
+          <p data-i18n="changes.h5">Link your Steam profile and get pinged when a game you wished for goes on sale.</p>
+          <span class="highlight-more"><span data-i18n="changes.look">Take a look</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></span>
+        </a>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="log-head">
+  <div class="wrap">
+    <div class="log-intro" data-reveal>
+      <h2 class="h-small" data-i18n="changes.logTitle">The kitchen log</h2>
+      <p class="note" data-i18n="changes.note">Each line is the note that went in with the change.</p>
+      <!-- Filters the slip by kind (changes.js). Hidden until the script fills in the counts. -->
+      <div class="log-filter" role="group" aria-label="Show changes" data-i18n-aria="changes.filter" data-log-filter hidden>
+        <button type="button" aria-pressed="true" data-kind="all"><span data-i18n="changes.all">All</span> <b data-count></b></button>
+        <button type="button" aria-pressed="false" data-kind="new"><span data-i18n="changes.new">New</span> <b data-count></b></button>
+        <button type="button" aria-pressed="false" data-kind="tweak"><span data-i18n="changes.tweak">Better</span> <b data-count></b></button>
+        <button type="button" aria-pressed="false" data-kind="fix"><span data-i18n="changes.fix">Fix</span> <b data-count></b></button>
+      </div>
+    </div>
     <!-- The whole kitchen log, printed by scripts/build.mjs. -->
     <div class="receipt-wrap is-long" data-reveal>
       <div class="receipt">

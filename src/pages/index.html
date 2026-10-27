@@ -1,5 +1,5 @@
 <!-- title: Dzbanek: Discord bot for music, live radio and game deals -->
-<!-- description: Dzbanek plays music, streams radio from Prague, London and California, and posts Steam deals and Epic freebies to your Discord server. Free, no premium tier. -->
+<!-- description: Dzbanek plays music, streams radio from Prague, London and California, runs your server’s own station with a DJ, and posts Steam deals and Epic freebies to your Discord server. Free, no premium tier. -->
 <!-- page: home -->
 <!-- scripts: film.js radio-film.js contents.js -->
 
@@ -175,8 +175,8 @@
     <div data-reveal>
       <h2 data-i18n="radioHome.title">Seven stations, live</h2>
       <p class="lead" data-i18n="radioHome.body">/radio play joins your voice channel and streams one of seven stations: Kiss, Rock Radio, Radio Beat and Frekvence 1 from Czechia, Heart and Capital from London, and Radio Paradise from California. The card shows what’s on and updates when the song changes. Hear something good? Hit Catch to save it, then Play to queue it from YouTube.</p>
-      <p class="note callout"><svg width="20" height="20" aria-hidden="true"><use href="#i-mic" /></svg> <span data-i18n="radioHome.fm">New on /radio play: Kitchen FM, the kitchen’s own station. It plays your server’s songs a genre at a time, and between the sets a DJ says who brought them in.</span></p>
-      <p class="note"><a class="link-arrow" href="radio.html"><span data-i18n="radioHome.more">More about radio</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
+      <p class="note callout"><svg width="20" height="20" aria-hidden="true"><use href="#i-mic" /></svg> <span data-i18n="radioHome.fm">New on /radio play: Kitchen FM, the kitchen’s own station. It plays your server’s songs a genre at a time, and between the sets a DJ says who brought them in. /radio dedicate gets your message read on air.</span></p>
+      <p class="note radio-links"><a class="link-arrow" href="radio.html#fm"><span data-i18n="commands.fmMore">How Kitchen FM works</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a> <a class="link-arrow" href="radio.html"><span data-i18n="radioHome.more">More about radio</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
     </div>
     <figure class="radio-film plate" data-reveal>
       <div class="radio-film-frame">
@@ -589,7 +589,7 @@
       </details>
       <details>
         <summary><span data-i18n="faq.q2">Does it need admin rights?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
-        <p data-i18n="faq.a2">No. It asks for Connect, Speak, View Channel, Send Messages, Embed Links, Manage Messages, and Add Reactions, and that’s it. Manage Messages is only for deleting its own old cards.</p>
+        <p data-i18n="faq.a2">No. It asks for Connect, Speak, View Channel, Send Messages, Embed Links, Manage Messages, Add Reactions, and Manage Channels, and that’s it. Manage Messages only deletes its own old cards, and Manage Channels is only for /textroom and /voiceroom, which only admins can run.</p>
       </details>
       <details>
         <summary><span data-i18n="faq.q3">Why can’t music and radio play at the same time?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
@@ -602,6 +602,14 @@
       <details>
         <summary><span data-i18n="faq.q5">Can I host it myself?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
         <p><span data-i18n="faq.a5">Sure. It’s a Node.js app that needs FFmpeg and Deno, and it runs fine on a home PC or a VPS. The repo has the full setup guide.</span> <a href="{{github}}" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+      </details>
+      <details>
+        <summary><span data-i18n="faq.q6">Is the Kitchen FM DJ an AI?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+        <p data-i18n="faq.a6">No. Its lines come from a book written ahead of time, and the bot only fills in the time, the genre, the song, and who brought it in. The voice is Microsoft Edge’s free read-aloud voice.</p>
+      </details>
+      <details>
+        <summary><span data-i18n="faq.q7">What does the bot remember about me?</span><svg width="18" height="18" aria-hidden="true"><use href="#i-plus" /></svg></summary>
+        <p><span data-i18n="faq.a7">Only what its features need: the songs you play, your catches, votes and quiz scores, and your Steam profile if you link it. Nothing is sold or shared.</span> <a class="link-arrow" href="privacy.html"><span data-i18n="faq.a7link">The whole list</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
       </details>
     </div>
   </div>
@@ -620,6 +628,7 @@
     <div class="receipt">
       <p class="receipt-head">DZBANEK · <span data-i18n="changelog.slip">kitchen log</span></p>
       <ol class="receipt-list">
+        <li><time datetime="2026-10-27">27. 10. 2026</time><span data-i18n="changelog.c15">Dedications on Kitchen FM: /radio dedicate sends the DJ a short message to read on air, and 🔥 or 👎 on the card decides which new finds stay.</span></li>
         <li><time datetime="2026-10-26">26. 10. 2026</time><span data-i18n="changelog.c14">Kitchen FM, the kitchen’s own station on /radio play: your server’s songs a genre at a time, with a DJ between the sets.</span></li>
         <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c13">Four new stations: Frekvence 1, Heart London, Capital London and Radio Paradise. The Friday vote has a button for each of the seven.</span></li>
         <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="changelog.c12">The Kitchen Board has an In voice card: everyone in every call, live, even when the bot isn’t in one.</span></li>
@@ -637,26 +646,34 @@
   </div>
 </section>
 
-<!-- The afterword: why it exists, in a letter from the person who makes it, beside a short chronicle. -->
+<!-- The afterword: a letter from the person who makes it, tucked into the back of the book, beside a short chronicle. -->
 <section class="section chapter" id="about">
   <p class="chapter-no"><span data-i18n="book.chapter">Chapter</span></p>
   <div class="wrap letter-split">
-    <div class="letter" data-reveal>
-      <h2 id="letter-title" data-i18n="about.title">Why Dzbanek exists</h2>
-      <div class="letter-body">
-        <p class="letter-lede" data-i18n="about.p1">I made Dzbanek for our own Discord server. We wanted one bot for music instead of three, the Czech radio we listen to anyway, and a heads-up when a good game gets cheap.</p>
-        <p data-i18n="about.first">The first version went up in June 2026 with music, RSS news and Steam deals. In September I wrote it again from scratch, and the bot turned into a kitchen: a cookie for everyone who joins, a Kitchen Board that edits itself, and radio playing on the counter.</p>
-        <p data-i18n="about.second">The newest thing in it is Kitchen FM, the kitchen’s own station, where a DJ talks between the songs and knows who brought each one in.</p>
-        <p data-i18n="about.p2">It’s free and it’ll stay that way. If something breaks or you miss a feature, tell me on GitHub.</p>
-      </div>
-      <p class="letter-sign">
+    <article class="letter" data-reveal aria-labelledby="letter-title">
+      <!-- A stamp with the pitcher on it, franked in Prague. -->
+      <span class="letter-stamp" aria-hidden="true">
         <picture>
           <source type="image/webp" srcset="assets/avatar-large.webp" />
           <img src="assets/avatar-large.jpg" alt="" width="435" height="435" loading="lazy" decoding="async" />
         </picture>
-        <span class="letter-name">Sunka <small data-i18n="about.role">makes Dzbanek</small></span>
-      </p>
-    </div>
+      </span>
+      <span class="letter-postmark" aria-hidden="true"><b>PRAHA</b><span>27 X 26</span></span>
+      <p class="letter-date" data-i18n="about.date">Prague, October 2026</p>
+      <h2 id="letter-title" data-i18n="about.title">Why I made Dzbanek</h2>
+      <div class="letter-body">
+        <p class="letter-hello" data-i18n="about.hello">Dear kitchen,</p>
+        <p class="letter-lede" data-i18n="about.p1">I made Dzbanek for our own Discord server. We wanted one bot for music instead of three, the Czech radio we listen to anyway, and a heads-up when a good game gets cheap.</p>
+        <p data-i18n="about.first">The first version went up in June 2026 with music, RSS news and Steam deals. In September I wrote it again from scratch, and the bot turned into a kitchen: a cookie for everyone who joins, a Kitchen Board that edits itself, and radio playing on the counter.</p>
+        <p data-i18n="about.second">These days I mostly work on Kitchen FM, the kitchen’s own station. A DJ talks between the sets and knows who brought each song in. Now you can send it a dedication too, and a 🔥 keeps a new find in the kitchen for good.</p>
+        <p data-i18n="about.p2">It’s free and it’ll stay that way. If something breaks or you miss a feature, tell me on GitHub.</p>
+      </div>
+      <div class="letter-sign">
+        <p class="letter-regards" data-i18n="about.regards">See you in the kitchen,</p>
+        <p class="letter-name">Sunka <small data-i18n="about.role">makes Dzbanek</small></p>
+      </div>
+      <p class="letter-ps" data-i18n="about.ps">P.S. Dzbanek is Czech for a little pitcher, minus the accents. That’s who’s on every page.</p>
+    </article>
     <aside class="chronicle" data-reveal aria-labelledby="chronicle-title">
       <h3 class="chronicle-title" id="chronicle-title" data-i18n="about.chronicle">Chronicle</h3>
       <ol class="chronicle-list">
@@ -664,8 +681,10 @@
           <li><time datetime="2026-09-16">16. 9. 2026</time><span data-i18n="about.c2">Dzbanek 2.0, written again from scratch</span></li>
           <li><time datetime="2026-09-20">20. 9. 2026</time><span data-i18n="about.c3">Kiss, Rock Radio and Radio Beat</span></li>
           <li><time datetime="2026-09-21">21. 9. 2026</time><span data-i18n="about.c4">The Kitchen Board, Catch and Radio Night</span></li>
+          <li><time datetime="2026-10-22">22. 10. 2026</time><span data-i18n="about.c7">Kitchen Quiz and Wishlist Radar</span></li>
           <li><time datetime="2026-10-24">24. 10. 2026</time><span data-i18n="about.c5">Frekvence 1, Heart, Capital and Radio Paradise</span></li>
-          <li class="is-new"><time datetime="2026-10-26">26. 10. 2026</time> <span class="chronicle-new" data-i18n="changes.new">New</span><span data-i18n="about.c6">Kitchen FM, with a DJ</span></li>
+          <li><time datetime="2026-10-26">26. 10. 2026</time><span data-i18n="about.c6">Kitchen FM, with a DJ</span></li>
+          <li class="is-new"><time datetime="2026-10-27">27. 10. 2026</time> <span class="chronicle-new" data-i18n="changes.new">New</span><span data-i18n="about.c8">Dedications, and 🔥 or 👎 for each song</span></li>
       </ol>
       <p class="chronicle-count"><a class="link-arrow" href="changes.html"><b>{{changeCount}}</b> <span data-i18n="about.changes">changes to Dzbanek 2.0 so far</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a></p>
       <p class="chronicle-links">

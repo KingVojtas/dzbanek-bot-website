@@ -375,10 +375,15 @@
         <input type="search" data-cmd-filter placeholder="Search: radio, queue, setup…" data-i18n-placeholder="commands.filter" />
       </label>
     </div>
-    <!-- Printed like a café menu, grouped the way the bot's /help groups them. -->
+    <div class="ref-sub" data-reveal>
+      <p class="lead" data-i18n="commands.refLead">All 30 of them, grouped the way /help groups them. Search, or jump to a shelf.</p>
+      <nav class="cmd-jump" aria-label="Command groups" data-i18n-aria="commands.jump"><a href="#cmd-gMusic"><span data-i18n="commands.gMusic">Music</span> <b>8</b></a><a href="#cmd-gRadio"><span data-i18n="commands.gRadio">Radio</span> <b>5</b></a><a href="#cmd-gSteam"><span data-i18n="commands.gSteam">Steam wishlist</span> <b>3</b></a><a href="#cmd-gQuiz"><span data-i18n="commands.gQuiz">Kitchen Quiz</span> <b>2</b></a><a href="#cmd-gSetup"><span data-i18n="commands.gSetup">Kitchen & setup</span> <b>9</b></a><a href="#cmd-gRooms"><span data-i18n="commands.gRooms">Rooms</span> <b>2</b></a><a href="#cmd-gHelp"><span data-i18n="commands.gHelp">Help</span> <b>1</b></a></nav>
+    </div>
+    <!-- Printed like a café menu, grouped the way the bot's /help groups them.
+         Commands with subcommands list each one on its own line, with its options. -->
     <div class="cmd-menu" data-reveal>
       <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gMusic">
-        <h3 class="cmd-group-title" id="cmd-gMusic" data-i18n="commands.gMusic">Music</h3>
+        <h3 class="cmd-group-title" id="cmd-gMusic"><span data-i18n="commands.gMusic">Music</span> <span class="cmd-count">8</span></h3>
         <article class="cmd-item" id="play" data-cmd>
           <header><code class="cmd-name">/play</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
           <p data-i18n="commands.play">Joins your voice channel and plays a YouTube or Spotify link, or whatever you search for. play_next puts it at the front of the queue.</p>
@@ -416,48 +421,62 @@
         </article>
       </section>
       <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gRadio">
-        <h3 class="cmd-group-title" id="cmd-gRadio" data-i18n="commands.gRadio">Radio</h3>
+        <h3 class="cmd-group-title" id="cmd-gRadio"><span data-i18n="commands.gRadio">Radio</span> <span class="cmd-count">5</span></h3>
         <article class="cmd-item" id="radio" data-cmd>
           <header><code class="cmd-name">/radio</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/radio play"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-          <p data-i18n="commands.radio">play, stop, night, and night-off. Pick one of seven stations.</p>
-          <ul class="opts"><li><code>play</code></li><li><code>stop</code></li><li><code>night</code></li><li><code>night-off</code></li></ul>
+          <p data-i18n="commands.radio">Seven live stations and Kitchen FM, plus Friday’s Radio Night.</p>
+          <dl class="cmd-subs">
+            <div><dt><code>play</code> <var>station</var></dt><dd data-i18n="commands.radioPlay">Joins your voice channel and starts one of the seven stations, or Kitchen FM.</dd></div>
+            <div><dt><code>stop</code></dt><dd data-i18n="commands.radioStop">Stops the stream, deletes the radio card, and leaves.</dd></div>
+            <div><dt><code>night</code> <var>station</var> <var>channel</var> <span class="cmd-need" data-i18n="commands.needManage">Manage Server</span></dt><dd data-i18n="commands.radioNight">Puts Radio Night on the calendar: a vote on Friday from 12:00, and the winner at 20:00.</dd></div>
+            <div><dt><code>night-off</code> <span class="cmd-need" data-i18n="commands.needManage">Manage Server</span></dt><dd data-i18n="commands.radioNightOff">Takes Radio Night off the calendar.</dd></div>
+            <div class="is-new"><dt><code>dedicate</code> <var>message</var> <var>to</var> <var>song</var> <span class="fm-new" data-i18n="changes.new">New</span></dt><dd data-i18n="commands.radioDedicate">Sends Kitchen FM’s DJ up to 120 characters to read on air, before the next song or one you name.</dd></div>
+          </dl>
+          <a class="link-arrow" href="radio.html#fm"><span data-i18n="commands.fmMore">How Kitchen FM works</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
         </article>
       </section>
       <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gSteam">
-        <h3 class="cmd-group-title" id="cmd-gSteam" data-i18n="commands.gSteam">Steam wishlist</h3>
+        <h3 class="cmd-group-title" id="cmd-gSteam"><span data-i18n="commands.gSteam">Steam wishlist</span> <span class="cmd-count">3</span></h3>
         <article class="cmd-item" id="steam" data-cmd>
           <header><code class="cmd-name">/steam</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/steam link"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-          <p data-i18n="commands.steam">Wishlist Radar: link your Steam profile and get pinged when a game on your wishlist goes on sale. wishlist shows the whole list with prices, sales first.</p>
-          <ul class="opts"><li><code>link</code></li><li><code>wishlist</code></li><li><code>unlink</code></li></ul>
+          <p data-i18n="commands.steam">Wishlist Radar: get pinged when a game on your Steam wishlist goes on sale. The wishlist has to be public.</p>
+          <dl class="cmd-subs">
+            <div><dt><code>link</code> <var>profile</var></dt><dd data-i18n="commands.steamLink">Links your Steam profile: a link, your custom name, or the 17-digit ID.</dd></div>
+            <div><dt><code>wishlist</code></dt><dd data-i18n="commands.steamWishlist">Your whole wishlist with prices, sales first, ten games a page. Only you see it.</dd></div>
+            <div><dt><code>unlink</code></dt><dd data-i18n="commands.steamUnlink">Stops watching your wishlist and deletes the link.</dd></div>
+          </dl>
         </article>
       </section>
       <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gQuiz">
-        <h3 class="cmd-group-title" id="cmd-gQuiz" data-i18n="commands.gQuiz">Kitchen Quiz</h3>
+        <h3 class="cmd-group-title" id="cmd-gQuiz"><span data-i18n="commands.gQuiz">Kitchen Quiz</span> <span class="cmd-count">2</span></h3>
         <article class="cmd-item" id="quiz" data-cmd>
           <header><code class="cmd-name">/quiz</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/quiz start"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
-          <p data-i18n="commands.quiz">Name that tune in voice. It plays 15-second clips of songs your kitchen has played, and everyone picks the title from four buttons. 10 rounds unless you ask for up to 20, or quiz on a playlist instead.</p>
-          <ul class="opts"><li><code>start</code></li><li><code>stop</code></li><li><code>rounds</code></li><li><code>playlist</code></li></ul>
+          <p data-i18n="commands.quiz">Name that tune in voice. It plays 15-second clips of songs your kitchen has played, or of a playlist you give it, and everyone picks the title from four buttons.</p>
+          <dl class="cmd-subs">
+            <div><dt><code>start</code> <var>rounds</var> <var>playlist</var></dt><dd data-i18n="commands.quizStart">Starts a quiz in your voice channel: 5 to 20 rounds, 10 unless you say otherwise.</dd></div>
+            <div><dt><code>stop</code></dt><dd data-i18n="commands.quizStop">Ends it now and shows the podium.</dd></div>
+          </dl>
         </article>
       </section>
       <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gSetup">
-        <h3 class="cmd-group-title" id="cmd-gSetup" data-i18n="commands.gSetup">Kitchen & setup</h3>
+        <h3 class="cmd-group-title" id="cmd-gSetup"><span data-i18n="commands.gSetup">Kitchen & setup</span> <span class="cmd-count">9</span></h3>
         <article class="cmd-item" id="setup" data-cmd>
-          <header><code class="cmd-name">/setup</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/setup status"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <header><code class="cmd-name">/setup</code> <span class="cmd-need" data-i18n="commands.needManage">Manage Server</span><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/setup status"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
           <p data-i18n="commands.setup">Sets which channels get deals, welcome messages, Wishlist Radar, and the Kitchen Board. Needs Manage Server.</p>
           <ul class="opts"><li><code>steam</code></li><li><code>epic</code></li><li><code>welcome</code></li><li><code>goodbye</code></li><li><code>kitchen</code></li><li><code>wishlist</code></li><li><code>idle-radio</code></li><li><code>status</code></li><li><code>disable</code></li></ul>
           <a class="link-arrow" href="setup.html"><span data-i18n="nav.setup">Setup</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-arrow-right" /></svg></a>
         </article>
       </section>
       <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gRooms">
-        <h3 class="cmd-group-title" id="cmd-gRooms" data-i18n="commands.gRooms">Rooms</h3>
+        <h3 class="cmd-group-title" id="cmd-gRooms"><span data-i18n="commands.gRooms">Rooms</span> <span class="cmd-count">2</span></h3>
         <article class="cmd-item" id="rooms" data-cmd>
-          <header><code class="cmd-name">/textroom · /voiceroom</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/textroom"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
+          <header><code class="cmd-name">/textroom · /voiceroom</code> <span class="cmd-need" data-i18n="commands.needAdmin">Admins</span><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/textroom"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
           <p data-i18n="commands.rooms">Opens a text or voice room under a category and adds an emoji to the name. Public, or hidden from everyone but admins. Admins only.</p>
           <ul class="opts"><li><code>name</code></li><li><code>category</code></li><li><code>access</code></li></ul>
         </article>
       </section>
       <section class="cmd-group" data-cmd-group aria-labelledby="cmd-gHelp">
-        <h3 class="cmd-group-title" id="cmd-gHelp" data-i18n="commands.gHelp">Help</h3>
+        <h3 class="cmd-group-title" id="cmd-gHelp"><span data-i18n="commands.gHelp">Help</span> <span class="cmd-count">1</span></h3>
         <article class="cmd-item" id="help" data-cmd>
           <header><code class="cmd-name">/help</code><span class="cmd-dots" aria-hidden="true"></span><button type="button" class="copy" data-copy="/help"><svg width="16" height="16" aria-hidden="true"><use href="#i-copy" /></svg><span data-i18n="copy">Copy</span></button></header>
           <p data-i18n="commands.help">Shows every command on one card. Add a command’s name to get just that one, with all its options.</p>

@@ -961,6 +961,13 @@ html:not(.theme-light) .icon-moon {
   text-decoration: none;
 }
 
+/* Two links side by side under a lead. */
+.radio-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
 .link-arrow + .link-arrow {
   margin-left: 1.25rem;
 }
@@ -1344,6 +1351,16 @@ button.dc-mention:hover {
 
 .dc-fields .wide {
   grid-column: 1 / -1;
+}
+
+/* A Discord block quote: what the Kitchen FM DJ just said. */
+.dc-quote {
+  margin-top: 0.6rem;
+  padding-left: 0.7rem;
+  border-left: 4px solid var(--dc-line);
+  color: var(--dc-text-2);
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 .dc-row {
@@ -3337,13 +3354,116 @@ html.theme-light .chip-vp {
   margin-top: 0.5rem;
 }
 
-/* why Dzbanek exists: the afterword, a letter set in the serif beside a short chronicle */
+/* why I made Dzbanek: the afterword, a letter on airmail paper, stamped in Prague, beside a short chronicle */
 
 .letter-split {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
   align-items: start;
   gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+.letter {
+  position: relative;
+  max-width: 46rem;
+  padding: clamp(2rem, 4vw, 3.25rem) clamp(1.4rem, 4vw, 3.5rem) clamp(1.75rem, 3.5vw, 2.75rem);
+  border: 1px solid var(--rule);
+  border-radius: 0.3rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--clay) 7%, transparent), transparent 10rem),
+    var(--ink-2);
+  box-shadow: var(--shadow);
+  rotate: -0.35deg;
+}
+
+/* The airmail edge across the top. */
+.letter::before {
+  content: "";
+  position: absolute;
+  inset: -1px -1px auto;
+  height: 0.45rem;
+  border-radius: 0.3rem 0.3rem 0 0;
+  background: repeating-linear-gradient(-45deg, var(--clay) 0 0.8rem, transparent 0.8rem 1.25rem, #4f74a8 1.25rem 2.05rem, transparent 2.05rem 2.5rem);
+  opacity: 0.85;
+}
+
+/* A stamp with the pitcher, its edge perforated by a mask. */
+.letter-stamp {
+  position: absolute;
+  top: clamp(1.4rem, 3vw, 2.1rem);
+  right: clamp(1.2rem, 3vw, 2.2rem);
+  width: 5.4rem;
+  height: 6.6rem;
+  padding: 0.42rem;
+  background: #fffdf8;
+  rotate: 4deg;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.18));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    radial-gradient(circle at 0.3rem 0.3rem, transparent 0.17rem, #000 0.18rem) -0.3rem -0.3rem / 0.6rem 0.6rem;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    radial-gradient(circle at 0.3rem 0.3rem, transparent 0.17rem, #000 0.18rem) -0.3rem -0.3rem / 0.6rem 0.6rem;
+}
+
+.letter-stamp img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  outline: 1px solid rgba(0, 0, 0, 0.12);
+  outline-offset: -1px;
+}
+
+/* The postmark lands half on the stamp, half on the paper. */
+.letter-postmark {
+  position: absolute;
+  top: calc(clamp(1.4rem, 3vw, 2.1rem) + 3.6rem);
+  right: calc(clamp(1.2rem, 3vw, 2.2rem) + 3.7rem);
+  display: grid;
+  place-content: center;
+  width: 4.6rem;
+  aspect-ratio: 1;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  color: color-mix(in srgb, var(--accent-text) 80%, transparent);
+  font: 700 0.62rem/1.25 var(--mono);
+  letter-spacing: 0.08em;
+  text-align: center;
+  rotate: -14deg;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.letter-postmark b {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+}
+
+.letter-postmark span {
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.letter-postmark::before {
+  content: "";
+  position: absolute;
+  inset: 0.22rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.letter-date {
+  padding-right: 7.5rem;
+  color: var(--accent-text);
+  font: 600 0.74rem/1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.letter h2 {
+  margin-top: 0.6rem;
+  padding-right: 9.5rem;
 }
 
 .letter-body {
@@ -3354,39 +3474,40 @@ html.theme-light .chip-vp {
 .letter-body p {
   margin-top: 1.1rem;
   color: var(--cream-soft);
-  font: 400 clamp(1.08rem, 1.35vw, 1.18rem) / 1.72 var(--serif);
+  font: 400 clamp(1.05rem, 1.3vw, 1.15rem) / 1.72 var(--serif);
+}
+
+.letter-body .letter-hello {
+  margin-top: 0;
+  color: var(--accent-text);
+  font: 700 clamp(1.9rem, 2.6vw, 2.3rem) / 1 var(--hand);
 }
 
 .letter-body .letter-lede {
-  margin-top: 0;
+  margin-top: 0.85rem;
   color: var(--cream);
-  font-size: clamp(1.3rem, 2vw, 1.6rem);
-  line-height: 1.5;
+  font-size: clamp(1.22rem, 1.8vw, 1.45rem);
+  line-height: 1.52;
 }
 
-/* A drop cap, the way a chapter opens in a printed book. */
-.letter-lede::first-letter {
-  float: left;
-  margin: 0.06em 0.1em 0 0;
-  color: var(--accent-text);
-  font-size: 3.2em;
-  font-weight: 600;
-  line-height: 0.82;
-}
-
-/* Signed by hand, next to the pitcher. */
+/* Signed by hand. */
 .letter-sign {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  margin-top: 1.75rem;
-  color: var(--accent-text);
-  font: 700 2.3rem/1 var(--hand);
+  margin-top: 1.9rem;
+}
+
+.letter-regards {
+  color: var(--cream-soft);
+  font: italic 400 1.05rem/1.4 var(--serif);
 }
 
 .letter-name {
-  display: grid;
-  gap: 0.2rem;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.75rem;
+  margin-top: 0.15rem;
+  color: var(--accent-text);
+  font: 700 2.6rem/1 var(--hand);
 }
 
 .letter-name small {
@@ -3395,14 +3516,13 @@ html.theme-light .chip-vp {
   letter-spacing: 0.02em;
 }
 
-.letter-sign img {
-  width: 3.4rem;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow:
-    0 0 0 1px var(--rule-strong),
-    0 0 0 5px color-mix(in srgb, var(--clay) 12%, transparent);
+.letter-ps {
+  margin-top: 1.6rem;
+  padding-top: 1.1rem;
+  border-top: 1px dashed var(--rule-strong);
+  color: var(--cream-soft);
+  font: 600 clamp(1.3rem, 1.8vw, 1.5rem) / 1.25 var(--hand);
+  rotate: -0.6deg;
 }
 
 /* The chronicle: what happened when, behind a column rule. */
@@ -3694,6 +3814,176 @@ html.theme-light .receipt-wrap {
 .log-more {
   margin-top: 2rem;
   text-align: center;
+}
+
+/* what's new: the big ones as cards, the newest one twice as wide */
+.highlights-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 2vw, 1.25rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.highlight.is-featured {
+  grid-column: span 2;
+}
+
+.highlight a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  height: 100%;
+  padding: clamp(1.25rem, 2.5vw, 1.6rem);
+  border: 1px solid var(--rule-strong);
+  border-radius: 0.9rem;
+  background: color-mix(in srgb, var(--ink-2) 70%, transparent);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color 0.3s var(--ease),
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.highlight a:hover,
+.highlight a:focus-visible {
+  border-color: var(--clay);
+  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+}
+
+.highlight.is-featured a {
+  background:
+    radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--clay) 18%, transparent), transparent 60%),
+    color-mix(in srgb, var(--ink-2) 80%, transparent);
+}
+
+.highlight-top {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.highlight-icon {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0.7rem;
+  background: color-mix(in srgb, var(--clay) 10%, transparent);
+  font-size: 1.25rem;
+}
+
+.highlight time {
+  color: var(--accent-text);
+  font: 600 0.78rem/1.4 var(--mono);
+}
+
+.highlight-top .chronicle-new {
+  margin-left: auto;
+}
+
+.highlight h3 {
+  margin-top: 0.3rem;
+  font-size: 1.35rem;
+  letter-spacing: -0.015em;
+}
+
+.highlight.is-featured h3 {
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+}
+
+.highlight p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.highlight.is-featured p {
+  max-width: 36rem;
+  color: var(--cream-soft);
+  font-size: 1.05rem;
+}
+
+.highlight-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: auto;
+  padding-top: 0.4rem;
+  color: var(--accent-text);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.highlight a:hover .highlight-more svg {
+  translate: 3px 0;
+}
+
+.highlight-more svg {
+  transition: translate 0.3s var(--ease);
+}
+
+/* Above the slip: its title, and buttons that keep one kind of change. */
+.log-intro {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.log-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+.log-filter button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cream-soft);
+  font: 600 0.85rem/1 var(--sans);
+  cursor: pointer;
+  transition:
+    border-color 0.25s var(--ease),
+    background 0.25s var(--ease),
+    color 0.25s var(--ease);
+}
+
+.log-filter button:hover {
+  border-color: var(--clay);
+  color: var(--accent-text);
+}
+
+.log-filter button[aria-pressed=true] {
+  border-color: var(--clay);
+  background: var(--clay);
+  color: #1d120a;
+}
+
+.log-filter b {
+  font: 700 0.75rem/1 var(--mono);
+  opacity: 0.8;
 }
 
 /* straight from the server: the real screenshots, set as numbered plates */
@@ -4850,6 +5140,140 @@ html:not(.js) .kbd-hint {
   color: var(--menu-accent);
 }
 
+/* How many commands sit on each shelf. */
+.cmd-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  margin-left: 0.3rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: rgba(154, 68, 22, 0.12);
+  color: var(--menu-accent);
+  font: 700 0.76rem/1 var(--sans);
+  vertical-align: 0.3rem;
+}
+
+.cmd-group-title {
+  scroll-margin-top: 7rem;
+}
+
+/* Who may run it: Manage Server, or admins only. */
+.cmd-need {
+  align-self: center;
+  padding: 0.12rem 0.5rem;
+  border: 1px solid rgba(154, 68, 22, 0.35);
+  border-radius: 999px;
+  color: #6b3a1a;
+  font: 700 0.62rem/1.4 var(--sans);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Subcommands, one per line, with their options after the name. */
+.cmd-subs {
+  display: grid;
+  margin: 0.1rem 0 0;
+}
+
+.cmd-subs > div {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.6rem 0;
+  border-top: 1px dashed rgba(42, 31, 22, 0.22);
+}
+
+.cmd-subs dt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.45rem;
+}
+
+.cmd-subs dt code {
+  color: var(--menu-accent);
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.cmd-subs var {
+  padding: 0.05rem 0.4rem;
+  border: 1px solid rgba(42, 31, 22, 0.2);
+  border-radius: 0.3rem;
+  color: #7a5c45;
+  font: 500 0.72rem/1.4 var(--mono);
+  font-style: normal;
+}
+
+.cmd-subs dd {
+  margin: 0;
+  color: #5b4a3c;
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+
+.cmd-subs .is-new {
+  margin-inline: -0.5rem;
+  padding-inline: 0.5rem;
+  border-radius: 0.3rem;
+  background: linear-gradient(90deg, rgba(47, 122, 63, 0.1), transparent 85%);
+}
+
+.cmd-menu .fm-new {
+  margin-left: 0;
+  color: #2f7a3f;
+}
+
+/* Under the heading: the count, and tabs that jump to a shelf. */
+.ref-sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin: -0.5rem 0 1.9rem;
+}
+
+.ref-sub .lead {
+  max-width: 34rem;
+}
+
+.cmd-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.cmd-jump a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  color: var(--cream-soft);
+  font: 600 0.85rem/1 var(--sans);
+  text-decoration: none;
+  transition:
+    border-color 0.25s var(--ease),
+    background 0.25s var(--ease),
+    color 0.25s var(--ease);
+}
+
+.cmd-jump a:hover,
+.cmd-jump a:focus-visible {
+  border-color: var(--clay);
+  background: color-mix(in srgb, var(--clay) 10%, transparent);
+  color: var(--accent-text);
+}
+
+.cmd-jump b {
+  color: var(--accent-text);
+  font: 700 0.75rem/1 var(--mono);
+}
+
 .opts {
   display: flex;
   flex-wrap: wrap;
@@ -5597,6 +6021,114 @@ html:not(.js) .vote-controls {
   font-size: 0.95rem;
 }
 
+/* privacy: the pantry list, beside what's kept for one person and what never is */
+.privacy-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  align-items: start;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.privacy-grid .recipe-list {
+  grid-template-columns: 1fr;
+}
+
+.privacy-grid .recipe-list dt {
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.privacy-side {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.privacy-side .recipe-list > div {
+  grid-template-columns: 1fr;
+}
+
+.privacy-list {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.privacy-list li {
+  position: relative;
+  padding-left: 1.7rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* A small no-entry sign before each line. */
+.privacy-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 0.95rem;
+  height: 0.95rem;
+  border: 1.5px solid var(--clay);
+  border-radius: 50%;
+  background: linear-gradient(45deg, transparent 44%, var(--clay) 44% 56%, transparent 56%);
+}
+
+/* Kitchen FM on the radio page: four points, each with its own emoji, beside the card. */
+.fm-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.9rem;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  color: var(--accent-text);
+  font: 700 0.72rem/1.2 var(--sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fm-points {
+  display: grid;
+  gap: 1.1rem;
+  margin: 1.6rem 0 1.4rem;
+  padding: 0;
+  list-style: none;
+}
+
+.fm-points li {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0.9rem;
+}
+
+.fm-icon {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0.7rem;
+  background: color-mix(in srgb, var(--clay) 10%, transparent);
+  font-size: 1.2rem;
+}
+
+.fm-points h3 {
+  font-size: 1.12rem;
+  letter-spacing: -0.01em;
+}
+
+.fm-points p {
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
 .channel-groups {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -5907,12 +6439,17 @@ html.js [data-reveal-group].is-in > * {
   .split.lean,
   .radio-head,
   .letter-split,
+  .privacy-grid,
   .night-split,
   .faq-split,
   .demo-intro,
   .method,
   .changelog-split {
     grid-template-columns: 1fr;
+  }
+
+  .highlights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .chronicle {
@@ -6191,6 +6728,29 @@ html.js [data-reveal-group].is-in > * {
 
 /* Narrow phones. */
 @media (max-width: 560px) {
+  .highlights {
+    grid-template-columns: 1fr;
+  }
+
+  .highlight.is-featured {
+    grid-column: auto;
+  }
+
+  .letter-stamp {
+    scale: 0.78;
+    transform-origin: top right;
+  }
+
+  /* No room for the postmark beside the title on a phone. */
+  .letter-postmark {
+    display: none;
+  }
+
+  .letter-date,
+  .letter h2 {
+    padding-right: 5.5rem;
+  }
+
   .station {
     grid-template-columns: 1.25rem minmax(0, 1fr);
   }

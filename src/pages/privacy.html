@@ -1,0 +1,75 @@
+<!-- title: Privacy · Dzbanek -->
+<!-- description: Everything Dzbanek keeps about your server and about you, what each thing is for, and how to have it removed. No ads, no tracking. -->
+<!-- page: privacy -->
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="title-top">
+      <p class="kicker" data-i18n="privacy.kicker">Privacy</p>
+      <p class="title-tag" data-i18n="book.tagline">a cookbook for Discord</p>
+    </div>
+    <h1 data-i18n="privacy.title">What Dzbanek remembers</h1>
+    <p class="lead" data-i18n="privacy.lead">The bot keeps a small pantry for each server, so the Kitchen Board, Kitchen FM, the quiz, and the deals work. Here’s everything on its shelves, what each thing is for, and how to clear it.</p>
+  </div>
+</header>
+
+<section class="section flush-top" id="server-data">
+  <div class="wrap privacy-grid">
+    <!-- Everything in the bot's database (prisma/schema.prisma in the bot repo), as a pantry list. -->
+    <div class="recipe" data-reveal>
+      <h2 class="recipe-title" data-i18n="privacy.serverTitle">For each server</h2>
+      <dl class="recipe-list">
+        <div><dt data-i18n="privacy.settingsT">Settings</dt><dd data-i18n="privacy.settings">The channels you picked with /setup, Radio Night, idle radio, and the last station that played, so a restart can put it back on.</dd></div>
+        <div><dt data-i18n="privacy.playsT">Songs played</dt><dd data-i18n="privacy.plays">The link, title, length, and who asked for each /play. Kitchen FM, the quiz, and the “brought in by” lines are made from it.</dd></div>
+        <div><dt data-i18n="privacy.catchesT">Catches</dt><dd data-i18n="privacy.catches">The song, the station, the cover, and who caught it. The Kitchen Board and the Sunday postcard show them.</dd></div>
+        <div><dt data-i18n="privacy.votesT">Radio Night votes</dt><dd data-i18n="privacy.votes">Who voted for which station that Friday. You can change your vote until 20:00.</dd></div>
+        <div><dt data-i18n="privacy.quizT">Quiz scores</dt><dd data-i18n="privacy.quiz">Points, right answers, and rounds for each player, for the podium and the week’s champion.</dd></div>
+        <div><dt data-i18n="privacy.reactionsT">🔥 and 👎</dt><dd data-i18n="privacy.reactions">Who reacted to which song on Kitchen FM, so the station knows what to play more and what to leave out.</dd></div>
+        <div><dt data-i18n="privacy.dealsT">Deals already posted</dt><dd data-i18n="privacy.deals">Which Steam and Epic games each server has already seen, so nothing gets posted twice.</dd></div>
+      </dl>
+    </div>
+    <div class="privacy-side">
+      <div class="recipe" data-reveal>
+        <h2 class="recipe-title" data-i18n="privacy.youTitle">Just for you</h2>
+        <dl class="recipe-list">
+          <div class="is-key"><dt data-i18n="privacy.steamT">Steam link</dt><dd data-i18n="privacy.steam">Your Steam profile ID, only if you run /steam link, so Wishlist Radar can read your public wishlist. /steam unlink deletes it.</dd></div>
+        </dl>
+      </div>
+      <div class="recipe privacy-not" data-reveal>
+        <h2 class="recipe-title" data-i18n="privacy.notTitle">Never kept</h2>
+        <ul class="privacy-list">
+          <li data-i18n="privacy.not1">Your messages. The bot doesn’t have the permission to read chat at all.</li>
+          <li data-i18n="privacy.not2">Your voice. It only plays audio and never records anything.</li>
+          <li data-i18n="privacy.not3">Dedications. They wait in memory until the DJ reads them, and anything unread is gone when the show ends.</li>
+          <li data-i18n="privacy.not4">Who’s in voice. The In voice card shows it live and doesn’t save it.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="site">
+  <div class="wrap split top">
+    <div data-reveal>
+      <h2 data-i18n="privacy.siteTitle">This website</h2>
+      <p class="lead" data-i18n="privacy.siteLead">No cookies, no analytics, no ads. Your browser remembers the language and the light or dark theme you picked, and that never leaves your computer.</p>
+    </div>
+    <div data-reveal>
+      <p class="note" data-i18n="privacy.siteRadio">When you press play on the radio, the stream comes straight from the station, and the song titles from radia.cz, Triton, and Global. They see your IP address like any website you visit.</p>
+      <p class="note" data-i18n="privacy.siteHost">The site is hosted on GitHub Pages, which keeps its own server logs.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="remove">
+  <div class="wrap">
+    <div class="intent" data-reveal>
+      <span class="intent-icon"><svg width="28" height="28" aria-hidden="true"><use href="#i-shield" /></svg></span>
+      <div>
+        <h2 data-i18n="privacy.removeTitle">Want something gone?</h2>
+        <p class="lead" data-i18n="privacy.removeBody">/steam unlink removes your Steam link on the spot. For anything else, write to me on GitHub and I’ll clear it. Nothing here is sold or shared with anyone.</p>
+        <p class="note"><a class="link-arrow" href="{{github}}/issues" target="_blank" rel="noopener noreferrer"><span data-i18n="about.write">Tell me on GitHub</span> <svg width="16" height="16" aria-hidden="true"><use href="#i-external" /></svg></a></p>
+      </div>
+    </div>
+  </div>
+</section>
