@@ -542,7 +542,7 @@
       not4: 'Who’s in voice. The In voice card shows it live and doesn’t save it.',
       sharedTitle: 'Who else sees some of it',
       claudeT: 'Claude, by Anthropic',
-      claude: 'When Kitchen FM can’t build a set from its genre blocks, the DJ asks Claude to plan one. That sends the server’s name, the time, the names of the people listening and of newcomers, and the songs with who brought them in.',
+      claude: 'When Kitchen FM can’t build a set from its genre blocks and Claude is switched on for the bot, the DJ asks Claude to plan one. That sends the server’s name, the time, the names of the people listening and of newcomers, and the songs with who brought them in.',
       voiceT: 'Microsoft',
       voice: 'The DJ’s lines are turned into speech by Microsoft Edge’s read-aloud service. A line can hold names and a dedication.',
       searchT: 'YouTube and Spotify',

@@ -542,7 +542,7 @@
       not4: 'Kdo je ve voice. Karta In voice to ukazuje živě a neukládá to.',
       sharedTitle: 'Kdo další něco z toho vidí',
       claudeT: 'Claude od Anthropicu',
-      claude: 'Když Kitchen FM nesloží set z bloků podle žánrů, požádá DJ o plán Clauda. Pošle mu přitom název serveru, čas, jména posluchačů i nováčků a písničky i s tím, kdo je přinesl.',
+      claude: 'Když Kitchen FM nesloží set z bloků podle žánrů a Claude je u bota zapnutý, požádá ho DJ o plán. Pošle mu přitom název serveru, čas, jména posluchačů i nováčků a písničky i s tím, kdo je přinesl.',
       voiceT: 'Microsoft',
       voice: 'Repliky DJe převádí na řeč služba předčítání z Microsoft Edge. Replika může obsahovat jména a věnování.',
       searchT: 'YouTube a Spotify',
